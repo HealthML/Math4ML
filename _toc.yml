@@ -6,3 +6,5 @@ root: index
 chapters:
 - file: chapter_preface/intro
 - file: chapter_linear_algebra/linear_algebra
+- file: chapter_calculus/calculus
+- file: chapter_probability/probability

@@ -284,11 +284,11 @@ convexity, and strong convexity.
 
 <figure id="fig:convexset">
 <figure>
-<img src="convex-set.png" />
+<img src="../figures/convex-set.png" />
 <figcaption>A convex set</figcaption>
 </figure>
 <figure>
-<img src="nonconvex-set.png" />
+<img src="../figures/nonconvex-set.png" />
 <figcaption>A non-convex set</figcaption>
 </figure>
 <figcaption>What convex sets look like</figcaption>
@@ -333,7 +333,7 @@ These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.
 
 ![What convex functions look
-like](convex-function.png){#fig:convexfunction width="\\linewidth"}
+like](../figures/convex-function.png){#fig:convexfunction width="\\linewidth"}
 
 Geometrically, convexity means that the line segment between two points
 on the graph of $f$ lies on or above the graph itself. See Figure
@@ -624,7 +624,7 @@ in Euclidean space, the solution is intimately related to orthogonality
 and the Pythagorean theorem:
 
 ::: center
-![image](orthogonal-projection.png){width="50%"}
+![image](../figures/orthogonal-projection.png){width="50%"}
 :::
 
 Here $\mathbf{y}$ is an arbitrary element of the subspace $S$, and
