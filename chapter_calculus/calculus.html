@@ -1,0 +1,1169 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Calculus and Optimization &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/calculus';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Probability" href="../chapter_probability/probability.html" />
+    <link rel="prev" title="Linear Algebra" href="../chapter_linear_algebra/linear_algebra.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark pst-js-only" alt="Mathematics for Machine Learning - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Mathematics for Machine Learning
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Calculus and Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter_probability/probability.html">Probability</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/calculus.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_calculus/calculus.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Calculus and Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extrema">Extrema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradients">Gradients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-jacobian">The Jacobian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hessian">The Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-calculus">Matrix calculus</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-projections">Orthogonal projections</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="calculus-and-optimization">
+<h1>Calculus and Optimization<a class="headerlink" href="#calculus-and-optimization" title="Link to this heading">#</a></h1>
+<p>Much of machine learning is about minimizing a <strong>cost function</strong> (also
+called an <strong>objective function</strong> in the optimization community), which
+is a scalar function of several variables that typically measures how
+poorly our model fits the data we have.</p>
+<section id="extrema">
+<h2>Extrema<a class="headerlink" href="#extrema" title="Link to this heading">#</a></h2>
+<p>Optimization is about finding <strong>extrema</strong>, which depending on the
+application could be minima or maxima. When defining extrema, it is
+necessary to consider the set of inputs over which we’re optimizing.
+This set <span class="math notranslate nohighlight">\(\mathcal{X} \subseteq \mathbb{R}^d\)</span> is called the <strong>feasible
+set</strong>. If <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> is the entire domain of the function being
+optimized (as it often will be for our purposes), we say that the
+problem is <strong>unconstrained</strong>. Otherwise the problem is <strong>constrained</strong>
+and may be much harder to solve, depending on the nature of the feasible
+set.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>. A point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is said
+to be a <strong>local minimum</strong> (resp. <strong>local maximum</strong>) of <span class="math notranslate nohighlight">\(f\)</span> in
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> if <span class="math notranslate nohighlight">\(f(\mathbf{x}) \leq f(\mathbf{y})\)</span> (resp.
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) \geq f(\mathbf{y})\)</span>) for all <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in some
+neighborhood <span class="math notranslate nohighlight">\(N \subseteq \mathcal{X}\)</span> about <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.[^6]
+Furthermore, if <span class="math notranslate nohighlight">\(f(\mathbf{x}) \leq f(\mathbf{y})\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{y} \in \mathcal{X}\)</span>, then <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a <strong>global minimum</strong>
+of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> (similarly for global maximum). If the phrase
+“in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>” is unclear from context, assume we are optimizing
+over the whole domain of the function.</p>
+<p>The qualifier <strong>strict</strong> (as in e.g. a strict local minimum) means that
+the inequality sign in the definition is actually a <span class="math notranslate nohighlight">\(&gt;\)</span> or <span class="math notranslate nohighlight">\(&lt;\)</span>, with
+equality not allowed. This indicates that the extremum is unique within
+some neighborhood.</p>
+<p>Observe that maximizing a function <span class="math notranslate nohighlight">\(f\)</span> is equivalent to minimizing <span class="math notranslate nohighlight">\(-f\)</span>,
+so optimization problems are typically phrased in terms of minimization
+without loss of generality. This convention (which we follow here)
+eliminates the need to discuss minimization and maximization separately.</p>
+</section>
+<section id="gradients">
+<h2>Gradients<a class="headerlink" href="#gradients" title="Link to this heading">#</a></h2>
+<p>The single most important concept from calculus in the context of
+machine learning is the <strong>gradient</strong>. Gradients generalize derivatives
+to scalar functions of several variables. The gradient of
+<span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>, denoted <span class="math notranslate nohighlight">\(\nabla f\)</span>, is given by
+$<span class="math notranslate nohighlight">\(\nabla f = \begin{bmatrix}\pdv{f}{x_1} \\ \vdots \\ \pdv{f}{x_n}\end{bmatrix}
+\hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
+[\nabla f]_i = \pdv{f}{x_i}\)</span><span class="math notranslate nohighlight">\( Gradients have the following very
+important property: \)</span>\nabla f(\mathbf{x})<span class="math notranslate nohighlight">\( points in the direction of
+**steepest ascent** from \)</span>\mathbf{x}<span class="math notranslate nohighlight">\(. Similarly,
+\)</span>-\nabla f(\mathbf{x})<span class="math notranslate nohighlight">\( points in the direction of **steepest descent**
+from \)</span>\mathbf{x}$. We will use this fact frequently when iteratively
+minimizing a function via <strong>gradient descent</strong>.</p>
+</section>
+<section id="the-jacobian">
+<h2>The Jacobian<a class="headerlink" href="#the-jacobian" title="Link to this heading">#</a></h2>
+<p>The <strong>Jacobian</strong> of <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}^m\)</span> is a matrix of
+first-order partial derivatives: $<span class="math notranslate nohighlight">\(\mathbf{J}_f = \begin{bmatrix}
+    \pdv{f_1}{x_1} &amp; \hdots &amp; \pdv{f_1}{x_n} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \pdv{f_m}{x_1} &amp; \hdots &amp; \pdv{f_m}{x_n}\end{bmatrix}
+\hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
+[\mathbf{J}_f]_{ij} = \pdv{f_i}{x_j}\)</span><span class="math notranslate nohighlight">\( Note the special case \)</span>m = 1<span class="math notranslate nohighlight">\(,
+where \)</span>\nabla f = \mathbf{J}_f^{!\top!}$.</p>
+</section>
+<section id="the-hessian">
+<h2>The Hessian<a class="headerlink" href="#the-hessian" title="Link to this heading">#</a></h2>
+<p>The <strong>Hessian</strong> matrix of <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is a matrix
+of second-order partial derivatives: $<span class="math notranslate nohighlight">\(\nabla^2 f = \begin{bmatrix}
+    \pdv[2]{f}{x_1} &amp; \hdots &amp; \pdv{f}{x_1}{x_d} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \pdv{f}{x_d}{x_1} &amp; \hdots &amp; \pdv[2]{f}{x_d}\end{bmatrix}
+\hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
+[\nabla^2 f]_{ij} = {\pdv{f}{x_i}{x_j}}\)</span>$ Recall that if the partial
+derivatives are continuous, the order of differentiation can be
+interchanged (Clairaut’s theorem), so the Hessian matrix will be
+symmetric. This will typically be the case for differentiable functions
+that we work with.</p>
+<p>The Hessian is used in some optimization algorithms such as Newton’s
+method. It is expensive to calculate but can drastically reduce the
+number of iterations needed to converge to a local minimum by providing
+information about the curvature of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</section>
+<section id="matrix-calculus">
+<h2>Matrix calculus<a class="headerlink" href="#matrix-calculus" title="Link to this heading">#</a></h2>
+<p>Since a lot of optimization reduces to finding points where the gradient
+vanishes, it is useful to have differentiation rules for matrix and
+vector expressions. We give some common rules here. Probably the two
+most important for our purposes are $<span class="math notranslate nohighlight">\(\begin{aligned}
+\nabla_\mathbf{x} &amp;(\mathbf{a}^{\!\top\!}\mathbf{x}) = \mathbf{a} \\
+\nabla_\mathbf{x} &amp;(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}) = (\mathbf{A} + \mathbf{A}^{\!\top\!})\mathbf{x}
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( Note that this second rule is defined only if
+\)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is square. Furthermore, if \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is symmetric, we
+can simplify the result to \)</span>2\mathbf{A}\mathbf{x}$.</p>
+<section id="the-chain-rule">
+<h3>The chain rule<a class="headerlink" href="#the-chain-rule" title="Link to this heading">#</a></h3>
+<p>Most functions that we wish to optimize are not completely arbitrary
+functions, but rather are composed of simpler functions which we know
+how to handle. The chain rule gives us a way to calculate derivatives
+for a composite function in terms of the derivatives of the simpler
+functions that make it up.</p>
+<p>The chain rule from single-variable calculus should be familiar:
+$<span class="math notranslate nohighlight">\((f \circ g)'(x) = f'(g(x))g'(x)\)</span><span class="math notranslate nohighlight">\( where \)</span>\circ$ denotes function
+composition. There is a natural generalization of this rule to
+multivariate functions.</p>
+<div class="proposition docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
+<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
+<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and
+$<span class="math notranslate nohighlight">\(\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\)</span>$</p>
+</div>
+<p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
+<span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
+<div class="corollary docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
+<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
+<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and
+$<span class="math notranslate nohighlight">\(\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\)</span>$</p>
+</div>
+</section>
+</section>
+<section id="taylor-s-theorem">
+<h2>Taylor’s theorem<a class="headerlink" href="#taylor-s-theorem" title="Link to this heading">#</a></h2>
+<p>Taylor’s theorem has natural generalizations to functions of more than
+one variable. We give the version presented in [&#64;numopt].</p>
+<div class="theorem docutils">
+<p>(Taylor’s theorem) Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is
+continuously differentiable, and let <span class="math notranslate nohighlight">\(\mathbf{h} \in \mathbb{R}^d\)</span>. Then
+there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that
+$<span class="math notranslate nohighlight">\(f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x} + t\mathbf{h})^{\!\top\!}\mathbf{h}\)</span><span class="math notranslate nohighlight">\(
+Furthermore, if \)</span>f<span class="math notranslate nohighlight">\( is twice continuously differentiable, then
+\)</span><span class="math notranslate nohighlight">\(\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f(\mathbf{x} + t\mathbf{h})\mathbf{h} \dd{t}\)</span><span class="math notranslate nohighlight">\(
+and there exists \)</span>t \in (0,1)<span class="math notranslate nohighlight">\( such that
+\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})^{\!\top\!}\mathbf{h} + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2f(\mathbf{x}+t\mathbf{h})\mathbf{h}\)</span>$</p>
+</div>
+<p>This theorem is used in proofs about conditions for local minima of
+unconstrained optimization problems. Some of the most important results
+are given in the next section.</p>
+</section>
+<section id="conditions-for-local-minima">
+<h2>Conditions for local minima<a class="headerlink" href="#conditions-for-local-minima" title="Link to this heading">#</a></h2>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is continuously
+differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, then
+<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose
+towards a contradiction that <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) \neq \mathbf{0}\)</span>.
+Let <span class="math notranslate nohighlight">\(\mathbf{h} = -\nabla f(\mathbf{x}^*)\)</span>, noting that by the
+continuity of <span class="math notranslate nohighlight">\(\nabla f\)</span> we have
+$<span class="math notranslate nohighlight">\(\lim_{t \to 0} -\nabla f(\mathbf{x}^* + t\mathbf{h}) = -\nabla f(\mathbf{x}^*) = \mathbf{h}\)</span><span class="math notranslate nohighlight">\(
+Hence
+\)</span><span class="math notranslate nohighlight">\(\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) = \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*) = -\|\mathbf{h}\|_2^2 &lt; 0\)</span><span class="math notranslate nohighlight">\(
+Thus there exists \)</span>T &gt; 0<span class="math notranslate nohighlight">\( such that
+\)</span>\mathbf{h}^{!\top!}\nabla f(\mathbf{x}^* + t\mathbf{h}) &lt; 0<span class="math notranslate nohighlight">\( for all
+\)</span>t \in [0,T]<span class="math notranslate nohighlight">\(. Now we apply Taylor's theorem: for any \)</span>t \in (0,T]<span class="math notranslate nohighlight">\(,
+there exists \)</span>t’ \in (0,t)<span class="math notranslate nohighlight">\( such that
+\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+whence it follows that \)</span>\mathbf{x}^<em><span class="math notranslate nohighlight">\( is not a local minimum, a
+contradiction. Hence \)</span>\nabla f(\mathbf{x}^</em>) = \mathbf{0}$. ◻</p>
+</div>
+<p>The proof shows us why the vanishing gradient is necessary for an
+extremum: if <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> is nonzero, there always exists a
+sufficiently small step <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> such that
+<span class="math notranslate nohighlight">\(f(\mathbf{x} - \alpha\nabla f(\mathbf{x}))) &lt; f(\mathbf{x})\)</span>. For this
+reason, <span class="math notranslate nohighlight">\(-\nabla f(\mathbf{x})\)</span> is called a <strong>descent direction</strong>.</p>
+<p>Points where the gradient vanishes are called <strong>stationary points</strong>.
+Note that not all stationary points are extrema. Consider
+<span class="math notranslate nohighlight">\(f : \mathbb{R}^2 \to \mathbb{R}\)</span> given by <span class="math notranslate nohighlight">\(f(x,y) = x^2 - y^2\)</span>. We have
+<span class="math notranslate nohighlight">\(\nabla f(\mathbf{0}) = \mathbf{0}\)</span>, but the point <span class="math notranslate nohighlight">\(\mathbf{0}\)</span> is the
+minimum along the line <span class="math notranslate nohighlight">\(y = 0\)</span> and the maximum along the line <span class="math notranslate nohighlight">\(x = 0\)</span>.
+Thus it is neither a local minimum nor a local maximum of <span class="math notranslate nohighlight">\(f\)</span>. Points
+such as these, where the gradient vanishes but there is no local
+extremum, are called <strong>saddle points</strong>.</p>
+<p>We have seen that first-order information (i.e. the gradient) is
+insufficient to characterize local minima. But we can say more with
+second-order information (i.e. the Hessian). First we prove a necessary
+second-order condition for local minima.</p>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is twice
+continuously differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, then
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive semi-definite.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose
+towards a contradiction that <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is not positive
+semi-definite. Let <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> be such that
+<span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} &lt; 0\)</span>, noting
+that by the continuity of <span class="math notranslate nohighlight">\(\nabla^2 f\)</span> we have
+$<span class="math notranslate nohighlight">\(\lim_{t \to 0} \nabla^2 f(\mathbf{x}^* + t\mathbf{h}) = \nabla^2 f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+Hence
+\)</span><span class="math notranslate nohighlight">\(\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} = \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} &lt; 0\)</span><span class="math notranslate nohighlight">\(
+Thus there exists \)</span>T &gt; 0<span class="math notranslate nohighlight">\( such that
+\)</span>\mathbf{h}^{!\top!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} &lt; 0<span class="math notranslate nohighlight">\(
+for all \)</span>t \in [0,T]<span class="math notranslate nohighlight">\(. Now we apply Taylor's theorem: for any
+\)</span>t \in (0,T]<span class="math notranslate nohighlight">\(, there exists \)</span>t’ \in (0,t)<span class="math notranslate nohighlight">\( such that
+\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + \underbrace{t\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}t^2\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t'\mathbf{h})\mathbf{h} &lt; f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+where the middle term vanishes because
+\)</span>\nabla f(\mathbf{x}^<em>) = \mathbf{0}<span class="math notranslate nohighlight">\( by the previous result. It follows
+that \)</span>\mathbf{x}^</em><span class="math notranslate nohighlight">\( is not a local minimum, a contradiction. Hence
+\)</span>\nabla^2 f(\mathbf{x}^*)$ is positive semi-definite. ◻</p>
+</div>
+<p>Now we give sufficient conditions for local minima.</p>
+<div class="proposition docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice continuously differentiable with <span class="math notranslate nohighlight">\(\nabla^2 f\)</span>
+positive semi-definite in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, and that
+<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local
+minimum of <span class="math notranslate nohighlight">\(f\)</span>. Furthermore if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive
+definite, then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a strict local minimum.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(B\)</span> be an open ball of radius <span class="math notranslate nohighlight">\(r &gt; 0\)</span> centered at
+<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> which is contained in the neighborhood. Applying Taylor’s
+theorem, we have that for any <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(\|\mathbf{h}\|_2 &lt; r\)</span>,
+there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that
+$<span class="math notranslate nohighlight">\(f(\mathbf{x}^* + \mathbf{h}) = f(\mathbf{x}^*) + \underbrace{\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+The last inequality holds because
+\)</span>\nabla^2 f(\mathbf{x}^* + t\mathbf{h})<span class="math notranslate nohighlight">\( is positive semi-definite
+(since \)</span>|t\mathbf{h}|_2 = t|\mathbf{h}|_2 &lt; |\mathbf{h}|_2 &lt; r<span class="math notranslate nohighlight">\(),
+so
+\)</span>\mathbf{h}^{!\top!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq 0<span class="math notranslate nohighlight">\(.
+Since \)</span>f(\mathbf{x}^<em>) \leq f(\mathbf{x}^</em> + \mathbf{h})<span class="math notranslate nohighlight">\( for all
+directions \)</span>\mathbf{h}<span class="math notranslate nohighlight">\( with \)</span>|\mathbf{h}|_2 &lt; r<span class="math notranslate nohighlight">\(, we conclude that
+\)</span>\mathbf{x}^*$ is a local minimum.</p>
+<p>Now further suppose that <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is strictly positive
+definite. Since the Hessian is continuous we can choose another ball
+<span class="math notranslate nohighlight">\(B'\)</span> with radius <span class="math notranslate nohighlight">\(r' &gt; 0\)</span> centered at <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> such that
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x})\)</span> is positive definite for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in B'\)</span>. Then following the same argument as above (except
+with a strict inequality now since the Hessian is positive definite) we
+have <span class="math notranslate nohighlight">\(f(\mathbf{x}^* + \mathbf{h}) &gt; f(\mathbf{x}^*)\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(0 &lt; \|\mathbf{h}\|_2 &lt; r'\)</span>. Hence <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a
+strict local minimum. ◻</p>
+</div>
+<p>Note that, perhaps counterintuitively, the conditions
+<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span> and <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span>
+positive semi-definite are not enough to guarantee a local minimum at
+<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>! Consider the function <span class="math notranslate nohighlight">\(f(x) = x^3\)</span>. We have <span class="math notranslate nohighlight">\(f'(0) = 0\)</span>
+and <span class="math notranslate nohighlight">\(f''(0) = 0\)</span> (so the Hessian, which in this case is the <span class="math notranslate nohighlight">\(1 \times 1\)</span>
+matrix <span class="math notranslate nohighlight">\(\begin{bmatrix}0\end{bmatrix}\)</span>, is positive semi-definite). But
+<span class="math notranslate nohighlight">\(f\)</span> has a saddle point at <span class="math notranslate nohighlight">\(x = 0\)</span>. The function <span class="math notranslate nohighlight">\(f(x) = -x^4\)</span> is an even
+worse offender – it has the same gradient and Hessian at <span class="math notranslate nohighlight">\(x = 0\)</span>, but
+<span class="math notranslate nohighlight">\(x = 0\)</span> is a strict local maximum for this function!</p>
+<p>For these reasons we require that the Hessian remains positive
+semi-definite as long as we are close to <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>. Unfortunately,
+this condition is not practical to check computationally, but in some
+cases we can verify it analytically (usually by showing that
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x})\)</span> is p.s.d. for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^d\)</span>). Also, if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is
+strictly positive definite, the continuity assumption on <span class="math notranslate nohighlight">\(f\)</span> implies
+this condition, so we don’t have to worry.</p>
+</section>
+<section id="convexity">
+<h2>Convexity<a class="headerlink" href="#convexity" title="Link to this heading">#</a></h2>
+<p><strong>Convexity</strong> is a term that pertains to both sets and functions. For
+functions, there are different degrees of convexity, and how convex a
+function is tells us a lot about its minima: do they exist, are they
+unique, how quickly can we find them using optimization algorithms, etc.
+In this section, we present basic results regarding convexity, strict
+convexity, and strong convexity.</p>
+<section id="convex-sets">
+<h3>Convex sets<a class="headerlink" href="#convex-sets" title="Link to this heading">#</a></h3>
+<figure id="fig:convexset">
+<figure>
+<img src="../figures/convex-set.png" />
+<figcaption>A convex set</figcaption>
+</figure>
+<figure>
+<img src="../figures/nonconvex-set.png" />
+<figcaption>A non-convex set</figcaption>
+</figure>
+<figcaption>What convex sets look like</figcaption>
+</figure>
+<p>A set <span class="math notranslate nohighlight">\(\mathcal{X} \subseteq \mathbb{R}^d\)</span> is <strong>convex</strong> if
+$<span class="math notranslate nohighlight">\(t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}\)</span><span class="math notranslate nohighlight">\( for all
+\)</span>\mathbf{x}, \mathbf{y} \in \mathcal{X}<span class="math notranslate nohighlight">\( and all \)</span>t \in [0,1]$.</p>
+<p>Geometrically, this means that all the points on the line segment
+between any two points in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> are also in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. See
+Figure <a class="reference internal" href="#fig:convexset"><span class="xref myst">1</span></a>{reference-type=”ref”
+reference=”fig:convexset”} for a visual.</p>
+<p>Why do we care whether or not a set is convex? We will see later that
+the nature of minima can depend greatly on whether or not the feasible
+set is convex. Undesirable pathological results can occur when we allow
+the feasible set to be arbitrary, so for proofs we will need to assume
+that it is convex. Fortunately, we often want to minimize over all of
+<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>, which is easily seen to be a convex set.</p>
+</section>
+<section id="basics-of-convex-functions">
+<h3>Basics of convex functions<a class="headerlink" href="#basics-of-convex-functions" title="Link to this heading">#</a></h3>
+<p>In the remainder of this section, assume
+<span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> unless otherwise noted. We’ll start
+with the definitions and then give some results.</p>
+<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>convex</strong> if
+$<span class="math notranslate nohighlight">\(f(t\mathbf{x} + (1-t)\mathbf{y}) \leq t f(\mathbf{x}) + (1-t)f(\mathbf{y})\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>\mathbf{x}, \mathbf{y} \in \dom f<span class="math notranslate nohighlight">\( and all \)</span>t \in [0,1]$.</p>
+<p>If the inequality holds strictly (i.e. <span class="math notranslate nohighlight">\(&lt;\)</span> rather than <span class="math notranslate nohighlight">\(\leq\)</span>) for all
+<span class="math notranslate nohighlight">\(t \in (0,1)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>, then we say that <span class="math notranslate nohighlight">\(f\)</span> is
+<strong>strictly convex</strong>.</p>
+<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>strongly convex with parameter <span class="math notranslate nohighlight">\(m\)</span></strong> (or
+<strong><span class="math notranslate nohighlight">\(m\)</span>-strongly convex</strong>) if the function
+$<span class="math notranslate nohighlight">\(\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span>$ is
+convex.</p>
+<p>These conditions are given in increasing order of strength; strong
+convexity implies strict convexity which implies convexity.</p>
+<p><img alt="What convex functions looklike" src="../_images/convex-function.png" />{#fig:convexfunction width=”\linewidth”}</p>
+<p>Geometrically, convexity means that the line segment between two points
+on the graph of <span class="math notranslate nohighlight">\(f\)</span> lies on or above the graph itself. See Figure
+<a class="reference internal" href="#fig:convexfunction"><span class="xref myst">2</span></a>{reference-type=”ref”
+reference=”fig:convexfunction”} for a visual.</p>
+<p>Strict convexity means that the graph of <span class="math notranslate nohighlight">\(f\)</span> lies strictly above the
+line segment, except at the segment endpoints. (So actually the function
+in the figure appears to be strictly convex.)</p>
+</section>
+<section id="consequences-of-convexity">
+<h3>Consequences of convexity<a class="headerlink" href="#consequences-of-convexity" title="Link to this heading">#</a></h3>
+<p>Why do we care if a function is (strictly/strongly) convex?</p>
+<p>Basically, our various notions of convexity have implications about the
+nature of minima. It should not be surprising that the stronger
+conditions tell us more about the minima.</p>
+<div class="proposition docutils">
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is convex, then any local
+minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> is also a global minimum.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex, and let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local
+minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then for some neighborhood
+<span class="math notranslate nohighlight">\(N \subseteq \mathcal{X}\)</span> about <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, we have
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) \geq f(\mathbf{x}^*)\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x} \in N\)</span>. Suppose
+towards a contradiction that there exists
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \in \mathcal{X}\)</span> such that
+<span class="math notranslate nohighlight">\(f(\tilde{\mathbf{x}}) &lt; f(\mathbf{x}^*)\)</span>.</p>
+<p>Consider the line segment
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
+noting that <span class="math notranslate nohighlight">\(\mathbf{x}(t) \in \mathcal{X}\)</span> by the convexity of
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,
+$<span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) &lt; tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>t \in (0,1)$.</p>
+<p>We can pick <span class="math notranslate nohighlight">\(t\)</span> to be sufficiently close to <span class="math notranslate nohighlight">\(1\)</span> that
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) \in N\)</span>; then <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)\)</span> by
+the definition of <span class="math notranslate nohighlight">\(N\)</span>, but <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; f(\mathbf{x}^*)\)</span> by the
+above inequality, a contradiction.</p>
+<p>It follows that <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) \leq f(\mathbf{x})\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a global minimum of
+<span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, then there
+exists at most one local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Consequently,
+if it exists it is the unique global minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> The second sentence follows from the first, so all we must show
+is that if a local minimum exists in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> then it is unique.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, and
+suppose towards a contradiction that there exists a local minimum
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \in \mathcal{X}\)</span> such that
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \neq \mathbf{x}^*\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, it is convex, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> and
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> are both global minima of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> by
+the previous result. Hence <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) = f(\tilde{\mathbf{x}})\)</span>.
+Consider the line segment
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
+which again must lie entirely in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. By the strict convexity
+of <span class="math notranslate nohighlight">\(f\)</span>,
+$<span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>t \in (0,1)<span class="math notranslate nohighlight">\(. But this contradicts the fact that \)</span>\mathbf{x}^<em><span class="math notranslate nohighlight">\(
+is a global minimum. Therefore if \)</span>\tilde{\mathbf{x}}<span class="math notranslate nohighlight">\( is a local
+minimum of \)</span>f<span class="math notranslate nohighlight">\( in \)</span>\mathcal{X}<span class="math notranslate nohighlight">\(, then
+\)</span>\tilde{\mathbf{x}} = \mathbf{x}^</em><span class="math notranslate nohighlight">\(, so \)</span>\mathbf{x}^*<span class="math notranslate nohighlight">\( is the unique
+minimum in \)</span>\mathcal{X}$. ◻</p>
+</div>
+<p>It is worthwhile to examine how the feasible set affects the
+optimization problem. We will see why the assumption that <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>
+is convex is needed in the results above.</p>
+<p>Consider the function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>, which is a strictly convex function.
+The unique global minimum of this function in <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> is <span class="math notranslate nohighlight">\(x = 0\)</span>.
+But let’s see what happens when we change the feasible set
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p>(i) <span class="math notranslate nohighlight">\(\mathcal{X} = \{1\}\)</span>: This set is actually convex, so we still have
+a unique global minimum. But it is not the same as the unconstrained
+minimum!</p>
+<p>(ii) <span class="math notranslate nohighlight">\(\mathcal{X} = \mathbb{R} \setminus \{0\}\)</span>: This set is non-convex,
+and we can see that <span class="math notranslate nohighlight">\(f\)</span> has no minima in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For any
+point <span class="math notranslate nohighlight">\(x \in \mathcal{X}\)</span>, one can find another point
+<span class="math notranslate nohighlight">\(y \in \mathcal{X}\)</span> such that <span class="math notranslate nohighlight">\(f(y) &lt; f(x)\)</span>.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(\mathcal{X} = (-\infty,-1] \cup [0,\infty)\)</span>: This set is
+non-convex, and we can see that there is a local minimum
+(<span class="math notranslate nohighlight">\(x = -1\)</span>) which is distinct from the global minimum (<span class="math notranslate nohighlight">\(x = 0\)</span>).</p>
+<p>(iv) <span class="math notranslate nohighlight">\(\mathcal{X} = (-\infty,-1] \cup [1,\infty)\)</span>: This set is
+non-convex, and we can see that there are two global minima
+(<span class="math notranslate nohighlight">\(x = \pm 1\)</span>).</p>
+</section>
+<section id="showing-that-a-function-is-convex">
+<h3>Showing that a function is convex<a class="headerlink" href="#showing-that-a-function-is-convex" title="Link to this heading">#</a></h3>
+<p>Hopefully the previous section has convinced the reader that convexity
+is an important property. Next we turn to the issue of showing that a
+function is (strictly/strongly) convex. It is of course possible (in
+principle) to directly show that the condition in the definition holds,
+but this is usually not the easiest way.</p>
+<div class="proposition docutils">
+<p>Norms are convex.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> be a norm on a vector space <span class="math notranslate nohighlight">\(V\)</span>. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>,
+$<span class="math notranslate nohighlight">\(\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
+where we have used respectively the triangle inequality, the homogeneity
+of norms, and the fact that \)</span>t<span class="math notranslate nohighlight">\( and \)</span>1-t<span class="math notranslate nohighlight">\( are nonnegative. Hence
+\)</span>|\cdot|$ is convex. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable. Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if
+$<span class="math notranslate nohighlight">\(f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>\mathbf{x}, \mathbf{y} \in \dom f$.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> To-do. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice differentiable. Then</p>
+<p>(i) <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for
+all <span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>.</p>
+<p>(ii) If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succ 0\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>, then <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if and only if
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Omitted. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>, then <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom(\alpha f) = \dom f\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+(\alpha f)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \alpha f(t\mathbf{x} + (1-t)\mathbf{y}) \\
+&amp;\leq \alpha\left(tf(\mathbf{x}) + (1-t)f(\mathbf{y})\right) \\
+&amp;= t(\alpha f(\mathbf{x})) + (1-t)(\alpha f(\mathbf{y})) \\
+&amp;= t(\alpha f)(\mathbf{x}) + (1-t)(\alpha f)(\mathbf{y})
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( so \)</span>\alpha f$ is convex. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is convex. Furthermore, if <span class="math notranslate nohighlight">\(g\)</span> is
+strictly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is strictly convex, and if <span class="math notranslate nohighlight">\(g\)</span> is
+<span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom (f+g) = \dom f \cap \dom g\)</span>,
+$<span class="math notranslate nohighlight">\(\begin{aligned}
+(f+g)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(t\mathbf{x} + (1-t)\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) &amp; \text{convexity of \)</span>f<span class="math notranslate nohighlight">\(} \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + tg(\mathbf{x}) + (1-t)g(\mathbf{y}) &amp; \text{convexity of \)</span>g<span class="math notranslate nohighlight">\(} \\
+&amp;= t(f(\mathbf{x}) + g(\mathbf{x})) + (1-t)(f(\mathbf{y}) + g(\mathbf{y})) \\
+&amp;= t(f+g)(\mathbf{x}) + (1-t)(f+g)(\mathbf{y})
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( so \)</span>f + g$ is convex.</p>
+<p>If <span class="math notranslate nohighlight">\(g\)</span> is strictly convex, the second inequality above holds strictly
+for <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span> and <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>, so <span class="math notranslate nohighlight">\(f+g\)</span> is strictly
+convex.</p>
+<p>If <span class="math notranslate nohighlight">\(g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then the function
+<span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span> is
+convex, so <span class="math notranslate nohighlight">\(f+h\)</span> is convex. But
+$<span class="math notranslate nohighlight">\((f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span><span class="math notranslate nohighlight">\(
+so \)</span>f+g<span class="math notranslate nohighlight">\( is \)</span>m$-strongly convex. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(f_1, \dots, f_n\)</span> are convex and <span class="math notranslate nohighlight">\(\alpha_1, \dots, \alpha_n \geq 0\)</span>,
+then $<span class="math notranslate nohighlight">\(\sum_{i=1}^n \alpha_i f_i\)</span>$ is convex.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Follows from the previous two propositions by induction. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex, then
+<span class="math notranslate nohighlight">\(g(\mathbf{x}) \equiv f(\mathbf{A}\mathbf{x} + \mathbf{b})\)</span> is convex
+for any appropriately-sized <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(g\)</span> is defined like so. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom g\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+g(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) + \mathbf{b}) \\
+&amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + \mathbf{b}) \\
+&amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + t\mathbf{b} + (1-t)\mathbf{b}) \\
+&amp;= f(t(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)(\mathbf{A}\mathbf{y} + \mathbf{b})) \\
+&amp;\leq tf(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)f(\mathbf{A}\mathbf{y} + \mathbf{b}) &amp; \text{convexity of \)</span>f<span class="math notranslate nohighlight">\(} \\
+&amp;= tg(\mathbf{x}) + (1-t)g(\mathbf{y})
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( Thus \)</span>g$ is convex. ◻</p>
+</div>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then
+<span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}\)</span> is convex.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex and <span class="math notranslate nohighlight">\(h\)</span> is defined like so. Then
+for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom h\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+h(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \max\{f(t\mathbf{x} + (1-t)\mathbf{y}), g(t\mathbf{x} + (1-t)\mathbf{y})\} \\
+&amp;\leq \max\{tf(\mathbf{x}) + (1-t)f(\mathbf{y}), tg(\mathbf{x}) + (1-t)g(\mathbf{y})\} \\
+&amp;\leq \max\{tf(\mathbf{x}), tg(\mathbf{x})\} + \max\{(1-t)f(\mathbf{y}), (1-t)g(\mathbf{y})\} \\
+&amp;= t\max\{f(\mathbf{x}), g(\mathbf{x})\} + (1-t)\max\{f(\mathbf{y}), g(\mathbf{y})\} \\
+&amp;= th(\mathbf{x}) + (1-t)h(\mathbf{y})
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( Note that in the first inequality we have used convexity
+of \)</span>f<span class="math notranslate nohighlight">\( and \)</span>g<span class="math notranslate nohighlight">\( plus the fact that \)</span>a \leq c, b \leq d<span class="math notranslate nohighlight">\( implies
+\)</span>\max{a,b} \leq \max{c,d}<span class="math notranslate nohighlight">\(. In the second inequality we have used
+the fact that \)</span>\max{a+b, c+d} \leq \max{a,c} + \max{b,d}$.</p>
+<p>Thus <span class="math notranslate nohighlight">\(h\)</span> is convex. ◻</p>
+</div>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<p>A good way to gain intuition about the distinction between convex,
+strictly convex, and strongly convex functions is to consider examples
+where the stronger property fails to hold.</p>
+<p>Functions that are convex but not strictly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{w}^{\!\top\!}\mathbf{x} + \alpha\)</span> for any
+<span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d, \alpha \in \mathbb{R}\)</span>. Such a
+function is called an <strong>affine function</strong>, and it is both convex and
+concave. (In fact, a function is affine if and only if it is both
+convex and concave.) Note that linear functions and constant
+functions are special cases of affine functions.</p>
+<p>(ii) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \|\mathbf{x}\|_1\)</span></p>
+<p>Functions that are strictly but not strongly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(x) = x^4\)</span>. This example is interesting because it is strictly
+convex but you cannot show this fact via a second-order argument
+(since <span class="math notranslate nohighlight">\(f''(0) = 0\)</span>).</p>
+<p>(ii) <span class="math notranslate nohighlight">\(f(x) = \exp(x)\)</span>. This example is interesting because it’s bounded
+below but has no local minimum.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(f(x) = -\log x\)</span>. This example is interesting because it’s
+strictly convex but not bounded below.</p>
+<p>Functions that are strongly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \|\mathbf{x}\|_2^2\)</span></p>
+</section>
+</section>
+<section id="orthogonal-projections">
+<h2>Orthogonal projections<a class="headerlink" href="#orthogonal-projections" title="Link to this heading">#</a></h2>
+<p>We now consider a particular kind of optimization problem that is
+particularly well-understood and can often be solved in closed form:
+given some point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in an inner product space <span class="math notranslate nohighlight">\(V\)</span>, find the
+closest point to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in a subspace <span class="math notranslate nohighlight">\(S\)</span> of <span class="math notranslate nohighlight">\(V\)</span>. This process is
+referred to as <strong>projection onto a subspace</strong>.</p>
+<p>The following diagram should make it geometrically clear that, at least
+in Euclidean space, the solution is intimately related to orthogonality
+and the Pythagorean theorem:</p>
+<div class="center docutils">
+<p><img alt="image" src="../_images/orthogonal-projection.png" />{width=”50%”}</p>
+</div>
+<p>Here <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary element of the subspace <span class="math notranslate nohighlight">\(S\)</span>, and
+<span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the point in <span class="math notranslate nohighlight">\(S\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^*\)</span>
+is perpendicular to <span class="math notranslate nohighlight">\(S\)</span>. The hypotenuse of a right triangle (in this
+case <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>) is always longer than either of the
+legs (in this case <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\|\)</span> and
+<span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\|\)</span>), and when <span class="math notranslate nohighlight">\(\mathbf{y} \neq \mathbf{y}^*\)</span>
+there always exists such a triangle between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>,
+and <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>.</p>
+<p>Our intuition from Euclidean space suggests that the closest point to
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in <span class="math notranslate nohighlight">\(S\)</span> has the perpendicularity property described above,
+and we now show that this is indeed the case.</p>
+<div class="proposition docutils">
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
+is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over
+<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span> if and only if <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>.</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> <span class="math notranslate nohighlight">\((\implies)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. That is,
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, with equality only if <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{y}^*\)</span>.
+Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that $<span class="math notranslate nohighlight">\(\begin{aligned}
+g(t) &amp;:= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
+&amp;= \langle \mathbf{x}-\mathbf{y}^*+t\mathbf{v}, \mathbf{x}-\mathbf{y}^*+t\mathbf{v} \rangle \\
+&amp;= \langle \mathbf{x}-\mathbf{y}^*, \mathbf{x}-\mathbf{y}^* \rangle - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\langle \mathbf{v}, \mathbf{v} \rangle \\
+&amp;= \|\mathbf{x}-\mathbf{y}^*\|^2 - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\|\mathbf{v}\|^2
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( must have a minimum at \)</span>t = 0<span class="math notranslate nohighlight">\( as a consequence of this
+assumption. Thus
+\)</span><span class="math notranslate nohighlight">\(0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle\)</span><span class="math notranslate nohighlight">\(
+giving \)</span>\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}<span class="math notranslate nohighlight">\(. Since \)</span>\mathbf{v}<span class="math notranslate nohighlight">\(
+was arbitrary in \)</span>S<span class="math notranslate nohighlight">\(, we have \)</span>\mathbf{x}-\mathbf{y}^* \perp S$ as
+claimed.</p>
+<p><span class="math notranslate nohighlight">\((\impliedby)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>. Observe that
+for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*-\mathbf{y} \in S\)</span> because
+<span class="math notranslate nohighlight">\(\mathbf{y}^* \in S\)</span> and <span class="math notranslate nohighlight">\(S\)</span> is closed under subtraction. Under the
+hypothesis, <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{y}^*-\mathbf{y}\)</span>, so
+by the Pythagorean theorem,
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|\)</span><span class="math notranslate nohighlight">\(
+and in fact the inequality is strict when \)</span>\mathbf{y} \neq \mathbf{y}^<em><span class="math notranslate nohighlight">\(
+since this implies \)</span>|\mathbf{y}^</em>-\mathbf{y}| &gt; 0<span class="math notranslate nohighlight">\(. Thus
+\)</span>\mathbf{y}^*<span class="math notranslate nohighlight">\( is the unique minimizer of \)</span>|\mathbf{x}-\mathbf{y}|<span class="math notranslate nohighlight">\(
+over \)</span>\mathbf{y} \in S$. ◻</p>
+</div>
+<p>Since a unique minimizer in <span class="math notranslate nohighlight">\(S\)</span> can be found for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>,
+we can define an operator
+$<span class="math notranslate nohighlight">\(P\mathbf{x} = \argmin_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
+Observe that \)</span>P\mathbf{y} = \mathbf{y}<span class="math notranslate nohighlight">\( for any \)</span>\mathbf{y} \in S<span class="math notranslate nohighlight">\(,
+since \)</span>\mathbf{y}<span class="math notranslate nohighlight">\( has distance zero from itself and every other point
+in \)</span>S<span class="math notranslate nohighlight">\( has positive distance from \)</span>\mathbf{y}<span class="math notranslate nohighlight">\(. Thus
+\)</span>P(P\mathbf{x}) = P\mathbf{x}<span class="math notranslate nohighlight">\( for any \)</span>\mathbf{x}<span class="math notranslate nohighlight">\( (i.e., \)</span>P^2 = P<span class="math notranslate nohighlight">\()
+because \)</span>P\mathbf{x} \in S<span class="math notranslate nohighlight">\(. The identity \)</span>P^2 = P$ is actually one of
+the defining properties of a <strong>projection</strong>, the other being linearity.</p>
+<p>An immediate consequence of the previous result is that
+<span class="math notranslate nohighlight">\(\mathbf{x} - P\mathbf{x} \perp S\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, and
+conversely that <span class="math notranslate nohighlight">\(P\)</span> is the unique operator that satisfies this property
+for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. For this reason, <span class="math notranslate nohighlight">\(P\)</span> is known as an
+<strong>orthogonal projection</strong>.</p>
+<p>If we choose an orthonormal basis for the target subspace <span class="math notranslate nohighlight">\(S\)</span>, it is
+possible to write down a more specific expression for <span class="math notranslate nohighlight">\(P\)</span>.</p>
+<div class="proposition docutils">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
+then
+$<span class="math notranslate nohighlight">\(P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\)</span>$</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> be an orthonormal basis
+for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,
+$<span class="math notranslate nohighlight">\(\begin{aligned}
+\left\langle \mathbf{x}-\sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i, \mathbf{e}_j \right\rangle &amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\underbrace{\langle \mathbf{e}_i, \mathbf{e}_j \rangle}_{\delta_{ij}} \\
+&amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \langle \mathbf{x}, \mathbf{e}_j \rangle \\
+&amp;= 0
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( We have shown that the claimed expression, call it
+\)</span>\tilde{P}\mathbf{x}<span class="math notranslate nohighlight">\(, satisfies
+\)</span>\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j<span class="math notranslate nohighlight">\( for every element
+\)</span>\mathbf{e}_j<span class="math notranslate nohighlight">\( of the orthonormal basis for \)</span>S<span class="math notranslate nohighlight">\(. It follows (by
+linearity of the inner product) that
+\)</span>\mathbf{x} - \tilde{P}\mathbf{x} \perp S<span class="math notranslate nohighlight">\(, so the previous result
+implies \)</span>P = \tilde{P}$. ◻</p>
+</div>
+<p>The fact that <span class="math notranslate nohighlight">\(P\)</span> is a linear operator (and thus a proper projection, as
+earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>) follows readily from this result.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_calculus"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter_linear_algebra/linear_algebra.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Linear Algebra</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../chapter_probability/probability.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Probability</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extrema">Extrema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradients">Gradients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-jacobian">The Jacobian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hessian">The Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-calculus">Matrix calculus</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#orthogonal-projections">Orthogonal projections</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
