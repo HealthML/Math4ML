@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Linear Algebra &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_linear_algebra/linear_algebra';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Notation" href="../chapter_preface/intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark pst-js-only" alt="Mathematics for Machine Learning - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Mathematics for Machine Learning
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Algebra</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapter_linear_algebra/linear_algebra.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_linear_algebra/linear_algebra.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Linear Algebra</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-spaces">Vector spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-space">Euclidean space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subspaces">Subspaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-spaces">Metric spaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normed-spaces">Normed spaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-spaces">Inner product spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pythagorean-theorem">Pythagorean Theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cauchy-schwarz-inequality">Cauchy-Schwarz inequality</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transposition">Transposition</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-algebra">
+<h1>Linear Algebra<a class="headerlink" href="#linear-algebra" title="Link to this heading">#</a></h1>
+<section id="vector-spaces">
+<h2>Vector spaces<a class="headerlink" href="#vector-spaces" title="Link to this heading">#</a></h2>
+<p><strong>Vector spaces</strong> are the basic setting in which linear algebra happens.
+A vector space <span class="math notranslate nohighlight">\(V\)</span> is a set (the elements of which are called
+<strong>vectors</strong>) on which two operations are defined: vectors can be added
+together, and vectors can be multiplied by real numbers<a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> called
+<strong>scalars</strong>. <span class="math notranslate nohighlight">\(V\)</span> must satisfy</p>
+<p>(i) There exists an additive identity (written <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>) in <span class="math notranslate nohighlight">\(V\)</span> such
+that <span class="math notranslate nohighlight">\(\mathbf{x}+\mathbf{0} = \mathbf{x}\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span></p>
+<p>(ii) For each <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, there exists an additive inverse
+(written <span class="math notranslate nohighlight">\(\mathbf{-x}\)</span>) such that
+<span class="math notranslate nohighlight">\(\mathbf{x}+(\mathbf{-x}) = \mathbf{0}\)</span></p>
+<p>(iii) There exists a multiplicative identity (written <span class="math notranslate nohighlight">\(1\)</span>) in
+<span class="math notranslate nohighlight">\(\mathbb{R}\)</span> such that <span class="math notranslate nohighlight">\(1\mathbf{x} = \mathbf{x}\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span></p>
+<p>(iv) Commutativity: <span class="math notranslate nohighlight">\(\mathbf{x}+\mathbf{y} = \mathbf{y}+\mathbf{x}\)</span> for
+all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span></p>
+<p>(v) Associativity:
+<span class="math notranslate nohighlight">\((\mathbf{x}+\mathbf{y})+\mathbf{z} = \mathbf{x}+(\mathbf{y}+\mathbf{z})\)</span>
+and <span class="math notranslate nohighlight">\(\alpha(\beta\mathbf{x}) = (\alpha\beta)\mathbf{x}\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}, \mathbf{z} \in V\)</span> and
+<span class="math notranslate nohighlight">\(\alpha, \beta \in \mathbb{R}\)</span></p>
+<p>(vi) Distributivity:
+<span class="math notranslate nohighlight">\(\alpha(\mathbf{x}+\mathbf{y}) = \alpha\mathbf{x} + \alpha\mathbf{y}\)</span>
+and <span class="math notranslate nohighlight">\((\alpha+\beta)\mathbf{x} = \alpha\mathbf{x} + \beta\mathbf{x}\)</span>
+for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and
+<span class="math notranslate nohighlight">\(\alpha, \beta \in \mathbb{R}\)</span></p>
+<section id="euclidean-space">
+<h3>Euclidean space<a class="headerlink" href="#euclidean-space" title="Link to this heading">#</a></h3>
+<p>The quintessential vector space is <strong>Euclidean space</strong>, which we denote
+<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>. The vectors in this space consist of <span class="math notranslate nohighlight">\(n\)</span>-tuples of real
+numbers: $<span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span><span class="math notranslate nohighlight">\( For our purposes, it
+will be useful to think of them as \)</span>n \times 1<span class="math notranslate nohighlight">\( matrices, or **column
+vectors**:
+\)</span><span class="math notranslate nohighlight">\(\mathbf{x} = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix}\)</span><span class="math notranslate nohighlight">\(
+Addition and scalar multiplication are defined component-wise on vectors
+in \)</span>\mathbb{R}^n<span class="math notranslate nohighlight">\(:
+\)</span><span class="math notranslate nohighlight">\(\mathbf{x} + \mathbf{y} = \begin{bmatrix}x_1 + y_1 \\ \vdots \\ x_n + y_n\end{bmatrix}, \hspace{0.5cm} \alpha\mathbf{x} = \begin{bmatrix}\alpha x_1 \\ \vdots \\ \alpha x_n\end{bmatrix}\)</span><span class="math notranslate nohighlight">\(
+Euclidean space is used to mathematically represent physical space, with
+notions such as distance, length, and angles. Although it becomes hard
+to visualize for \)</span>n &gt; 3<span class="math notranslate nohighlight">\(, these concepts generalize mathematically in
+obvious ways. Even when you're working in more general settings than
+\)</span>\mathbb{R}^n$, it is often useful to visualize vector addition and
+scalar multiplication in terms of 2D vectors in the plane or 3D vectors
+in space.</p>
+</section>
+<section id="subspaces">
+<h3>Subspaces<a class="headerlink" href="#subspaces" title="Link to this heading">#</a></h3>
+<p>Vector spaces can contain other vector spaces. If <span class="math notranslate nohighlight">\(V\)</span> is a vector space,
+then <span class="math notranslate nohighlight">\(S \subseteq V\)</span> is said to be a <strong>subspace</strong> of <span class="math notranslate nohighlight">\(V\)</span> if</p>
+<p>(i) <span class="math notranslate nohighlight">\(\mathbf{0} \in S\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\(S\)</span> is closed under addition: <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in S\)</span>
+implies <span class="math notranslate nohighlight">\(\mathbf{x}+\mathbf{y} \in S\)</span></p>
+<p>(iii) <span class="math notranslate nohighlight">\(S\)</span> is closed under scalar multiplication:
+<span class="math notranslate nohighlight">\(\mathbf{x} \in S, \alpha \in \mathbb{R}\)</span> implies
+<span class="math notranslate nohighlight">\(\alpha\mathbf{x} \in S\)</span></p>
+<p>Note that <span class="math notranslate nohighlight">\(V\)</span> is always a subspace of <span class="math notranslate nohighlight">\(V\)</span>, as is the trivial vector
+space which contains only <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>.</p>
+<p>As a concrete example, a line passing through the origin is a subspace
+of Euclidean space.</p>
+<p>Some of the most important subspaces are those induced by linear maps.
+If <span class="math notranslate nohighlight">\(T : V \to W\)</span> is a linear map, we define the <strong>nullspace</strong><a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> of <span class="math notranslate nohighlight">\(T\)</span>
+as $<span class="math notranslate nohighlight">\(\Null(T) = \{\mathbf{x} \in V \mid T\mathbf{x} = \mathbf{0}\}\)</span><span class="math notranslate nohighlight">\( and
+the **range** (or the **columnspace** if we are considering the matrix
+form) of \)</span>T<span class="math notranslate nohighlight">\( as
+\)</span><span class="math notranslate nohighlight">\(\range(T) = \{\mathbf{y} \in W \mid \text{\)</span>\exists \mathbf{x} \in V<span class="math notranslate nohighlight">\( such that \)</span>T\mathbf{x} = \mathbf{y}<span class="math notranslate nohighlight">\(}\}\)</span>$
+It is a good exercise to verify that the nullspace and range of a linear
+map are always subspaces of its domain and codomain, respectively.</p>
+</section>
+</section>
+<section id="metric-spaces">
+<h2>Metric spaces<a class="headerlink" href="#metric-spaces" title="Link to this heading">#</a></h2>
+<p>Metrics generalize the notion of distance from Euclidean space (although
+metric spaces need not be vector spaces).</p>
+<p>A <strong>metric</strong> on a set <span class="math notranslate nohighlight">\(S\)</span> is a function <span class="math notranslate nohighlight">\(d : S \times S \to \mathbb{R}\)</span>
+that satisfies</p>
+<p>(i) <span class="math notranslate nohighlight">\(d(x,y) \geq 0\)</span>, with equality if and only if <span class="math notranslate nohighlight">\(x = y\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\(d(x,y) = d(y,x)\)</span></p>
+<p>(iii) <span class="math notranslate nohighlight">\(d(x,z) \leq d(x,y) + d(y,z)\)</span> (the so-called <strong>triangle
+inequality</strong>)</p>
+<p>for all <span class="math notranslate nohighlight">\(x, y, z \in S\)</span>.</p>
+<p>A key motivation for metrics is that they allow limits to be defined for
+mathematical objects other than real numbers. We say that a sequence
+<span class="math notranslate nohighlight">\(\{x_n\} \subseteq S\)</span> converges to the limit <span class="math notranslate nohighlight">\(x\)</span> if for any
+<span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, there exists <span class="math notranslate nohighlight">\(N \in \mathbb{N}\)</span> such that
+<span class="math notranslate nohighlight">\(d(x_n, x) &lt; \epsilon\)</span> for all <span class="math notranslate nohighlight">\(n \geq N\)</span>. Note that the definition for
+limits of sequences of real numbers, which you have likely seen in a
+calculus class, is a special case of this definition when using the
+metric <span class="math notranslate nohighlight">\(d(x, y) = |x-y|\)</span>.</p>
+</section>
+<section id="normed-spaces">
+<h2>Normed spaces<a class="headerlink" href="#normed-spaces" title="Link to this heading">#</a></h2>
+<p>Norms generalize the notion of length from Euclidean space.</p>
+<p>A <strong>norm</strong> on a real vector space <span class="math notranslate nohighlight">\(V\)</span> is a function
+<span class="math notranslate nohighlight">\(\|\cdot\| : V \to \mathbb{R}\)</span> that satisfies</p>
+<p>(i) <span class="math notranslate nohighlight">\(\|\mathbf{x}\| \geq 0\)</span>, with equality if and only if
+<span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\(\|\alpha\mathbf{x}\| = |\alpha|\|\mathbf{x}\|\)</span></p>
+<p>(iii) <span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\| \leq \|\mathbf{x}\| + \|\mathbf{y}\|\)</span>
+(the <strong>triangle inequality</strong> again)</p>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and all <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>.
+A vector space endowed with a norm is called a <strong>normed vector space</strong>,
+or simply a <strong>normed space</strong>.</p>
+<p>Note that any norm on <span class="math notranslate nohighlight">\(V\)</span> induces a distance metric on <span class="math notranslate nohighlight">\(V\)</span>:
+$<span class="math notranslate nohighlight">\(d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|\)</span>$ One can verify
+that the axioms for metrics are satisfied under this definition and
+follow directly from the axioms for norms. Therefore any normed space is
+also a metric space.<a class="footnote-reference brackets" href="#id7" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<p>We will typically only be concerned with a few specific norms on
+<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>: $<span class="math notranslate nohighlight">\(\begin{aligned}
+\|\mathbf{x}\|_1 &amp;= \sum_{i=1}^n |x_i| \\
+\|\mathbf{x}\|_2 &amp;= \sqrt{\sum_{i=1}^n x_i^2} \\
+\|\mathbf{x}\|_p &amp;= \left(\sum_{i=1}^n |x_i|^p\right)^\frac{1}{p} \hspace{0.5cm}\hspace{0.5cm} (p \geq 1) \\
+\|\mathbf{x}\|_\infty &amp;= \max_{1 \leq i \leq n} |x_i|
+\end{aligned}\)</span><span class="math notranslate nohighlight">\( Note that the 1- and 2-norms are special cases of the
+\)</span>p<span class="math notranslate nohighlight">\(-norm, and the \)</span>\infty<span class="math notranslate nohighlight">\(-norm is the limit of the \)</span>p<span class="math notranslate nohighlight">\(-norm as \)</span>p<span class="math notranslate nohighlight">\(
+tends to infinity. We require \)</span>p \geq 1<span class="math notranslate nohighlight">\( for the general definition of
+the \)</span>p<span class="math notranslate nohighlight">\(-norm because the triangle inequality fails to hold if \)</span>p &lt; 1$.
+(Try to find a counterexample!)</p>
+<p>Here’s a fun fact: for any given finite-dimensional vector space <span class="math notranslate nohighlight">\(V\)</span>,
+all norms on <span class="math notranslate nohighlight">\(V\)</span> are equivalent in the sense that for two norms
+<span class="math notranslate nohighlight">\(\|\cdot\|_A, \|\cdot\|_B\)</span>, there exist constants <span class="math notranslate nohighlight">\(\alpha, \beta &gt; 0\)</span>
+such that
+$<span class="math notranslate nohighlight">\(\alpha\|\mathbf{x}\|_A \leq \|\mathbf{x}\|_B \leq \beta\|\mathbf{x}\|_A\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>\mathbf{x} \in V$. Therefore convergence in one norm implies
+convergence in any other norm. This rule may not apply in
+infinite-dimensional vector spaces such as function spaces, though.</p>
+</section>
+<section id="inner-product-spaces">
+<h2>Inner product spaces<a class="headerlink" href="#inner-product-spaces" title="Link to this heading">#</a></h2>
+<p>An <strong>inner product</strong> on a real vector space <span class="math notranslate nohighlight">\(V\)</span> is a function
+<span class="math notranslate nohighlight">\(\langle \cdot, \cdot \rangle : V \times V \to \mathbb{R}\)</span> satisfying</p>
+<p>(i) <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{x} \rangle \geq 0\)</span>, with equality if
+and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\(\langle \alpha\mathbf{x} + \beta\mathbf{y}, \mathbf{z} \rangle = \alpha\langle \mathbf{x}, \mathbf{z} \rangle + \beta\langle \mathbf{y}, \mathbf{z} \rangle\)</span></p>
+<p>(iii) <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \langle \mathbf{y}, \mathbf{x} \rangle\)</span></p>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}, \mathbf{z} \in V\)</span> and all
+<span class="math notranslate nohighlight">\(\alpha,\beta \in \mathbb{R}\)</span>. A vector space endowed with an inner
+product is called an <strong>inner product space</strong>.</p>
+<p>Note that any inner product on <span class="math notranslate nohighlight">\(V\)</span> induces a norm on <span class="math notranslate nohighlight">\(V\)</span>:
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}\)</span>$ One
+can verify that the axioms for norms are satisfied under this definition
+and follow (almost) directly from the axioms for inner products.
+Therefore any inner product space is also a normed space (and hence also
+a metric space).<a class="footnote-reference brackets" href="#id8" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p>
+<p>Two vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are said to be <strong>orthogonal</strong>
+if <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>; we write
+<span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span> for shorthand. Orthogonality generalizes
+the notion of perpendicularity from Euclidean space. If two orthogonal
+vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> additionally have unit length
+(i.e. <span class="math notranslate nohighlight">\(\|\mathbf{x}\| = \|\mathbf{y}\| = 1\)</span>), then they are described as
+<strong>orthonormal</strong>.</p>
+<p>The standard inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is given by
+$<span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{i=1}^n x_iy_i = \mathbf{x}^{\!\top\!}\mathbf{y}\)</span><span class="math notranslate nohighlight">\(
+The matrix notation on the righthand side (see the Transposition section
+if it's unfamiliar) arises because this inner product is a special case
+of matrix multiplication where we regard the resulting \)</span>1 \times 1<span class="math notranslate nohighlight">\(
+matrix as a scalar. The inner product on \)</span>\mathbb{R}^n<span class="math notranslate nohighlight">\( is also often
+written \)</span>\mathbf{x}\cdot\mathbf{y}<span class="math notranslate nohighlight">\( (hence the alternate name **dot
+product**). The reader can verify that the two-norm \)</span>|\cdot|_2<span class="math notranslate nohighlight">\( on
+\)</span>\mathbb{R}^n$ is induced by this inner product.</p>
+<section id="pythagorean-theorem">
+<h3>Pythagorean Theorem<a class="headerlink" href="#pythagorean-theorem" title="Link to this heading">#</a></h3>
+<p>The well-known Pythagorean theorem generalizes naturally to arbitrary
+inner product spaces.</p>
+<div class="theorem docutils">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, then
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2\)</span>$</p>
+</div>
+<div class="proof docutils">
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, i.e.
+<span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>. Then
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{y}, \mathbf{x} \rangle + \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2\)</span>$
+as claimed. ◻</p>
+</div>
+</section>
+<section id="cauchy-schwarz-inequality">
+<h3>Cauchy-Schwarz inequality<a class="headerlink" href="#cauchy-schwarz-inequality" title="Link to this heading">#</a></h3>
+<p>This inequality is sometimes useful in proving bounds:
+$<span class="math notranslate nohighlight">\(|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
+for all \)</span>\mathbf{x}, \mathbf{y} \in V<span class="math notranslate nohighlight">\(. Equality holds exactly when
+\)</span>\mathbf{x}<span class="math notranslate nohighlight">\( and \)</span>\mathbf{y}$ are scalar multiples of each other (or
+equivalently, when they are linearly dependent).</p>
+</section>
+</section>
+<section id="transposition">
+<h2>Transposition<a class="headerlink" href="#transposition" title="Link to this heading">#</a></h2>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>, its <strong>transpose</strong>
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!} \in \mathbb{R}^{n \times m}\)</span> is given by
+<span class="math notranslate nohighlight">\((\mathbf{A}^{\!\top\!})_{ij} = A_{ji}\)</span> for each <span class="math notranslate nohighlight">\((i, j)\)</span>. In other
+words, the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> become the rows of
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\)</span>, and the rows of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> become the columns
+of <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\)</span>.</p>
+<p>The transpose has several nice algebraic properties that can be easily
+verified from the definition:</p>
+<p>(i) <span class="math notranslate nohighlight">\((\mathbf{A}^{\!\top\!})^{\!\top\!} = \mathbf{A}\)</span></p>
+<p>(ii) <span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})^{\!\top\!} = \mathbf{A}^{\!\top\!} + \mathbf{B}^{\!\top\!}\)</span></p>
+<p>(iii) <span class="math notranslate nohighlight">\((\alpha \mathbf{A})^{\!\top\!} = \alpha \mathbf{A}^{\!\top\!}\)</span></p>
+<p>(iv) <span class="math notranslate nohighlight">\((\mathbf{A}\mathbf{B})^{\!\top\!} = \mathbf{B}^{\!\top\!} \mathbf{A}^{\!\top\!}\)</span></p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>More generally, vector spaces can be defined over any <strong>field</strong>
+<span class="math notranslate nohighlight">\(\mathbb{F}\)</span>. We take <span class="math notranslate nohighlight">\(\mathbb{F} = \mathbb{R}\)</span> in this document to
+avoid an unnecessary diversion into abstract algebra.</p>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>It is sometimes called the <strong>kernel</strong> by algebraists, but we
+eschew this terminology because the word “kernel” has another
+meaning in machine learning.</p>
+</aside>
+<aside class="footnote brackets" id="id7" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>If a normed space is complete with respect to the distance metric
+induced by its norm, we say that it is a <strong>Banach space</strong>.</p>
+</aside>
+<aside class="footnote brackets" id="id8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>If an inner product space is complete with respect to the distance
+metric induced by its inner product, we say that it is a <strong>Hilbert
+space</strong>.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_linear_algebra"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter_preface/intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Notation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-spaces">Vector spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-space">Euclidean space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#subspaces">Subspaces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-spaces">Metric spaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normed-spaces">Normed spaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-spaces">Inner product spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pythagorean-theorem">Pythagorean Theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cauchy-schwarz-inequality">Cauchy-Schwarz inequality</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transposition">Transposition</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
