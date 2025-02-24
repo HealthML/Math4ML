@@ -172,8 +172,6 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
-
-
 <li class="toctree-l1"><a class="reference internal" href="../chapter_calculus/calculus.html">Calculus and Optimization</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Probability</a></li>
 </ul>
@@ -437,8 +435,10 @@ subsets of <span class="math notranslate nohighlight">\(\Omega\)</span>. The set
 <span class="math notranslate nohighlight">\(\mathbb{P} : \mathcal{F} \to [0,1]\)</span> which must satisfy</p>
 <p>(i) <span class="math notranslate nohighlight">\(\mathbb{P}(\Omega) = 1\)</span></p>
 <p>(ii) <strong>Countable additivity</strong>: for any countable collection of disjoint
-sets <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span>,
-$<span class="math notranslate nohighlight">\(\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)\)</span>$</p>
+sets <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span>,</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)$$
+</pre></div>
+</div>
 <p>The triple <span class="math notranslate nohighlight">\((\Omega, \mathcal{F}, \mathbb{P})\)</span> is called a <strong>probability
 space</strong>.<a class="footnote-reference brackets" href="#id10" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p>
 <p>If <span class="math notranslate nohighlight">\(\mathbb{P}(A) = 1\)</span>, we say that <span class="math notranslate nohighlight">\(A\)</span> occurs <strong>almost surely</strong> (often
@@ -453,15 +453,18 @@ abbreviated a.s.).<a class="footnote-reference brackets" href="#id11" id="id3" r
 <p>(iii) <span class="math notranslate nohighlight">\(0 = \mathbb{P}(\varnothing) \leq \mathbb{P}(A) \leq \mathbb{P}(\Omega) = 1\)</span></p>
 </div>
 <div class="proof docutils">
-<p><em>Proof.</em> (i) Using the countable additivity of <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, we have
-$<span class="math notranslate nohighlight">\(\mathbb{P}(A) + \mathbb{P}(A^\text{c}) = \mathbb{P}(A \mathbin{\dot{\cup}} A^\text{c}) = \mathbb{P}(\Omega) = 1\)</span>$</p>
-<p>To show (ii), suppose <span class="math notranslate nohighlight">\(B \in \mathcal{F}\)</span> and <span class="math notranslate nohighlight">\(B \subseteq A\)</span>. Then
-$<span class="math notranslate nohighlight">\(\mathbb{P}(A) = \mathbb{P}(B \mathbin{\dot{\cup}} (A \setminus B)) = \mathbb{P}(B) + \mathbb{P}(A \setminus B) \geq \mathbb{P}(B)\)</span>$
-as claimed.</p>
+<p><em>Proof.</em> (i) Using the countable additivity of <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A) + \mathbb{P}(A^\text{c}) = \mathbb{P}(A \mathbin{\dot{\cup}} A^\text{c}) = \mathbb{P}(\Omega) = 1\]</div>
+<p>To show (ii), suppose <span class="math notranslate nohighlight">\(B \in \mathcal{F}\)</span> and <span class="math notranslate nohighlight">\(B \subseteq A\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A) = \mathbb{P}(B \mathbin{\dot{\cup}} (A \setminus B)) = \mathbb{P}(B) + \mathbb{P}(A \setminus B) \geq \mathbb{P}(B)\]</div>
+<p>as claimed.</p>
 <p>For (iii): the middle inequality follows from (ii) since
-<span class="math notranslate nohighlight">\(\varnothing \subseteq A \subseteq \Omega\)</span>. We also have
-$<span class="math notranslate nohighlight">\(\mathbb{P}(\varnothing) = \mathbb{P}(\varnothing \mathbin{\dot{\cup}} \varnothing) = \mathbb{P}(\varnothing) + \mathbb{P}(\varnothing)\)</span><span class="math notranslate nohighlight">\(
-by countable additivity, which shows \)</span>\mathbb{P}(\varnothing) = 0$. ◻</p>
+<span class="math notranslate nohighlight">\(\varnothing \subseteq A \subseteq \Omega\)</span>. We also have</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(\varnothing) = \mathbb{P}(\varnothing \mathbin{\dot{\cup}} \varnothing) = \mathbb{P}(\varnothing) + \mathbb{P}(\varnothing)\]</div>
+<p>by countable additivity, which shows <span class="math notranslate nohighlight">\(\mathbb{P}(\varnothing) = 0\)</span>. ◻</p>
 </div>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are events, then
@@ -469,17 +472,21 @@ by countable additivity, which shows \)</span>\mathbb{P}(\varnothing) = 0$. ◻
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> The key is to break the events up into their various
-overlapping and non-overlapping parts. $<span class="math notranslate nohighlight">\(\begin{aligned}
+overlapping and non-overlapping parts.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 \mathbb{P}(A \cup B) &amp;= \mathbb{P}((A \cap B) \mathbin{\dot{\cup}} (A \setminus B) \mathbin{\dot{\cup}} (B \setminus A)) \\
 &amp;= \mathbb{P}(A \cap B) + \mathbb{P}(A \setminus B) + \mathbb{P}(B \setminus A) \\
 &amp;= \mathbb{P}(A \cap B) + \mathbb{P}(A) - \mathbb{P}(A \cap B) + \mathbb{P}(B) - \mathbb{P}(A \cap B) \\
 &amp;= \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)
-\end{aligned}\)</span>$ ◻</p>
+\end{aligned}\end{split}\]</div>
+<p>◻</p>
 </div>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span> is a countable set of events,
-disjoint or not, then
-$<span class="math notranslate nohighlight">\(\mathbb{P}\bigg(\bigcup_i A_i\bigg) \leq \sum_i \mathbb{P}(A_i)\)</span>$</p>
+disjoint or not, then</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\bigg(\bigcup_i A_i\bigg) \leq \sum_i \mathbb{P}(A_i)\]</div>
 </div>
 <p>This inequality is sometimes referred to as <strong>Boole’s inequality</strong> or
 the <strong>union bound</strong>.</p>
@@ -487,33 +494,39 @@ the <strong>union bound</strong>.</p>
 <p><em>Proof.</em> Define <span class="math notranslate nohighlight">\(B_1 = A_1\)</span> and
 <span class="math notranslate nohighlight">\(B_i = A_i \setminus (\bigcup_{j &lt; i} A_j)\)</span> for <span class="math notranslate nohighlight">\(i &gt; 1\)</span>, noting that
 <span class="math notranslate nohighlight">\(\bigcup_{j \leq i} B_j = \bigcup_{j \leq i} A_j\)</span> for all <span class="math notranslate nohighlight">\(i\)</span> and the
-<span class="math notranslate nohighlight">\(B_i\)</span> are disjoint. Then
-$<span class="math notranslate nohighlight">\(\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \mathbb{P}\bigg(\bigcup_i B_i\bigg) = \sum_i \mathbb{P}(B_i) \leq \sum_i \mathbb{P}(A_i)\)</span><span class="math notranslate nohighlight">\(
-where the last inequality follows by monotonicity since
-\)</span>B_i \subseteq A_i<span class="math notranslate nohighlight">\( for all \)</span>i$. ◻</p>
+<span class="math notranslate nohighlight">\(B_i\)</span> are disjoint. Then</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \mathbb{P}\bigg(\bigcup_i B_i\bigg) = \sum_i \mathbb{P}(B_i) \leq \sum_i \mathbb{P}(A_i)\]</div>
+<p>where the last inequality follows by monotonicity since
+<span class="math notranslate nohighlight">\(B_i \subseteq A_i\)</span> for all <span class="math notranslate nohighlight">\(i\)</span>. ◻</p>
 </div>
 <section id="conditional-probability">
 <h3>Conditional probability<a class="headerlink" href="#conditional-probability" title="Link to this heading">#</a></h3>
 <p>The <strong>conditional probability</strong> of event <span class="math notranslate nohighlight">\(A\)</span> given that event <span class="math notranslate nohighlight">\(B\)</span> has
-occurred is written <span class="math notranslate nohighlight">\(\mathbb{P}(A | B)\)</span> and defined as
-$<span class="math notranslate nohighlight">\(\mathbb{P}(A | B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}\)</span><span class="math notranslate nohighlight">\(
-assuming \)</span>\mathbb{P}(B) &gt; 0$.<a class="footnote-reference brackets" href="#id12" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a></p>
+occurred is written <span class="math notranslate nohighlight">\(\mathbb{P}(A | B)\)</span> and defined as</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A | B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}\]</div>
+<p>assuming <span class="math notranslate nohighlight">\(\mathbb{P}(B) &gt; 0\)</span>.<a class="footnote-reference brackets" href="#id12" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></a></p>
 </section>
 <section id="chain-rule">
 <h3>Chain rule<a class="headerlink" href="#chain-rule" title="Link to this heading">#</a></h3>
 <p>Another very useful tool, the <strong>chain rule</strong>, follows immediately from
-this definition:
-$<span class="math notranslate nohighlight">\(\mathbb{P}(A \cap B) = \mathbb{P}(A | B)\mathbb{P}(B) = \mathbb{P}(B | A)\mathbb{P}(A)\)</span>$</p>
+this definition:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A \cap B) = \mathbb{P}(A | B)\mathbb{P}(B) = \mathbb{P}(B | A)\mathbb{P}(A)\]</div>
 </section>
 <section id="bayes-rule">
 <h3>Bayes’ rule<a class="headerlink" href="#bayes-rule" title="Link to this heading">#</a></h3>
 <p>Taking the equality from above one step further, we arrive at the simple
-but crucial <strong>Bayes’ rule</strong>:
-$<span class="math notranslate nohighlight">\(\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)\mathbb{P}(A)}{\mathbb{P}(B)}\)</span><span class="math notranslate nohighlight">\(
-It is sometimes beneficial to omit the normalizing constant and write
-\)</span><span class="math notranslate nohighlight">\(\mathbb{P}(A | B) \propto \mathbb{P}(A)\mathbb{P}(B | A)\)</span><span class="math notranslate nohighlight">\( Under this
-formulation, \)</span>\mathbb{P}(A)<span class="math notranslate nohighlight">\( is often referred to as the **prior**,
-\)</span>\mathbb{P}(A | B)<span class="math notranslate nohighlight">\( as the **posterior**, and \)</span>\mathbb{P}(B | A)$ as the
+but crucial <strong>Bayes’ rule</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)\mathbb{P}(A)}{\mathbb{P}(B)}\]</div>
+<p>It is sometimes beneficial to omit the normalizing constant and write</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(A | B) \propto \mathbb{P}(A)\mathbb{P}(B | A)\]</div>
+<p>Under this
+formulation, <span class="math notranslate nohighlight">\(\mathbb{P}(A)\)</span> is often referred to as the <strong>prior</strong>,
+<span class="math notranslate nohighlight">\(\mathbb{P}(A | B)\)</span> as the <strong>posterior</strong>, and <span class="math notranslate nohighlight">\(\mathbb{P}(B | A)\)</span> as the
 <strong>likelihood</strong>.</p>
 <p>In the context of machine learning, we can use Bayes’ rule to update our
 “beliefs” (e.g. values of our model parameters) given some data that
@@ -530,18 +543,23 @@ probability distribution over the values it can assume.</p>
 <p>We denote the range of <span class="math notranslate nohighlight">\(X\)</span> by
 <span class="math notranslate nohighlight">\(X(\Omega) = \{X(\omega) : \omega \in \Omega\}\)</span>. To give a concrete
 example (taken from [&#64;pitman]), suppose <span class="math notranslate nohighlight">\(X\)</span> is the number of heads in
-two tosses of a fair coin. The sample space is
-$<span class="math notranslate nohighlight">\(\Omega = \{hh, tt, ht, th\}\)</span><span class="math notranslate nohighlight">\( and \)</span>X<span class="math notranslate nohighlight">\( is determined completely by the
-outcome \)</span>\omega<span class="math notranslate nohighlight">\(, i.e. \)</span>X = X(\omega)<span class="math notranslate nohighlight">\(. For example, the event \)</span>X = 1<span class="math notranslate nohighlight">\(
-is the set of outcomes \)</span>{ht, th}$.</p>
+two tosses of a fair coin. The sample space is</p>
+<div class="math notranslate nohighlight">
+\[\Omega = \{hh, tt, ht, th\}\]</div>
+<p>and <span class="math notranslate nohighlight">\(X\)</span> is determined completely by the
+outcome <span class="math notranslate nohighlight">\(\omega\)</span>, i.e. <span class="math notranslate nohighlight">\(X = X(\omega)\)</span>. For example, the event <span class="math notranslate nohighlight">\(X = 1\)</span>
+is the set of outcomes <span class="math notranslate nohighlight">\(\{ht, th\}\)</span>.</p>
 <p>It is common to talk about the values of a random variable without
 directly referencing its sample space. The two are related by the
 following definition: the event that the value of <span class="math notranslate nohighlight">\(X\)</span> lies in some set
-<span class="math notranslate nohighlight">\(S \subseteq \mathbb{R}\)</span> is
-$<span class="math notranslate nohighlight">\(X \in S = \{\omega \in \Omega : X(\omega) \in S\}\)</span><span class="math notranslate nohighlight">\( Note that special
-cases of this definition include \)</span>X<span class="math notranslate nohighlight">\( being equal to, less than, or
-greater than some specified value. For example
-\)</span><span class="math notranslate nohighlight">\(\mathbb{P}(X = x) = \mathbb{P}(\{\omega \in \Omega : X(\omega) = x\})\)</span>$</p>
+<span class="math notranslate nohighlight">\(S \subseteq \mathbb{R}\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[X \in S = \{\omega \in \Omega : X(\omega) \in S\}\]</div>
+<p>Note that special
+cases of this definition include <span class="math notranslate nohighlight">\(X\)</span> being equal to, less than, or
+greater than some specified value. For example</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(X = x) = \mathbb{P}(\{\omega \in \Omega : X(\omega) = x\})\]</div>
 <p>A word on notation: we write <span class="math notranslate nohighlight">\(p(X)\)</span> to denote the entire probability
 distribution of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(p(x)\)</span> for the evaluation of the function <span class="math notranslate nohighlight">\(p\)</span> at
 a particular value <span class="math notranslate nohighlight">\(x \in X(\Omega)\)</span>. Hopefully this (reasonably
@@ -553,10 +571,13 @@ in which case we condition on the parameters.</p>
 <section id="the-cumulative-distribution-function">
 <h3>The cumulative distribution function<a class="headerlink" href="#the-cumulative-distribution-function" title="Link to this heading">#</a></h3>
 <p>The <strong>cumulative distribution function</strong> (c.d.f.) gives the probability
-that a random variable is at most a certain value:
-$<span class="math notranslate nohighlight">\(F(x) = \mathbb{P}(X \leq x)\)</span><span class="math notranslate nohighlight">\( The c.d.f. can be used to give the
-probability that a variable lies within a certain range:
-\)</span><span class="math notranslate nohighlight">\(\mathbb{P}(a &lt; X \leq b) = F(b) - F(a)\)</span>$</p>
+that a random variable is at most a certain value:</p>
+<div class="math notranslate nohighlight">
+\[F(x) = \mathbb{P}(X \leq x)\]</div>
+<p>The c.d.f. can be used to give the
+probability that a variable lies within a certain range:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(a &lt; X \leq b) = F(b) - F(a)\]</div>
 </section>
 <section id="discrete-random-variables">
 <h3>Discrete random variables<a class="headerlink" href="#discrete-random-variables" title="Link to this heading">#</a></h3>
@@ -564,9 +585,13 @@ probability that a variable lies within a certain range:
 range and assumes each value in this range with positive probability.
 Discrete random variables are completely specified by their
 <strong>probability mass function</strong> (p.m.f.) <span class="math notranslate nohighlight">\(p : X(\Omega) \to [0,1]\)</span> which
-satisfies $<span class="math notranslate nohighlight">\(\sum_{x \in X(\Omega)} p(x) = 1\)</span><span class="math notranslate nohighlight">\( For a discrete \)</span>X<span class="math notranslate nohighlight">\(, the
-probability of a particular value is given exactly by its p.m.f.:
-\)</span><span class="math notranslate nohighlight">\(\mathbb{P}(X = x) = p(x)\)</span>$</p>
+satisfies</p>
+<div class="math notranslate nohighlight">
+\[\sum_{x \in X(\Omega)} p(x) = 1\]</div>
+<p>For a discrete <span class="math notranslate nohighlight">\(X\)</span>, the
+probability of a particular value is given exactly by its p.m.f.:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(X = x) = p(x)\]</div>
 </section>
 <section id="continuous-random-variables">
 <h3>Continuous random variables<a class="headerlink" href="#continuous-random-variables" title="Link to this heading">#</a></h3>
@@ -575,9 +600,15 @@ uncountable range and assumes each value in this range with probability
 zero. Most of the continuous random variables that one would encounter
 in practice are <strong>absolutely continuous random variables</strong><a class="footnote-reference brackets" href="#id15" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></a>, which
 means that there exists a function <span class="math notranslate nohighlight">\(p : \mathbb{R} \to [0,\infty)\)</span> that
-satisfies $<span class="math notranslate nohighlight">\(F(x) \equiv \int_{-\infty}^x p(z)\dd{z}\)</span><span class="math notranslate nohighlight">\( The function \)</span>p<span class="math notranslate nohighlight">\(
-is called a **probability density function** (abbreviated p.d.f.) and
-must satisfy \)</span><span class="math notranslate nohighlight">\(\int_{-\infty}^\infty p(x)\dd{x} = 1\)</span>$ The values of this
+satisfies</p>
+<div class="math notranslate nohighlight">
+\[F(x) \equiv \int_{-\infty}^x p(z)\operatorname{d}{z}\]</div>
+<p>The function <span class="math notranslate nohighlight">\(p\)</span>
+is called a <strong>probability density function</strong> (abbreviated p.d.f.) and
+must satisfy</p>
+<div class="math notranslate nohighlight">
+\[\int_{-\infty}^\infty p(x)\operatorname{d}{x} = 1\]</div>
+<p>The values of this
 function are not themselves probabilities, since they could exceed 1.
 However, they do have a couple of reasonable interpretations. One is as
 relative probabilities; even though the probability of each particular
@@ -585,14 +616,16 @@ value being picked is technically zero, some points are still in a sense
 more likely than others.</p>
 <p>One can also think of the density as determining the probability that
 the variable will lie in a small range about a given value. This is
-because, for small <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>,
-$<span class="math notranslate nohighlight">\(\mathbb{P}(x-\epsilon \leq X \leq x+\epsilon) = \int_{x-\epsilon}^{x+\epsilon} p(z)\dd{z} \approx 2\epsilon p(x)\)</span>$
-using a midpoint approximation to the integral.</p>
-<p>Here are some useful identities that follow from the definitions above:
-$<span class="math notranslate nohighlight">\(\begin{aligned}
-\mathbb{P}(a \leq X \leq b) &amp;= \int_a^b p(x)\dd{x} \\
+because, for small <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(x-\epsilon \leq X \leq x+\epsilon) = \int_{x-\epsilon}^{x+\epsilon} p(z)\operatorname{d}{z} \approx 2\epsilon p(x)\]</div>
+<p>using a midpoint approximation to the integral.</p>
+<p>Here are some useful identities that follow from the definitions above:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}(a \leq X \leq b) &amp;= \int_a^b p(x)\operatorname{d}{x} \\
 p(x) &amp;= F'(x)
-\end{aligned}\)</span>$</p>
+\end{aligned}\end{split}\]</div>
 </section>
 <section id="other-kinds-of-random-variables">
 <h3>Other kinds of random variables<a class="headerlink" href="#other-kinds-of-random-variables" title="Link to this heading">#</a></h3>
@@ -615,49 +648,64 @@ over entire assignments to all the <span class="math notranslate nohighlight">\(
 <section id="independence-of-random-variables">
 <h3>Independence of random variables<a class="headerlink" href="#independence-of-random-variables" title="Link to this heading">#</a></h3>
 <p>We say that two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are <strong>independent</strong> if their joint
-distribution factors into their respective distributions, i.e.
-$<span class="math notranslate nohighlight">\(p(X, Y) = p(X)p(Y)\)</span><span class="math notranslate nohighlight">\( We can also define independence for more than two
+distribution factors into their respective distributions, i.e.</p>
+<div class="math notranslate nohighlight">
+\[p(X, Y) = p(X)p(Y)\]</div>
+<p>We can also define independence for more than two
 random variables, although it is more complicated. Let
-\)</span>{X_i}_{i \in I}<span class="math notranslate nohighlight">\( be a collection of random variables indexed by \)</span>I<span class="math notranslate nohighlight">\(,
-which may be infinite. Then \)</span>{X_i}<span class="math notranslate nohighlight">\( are independent if for every
-finite subset of indices \)</span>i_1, \dots, i_k \in I<span class="math notranslate nohighlight">\( we have
-\)</span><span class="math notranslate nohighlight">\(p(X_{i_1}, \dots, X_{i_k}) = \prod_{j=1}^k p(X_{i_j})\)</span><span class="math notranslate nohighlight">\( For example,
-in the case of three random variables, \)</span>X, Y, Z<span class="math notranslate nohighlight">\(, we require that
-\)</span>p(X,Y,Z) = p(X)p(Y)p(Z)<span class="math notranslate nohighlight">\( as well as \)</span>p(X,Y) = p(X)p(Y)<span class="math notranslate nohighlight">\(,
-\)</span>p(X,Z) = p(X)p(Z)<span class="math notranslate nohighlight">\(, and \)</span>p(Y,Z) = p(Y)p(Z)$.</p>
+<span class="math notranslate nohighlight">\(\{X_i\}_{i \in I}\)</span> be a collection of random variables indexed by <span class="math notranslate nohighlight">\(I\)</span>,
+which may be infinite. Then <span class="math notranslate nohighlight">\(\{X_i\}\)</span> are independent if for every
+finite subset of indices <span class="math notranslate nohighlight">\(i_1, \dots, i_k \in I\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[p(X_{i_1}, \dots, X_{i_k}) = \prod_{j=1}^k p(X_{i_j})\]</div>
+<p>For example,
+in the case of three random variables, <span class="math notranslate nohighlight">\(X, Y, Z\)</span>, we require that
+<span class="math notranslate nohighlight">\(p(X,Y,Z) = p(X)p(Y)p(Z)\)</span> as well as <span class="math notranslate nohighlight">\(p(X,Y) = p(X)p(Y)\)</span>,
+<span class="math notranslate nohighlight">\(p(X,Z) = p(X)p(Z)\)</span>, and <span class="math notranslate nohighlight">\(p(Y,Z) = p(Y)p(Z)\)</span>.</p>
 <p>It is often convenient (though perhaps questionable) to assume that a
 bunch of random variables are <strong>independent and identically
 distributed</strong> (i.i.d.) so that their joint distribution can be factored
-entirely: $<span class="math notranslate nohighlight">\(p(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)\)</span><span class="math notranslate nohighlight">\( where
-\)</span>X_1, \dots, X_n$ all share the same p.m.f./p.d.f.</p>
+entirely:</p>
+<div class="math notranslate nohighlight">
+\[p(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)\]</div>
+<p>where
+<span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> all share the same p.m.f./p.d.f.</p>
 </section>
 <section id="marginal-distributions">
 <h3>Marginal distributions<a class="headerlink" href="#marginal-distributions" title="Link to this heading">#</a></h3>
 <p>If we have a joint distribution over some set of random variables, it is
 possible to obtain a distribution for a subset of them by “summing out”
 (or “integrating out” in the continuous case) the variables we don’t
-care about: $<span class="math notranslate nohighlight">\(p(X) = \sum_{y} p(X, y)\)</span>$</p>
+care about:</p>
+<div class="math notranslate nohighlight">
+\[p(X) = \sum_{y} p(X, y)\]</div>
 </section>
 </section>
 <section id="great-expectations">
 <h2>Great Expectations<a class="headerlink" href="#great-expectations" title="Link to this heading">#</a></h2>
 <p>If we have some random variable <span class="math notranslate nohighlight">\(X\)</span>, we might be interested in knowing
 what is the “average” value of <span class="math notranslate nohighlight">\(X\)</span>. This concept is captured by the
-<strong>expected value</strong> (or <strong>mean</strong>) <span class="math notranslate nohighlight">\(\mathbb{E}[X]\)</span>, which is defined as
-$<span class="math notranslate nohighlight">\(\mathbb{E}[X] = \sum_{x \in X(\Omega)} xp(x)\)</span><span class="math notranslate nohighlight">\( for discrete \)</span>X<span class="math notranslate nohighlight">\( and as
-\)</span><span class="math notranslate nohighlight">\(\mathbb{E}[X] = \int_{-\infty}^\infty xp(x)\dd{x}\)</span><span class="math notranslate nohighlight">\( for continuous
-\)</span>X$.</p>
+<strong>expected value</strong> (or <strong>mean</strong>) <span class="math notranslate nohighlight">\(\mathbb{E}[X]\)</span>, which is defined as</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}[X] = \sum_{x \in X(\Omega)} xp(x)\]</div>
+<p>for discrete <span class="math notranslate nohighlight">\(X\)</span> and as</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}[X] = \int_{-\infty}^\infty xp(x)\operatorname{d}{x}\]</div>
+<p>for continuous
+<span class="math notranslate nohighlight">\(X\)</span>.</p>
 <p>In words, we are taking a weighted sum of the values that <span class="math notranslate nohighlight">\(X\)</span> can take
 on, where the weights are the probabilities of those respective values.
 The expected value has a physical interpretation as the “center of mass”
 of the distribution.</p>
 <section id="properties-of-expected-value">
 <h3>Properties of expected value<a class="headerlink" href="#properties-of-expected-value" title="Link to this heading">#</a></h3>
-<p>A very useful property of expectation is that of linearity:
-$<span class="math notranslate nohighlight">\(\mathbb{E}\left[\sum_{i=1}^n \alpha_i X_i + \beta\right] = \sum_{i=1}^n \alpha_i \mathbb{E}[X_i] + \beta\)</span><span class="math notranslate nohighlight">\(
-Note that this holds even if the \)</span>X_i$ are not independent!</p>
-<p>But if they are independent, the product rule also holds:
-$<span class="math notranslate nohighlight">\(\mathbb{E}\left[\prod_{i=1}^n X_i\right] = \prod_{i=1}^n \mathbb{E}[X_i]\)</span>$</p>
+<p>A very useful property of expectation is that of linearity:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\left[\sum_{i=1}^n \alpha_i X_i + \beta\right] = \sum_{i=1}^n \alpha_i \mathbb{E}[X_i] + \beta\]</div>
+<p>Note that this holds even if the <span class="math notranslate nohighlight">\(X_i\)</span> are not independent!</p>
+<p>But if they are independent, the product rule also holds:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\left[\prod_{i=1}^n X_i\right] = \prod_{i=1}^n \mathbb{E}[X_i]\]</div>
 </section>
 </section>
 <section id="variance">
@@ -665,22 +713,26 @@ $<span class="math notranslate nohighlight">\(\mathbb{E}\left[\prod_{i=1}^n X_i\
 <p>Expectation provides a measure of the “center” of a distribution, but
 frequently we are also interested in what the “spread” is about that
 center. We define the variance <span class="math notranslate nohighlight">\(\operatorname{Var}(X)\)</span> of a random
-variable <span class="math notranslate nohighlight">\(X\)</span> by
-$<span class="math notranslate nohighlight">\(\operatorname{Var}(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X]\right)^2\right]\)</span><span class="math notranslate nohighlight">\(
-In words, this is the average squared deviation of the values of \)</span>X<span class="math notranslate nohighlight">\(
-from the mean of \)</span>X<span class="math notranslate nohighlight">\(. Using a little algebra and the linearity of
-expectation, it is straightforward to show that
-\)</span><span class="math notranslate nohighlight">\(\operatorname{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2\)</span>$</p>
+variable <span class="math notranslate nohighlight">\(X\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Var}(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X]\right)^2\right]\]</div>
+<p>In words, this is the average squared deviation of the values of <span class="math notranslate nohighlight">\(X\)</span>
+from the mean of <span class="math notranslate nohighlight">\(X\)</span>. Using a little algebra and the linearity of
+expectation, it is straightforward to show that</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2\]</div>
 <section id="properties-of-variance">
 <h3>Properties of variance<a class="headerlink" href="#properties-of-variance" title="Link to this heading">#</a></h3>
 <p>Variance is not linear (because of the squaring in the definition), but
-one can show the following:
-$<span class="math notranslate nohighlight">\(\operatorname{Var}(\alpha X + \beta) = \alpha^2 \operatorname{Var}(X)\)</span>$
-Basically, multiplicative constants become squared when they are pulled
+one can show the following:</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Var}(\alpha X + \beta) = \alpha^2 \operatorname{Var}(X)\]</div>
+<p>Basically, multiplicative constants become squared when they are pulled
 out, and additive constants disappear (since the variance contributed by
 a constant is zero).</p>
-<p>Furthermore, if <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> are uncorrelated<a class="footnote-reference brackets" href="#id16" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>, then
-$<span class="math notranslate nohighlight">\(\operatorname{Var}(X_1 + \dots + X_n) = \operatorname{Var}(X_1) + \dots + \operatorname{Var}(X_n)\)</span>$</p>
+<p>Furthermore, if <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> are uncorrelated<a class="footnote-reference brackets" href="#id16" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></a>, then</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Var}(X_1 + \dots + X_n) = \operatorname{Var}(X_1) + \dots + \operatorname{Var}(X_n)\]</div>
 </section>
 <section id="standard-deviation">
 <h3>Standard deviation<a class="headerlink" href="#standard-deviation" title="Link to this heading">#</a></h3>
@@ -695,25 +747,29 @@ standard deviation of <span class="math notranslate nohighlight">\(X\)</span> ha
 <h2>Covariance<a class="headerlink" href="#covariance" title="Link to this heading">#</a></h2>
 <p>Covariance is a measure of the linear relationship between two random
 variables. We denote the covariance between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> as
-<span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y)\)</span>, and it is defined to be
-$<span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y) = \mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]\)</span><span class="math notranslate nohighlight">\(
-Note that the outer expectation must be taken over the joint
-distribution of \)</span>X<span class="math notranslate nohighlight">\( and \)</span>Y$.</p>
-<p>Again, the linearity of expectation allows us to rewrite this as
-$<span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]\)</span><span class="math notranslate nohighlight">\(
-Comparing these formulas to the ones for variance, it is not hard to see
-that \)</span>\operatorname{Var}(X) = \operatorname{Cov}(X, X)$.</p>
-<p>A useful property of covariance is that of <strong>bilinearity</strong>:
-$<span class="math notranslate nohighlight">\(\begin{aligned}
+<span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y)\)</span>, and it is defined to be</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Cov}(X, Y) = \mathbb{E}[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])]\]</div>
+<p>Note that the outer expectation must be taken over the joint
+distribution of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Again, the linearity of expectation allows us to rewrite this as</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Cov}(X, Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y]\]</div>
+<p>Comparing these formulas to the ones for variance, it is not hard to see
+that <span class="math notranslate nohighlight">\(\operatorname{Var}(X) = \operatorname{Cov}(X, X)\)</span>.</p>
+<p>A useful property of covariance is that of <strong>bilinearity</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 \operatorname{Cov}(\alpha X + \beta Y, Z) &amp;= \alpha\operatorname{Cov}(X, Z) + \beta\operatorname{Cov}(Y, Z) \\
 \operatorname{Cov}(X, \alpha Y + \beta Z) &amp;= \alpha\operatorname{Cov}(X, Y) + \beta\operatorname{Cov}(X, Z)
-\end{aligned}\)</span>$</p>
+\end{aligned}\end{split}\]</div>
 <section id="correlation">
 <h3>Correlation<a class="headerlink" href="#correlation" title="Link to this heading">#</a></h3>
-<p>Normalizing the covariance gives the <strong>correlation</strong>:
-$<span class="math notranslate nohighlight">\(\rho(X, Y) = \frac{\operatorname{Cov}(X, Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}\)</span><span class="math notranslate nohighlight">\(
-Correlation also measures the linear relationship between two variables,
-but unlike covariance always lies between \)</span>-1<span class="math notranslate nohighlight">\( and \)</span>1$.</p>
+<p>Normalizing the covariance gives the <strong>correlation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\rho(X, Y) = \frac{\operatorname{Cov}(X, Y)}{\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}\]</div>
+<p>Correlation also measures the linear relationship between two variables,
+but unlike covariance always lies between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>.</p>
 <p>Two variables are said to be <strong>uncorrelated</strong> if
 <span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y) = 0\)</span> because <span class="math notranslate nohighlight">\(\operatorname{Cov}(X, Y) = 0\)</span>
 implies that <span class="math notranslate nohighlight">\(\rho(X, Y) = 0\)</span>. If two variables are independent, then
@@ -725,24 +781,30 @@ they are uncorrelated, but the converse does not hold in general.</p>
 <p>So far we have been talking about <strong>univariate distributions</strong>, that is,
 distributions of single variables. But we can also talk about
 <strong>multivariate distributions</strong> which give distributions of <strong>random
-vectors</strong>:
-$<span class="math notranslate nohighlight">\(\mathbf{X} = \begin{bmatrix}X_1 \\ \vdots \\ X_n\end{bmatrix}\)</span>$ The
+vectors</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{X} = \begin{bmatrix}X_1 \\ \vdots \\ X_n\end{bmatrix}\end{split}\]</div>
+<p>The
 summarizing quantities we have discussed for single variables have
 natural generalizations to the multivariate case.</p>
 <p>Expectation of a random vector is simply the expectation applied to each
-component:
-$<span class="math notranslate nohighlight">\(\mathbb{E}[\mathbf{X}] = \begin{bmatrix}\mathbb{E}[X_1] \\ \vdots \\ \mathbb{E}[X_n]\end{bmatrix}\)</span>$</p>
-<p>The variance is generalized by the <strong>covariance matrix</strong>:
-$<span class="math notranslate nohighlight">\(\mathbf{\Sigma} = \mathbb{E}[(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}] = \begin{bmatrix}
-\operatorname{Var}(X_1) &amp; \operatorname{Cov}(X_1, X_2) &amp; \hdots &amp; \operatorname{Cov}(X_1, X_n) \\
-\operatorname{Cov}(X_2, X_1) &amp; \operatorname{Var}(X_2) &amp; \hdots &amp; \operatorname{Cov}(X_2, X_n) \\
+component:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{E}[\mathbf{X}] = \begin{bmatrix}\mathbb{E}[X_1] \\ \vdots \\ \mathbb{E}[X_n]\end{bmatrix}\end{split}\]</div>
+<p>The variance is generalized by the <strong>covariance matrix</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\Sigma} = \mathbb{E}[(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}] = \begin{bmatrix}
+\operatorname{Var}(X_1) &amp; \operatorname{Cov}(X_1, X_2) &amp; \dots &amp; \operatorname{Cov}(X_1, X_n) \\
+\operatorname{Cov}(X_2, X_1) &amp; \operatorname{Var}(X_2) &amp; \dots &amp; \operatorname{Cov}(X_2, X_n) \\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-\operatorname{Cov}(X_n, X_1) &amp; \operatorname{Cov}(X_n, X_2) &amp; \hdots &amp; \operatorname{Var}(X_n)
-\end{bmatrix}\)</span><span class="math notranslate nohighlight">\( That is, \)</span>\Sigma_{ij} = \operatorname{Cov}(X_i, X_j)<span class="math notranslate nohighlight">\(.
+\operatorname{Cov}(X_n, X_1) &amp; \operatorname{Cov}(X_n, X_2) &amp; \dots &amp; \operatorname{Var}(X_n)
+\end{bmatrix}\end{split}\]</div>
+<p>That is, <span class="math notranslate nohighlight">\(\Sigma_{ij} = \operatorname{Cov}(X_i, X_j)\)</span>.
 Since covariance is symmetric in its arguments, the covariance matrix is
-also symmetric. It's also positive semi-definite: for any \)</span>\mathbf{x}<span class="math notranslate nohighlight">\(,
-\)</span><span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{\Sigma}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbb{E}[(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}]\mathbf{x} = \mathbb{E}[\mathbf{x}^{\!\top\!}(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}\mathbf{x}] = \mathbb{E}[((\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}\mathbf{x})^2] \geq 0\)</span><span class="math notranslate nohighlight">\(
-The inverse of the covariance matrix, \)</span>\mathbf{\Sigma}^{-1}$, is
+also symmetric. It’s also positive semi-definite: for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}^{\!\top\!}\mathbf{\Sigma}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbb{E}[(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}]\mathbf{x} = \mathbb{E}[\mathbf{x}^{\!\top\!}(\mathbf{X} - \mathbb{E}[\mathbf{X}])(\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}\mathbf{x}] = \mathbb{E}[((\mathbf{X} - \mathbb{E}[\mathbf{X}])^{\!\top\!}\mathbf{x})^2] \geq 0\]</div>
+<p>The inverse of the covariance matrix, <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>, is
 sometimes called the <strong>precision matrix</strong>.</p>
 </section>
 <section id="estimation-of-parameters">
@@ -758,19 +820,23 @@ values of the parameters?</p>
 (MLE). The basic principle of MLE is to choose values that “explain” the
 data best by maximizing the probability/density of the data we’ve seen
 as a function of the parameters. Suppose we have random variables
-<span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> and corresponding observations <span class="math notranslate nohighlight">\(x_1, \dots, x_n\)</span>. Then
-$<span class="math notranslate nohighlight">\(\hat{\mathbf{\theta}}_\textsc{mle} = \argmax_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\mathcal{L}<span class="math notranslate nohighlight">\( is the **likelihood function**
-\)</span><span class="math notranslate nohighlight">\(\mathcal{L}(\mathbf{\theta}) = p(x_1, \dots, x_n; \mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-Often, we assume that \)</span>X_1, \dots, X_n<span class="math notranslate nohighlight">\( are i.i.d. Then we can write
-\)</span><span class="math notranslate nohighlight">\(p(x_1, \dots, x_n; \theta) = \prod_{i=1}^n p(x_i; \mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-At this point, it is usually convenient to take logs, giving rise to the
-**log-likelihood**
-\)</span><span class="math notranslate nohighlight">\(\log\mathcal{L}(\mathbf{\theta}) = \sum_{i=1}^n \log p(x_i; \mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-This is a valid operation because the probabilities/densities are
+<span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> and corresponding observations <span class="math notranslate nohighlight">\(x_1, \dots, x_n\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{\theta}}_\text{mle} = \argmax_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the <strong>likelihood function</strong></p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{\theta}) = p(x_1, \dots, x_n; \mathbf{\theta})\]</div>
+<p>Often, we assume that <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> are i.i.d. Then we can write</p>
+<div class="math notranslate nohighlight">
+\[p(x_1, \dots, x_n; \theta) = \prod_{i=1}^n p(x_i; \mathbf{\theta})\]</div>
+<p>At this point, it is usually convenient to take logs, giving rise to the
+<strong>log-likelihood</strong></p>
+<div class="math notranslate nohighlight">
+\[\log\mathcal{L}(\mathbf{\theta}) = \sum_{i=1}^n \log p(x_i; \mathbf{\theta})\]</div>
+<p>This is a valid operation because the probabilities/densities are
 assumed to be positive, and since log is a monotonically increasing
 function, it preserves ordering. In other words, any maximizer of
-\)</span>\log\mathcal{L}<span class="math notranslate nohighlight">\( will also maximize \)</span>\mathcal{L}$.</p>
+<span class="math notranslate nohighlight">\(\log\mathcal{L}\)</span> will also maximize <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>.</p>
 <p>For some distributions, it is possible to analytically solve for the
 maximum likelihood estimator. If <span class="math notranslate nohighlight">\(\log\mathcal{L}\)</span> is differentiable,
 setting the derivatives to zero and trying to solve for
@@ -782,18 +848,21 @@ setting the derivatives to zero and trying to solve for
 estimation</strong> (MAP). In this technique we assume that the parameters are
 a random variable, and we specify a prior distribution
 <span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>. Then we can employ Bayes’ rule to compute the
-posterior distribution of the parameters given the observed data:
-$<span class="math notranslate nohighlight">\(p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-Computing the normalizing constant is often intractable, because it
+posterior distribution of the parameters given the observed data:</p>
+<div class="math notranslate nohighlight">
+\[p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
+<p>Computing the normalizing constant is often intractable, because it
 involves integrating over the parameter space, which may be very
 high-dimensional. Fortunately, if we just want the MAP estimate, we
-don't care about the normalizing constant! It does not affect which
-values of \)</span>\mathbf{\theta}<span class="math notranslate nohighlight">\( maximize the posterior. So we have
-\)</span><span class="math notranslate nohighlight">\(\hat{\mathbf{\theta}}_\textsc{map} = \argmax_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\)</span><span class="math notranslate nohighlight">\(
-Again, if we assume the observations are i.i.d., then we can express
-this in the equivalent, and possibly friendlier, form
-\)</span><span class="math notranslate nohighlight">\(\hat{\mathbf{\theta}}_\textsc{map} = \argmax_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\)</span>$
-A particularly nice case is when the prior is chosen carefully such that
+don’t care about the normalizing constant! It does not affect which
+values of <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> maximize the posterior. So we have</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
+<p>Again, if we assume the observations are i.i.d., then we can express
+this in the equivalent, and possibly friendlier, form</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\]</div>
+<p>A particularly nice case is when the prior is chosen carefully such that
 the posterior comes from the same family as the prior. In this case the
 prior is called a <strong>conjugate prior</strong>. For example, if the likelihood is
 binomial and the prior is beta, the posterior is also beta. There are
@@ -808,14 +877,16 @@ useful.</p>
 <strong>Gaussian distribution</strong>, also known as the <strong>normal distribution</strong>. It
 is a continuous distribution, parameterized by its mean
 <span class="math notranslate nohighlight">\(\bm\mu \in \mathbb{R}^d\)</span> and positive-definite covariance matrix
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, with density
-$<span class="math notranslate nohighlight">\(p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \bm\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \bm\mu)\right)\)</span><span class="math notranslate nohighlight">\(
-Note that in the special case \)</span>d = 1<span class="math notranslate nohighlight">\(, the density is written in the
-more recognizable form
-\)</span><span class="math notranslate nohighlight">\(p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\)</span><span class="math notranslate nohighlight">\(
-We write \)</span>\mathbf{X} \sim \mathcal{N}(\bm\mu, \mathbf{\Sigma})<span class="math notranslate nohighlight">\( to
-denote that \)</span>\mathbf{X}<span class="math notranslate nohighlight">\( is normally distributed with mean \)</span>\bm\mu<span class="math notranslate nohighlight">\( and
-variance \)</span>\mathbf{\Sigma}$.</p>
+<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, with density</p>
+<div class="math notranslate nohighlight">
+\[p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \bm\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \bm\mu)\right)\]</div>
+<p>Note that in the special case <span class="math notranslate nohighlight">\(d = 1\)</span>, the density is written in the
+more recognizable form</p>
+<div class="math notranslate nohighlight">
+\[p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</div>
+<p>We write <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\bm\mu, \mathbf{\Sigma})\)</span> to
+denote that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is normally distributed with mean <span class="math notranslate nohighlight">\(\bm\mu\)</span> and
+variance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
 <section id="the-geometry-of-multivariate-gaussians">
 <h3>The geometry of multivariate Gaussians<a class="headerlink" href="#the-geometry-of-multivariate-gaussians" title="Link to this heading">#</a></h3>
 <p>The geometry of the multivariate Gaussian density is intimately related
@@ -823,12 +894,13 @@ to the geometry of positive definite quadratic forms, so make sure the
 material in that section is well-understood before tackling this
 section.</p>
 <p>First observe that the p.d.f. of the multivariate Gaussian can be
-rewritten as
-$<span class="math notranslate nohighlight">\(p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\tilde{\mathbf{x}} = \mathbf{x} - \bm\mu<span class="math notranslate nohighlight">\( and
-\)</span>g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)<span class="math notranslate nohighlight">\(.
+rewritten as</p>
+<div class="math notranslate nohighlight">
+\[p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x} - \bm\mu\)</span> and
+<span class="math notranslate nohighlight">\(g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)\)</span>.
 Writing the density in this way, we see that after shifting by the mean
-\)</span>\bm\mu$, the density is really just a simple function of its precision
+<span class="math notranslate nohighlight">\(\bm\mu\)</span>, the density is really just a simple function of its precision
 matrix’s quadratic form.</p>
 <p>Here is a key observation: this function <span class="math notranslate nohighlight">\(g\)</span> is <strong>strictly monotonically
 decreasing</strong> in its argument. That is, <span class="math notranslate nohighlight">\(g(a) &gt; g(b)\)</span> whenever <span class="math notranslate nohighlight">\(a &lt; b\)</span>.
@@ -841,9 +913,10 @@ because <span class="math notranslate nohighlight">\(g\)</span> is <em>strictly<
 <span class="math notranslate nohighlight">\(c\)</span>-isocontours of <span class="math notranslate nohighlight">\(p(\mathbf{x}; \bm\mu, \mathbf{\Sigma})\)</span> are the
 <span class="math notranslate nohighlight">\(g^{-1}(c)\)</span>-isocontours of the function
 <span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>.
-That is, for any <span class="math notranslate nohighlight">\(c\)</span>,
-$<span class="math notranslate nohighlight">\(\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\)</span>$
-In words, these functions have the same isocontours but different
+That is, for any <span class="math notranslate nohighlight">\(c\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\]</div>
+<p>In words, these functions have the same isocontours but different
 isovalues.</p>
 <p>Recall the executive summary of the geometry of positive definite
 quadratic forms: the isocontours of
