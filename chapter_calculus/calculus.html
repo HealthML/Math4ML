@@ -375,6 +375,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>
@@ -510,25 +512,28 @@ functions that make it up.</p>
 <p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
 composition. There is a natural generalization of this rule to
 multivariate functions.</p>
-<div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
 <span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
 <span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\]</div>
 <p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
 <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
-<div class="corollary docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
+<p>corollary
+Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
 <span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
 <span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and</p>
 <div class="math notranslate nohighlight">
 \[\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\]</div>
-<h2 class="rubric" id="taylor-s-theorem">Taylor’s theorem</h2>
+</section>
+</section>
+<section id="taylor-s-theorem">
+<h2>Taylor’s theorem<a class="headerlink" href="#taylor-s-theorem" title="Link to this heading">#</a></h2>
 <p>Taylor’s theorem has natural generalizations to functions of more than
 one variable. We give the version presented in [&#64;numopt].</p>
-<div class="theorem docutils">
-<p>(Taylor’s theorem) Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is
+<p><em>Theorem.</em>
+(Taylor’s theorem) Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is
 continuously differentiable, and let <span class="math notranslate nohighlight">\(\mathbf{h} \in \mathbb{R}^d\)</span>. Then
 there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that</p>
 <div class="math notranslate nohighlight">
@@ -542,16 +547,13 @@ there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> s
 <p>This theorem is used in proofs about conditions for local minima of
 unconstrained optimization problems. Some of the most important results
 are given in the next section.</p>
-<h2 class="rubric" id="conditions-for-local-minima">Conditions for local minima</h2>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is continuously
+</section>
+<section id="conditions-for-local-minima">
+<h2>Conditions for local minima<a class="headerlink" href="#conditions-for-local-minima" title="Link to this heading">#</a></h2>
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is continuously
 differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, then
 <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose
 towards a contradiction that <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) \neq \mathbf{0}\)</span>.
 Let <span class="math notranslate nohighlight">\(\mathbf{h} = -\nabla f(\mathbf{x}^*)\)</span>, noting that by the
@@ -569,7 +571,6 @@ there exists <span class="math notranslate nohighlight">\(t' \in (0,t)\)</span> 
 \[f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; f(\mathbf{x}^*)\]</div>
 <p>whence it follows that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a
 contradiction. Hence <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. ◻</p>
-</div>
 <p>The proof shows us why the vanishing gradient is necessary for an
 extremum: if <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> is nonzero, there always exists a
 sufficiently small step <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> such that
@@ -587,12 +588,10 @@ extremum, are called <strong>saddle points</strong>.</p>
 insufficient to characterize local minima. But we can say more with
 second-order information (i.e. the Hessian). First we prove a necessary
 second-order condition for local minima.</p>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is twice
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is twice
 continuously differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, then
 <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive semi-definite.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose
 towards a contradiction that <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is not positive
 semi-definite. Let <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> be such that
@@ -613,16 +612,13 @@ for all <span class="math notranslate nohighlight">\(t \in [0,T]\)</span>. Now w
 <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span> by the previous result. It follows
 that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a contradiction. Hence
 <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive semi-definite. ◻</p>
-</div>
 <p>Now we give sufficient conditions for local minima.</p>
-<div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice continuously differentiable with <span class="math notranslate nohighlight">\(\nabla^2 f\)</span>
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice continuously differentiable with <span class="math notranslate nohighlight">\(\nabla^2 f\)</span>
 positive semi-definite in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, and that
 <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local
 minimum of <span class="math notranslate nohighlight">\(f\)</span>. Furthermore if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive
 definite, then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a strict local minimum.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(B\)</span> be an open ball of radius <span class="math notranslate nohighlight">\(r &gt; 0\)</span> centered at
 <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> which is contained in the neighborhood. Applying Taylor’s
 theorem, we have that for any <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(\|\mathbf{h}\|_2 &lt; r\)</span>,
@@ -646,7 +642,6 @@ with a strict inequality now since the Hessian is positive definite) we
 have <span class="math notranslate nohighlight">\(f(\mathbf{x}^* + \mathbf{h}) &gt; f(\mathbf{x}^*)\)</span> for all
 <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(0 &lt; \|\mathbf{h}\|_2 &lt; r'\)</span>. Hence <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a
 strict local minimum. ◻</p>
-</div>
 <p>Note that, perhaps counterintuitively, the conditions
 <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span> and <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span>
 positive semi-definite are not enough to guarantee a local minimum at
@@ -665,7 +660,6 @@ cases we can verify it analytically (usually by showing that
 strictly positive definite, the continuity assumption on <span class="math notranslate nohighlight">\(f\)</span> implies
 this condition, so we don’t have to worry.</p>
 </section>
-</section>
 <section id="convexity">
 <h2>Convexity<a class="headerlink" href="#convexity" title="Link to this heading">#</a></h2>
 <p><strong>Convexity</strong> is a term that pertains to both sets and functions. For
@@ -676,17 +670,14 @@ In this section, we present basic results regarding convexity, strict
 convexity, and strong convexity.</p>
 <section id="convex-sets">
 <h3>Convex sets<a class="headerlink" href="#convex-sets" title="Link to this heading">#</a></h3>
-<figure id="fig:convexset">
-<figure>
-<img src="../figures/convex-set.png" />
-<figcaption>A convex set</figcaption>
-</figure>
-<figure>
-<img src="../figures/nonconvex-set.png" />
-<figcaption>A non-convex set</figcaption>
-</figure>
-<figcaption>What convex sets look like</figcaption>
-</figure>
+<div class="center docutils">
+<p><img alt="image" src="../_images/convex-set.png" />
+A convex set</p>
+</div>
+<div class="center docutils">
+<p><img alt="image" src="../_images/nonconvex-set.png" />
+A non-convex set</p>
+</div>
 <p>A set <span class="math notranslate nohighlight">\(\mathcal{X} \subseteq \mathbb{R}^d\)</span> is <strong>convex</strong> if</p>
 <div class="math notranslate nohighlight">
 \[t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}\]</div>
@@ -723,7 +714,10 @@ with the definitions and then give some results.</p>
 convex.</p>
 <p>These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.</p>
-<p><img alt="What convex functions looklike" src="../_images/convex-function.png" />{#fig:convexfunction width=”\linewidth”}</p>
+<div class="center docutils">
+<p><img alt="What convex functions look like" src="../_images/convex-function.png" />
+What convex functions look like</p>
+</div>
 <p>Geometrically, convexity means that the line segment between two points
 on the graph of <span class="math notranslate nohighlight">\(f\)</span> lies on or above the graph itself. See Figure
 <a class="reference internal" href="#fig:convexfunction"><span class="xref myst">2</span></a>{reference-type=”ref”
@@ -738,11 +732,9 @@ in the figure appears to be strictly convex.)</p>
 <p>Basically, our various notions of convexity have implications about the
 nature of minima. It should not be surprising that the stronger
 conditions tell us more about the minima.</p>
-<div class="proposition docutils">
-<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is convex, then any local
+<p><em>Proposition.</em>
+Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is convex, then any local
 minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> is also a global minimum.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex, and let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local
 minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then for some neighborhood
 <span class="math notranslate nohighlight">\(N \subseteq \mathcal{X}\)</span> about <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, we have
@@ -764,13 +756,10 @@ above inequality, a contradiction.</p>
 <p>It follows that <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) \leq f(\mathbf{x})\)</span> for all
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a global minimum of
 <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, then there
+<p><em>Proposition.</em>
+Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set. If <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, then there
 exists at most one local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Consequently,
 if it exists it is the unique global minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> The second sentence follows from the first, so all we must show
 is that if a local minimum exists in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> then it is unique.</p>
 <p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, and
@@ -791,7 +780,6 @@ is a global minimum. Therefore if <span class="math notranslate nohighlight">\(\
 minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, then
 <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x}^*\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is the unique
 minimum in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
-</div>
 <p>It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>
 is convex is needed in the results above.</p>
@@ -820,10 +808,8 @@ is an important property. Next we turn to the issue of showing that a
 function is (strictly/strongly) convex. It is of course possible (in
 principle) to directly show that the condition in the definition holds,
 but this is usually not the easiest way.</p>
-<div class="proposition docutils">
-<p>Norms are convex.</p>
-</div>
-<div class="proof docutils">
+<p><em>Proposition.</em>
+Norms are convex.</p>
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> be a norm on a vector space <span class="math notranslate nohighlight">\(V\)</span>. Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -831,18 +817,14 @@ but this is usually not the easiest way.</p>
 <p>where we have used respectively the triangle inequality, the homogeneity
 of norms, and the fact that <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(1-t\)</span> are nonnegative. Hence
 <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> is convex. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable. Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if</p>
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable. Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle\]</div>
 <p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>.</p>
-<div class="proof docutils">
 <p><em>Proof.</em> To-do. ◻</p>
-</div>
-</div>
-<div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice differentiable. Then</p>
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice differentiable. Then</p>
 <p>(i) <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for
 all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
 <p>(ii) If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succ 0\)</span> for all
@@ -850,14 +832,9 @@ all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{do
 <p>(iii) <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if and only if
 <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Omitted. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>, then <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex.</p>
-</div>
-<div class="proof docutils">
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>, then <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex.</p>
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>. Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -868,13 +845,10 @@ all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{do
 &amp;= t(\alpha f)(\mathbf{x}) + (1-t)(\alpha f)(\mathbf{y})
 \end{aligned}\end{split}\]</div>
 <p>so <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex. ◻</p>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is convex. Furthermore, if <span class="math notranslate nohighlight">\(g\)</span> is
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is convex. Furthermore, if <span class="math notranslate nohighlight">\(g\)</span> is
 strictly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is strictly convex, and if <span class="math notranslate nohighlight">\(g\)</span> is
 <span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex.</p>
-</div>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex. Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -895,23 +869,17 @@ convex, so <span class="math notranslate nohighlight">\(f+h\)</span> is convex. 
 <div class="math notranslate nohighlight">
 \[(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\]</div>
 <p>so <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(f_1, \dots, f_n\)</span> are convex and <span class="math notranslate nohighlight">\(\alpha_1, \dots, \alpha_n \geq 0\)</span>,
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(f_1, \dots, f_n\)</span> are convex and <span class="math notranslate nohighlight">\(\alpha_1, \dots, \alpha_n \geq 0\)</span>,
 then</p>
 <div class="math notranslate nohighlight">
 \[\sum_{i=1}^n \alpha_i f_i\]</div>
 <p>is convex.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Follows from the previous two propositions by induction. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex, then
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(f\)</span> is convex, then
 <span class="math notranslate nohighlight">\(g(\mathbf{x}) \equiv f(\mathbf{A}\mathbf{x} + \mathbf{b})\)</span> is convex
 for any appropriately-sized <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(g\)</span> is defined like so. Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} g\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -924,12 +892,9 @@ g(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{
 &amp;= tg(\mathbf{x}) + (1-t)g(\mathbf{y})
 \end{aligned}\end{split}\]</div>
 <p>Thus <span class="math notranslate nohighlight">\(g\)</span> is convex. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then
 <span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}\)</span> is convex.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex and <span class="math notranslate nohighlight">\(h\)</span> is defined like so. Then
 for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} h\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -945,7 +910,6 @@ of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math
 <span class="math notranslate nohighlight">\(\max\{a,b\} \leq \max\{c,d\}\)</span>. In the second inequality we have used
 the fact that <span class="math notranslate nohighlight">\(\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}\)</span>.</p>
 <p>Thus <span class="math notranslate nohighlight">\(h\)</span> is convex. ◻</p>
-</div>
 </section>
 <section id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
@@ -983,7 +947,7 @@ referred to as <strong>projection onto a subspace</strong>.</p>
 in Euclidean space, the solution is intimately related to orthogonality
 and the Pythagorean theorem:</p>
 <div class="center docutils">
-<p><img alt="image" src="../_images/orthogonal-projection.png" />{width=”50%”}</p>
+<p><img alt="image" src="../_images/orthogonal-projection.png" /></p>
 </div>
 <p>Here <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary element of the subspace <span class="math notranslate nohighlight">\(S\)</span>, and
 <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the point in <span class="math notranslate nohighlight">\(S\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^*\)</span>
@@ -996,12 +960,10 @@ and <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>.</p>
 <p>Our intuition from Euclidean space suggests that the closest point to
 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in <span class="math notranslate nohighlight">\(S\)</span> has the perpendicularity property described above,
 and we now show that this is indeed the case.</p>
-<div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
 is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over
 <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span> if and only if <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> <span class="math notranslate nohighlight">\((\implies)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. That is,
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|\)</span> for all
@@ -1032,7 +994,6 @@ by the Pythagorean theorem,</p>
 since this implies <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\| &gt; 0\)</span>. Thus
 <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>
 over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. ◻</p>
-</div>
 <p>Since a unique minimizer in <span class="math notranslate nohighlight">\(S\)</span> can be found for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>,
 we can define an operator</p>
 <div class="math notranslate nohighlight">
@@ -1050,12 +1011,11 @@ for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. 
 <strong>orthogonal projection</strong>.</p>
 <p>If we choose an orthonormal basis for the target subspace <span class="math notranslate nohighlight">\(S\)</span>, it is
 possible to write down a more specific expression for <span class="math notranslate nohighlight">\(P\)</span>.</p>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
 then</p>
 <div class="math notranslate nohighlight">
 \[P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\]</div>
-<div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> be an orthonormal basis
 for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -1071,8 +1031,6 @@ for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span c
 linearity of the inner product) that
 <span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp S\)</span>, so the previous result
 implies <span class="math notranslate nohighlight">\(P = \tilde{P}\)</span>. ◻</p>
-</div>
-</div>
 <p>The fact that <span class="math notranslate nohighlight">\(P\)</span> is a linear operator (and thus a proper projection, as
 earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>) follows readily from this result.</p>
 </section>
@@ -1151,6 +1109,8 @@ earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>

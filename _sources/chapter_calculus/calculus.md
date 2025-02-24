@@ -126,7 +126,7 @@ where $\circ$ denotes function
 composition. There is a natural generalization of this rule to
 multivariate functions.
 
-::: proposition
+*Proposition.*
 Suppose $f : \mathbb{R}^m \to \mathbb{R}^k$ and
 $g : \mathbb{R}^n \to \mathbb{R}^m$. Then
 $f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ and
@@ -137,7 +137,7 @@ $$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\
 In the special case $k = 1$ we have the following corollary since
 $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 
-::: corollary
+ corollary
 Suppose $f : \mathbb{R}^m \to \mathbb{R}$ and
 $g : \mathbb{R}^n \to \mathbb{R}^m$. Then
 $f \circ g : \mathbb{R}^n \to \mathbb{R}$ and
@@ -150,7 +150,7 @@ $$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(
 Taylor's theorem has natural generalizations to functions of more than
 one variable. We give the version presented in [@numopt].
 
-::: theorem
+*Theorem.*
 (Taylor's theorem) Suppose $f : \mathbb{R}^d \to \mathbb{R}$ is
 continuously differentiable, and let $\mathbf{h} \in \mathbb{R}^d$. Then
 there exists $t \in (0,1)$ such that
@@ -172,13 +172,13 @@ are given in the next section.
 
 ## Conditions for local minima
 
-::: proposition
+*Proposition.*
 If $\mathbf{x}^*$ is a local minimum of $f$ and $f$ is continuously
 differentiable in a neighborhood of $\mathbf{x}^*$, then
 $\nabla f(\mathbf{x}^*) = \mathbf{0}$.
-:::
 
-::: proof
+
+
 *Proof.* Let $\mathbf{x}^*$ be a local minimum of $f$, and suppose
 towards a contradiction that $\nabla f(\mathbf{x}^*) \neq \mathbf{0}$.
 Let $\mathbf{h} = -\nabla f(\mathbf{x}^*)$, noting that by the
@@ -199,7 +199,7 @@ $$f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabl
 
 whence it follows that $\mathbf{x}^*$ is not a local minimum, a
 contradiction. Hence $\nabla f(\mathbf{x}^*) = \mathbf{0}$. ◻
-:::
+
 
 The proof shows us why the vanishing gradient is necessary for an
 extremum: if $\nabla f(\mathbf{x})$ is nonzero, there always exists a
@@ -221,13 +221,13 @@ insufficient to characterize local minima. But we can say more with
 second-order information (i.e. the Hessian). First we prove a necessary
 second-order condition for local minima.
 
-::: proposition
+*Proposition.*
 If $\mathbf{x}^*$ is a local minimum of $f$ and $f$ is twice
 continuously differentiable in a neighborhood of $\mathbf{x}^*$, then
 $\nabla^2 f(\mathbf{x}^*)$ is positive semi-definite.
-:::
 
-::: proof
+
+
 *Proof.* Let $\mathbf{x}^*$ be a local minimum of $f$, and suppose
 towards a contradiction that $\nabla^2 f(\mathbf{x}^*)$ is not positive
 semi-definite. Let $\mathbf{h}$ be such that
@@ -251,19 +251,19 @@ where the middle term vanishes because
 $\nabla f(\mathbf{x}^*) = \mathbf{0}$ by the previous result. It follows
 that $\mathbf{x}^*$ is not a local minimum, a contradiction. Hence
 $\nabla^2 f(\mathbf{x}^*)$ is positive semi-definite. ◻
-:::
+
 
 Now we give sufficient conditions for local minima.
 
-::: proposition
+*Proposition.*
 Suppose $f$ is twice continuously differentiable with $\nabla^2 f$
 positive semi-definite in a neighborhood of $\mathbf{x}^*$, and that
 $\nabla f(\mathbf{x}^*) = \mathbf{0}$. Then $\mathbf{x}^*$ is a local
 minimum of $f$. Furthermore if $\nabla^2 f(\mathbf{x}^*)$ is positive
 definite, then $\mathbf{x}^*$ is a strict local minimum.
-:::
 
-::: proof
+
+
 *Proof.* Let $B$ be an open ball of radius $r > 0$ centered at
 $\mathbf{x}^*$ which is contained in the neighborhood. Applying Taylor's
 theorem, we have that for any $\mathbf{h}$ with $\|\mathbf{h}\|_2 < r$,
@@ -289,7 +289,7 @@ with a strict inequality now since the Hessian is positive definite) we
 have $f(\mathbf{x}^* + \mathbf{h}) > f(\mathbf{x}^*)$ for all
 $\mathbf{h}$ with $0 < \|\mathbf{h}\|_2 < r'$. Hence $\mathbf{x}^*$ is a
 strict local minimum. ◻
-:::
+
 
 Note that, perhaps counterintuitively, the conditions
 $\nabla f(\mathbf{x}^*) = \mathbf{0}$ and $\nabla^2 f(\mathbf{x}^*)$
@@ -320,18 +320,15 @@ In this section, we present basic results regarding convexity, strict
 convexity, and strong convexity.
 
 ### Convex sets
+ ::: center
+![image](../figures/convex-set.png)
+A convex set
+:::
 
-<figure id="fig:convexset">
-<figure>
-<img src="../figures/convex-set.png" />
-<figcaption>A convex set</figcaption>
-</figure>
-<figure>
-<img src="../figures/nonconvex-set.png" />
-<figcaption>A non-convex set</figcaption>
-</figure>
-<figcaption>What convex sets look like</figcaption>
-</figure>
+ ::: center
+![image](../figures/nonconvex-set.png)
+A non-convex set
+:::
 
 A set $\mathcal{X} \subseteq \mathbb{R}^d$ is **convex** if
 
@@ -379,8 +376,10 @@ convex.
 These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.
 
-![What convex functions look
-like](../figures/convex-function.png){#fig:convexfunction width="\\linewidth"}
+ ::: center
+![What convex functions look like](../figures/convex-function.png)
+What convex functions look like
+:::
 
 Geometrically, convexity means that the line segment between two points
 on the graph of $f$ lies on or above the graph itself. See Figure
@@ -399,12 +398,12 @@ Basically, our various notions of convexity have implications about the
 nature of minima. It should not be surprising that the stronger
 conditions tell us more about the minima.
 
-::: proposition
+*Proposition.*
 Let $\mathcal{X}$ be a convex set. If $f$ is convex, then any local
 minimum of $f$ in $\mathcal{X}$ is also a global minimum.
-:::
 
-::: proof
+
+
 *Proof.* Suppose $f$ is convex, and let $\mathbf{x}^*$ be a local
 minimum of $f$ in $\mathcal{X}$. Then for some neighborhood
 $N \subseteq \mathcal{X}$ about $\mathbf{x}^*$, we have
@@ -430,15 +429,15 @@ above inequality, a contradiction.
 It follows that $f(\mathbf{x}^*) \leq f(\mathbf{x})$ for all
 $\mathbf{x} \in \mathcal{X}$, so $\mathbf{x}^*$ is a global minimum of
 $f$ in $\mathcal{X}$. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 Let $\mathcal{X}$ be a convex set. If $f$ is strictly convex, then there
 exists at most one local minimum of $f$ in $\mathcal{X}$. Consequently,
 if it exists it is the unique global minimum of $f$ in $\mathcal{X}$.
-:::
 
-::: proof
+
+
 *Proof.* The second sentence follows from the first, so all we must show
 is that if a local minimum exists in $\mathcal{X}$ then it is unique.
 
@@ -462,7 +461,7 @@ is a global minimum. Therefore if $\tilde{\mathbf{x}}$ is a local
 minimum of $f$ in $\mathcal{X}$, then
 $\tilde{\mathbf{x}} = \mathbf{x}^*$, so $\mathbf{x}^*$ is the unique
 minimum in $\mathcal{X}$. ◻
-:::
+
 
 It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that $\mathcal{X}$
@@ -498,11 +497,11 @@ function is (strictly/strongly) convex. It is of course possible (in
 principle) to directly show that the condition in the definition holds,
 but this is usually not the easiest way.
 
-::: proposition
+*Proposition.*
 Norms are convex.
-:::
 
-::: proof
+
+
 *Proof.* Let $\|\cdot\|$ be a norm on a vector space $V$. Then for all
 $\mathbf{x}, \mathbf{y} \in V$ and $t \in [0,1]$,
 
@@ -511,9 +510,9 @@ $$\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| =
 where we have used respectively the triangle inequality, the homogeneity
 of norms, and the fact that $t$ and $1-t$ are nonnegative. Hence
 $\|\cdot\|$ is convex. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 Suppose $f$ is differentiable. Then $f$ is convex if and only if
 
 $$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle$$
@@ -521,11 +520,11 @@ $$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - 
 for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
 
 
-::: proof
-*Proof.* To-do. ◻
-:::
 
-::: proposition
+*Proof.* To-do. ◻
+
+
+*Proposition.*
 Suppose $f$ is twice differentiable. Then
 
 (i) $f$ is convex if and only if $\nabla^2 f(\mathbf{x}) \succeq 0$ for
@@ -537,17 +536,17 @@ Suppose $f$ is twice differentiable. Then
 (iii) $f$ is $m$-strongly convex if and only if
       $\nabla^2 f(\mathbf{x}) \succeq mI$ for all
       $\mathbf{x} \in \operatorname{dom} f$.
-:::
 
-::: proof
+
+
 *Proof.* Omitted. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $f$ is convex and $\alpha \geq 0$, then $\alpha f$ is convex.
-:::
 
-::: proof
+
+
 *Proof.* Suppose $f$ is convex and $\alpha \geq 0$. Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f$, 
 
@@ -560,13 +559,13 @@ $$\begin{aligned}
 
 so $\alpha f$ is convex. ◻
 
-::: proposition
+*Proposition.*
 If $f$ and $g$ are convex, then $f+g$ is convex. Furthermore, if $g$ is
 strictly convex, then $f+g$ is strictly convex, and if $g$ is
 $m$-strongly convex, then $f+g$ is $m$-strongly convex.
-:::
 
-::: proof
+
+
 *Proof.* Suppose $f$ and $g$ are convex. Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g$,
 
@@ -591,28 +590,28 @@ convex, so $f+h$ is convex. But
 $$(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$
 
 so $f+g$ is $m$-strongly convex. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $f_1, \dots, f_n$ are convex and $\alpha_1, \dots, \alpha_n \geq 0$,
 then 
 
 $$\sum_{i=1}^n \alpha_i f_i$$ 
 
 is convex.
-:::
 
-::: proof
+
+
 *Proof.* Follows from the previous two propositions by induction. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $f$ is convex, then
 $g(\mathbf{x}) \equiv f(\mathbf{A}\mathbf{x} + \mathbf{b})$ is convex
 for any appropriately-sized $\mathbf{A}$ and $\mathbf{b}$.
-:::
 
-::: proof
+
+
 *Proof.* Suppose $f$ is convex and $g$ is defined like so. Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom} g$, 
 
@@ -626,14 +625,14 @@ g(t\mathbf{x} + (1-t)\mathbf{y}) &= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) 
 \end{aligned}$$ 
 
 Thus $g$ is convex. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $f$ and $g$ are convex, then
 $h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}$ is convex.
-:::
 
-::: proof
+
+
 *Proof.* Suppose $f$ and $g$ are convex and $h$ is defined like so. Then
 for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} h$, 
 
@@ -651,7 +650,7 @@ $\max\{a,b\} \leq \max\{c,d\}$. In the second inequality we have used
 the fact that $\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}$.
 
 Thus $h$ is convex. ◻
-:::
+
 
 ### Examples
 
@@ -698,8 +697,8 @@ The following diagram should make it geometrically clear that, at least
 in Euclidean space, the solution is intimately related to orthogonality
 and the Pythagorean theorem:
 
-::: center
-![image](../figures/orthogonal-projection.png){width="50%"}
+ ::: center
+![image](../figures/orthogonal-projection.png)
 :::
 
 Here $\mathbf{y}$ is an arbitrary element of the subspace $S$, and
@@ -715,13 +714,13 @@ Our intuition from Euclidean space suggests that the closest point to
 $\mathbf{x}$ in $S$ has the perpendicularity property described above,
 and we now show that this is indeed the case.
 
-::: proposition
+*Proposition.*
 Suppose $\mathbf{x} \in V$ and $\mathbf{y} \in S$. Then $\mathbf{y}^*$
 is the unique minimizer of $\|\mathbf{x}-\mathbf{y}\|$ over
 $\mathbf{y} \in S$ if and only if $\mathbf{x}-\mathbf{y}^* \perp S$.
-:::
 
-::: proof
+
+
 *Proof.* $(\implies)$ Suppose $\mathbf{y}^*$ is the unique minimizer of
 $\|\mathbf{x}-\mathbf{y}\|$ over $\mathbf{y} \in S$. That is,
 $\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|$ for all
@@ -756,7 +755,7 @@ and in fact the inequality is strict when $\mathbf{y} \neq \mathbf{y}^*$
 since this implies $\|\mathbf{y}^*-\mathbf{y}\| > 0$. Thus
 $\mathbf{y}^*$ is the unique minimizer of $\|\mathbf{x}-\mathbf{y}\|$
 over $\mathbf{y} \in S$. ◻
-:::
+
 
 Since a unique minimizer in $S$ can be found for any $\mathbf{x} \in V$,
 we can define an operator
@@ -779,13 +778,13 @@ for all $\mathbf{x} \in V$. For this reason, $P$ is known as an
 If we choose an orthonormal basis for the target subspace $S$, it is
 possible to write down a more specific expression for $P$.
 
-::: proposition
+*Proposition.*
 If $\mathbf{e}_1, \dots, \mathbf{e}_m$ is an orthonormal basis for $S$,
 then
 
 $$P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i$$
 
-::: proof
+
 *Proof.* Let $\mathbf{e}_1, \dots, \mathbf{e}_m$ be an orthonormal basis
 for $S$, and suppose $\mathbf{x} \in V$. Then for all $j = 1, \dots, m$,
 
@@ -802,7 +801,7 @@ $\mathbf{e}_j$ of the orthonormal basis for $S$. It follows (by
 linearity of the inner product) that
 $\mathbf{x} - \tilde{P}\mathbf{x} \perp S$, so the previous result
 implies $P = \tilde{P}$. ◻
-:::
+
 
 The fact that $P$ is a linear operator (and thus a proper projection, as
 earlier we showed $P^2 = P$) follows readily from this result.

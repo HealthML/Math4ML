@@ -22,7 +22,7 @@ $\mathbb{P} : \mathcal{F} \to [0,1]$ which must satisfy
 (ii) **Countable additivity**: for any countable collection of disjoint
      sets $\{A_i\} \subseteq \mathcal{F}$,
 
-     $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)$$
+$$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)$$
 
 The triple $(\Omega, \mathcal{F}, \mathbb{P})$ is called a **probability
 space**.[^8]
@@ -33,7 +33,7 @@ $\mathbb{P}(A) = 0$.
 
 From these axioms, a number of useful rules can be derived.
 
-::: proposition
+*Proposition.*
 Let $A$ be an event. Then
 
 (i) $\mathbb{P}(A^\text{c}) = 1 - \mathbb{P}(A)$.
@@ -42,9 +42,9 @@ Let $A$ be an event. Then
      $\mathbb{P}(B) \leq \mathbb{P}(A)$.
 
 (iii) $0 = \mathbb{P}(\varnothing) \leq \mathbb{P}(A) \leq \mathbb{P}(\Omega) = 1$
-:::
 
-::: proof
+
+
 *Proof.* (i) Using the countable additivity of $\mathbb{P}$, we have
 
 $$\mathbb{P}(A) + \mathbb{P}(A^\text{c}) = \mathbb{P}(A \mathbin{\dot{\cup}} A^\text{c}) = \mathbb{P}(\Omega) = 1$$
@@ -61,14 +61,14 @@ $\varnothing \subseteq A \subseteq \Omega$. We also have
 $$\mathbb{P}(\varnothing) = \mathbb{P}(\varnothing \mathbin{\dot{\cup}} \varnothing) = \mathbb{P}(\varnothing) + \mathbb{P}(\varnothing)$$
 
 by countable additivity, which shows $\mathbb{P}(\varnothing) = 0$. ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $A$ and $B$ are events, then
 $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$.
-:::
 
-::: proof
+
+
 *Proof.* The key is to break the events up into their various
 overlapping and non-overlapping parts. 
 
@@ -80,20 +80,20 @@ $$\begin{aligned}
 \end{aligned}$$
 
  ◻
-:::
 
-::: proposition
+
+*Proposition.*
 If $\{A_i\} \subseteq \mathcal{F}$ is a countable set of events,
 disjoint or not, then
 
 $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) \leq \sum_i \mathbb{P}(A_i)$$
 
-:::
+
 
 This inequality is sometimes referred to as **Boole's inequality** or
 the **union bound**.
 
-::: proof
+
 *Proof.* Define $B_1 = A_1$ and
 $B_i = A_i \setminus (\bigcup_{j < i} A_j)$ for $i > 1$, noting that
 $\bigcup_{j \leq i} B_j = \bigcup_{j \leq i} A_j$ for all $i$ and the
@@ -103,7 +103,7 @@ $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \mathbb{P}\bigg(\bigcup_i B_i\bigg) = \s
 
 where the last inequality follows by monotonicity since
 $B_i \subseteq A_i$ for all $i$. ◻
-:::
+
 
 ### Conditional probability
 
@@ -467,7 +467,7 @@ data best by maximizing the probability/density of the data we've seen
 as a function of the parameters. Suppose we have random variables
 $X_1, \dots, X_n$ and corresponding observations $x_1, \dots, x_n$. Then
 
-$$\hat{\mathbf{\theta}}_\text{mle} = \argmax_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})$$
+$$\hat{\mathbf{\theta}}_\text{mle} = \operatorname{argmax}_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})$$
 
 where $\mathcal{L}$ is the **likelihood function**
 
@@ -508,12 +508,12 @@ high-dimensional. Fortunately, if we just want the MAP estimate, we
 don't care about the normalizing constant! It does not affect which
 values of $\mathbf{\theta}$ maximize the posterior. So we have
 
-$$\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
+$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
 
 Again, if we assume the observations are i.i.d., then we can express
 this in the equivalent, and possibly friendlier, form
 
-$$\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)$$
+$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)$$
 
 A particularly nice case is when the prior is chosen carefully such that
 the posterior comes from the same family as the prior. In this case the
@@ -528,18 +528,18 @@ useful.
 There are many distributions, but one of particular importance is the
 **Gaussian distribution**, also known as the **normal distribution**. It
 is a continuous distribution, parameterized by its mean
-$\bm\mu \in \mathbb{R}^d$ and positive-definite covariance matrix
+$\boldsymbol\mu \in \mathbb{R}^d$ and positive-definite covariance matrix
 $\mathbf{\Sigma} \in \mathbb{R}^{d \times d}$, with density
 
-$$p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \bm\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \bm\mu)\right)$$
+$$p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \boldsymbol\mu)\right)$$
 
 Note that in the special case $d = 1$, the density is written in the
 more recognizable form
 
 $$p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
 
-We write $\mathbf{X} \sim \mathcal{N}(\bm\mu, \mathbf{\Sigma})$ to
-denote that $\mathbf{X}$ is normally distributed with mean $\bm\mu$ and
+We write $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})$ to
+denote that $\mathbf{X}$ is normally distributed with mean $\boldsymbol\mu$ and
 variance $\mathbf{\Sigma}$.
 
 ### The geometry of multivariate Gaussians
@@ -552,12 +552,12 @@ section.
 First observe that the p.d.f. of the multivariate Gaussian can be
 rewritten as
 
-$$p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})$$
+$$p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})$$
 
-where $\tilde{\mathbf{x}} = \mathbf{x} - \bm\mu$ and
+where $\tilde{\mathbf{x}} = \mathbf{x} - \boldsymbol\mu$ and
 $g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)$.
 Writing the density in this way, we see that after shifting by the mean
-$\bm\mu$, the density is really just a simple function of its precision
+$\boldsymbol\mu$, the density is really just a simple function of its precision
 matrix's quadratic form.
 
 Here is a key observation: this function $g$ is **strictly monotonically
@@ -565,15 +565,15 @@ decreasing** in its argument. That is, $g(a) > g(b)$ whenever $a < b$.
 Therefore, small values of
 $\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}$
 (which generally correspond to points where $\tilde{\mathbf{x}}$ is
-closer to $\mathbf{0}$, i.e. $\mathbf{x} \approx \bm\mu$) have
+closer to $\mathbf{0}$, i.e. $\mathbf{x} \approx \boldsymbol\mu$) have
 relatively high probability densities, and vice-versa. Furthermore,
 because $g$ is *strictly* monotonic, it is injective, so the
-$c$-isocontours of $p(\mathbf{x}; \bm\mu, \mathbf{\Sigma})$ are the
+$c$-isocontours of $p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma})$ are the
 $g^{-1}(c)$-isocontours of the function
 $\mathbf{x} \mapsto \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}$.
 That is, for any $c$,
 
-$$\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}$$
+$$\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}$$
 
 In words, these functions have the same isocontours but different
 isovalues.
@@ -585,7 +585,7 @@ ellipsoids such that the axes point in the directions of the
 eigenvectors of $\mathbf{A}$, and the lengths of these axes are
 proportional to the inverse square roots of the corresponding
 eigenvalues. Therefore in this case, the isocontours of the density are
-ellipsoids (centered at $\bm\mu$) with axis lengths proportional to the
+ellipsoids (centered at $\boldsymbol\mu$) with axis lengths proportional to the
 inverse square roots of the eigenvalues of $\mathbf{\Sigma}^{-1}$, or
 equivalently, the square roots of the eigenvalues of $\mathbf{\Sigma}$.
 

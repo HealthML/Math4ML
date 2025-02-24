@@ -436,23 +436,20 @@ subsets of <span class="math notranslate nohighlight">\(\Omega\)</span>. The set
 <p>(i) <span class="math notranslate nohighlight">\(\mathbb{P}(\Omega) = 1\)</span></p>
 <p>(ii) <strong>Countable additivity</strong>: for any countable collection of disjoint
 sets <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span>,</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)$$
-</pre></div>
-</div>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \sum_i \mathbb{P}(A_i)\]</div>
 <p>The triple <span class="math notranslate nohighlight">\((\Omega, \mathcal{F}, \mathbb{P})\)</span> is called a <strong>probability
 space</strong>.<a class="footnote-reference brackets" href="#id10" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></a></p>
 <p>If <span class="math notranslate nohighlight">\(\mathbb{P}(A) = 1\)</span>, we say that <span class="math notranslate nohighlight">\(A\)</span> occurs <strong>almost surely</strong> (often
 abbreviated a.s.).<a class="footnote-reference brackets" href="#id11" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></a>, and conversely <span class="math notranslate nohighlight">\(A\)</span> occurs <strong>almost never</strong> if
 <span class="math notranslate nohighlight">\(\mathbb{P}(A) = 0\)</span>.</p>
 <p>From these axioms, a number of useful rules can be derived.</p>
-<div class="proposition docutils">
-<p>Let <span class="math notranslate nohighlight">\(A\)</span> be an event. Then</p>
+<p><em>Proposition.</em>
+Let <span class="math notranslate nohighlight">\(A\)</span> be an event. Then</p>
 <p>(i) <span class="math notranslate nohighlight">\(\mathbb{P}(A^\text{c}) = 1 - \mathbb{P}(A)\)</span>.</p>
 <p>(ii) If <span class="math notranslate nohighlight">\(B\)</span> is an event and <span class="math notranslate nohighlight">\(B \subseteq A\)</span>, then
 <span class="math notranslate nohighlight">\(\mathbb{P}(B) \leq \mathbb{P}(A)\)</span>.</p>
 <p>(iii) <span class="math notranslate nohighlight">\(0 = \mathbb{P}(\varnothing) \leq \mathbb{P}(A) \leq \mathbb{P}(\Omega) = 1\)</span></p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> (i) Using the countable additivity of <span class="math notranslate nohighlight">\(\mathbb{P}\)</span>, we have</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{P}(A) + \mathbb{P}(A^\text{c}) = \mathbb{P}(A \mathbin{\dot{\cup}} A^\text{c}) = \mathbb{P}(\Omega) = 1\]</div>
@@ -465,12 +462,9 @@ abbreviated a.s.).<a class="footnote-reference brackets" href="#id11" id="id3" r
 <div class="math notranslate nohighlight">
 \[\mathbb{P}(\varnothing) = \mathbb{P}(\varnothing \mathbin{\dot{\cup}} \varnothing) = \mathbb{P}(\varnothing) + \mathbb{P}(\varnothing)\]</div>
 <p>by countable additivity, which shows <span class="math notranslate nohighlight">\(\mathbb{P}(\varnothing) = 0\)</span>. ◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are events, then
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are events, then
 <span class="math notranslate nohighlight">\(\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)\)</span>.</p>
-</div>
-<div class="proof docutils">
 <p><em>Proof.</em> The key is to break the events up into their various
 overlapping and non-overlapping parts.</p>
 <div class="math notranslate nohighlight">
@@ -481,16 +475,13 @@ overlapping and non-overlapping parts.</p>
 &amp;= \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)
 \end{aligned}\end{split}\]</div>
 <p>◻</p>
-</div>
-<div class="proposition docutils">
-<p>If <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span> is a countable set of events,
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(\{A_i\} \subseteq \mathcal{F}\)</span> is a countable set of events,
 disjoint or not, then</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{P}\bigg(\bigcup_i A_i\bigg) \leq \sum_i \mathbb{P}(A_i)\]</div>
-</div>
 <p>This inequality is sometimes referred to as <strong>Boole’s inequality</strong> or
 the <strong>union bound</strong>.</p>
-<div class="proof docutils">
 <p><em>Proof.</em> Define <span class="math notranslate nohighlight">\(B_1 = A_1\)</span> and
 <span class="math notranslate nohighlight">\(B_i = A_i \setminus (\bigcup_{j &lt; i} A_j)\)</span> for <span class="math notranslate nohighlight">\(i &gt; 1\)</span>, noting that
 <span class="math notranslate nohighlight">\(\bigcup_{j \leq i} B_j = \bigcup_{j \leq i} A_j\)</span> for all <span class="math notranslate nohighlight">\(i\)</span> and the
@@ -499,7 +490,6 @@ the <strong>union bound</strong>.</p>
 \[\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \mathbb{P}\bigg(\bigcup_i B_i\bigg) = \sum_i \mathbb{P}(B_i) \leq \sum_i \mathbb{P}(A_i)\]</div>
 <p>where the last inequality follows by monotonicity since
 <span class="math notranslate nohighlight">\(B_i \subseteq A_i\)</span> for all <span class="math notranslate nohighlight">\(i\)</span>. ◻</p>
-</div>
 <section id="conditional-probability">
 <h3>Conditional probability<a class="headerlink" href="#conditional-probability" title="Link to this heading">#</a></h3>
 <p>The <strong>conditional probability</strong> of event <span class="math notranslate nohighlight">\(A\)</span> given that event <span class="math notranslate nohighlight">\(B\)</span> has
@@ -822,7 +812,7 @@ data best by maximizing the probability/density of the data we’ve seen
 as a function of the parameters. Suppose we have random variables
 <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> and corresponding observations <span class="math notranslate nohighlight">\(x_1, \dots, x_n\)</span>. Then</p>
 <div class="math notranslate nohighlight">
-\[\hat{\mathbf{\theta}}_\text{mle} = \argmax_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})\]</div>
+\[\hat{\mathbf{\theta}}_\text{mle} = \operatorname{argmax}_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the <strong>likelihood function</strong></p>
 <div class="math notranslate nohighlight">
 \[\mathcal{L}(\mathbf{\theta}) = p(x_1, \dots, x_n; \mathbf{\theta})\]</div>
@@ -857,11 +847,11 @@ high-dimensional. Fortunately, if we just want the MAP estimate, we
 don’t care about the normalizing constant! It does not affect which
 values of <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> maximize the posterior. So we have</p>
 <div class="math notranslate nohighlight">
-\[\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
+\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
 <p>Again, if we assume the observations are i.i.d., then we can express
 this in the equivalent, and possibly friendlier, form</p>
 <div class="math notranslate nohighlight">
-\[\hat{\mathbf{\theta}}_\text{map} = \argmax_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\]</div>
+\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\]</div>
 <p>A particularly nice case is when the prior is chosen carefully such that
 the posterior comes from the same family as the prior. In this case the
 prior is called a <strong>conjugate prior</strong>. For example, if the likelihood is
@@ -876,16 +866,16 @@ useful.</p>
 <p>There are many distributions, but one of particular importance is the
 <strong>Gaussian distribution</strong>, also known as the <strong>normal distribution</strong>. It
 is a continuous distribution, parameterized by its mean
-<span class="math notranslate nohighlight">\(\bm\mu \in \mathbb{R}^d\)</span> and positive-definite covariance matrix
+<span class="math notranslate nohighlight">\(\boldsymbol\mu \in \mathbb{R}^d\)</span> and positive-definite covariance matrix
 <span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, with density</p>
 <div class="math notranslate nohighlight">
-\[p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \bm\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \bm\mu)\right)\]</div>
+\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \boldsymbol\mu)\right)\]</div>
 <p>Note that in the special case <span class="math notranslate nohighlight">\(d = 1\)</span>, the density is written in the
 more recognizable form</p>
 <div class="math notranslate nohighlight">
 \[p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</div>
-<p>We write <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\bm\mu, \mathbf{\Sigma})\)</span> to
-denote that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is normally distributed with mean <span class="math notranslate nohighlight">\(\bm\mu\)</span> and
+<p>We write <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span> to
+denote that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is normally distributed with mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and
 variance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
 <section id="the-geometry-of-multivariate-gaussians">
 <h3>The geometry of multivariate Gaussians<a class="headerlink" href="#the-geometry-of-multivariate-gaussians" title="Link to this heading">#</a></h3>
@@ -896,26 +886,26 @@ section.</p>
 <p>First observe that the p.d.f. of the multivariate Gaussian can be
 rewritten as</p>
 <div class="math notranslate nohighlight">
-\[p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\]</div>
-<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x} - \bm\mu\)</span> and
+\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x} - \boldsymbol\mu\)</span> and
 <span class="math notranslate nohighlight">\(g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)\)</span>.
 Writing the density in this way, we see that after shifting by the mean
-<span class="math notranslate nohighlight">\(\bm\mu\)</span>, the density is really just a simple function of its precision
+<span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>, the density is really just a simple function of its precision
 matrix’s quadratic form.</p>
 <p>Here is a key observation: this function <span class="math notranslate nohighlight">\(g\)</span> is <strong>strictly monotonically
 decreasing</strong> in its argument. That is, <span class="math notranslate nohighlight">\(g(a) &gt; g(b)\)</span> whenever <span class="math notranslate nohighlight">\(a &lt; b\)</span>.
 Therefore, small values of
 <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>
 (which generally correspond to points where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> is
-closer to <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \approx \bm\mu\)</span>) have
+closer to <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \approx \boldsymbol\mu\)</span>) have
 relatively high probability densities, and vice-versa. Furthermore,
 because <span class="math notranslate nohighlight">\(g\)</span> is <em>strictly</em> monotonic, it is injective, so the
-<span class="math notranslate nohighlight">\(c\)</span>-isocontours of <span class="math notranslate nohighlight">\(p(\mathbf{x}; \bm\mu, \mathbf{\Sigma})\)</span> are the
+<span class="math notranslate nohighlight">\(c\)</span>-isocontours of <span class="math notranslate nohighlight">\(p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma})\)</span> are the
 <span class="math notranslate nohighlight">\(g^{-1}(c)\)</span>-isocontours of the function
 <span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>.
 That is, for any <span class="math notranslate nohighlight">\(c\)</span>,</p>
 <div class="math notranslate nohighlight">
-\[\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \bm\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\]</div>
+\[\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\]</div>
 <p>In words, these functions have the same isocontours but different
 isovalues.</p>
 <p>Recall the executive summary of the geometry of positive definite
@@ -925,7 +915,7 @@ ellipsoids such that the axes point in the directions of the
 eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the lengths of these axes are
 proportional to the inverse square roots of the corresponding
 eigenvalues. Therefore in this case, the isocontours of the density are
-ellipsoids (centered at <span class="math notranslate nohighlight">\(\bm\mu\)</span>) with axis lengths proportional to the
+ellipsoids (centered at <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>) with axis lengths proportional to the
 inverse square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>, or
 equivalently, the square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
 <hr class="footnotes docutils" />
