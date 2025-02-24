@@ -62,10 +62,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_converted';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Probability" href="../chapter_probability/probability.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -116,6 +115,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -169,12 +170,12 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_calculus/calculus.html">Calculus and Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_probability/probability.html">Probability</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Machine Learning for Human Phenotype Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phenotype_classification_LogisticRegression.html">Machine Learning for Human Phenotype Classification</a></li>
 
 </ul>
 
@@ -252,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flogistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flogistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_converted.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,7 +283,7 @@
       
       
       
-      <li><a href="../_sources/logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression.md" target="_blank"
+      <li><a href="../_sources/logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_converted.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -417,9 +418,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="machine-learning-for-human-phenotype-classification">
 <h1>Machine Learning for Human Phenotype Classification<a class="headerlink" href="#machine-learning-for-human-phenotype-classification" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Some imports</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">### Some imports</span>
 <span class="c1"># All packages are included in the Anaconda python distribution and integral part of a machine learning Python environment).</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>               <span class="c1"># efficient matrix-vector operations</span>
 <span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="nn">la</span>        <span class="c1"># linear algebra (solvers etc.)</span>
@@ -438,8 +437,6 @@
 <span class="kn">import</span> <span class="nn">time</span>                      <span class="c1"># timing (for example to benchmark an algorithm)</span>
 </pre></div>
 </div>
-</div>
-</div>
 <section id="diagnosing-breast-cancer-biopsies-using-logistic-regression">
 <h2>Diagnosing Breast cancer biopsies using Logistic Regression<a class="headerlink" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression" title="Link to this heading">#</a></h2>
 <p>Wisconsin Diagnostic Breast Cancer (WDBC, 1993) data from UCI Machine Learning repository.</p>
@@ -452,31 +449,28 @@
 <p><img alt="title" src="../_images/breast_cancer_nuclei_12938_2011_Article_597_Fig3_HTML.jpg" /></p>
 <p>We are given a number of features that describe the nuclei that have been determined from image processing techniques [Street et al, 1992].
 While the original data consists of 30 features and all presented methods work with 30 features, we restrict ourselves to 2 features, the <em>concavity</em> and the <em>texture</em> of the nuclei for illustrative purposes.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">])</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;bias&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;bias&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(398, 2)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(398, 2)
 </pre></div>
 </div>
-<div class="output text_html"><div>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.dataframe tbody tr th {
+    vertical-align: top;
+}
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+.dataframe thead th {
+    text-align: right;
+}
+</pre></div>
+</div>
 </style>
 <table border="1" class="dataframe">
   <thead>
@@ -514,7 +508,6 @@ While the original data consists of 30 features and all presented methods work w
     </tr>
   </tbody>
 </table>
-</div></div></div>
 </div>
 <p>Note that we have added a constant feature to the matrix <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> with the column name ‘bias’.</p>
 <section id="binary-classificaiton">
@@ -527,43 +520,31 @@ Then given a new image for which we don’t know the diagnosis, we can predict t
 We call the new image the <strong>test data</strong>.</p>
 <p>The shape of the nulei has been determined and coded in a number of features.
 Let’s look at the data:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Benign samples    &#39;B&#39;: </span><span class="si">{:}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">y</span><span class="o">==</span><span class="s1">&#39;B&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Malignant samples &#39;M&#39;: </span><span class="si">{:}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">y</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(398,)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(398,)
 [&#39;B&#39; &#39;M&#39;]
 Benign samples    &#39;B&#39;: 249
 Malignant samples &#39;M&#39;: 149
 </pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="plot-the-data">
 <h1>plot the data<a class="headerlink" href="#plot-the-data" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">scatter_plot_kde2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/44e6ac127b26e75c82cd0f7c43eb8d20cd4710760c0977495b3db20107e54699.png" src="../_images/44e6ac127b26e75c82cd0f7c43eb8d20cd4710760c0977495b3db20107e54699.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_13_0.png" /></p>
 <p>There are many ways to draw a function that separates the samples. But what is a good one?</p>
 <p>In this lecture, we will look for a <strong>linear</strong> function for the features <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> that separates the two classes.</p>
 <div class="math notranslate nohighlight">
@@ -591,9 +572,7 @@ w_{1} \\ w_{2} \\ b
 \end{matrix}
 \right].\end{split}\]</div>
 <p>Note, that we have included the bias <span class="math notranslate nohighlight">\(b\)</span> into the vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> by creating a new feature in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> equal to 1.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
@@ -601,14 +580,8 @@ w_{1} \\ w_{2} \\ b
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" src="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_16_1.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">second_line</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
@@ -616,11 +589,7 @@ w_{1} \\ w_{2} \\ b
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" src="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_17_1.png" /></p>
 <p>The classifier predicts all samples on one side of the <strong>decision boundary</strong> to belong to one class, all others to the other class.</p>
 <p>As we observe, with a linear function, we have to accept that there are missclassifications, especially if we have a large training data set, the training data is rarely <strong>linearly separable</strong>.</p>
 <section id="the-logistic-sigmoid">
@@ -638,9 +607,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 \pi(a) := \frac{1}{1+\exp{\left(-a\right)}} = \frac{\exp{\left(a\right)}}{1+\exp{\left(a\right)}}
 \]</div>
 <p>Here, as we are modeling linear functions, <span class="math notranslate nohighlight">\(a=\mathbf{x}_n\mathbf{w}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{x}_n\)</span> is the <strong>feature vector</strong> for the <span class="math notranslate nohighlight">\(n\)</span>-th individual (given), and <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is a <strong>weight vector</strong> that we would like to find.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logistic</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    returns the logistic sigmoid pi(a)</span>
 <span class="sd">    Keyword arguments:</span>
@@ -650,11 +617,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
     <span class="k">return</span> <span class="n">expa</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">expa</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
 <span class="c1"># Set up the figure</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">linex</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">)</span>
@@ -695,14 +658,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/291124841f3e66e99a66ea54197679adc1944edbd40d7afbfa510e66caf130c0.png" src="../_images/291124841f3e66e99a66ea54197679adc1944edbd40d7afbfa510e66caf130c0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
 <span class="c1"># Set up the figure</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">linex</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">)</span>
@@ -740,11 +696,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/df04f58c1cb4604fc4aabf71bc5fd8a6beae969340981123a961591894ccb041.png" src="../_images/df04f58c1cb4604fc4aabf71bc5fd8a6beae969340981123a961591894ccb041.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_26_1.png" /></p>
 <p>Conversely, the probabily to belong to the class <span class="math notranslate nohighlight">\(c_2\)</span> (Benign) is given by <span class="math notranslate nohighlight">\(1-\pi(a)\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -762,9 +714,7 @@ p(y_n=c_2|\mathbf{x}_n; \mathbf{w})= 1-\pi(\mathbf{x}_n\mathbf{w}) = \frac{1}{1+
 <p>The <strong>loss function</strong> measures the <strong>errors</strong> we make on the <strong>training data</strong>.
 So for each error, we record a loss.
 As we are trying to assign high probabilities to the correct class, we would like to obtain a function that records a loss, whenever we assign low probability to the correct class <span class="math notranslate nohighlight">\(c_{true}\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.00001</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.00001</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.00001</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.00001</span><span class="p">)</span>
 <span class="n">yy</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -776,11 +726,7 @@ As we are trying to assign high probabilities to the correct class, we would lik
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/log_error.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/ca97a551d5c80d3248c7ad58aff37c77d17b398f7c7925ea14a987354d4f5c5d.png" src="../_images/ca97a551d5c80d3248c7ad58aff37c77d17b398f7c7925ea14a987354d4f5c5d.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_30_1.png" /></p>
 <p>By summing this loss over all samples, we obtain the <strong>log-loss</strong> or <strong>cross-entropy</strong> function.</p>
 <div class="math notranslate nohighlight">
 \[
@@ -797,9 +743,7 @@ regularizer = 0.5 \cdot \lambda \cdot \sum_{d=1}^{D}{w_d}^2
 \]</div>
 <p>The (hyper)-parameter <span class="math notranslate nohighlight">\(\lambda\)</span> weighs the importance of the regularizer vs. the loss. In this example, we always use <span class="math notranslate nohighlight">\(\lambda=10^{-3}\)</span>.</p>
 <p>In-depth discussion of the regularizer is beyond the scope of this lecture.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">yy</span> <span class="o">=</span> <span class="mf">0.001</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">*</span> <span class="n">xx</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -811,11 +755,7 @@ regularizer = 0.5 \cdot \lambda \cdot \sum_{d=1}^{D}{w_d}^2
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/regularizer.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/ea280625f6dcca8a85696cdd3ba86f8a0f652fae22c16305b49aaf1729e023a8.png" src="../_images/ea280625f6dcca8a85696cdd3ba86f8a0f652fae22c16305b49aaf1729e023a8.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_33_0.png" /></p>
 </section>
 <section id="combined-objective">
 <h2>Combined objective<a class="headerlink" href="#combined-objective" title="Link to this heading">#</a></h2>
@@ -829,22 +769,16 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 <h2>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h2>
 <p>Now that we have an objective, how do we obtain a good set of parameters?</p>
 <p>Let’s look at the objective in 2 dimensions.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0030s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<img alt="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" src="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_36_1.png" /></p>
 <p>The image visualizes the objective <span class="math notranslate nohighlight">\(L\)</span> as a function of the two weights <span class="math notranslate nohighlight">\(w_1\)</span> and <span class="math notranslate nohighlight">\(w_2\)</span>, with objective values going from low (yellow) to high (red). The <strong>minimum</strong> is marked by a blue dot.</p>
 <section id="taking-the-derivative">
 <h3>Taking the derivative<a class="headerlink" href="#taking-the-derivative" title="Link to this heading">#</a></h3>
@@ -882,61 +816,41 @@ Therefore the algorithm is called <strong>steepest descent</strong>.</p>
 Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1} = \mathbf{w}^{t} - \alpha \cdot \nabla_{\mathbf{w}^{t}} (L)\)</span>.</p>
 <p>A typical value for <span class="math notranslate nohighlight">\(\alpha\)</span> is around <span class="math notranslate nohighlight">\(10^{-4}\)</span>.</p>
 <p>A problem with steepest descent is that the estimate tends to oscillate and often even overshoots and diverges (leading to an increase in the objetive). Getting the learning rate right is very hard, trading off progress in learning and risk of diverging. Many tricks exit to improve learning in gradient descent, such as weight decay, where the learning rate is gradually reduced during learning.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0020s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+[iteration 200000, 23.1445s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2583s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
-</pre></div>
-</div>
-<img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_44_1.png" /></p>
 <p>In the image above, where we applied weight decay, multiplying the learning rate by <span class="math notranslate nohighlight">\(1-10^{-6}\)</span> after each iteration, the learning does not converge to the minimum (the blue dot) after 200.000 iterations.</p>
 </section>
 <section id="using-curvature-information">
 <h4>Using curvature information<a class="headerlink" href="#using-curvature-information" title="Link to this heading">#</a></h4>
 <p>We can build a better learning algorithm by using second order information, utilizing a second-order Taylor-series expansion around the current weight estimate <span class="math notranslate nohighlight">\(\mathbf{w}^t\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer1D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">taylor1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taylor2</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/derivative_1D.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0010s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<img alt="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" src="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_48_1.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer1D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">taylor1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taylor2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/newton_step_1D.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0020s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<img alt="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" src="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_49_1.png" /></p>
 <p>The image depicts the idea for a single weight <span class="math notranslate nohighlight">\(w_1\)</span>. At the current estimate <span class="math notranslate nohighlight">\(w_1^{t}\)</span>, we compute the first and second derivatives of the objective to form a parabolic fit to the objective <span class="math notranslate nohighlight">\(L\)</span>. Then, we obtain <span class="math notranslate nohighlight">\(w_1^{t+1}\)</span> as the minimum of that parabolic and iterate.</p>
 </section>
 </section>
@@ -972,33 +886,23 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 \[
 \mathbf{w}^{t+1} = \mathbf{w}^{t} - \mathbf{H}_{\mathbf{w}^t}^{-1} \nabla{L}\left(\mathbf{w}^{t}\right)
 \]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">irls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0020s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+[iteration 200000, 19.0800s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2770s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
-</pre></div>
-</div>
-<img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_55_1.png" /></p>
 <p>The blue line corresponds to minimization using the Newton-Raphson algorithm.
 We observe that the curvature information provided by <span class="math notranslate nohighlight">\(\mathbf{H}_{\mathbf{w}^{t}}\)</span> dramatically speeds up optimization, with convergence achieved after 7 iterations.</p>
 </section>
 <section id="the-implementation-of-logistic-regression">
 <h3>The implementation of logistic regression<a class="headerlink" href="#the-implementation-of-logistic-regression" title="Link to this heading">#</a></h3>
 <p>Let’s put things together and implement logistic regression.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements logistic regression classifier with the objective</span>
 <span class="sd">    sum_{n in class_{1}} log(pi(x_n.dot(w))) + sum_{n in class_{0}} log(1-pi(x_n.dot(w))) + lambd/2 * w.T.dot(w)</span>
@@ -1091,8 +995,6 @@ We observe that the curvature information provided by <span class="math notransl
         <span class="k">return</span>  <span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">pi</span><span class="p">)))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lambd</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-</div>
 </section>
 <section id="evaluating-the-model">
 <h3>Evaluating the model<a class="headerlink" href="#evaluating-the-model" title="Link to this heading">#</a></h3>
@@ -1102,6 +1004,9 @@ We observe that the curvature information provided by <span class="math notransl
 \]</div>
 <section id="confusion-matrix">
 <h4>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -1137,17 +1042,13 @@ We observe that the curvature information provided by <span class="math notransl
 <section id="train-error-vs-test-error">
 <h3>Train error vs. Test error<a class="headerlink" href="#train-error-vs-test-error" title="Link to this heading">#</a></h3>
 <p>Let us compute these quantities on the test data:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
 <span class="n">util</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">x_test</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;confusion_matrix_train.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number samples: 398
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>number samples: 398
 number M: 149
 number B: 249
 Accuracy   : 0.902
@@ -1155,12 +1056,8 @@ Sensitivity: 0.826
 Specificity: 0.904
 </pre></div>
 </div>
-<img alt="../_images/b3e6046ef8aa7efa172fc36643721e9e1770ec29705c48ef85a3ef9fcd302981.png" src="../_images/b3e6046ef8aa7efa172fc36643721e9e1770ec29705c48ef85a3ef9fcd302981.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_68_1.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">testing_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">])</span>
 
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
@@ -1168,9 +1065,7 @@ Specificity: 0.904
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;confusion_matrix_test.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number samples: 171
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>number samples: 171
 number M: 63
 number B: 108
 Accuracy   : 0.854
@@ -1178,12 +1073,8 @@ Sensitivity: 0.762
 Specificity: 0.828
 </pre></div>
 </div>
-<img alt="../_images/f17d9a85257153cbcb5f3d22bd08f15b96052ca6a3832f69103b084dbdd4dc07.png" src="../_images/f17d9a85257153cbcb5f3d22bd08f15b96052ca6a3832f69103b084dbdd4dc07.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_69_1.png" /></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
@@ -1191,11 +1082,7 @@ Specificity: 0.828
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary_test.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/666f04392f5601645cd9461d2a12f7488a2db1df5e24a05ba7e7ef50fc2e2085.png" src="../_images/666f04392f5601645cd9461d2a12f7488a2db1df5e24a05ba7e7ef50fc2e2085.png" />
-</div>
-</div>
+<p><img alt="png" src="../_images/phenotype_classification_LogisticRegression_70_1.png" /></p>
 </section>
 </section>
 <section id="conclusions">
@@ -1243,15 +1130,6 @@ Specificity: 0.828
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../chapter_probability/probability.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Probability</p>
-      </div>
-    </a>
 </div>
                 </footer>
               

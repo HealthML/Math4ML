@@ -62,10 +62,9 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_nb';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Probability" href="../chapter_probability/probability.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -116,6 +115,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
@@ -169,12 +170,12 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_calculus/calculus.html">Calculus and Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_probability/probability.html">Probability</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Machine Learning for Human Phenotype Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phenotype_classification_LogisticRegression.html">Machine Learning for Human Phenotype Classification</a></li>
 
 </ul>
 
@@ -252,7 +253,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flogistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Flogistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_nb.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,7 +283,7 @@
       
       
       
-      <li><a href="../_sources/logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression.md" target="_blank"
+      <li><a href="../_sources/logistic_regression_uci_breast_cancer/phenotype_classification_LogisticRegression_nb.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -292,7 +293,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -839,7 +840,7 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0008s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" src="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" />
@@ -891,10 +892,10 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0012s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2583s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.1006s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
@@ -984,7 +985,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2770s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2598s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />
@@ -1243,15 +1244,6 @@ Specificity: 0.828
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../chapter_probability/probability.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Probability</p>
-      </div>
-    </a>
 </div>
                 </footer>
               
