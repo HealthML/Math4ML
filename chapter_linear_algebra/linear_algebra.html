@@ -448,18 +448,20 @@ for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in 
 <h3>Euclidean space<a class="headerlink" href="#euclidean-space" title="Link to this heading">#</a></h3>
 <p>The quintessential vector space is <strong>Euclidean space</strong>, which we denote
 <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>. The vectors in this space consist of <span class="math notranslate nohighlight">\(n\)</span>-tuples of real
-numbers: $<span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span><span class="math notranslate nohighlight">\( For our purposes, it
-will be useful to think of them as \)</span>n \times 1<span class="math notranslate nohighlight">\( matrices, or **column
-vectors**:
-\)</span><span class="math notranslate nohighlight">\(\mathbf{x} = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix}\)</span><span class="math notranslate nohighlight">\(
-Addition and scalar multiplication are defined component-wise on vectors
-in \)</span>\mathbb{R}^n<span class="math notranslate nohighlight">\(:
-\)</span><span class="math notranslate nohighlight">\(\mathbf{x} + \mathbf{y} = \begin{bmatrix}x_1 + y_1 \\ \vdots \\ x_n + y_n\end{bmatrix}, \hspace{0.5cm} \alpha\mathbf{x} = \begin{bmatrix}\alpha x_1 \\ \vdots \\ \alpha x_n\end{bmatrix}\)</span><span class="math notranslate nohighlight">\(
-Euclidean space is used to mathematically represent physical space, with
+numbers:
+$<span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, x_2, \dots, x_n)\)</span>$</p>
+<p>For our purposes, it
+will be useful to think of them as <span class="math notranslate nohighlight">\(n \times 1\)</span> matrices, or <strong>column
+vectors</strong>:
+$<span class="math notranslate nohighlight">\(\mathbf{x} = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix}\)</span>$</p>
+<p>Addition and scalar multiplication are defined component-wise on vectors
+in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>:
+$<span class="math notranslate nohighlight">\(\mathbf{x} + \mathbf{y} = \begin{bmatrix}x_1 + y_1 \\ \vdots \\ x_n + y_n\end{bmatrix}, \hspace{0.5cm} \alpha\mathbf{x} = \begin{bmatrix}\alpha x_1 \\ \vdots \\ \alpha x_n\end{bmatrix}\)</span>$</p>
+<p>Euclidean space is used to mathematically represent physical space, with
 notions such as distance, length, and angles. Although it becomes hard
-to visualize for \)</span>n &gt; 3<span class="math notranslate nohighlight">\(, these concepts generalize mathematically in
-obvious ways. Even when you're working in more general settings than
-\)</span>\mathbb{R}^n$, it is often useful to visualize vector addition and
+to visualize for <span class="math notranslate nohighlight">\(n &gt; 3\)</span>, these concepts generalize mathematically in
+obvious ways. Even when you’re working in more general settings than
+<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, it is often useful to visualize vector addition and
 scalar multiplication in terms of 2D vectors in the plane or 3D vectors
 in space.</p>
 </section>
@@ -534,18 +536,18 @@ $<span class="math notranslate nohighlight">\(\begin{aligned}
 \|\mathbf{x}\|_2 &amp;= \sqrt{\sum_{i=1}^n x_i^2} \\
 \|\mathbf{x}\|_p &amp;= \left(\sum_{i=1}^n |x_i|^p\right)^\frac{1}{p} \hspace{0.5cm}\hspace{0.5cm} (p \geq 1) \\
 \|\mathbf{x}\|_\infty &amp;= \max_{1 \leq i \leq n} |x_i|
-\end{aligned}\)</span><span class="math notranslate nohighlight">\(
-Note that the 1- and 2-norms are special cases of the
-\)</span>p<span class="math notranslate nohighlight">\(-norm, and the \)</span>\infty<span class="math notranslate nohighlight">\(-norm is the limit of the \)</span>p<span class="math notranslate nohighlight">\(-norm as \)</span>p<span class="math notranslate nohighlight">\(
-tends to infinity. We require \)</span>p \geq 1<span class="math notranslate nohighlight">\( for the general definition of
-the \)</span>p<span class="math notranslate nohighlight">\(-norm because the triangle inequality fails to hold if \)</span>p &lt; 1$.
+\end{aligned}\)</span>$</p>
+<p>Note that the 1- and 2-norms are special cases of the
+<span class="math notranslate nohighlight">\(p\)</span>-norm, and the <span class="math notranslate nohighlight">\(\infty\)</span>-norm is the limit of the <span class="math notranslate nohighlight">\(p\)</span>-norm as <span class="math notranslate nohighlight">\(p\)</span>
+tends to infinity. We require <span class="math notranslate nohighlight">\(p \geq 1\)</span> for the general definition of
+the <span class="math notranslate nohighlight">\(p\)</span>-norm because the triangle inequality fails to hold if <span class="math notranslate nohighlight">\(p &lt; 1\)</span>.
 (Try to find a counterexample!)</p>
 <p>Here’s a fun fact: for any given finite-dimensional vector space <span class="math notranslate nohighlight">\(V\)</span>,
 all norms on <span class="math notranslate nohighlight">\(V\)</span> are equivalent in the sense that for two norms
 <span class="math notranslate nohighlight">\(\|\cdot\|_A, \|\cdot\|_B\)</span>, there exist constants <span class="math notranslate nohighlight">\(\alpha, \beta &gt; 0\)</span>
 such that
-$<span class="math notranslate nohighlight">\(\alpha\|\mathbf{x}\|_A \leq \|\mathbf{x}\|_B \leq \beta\|\mathbf{x}\|_A\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>\mathbf{x} \in V$. Therefore convergence in one norm implies
+$<span class="math notranslate nohighlight">\(\alpha\|\mathbf{x}\|_A \leq \|\mathbf{x}\|_B \leq \beta\|\mathbf{x}\|_A\)</span>$</p>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Therefore convergence in one norm implies
 convergence in any other norm. This rule may not apply in
 infinite-dimensional vector spaces such as function spaces, though.</p>
 </section>
@@ -561,8 +563,8 @@ and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}
 <span class="math notranslate nohighlight">\(\alpha,\beta \in \mathbb{R}\)</span>. A vector space endowed with an inner
 product is called an <strong>inner product space</strong>.</p>
 <p>Note that any inner product on <span class="math notranslate nohighlight">\(V\)</span> induces a norm on <span class="math notranslate nohighlight">\(V\)</span>:
-$<span class="math notranslate nohighlight">\(\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}\)</span>$
-One can verify that the axioms for norms are satisfied under this definition
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}\)</span>$</p>
+<p>One can verify that the axioms for norms are satisfied under this definition
 and follow (almost) directly from the axioms for inner products.
 Therefore any inner product space is also a normed space (and hence also
 a metric space).[^4]</p>
@@ -574,14 +576,14 @@ vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <sp
 (i.e. <span class="math notranslate nohighlight">\(\|\mathbf{x}\| = \|\mathbf{y}\| = 1\)</span>), then they are described as
 <strong>orthonormal</strong>.</p>
 <p>The standard inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is given by
-$<span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{i=1}^n x_iy_i = \mathbf{x}^{\!\top\!}\mathbf{y}\)</span><span class="math notranslate nohighlight">\(
-The matrix notation on the righthand side (see the Transposition section
-if it's unfamiliar) arises because this inner product is a special case
-of matrix multiplication where we regard the resulting \)</span>1 \times 1<span class="math notranslate nohighlight">\(
-matrix as a scalar. The inner product on \)</span>\mathbb{R}^n<span class="math notranslate nohighlight">\( is also often
-written \)</span>\mathbf{x}\cdot\mathbf{y}<span class="math notranslate nohighlight">\( (hence the alternate name **dot
-product**). The reader can verify that the two-norm \)</span>|\cdot|_2<span class="math notranslate nohighlight">\( on
-\)</span>\mathbb{R}^n$ is induced by this inner product.</p>
+$<span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{i=1}^n x_iy_i = \mathbf{x}^{\!\top\!}\mathbf{y}\)</span>$</p>
+<p>The matrix notation on the righthand side (see the Transposition section
+if it’s unfamiliar) arises because this inner product is a special case
+of matrix multiplication where we regard the resulting <span class="math notranslate nohighlight">\(1 \times 1\)</span>
+matrix as a scalar. The inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is also often
+written <span class="math notranslate nohighlight">\(\mathbf{x}\cdot\mathbf{y}\)</span> (hence the alternate name <strong>dot
+product</strong>). The reader can verify that the two-norm <span class="math notranslate nohighlight">\(\|\cdot\|_2\)</span> on
+<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is induced by this inner product.</p>
 <section id="pythagorean-theorem">
 <h3>Pythagorean Theorem<a class="headerlink" href="#pythagorean-theorem" title="Link to this heading">#</a></h3>
 <p>The well-known Pythagorean theorem generalizes naturally to arbitrary
@@ -591,15 +593,15 @@ If <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</s
 $<span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2.\)</span>$</p>
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, i.e.
 <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>. Then
-$<span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{y}, \mathbf{x} \rangle + \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2\)</span>$
-as claimed. ◻</p>
+$<span class="math notranslate nohighlight">\(\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{y}, \mathbf{x} \rangle + \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2\)</span>$</p>
+<p>as claimed. ◻</p>
 </section>
 <section id="cauchy-schwarz-inequality">
 <h3>Cauchy-Schwarz inequality<a class="headerlink" href="#cauchy-schwarz-inequality" title="Link to this heading">#</a></h3>
 <p>This inequality is sometimes useful in proving bounds:
-$<span class="math notranslate nohighlight">\(|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>\mathbf{x}, \mathbf{y} \in V<span class="math notranslate nohighlight">\(. Equality holds exactly when
-\)</span>\mathbf{x}<span class="math notranslate nohighlight">\( and \)</span>\mathbf{y}$ are scalar multiples of each other (or
+$<span class="math notranslate nohighlight">\(|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|\)</span>$</p>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span>. Equality holds exactly when
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are scalar multiples of each other (or
 equivalently, when they are linearly dependent).</p>
 </section>
 </section>
@@ -625,11 +627,11 @@ be vectors which, when <span class="math notranslate nohighlight">\(\mathbf{A}\)
 scaled by some constant. We say that a nonzero vector
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> is an <strong>eigenvector</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>
 corresponding to <strong>eigenvalue</strong> <span class="math notranslate nohighlight">\(\lambda\)</span> if
-$<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \lambda\mathbf{x}\)</span><span class="math notranslate nohighlight">\(
-The zero vector is excluded
+$<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \lambda\mathbf{x}\)</span>$</p>
+<p>The zero vector is excluded
 from this definition because
-\)</span>\mathbf{A}\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}<span class="math notranslate nohighlight">\( for every
-\)</span>\lambda$.</p>
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}\)</span> for every
+<span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <p>We now give some useful results about how eigenvalues change after
 various manipulations.</p>
 <p><em>Proposition.</em>
@@ -645,10 +647,10 @@ definition).</p>
 <p><em>Proof.</em> (i) follows readily:
 $<span class="math notranslate nohighlight">\((\mathbf{A} + \gamma\mathbf{I})\mathbf{x} = \mathbf{A}\mathbf{x} + \gamma\mathbf{I}\mathbf{x} = \lambda\mathbf{x} + \gamma\mathbf{x} = (\lambda + \gamma)\mathbf{x}\)</span>$</p>
 <p>(ii) Suppose <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is invertible. Then
-$<span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^{-1}\mathbf{A}\mathbf{x} = \mathbf{A}^{-1}(\lambda\mathbf{x}) = \lambda\mathbf{A}^{-1}\mathbf{x}\)</span><span class="math notranslate nohighlight">\(
-Dividing by \)</span>\lambda<span class="math notranslate nohighlight">\(, which is valid because the invertibility of
-\)</span>\mathbf{A}<span class="math notranslate nohighlight">\( implies \)</span>\lambda \neq 0<span class="math notranslate nohighlight">\(, gives
-\)</span>\lambda^{-1}\mathbf{x} = \mathbf{A}^{-1}\mathbf{x}$.</p>
+$<span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^{-1}\mathbf{A}\mathbf{x} = \mathbf{A}^{-1}(\lambda\mathbf{x}) = \lambda\mathbf{A}^{-1}\mathbf{x}\)</span>$</p>
+<p>Dividing by <span class="math notranslate nohighlight">\(\lambda\)</span>, which is valid because the invertibility of
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> implies <span class="math notranslate nohighlight">\(\lambda \neq 0\)</span>, gives
+<span class="math notranslate nohighlight">\(\lambda^{-1}\mathbf{x} = \mathbf{A}^{-1}\mathbf{x}\)</span>.</p>
 <p>(iii) The case <span class="math notranslate nohighlight">\(k \geq 0\)</span> follows immediately by induction on <span class="math notranslate nohighlight">\(k\)</span>.
 Then the general case <span class="math notranslate nohighlight">\(k \in \mathbb{Z}\)</span> follows by combining the
 <span class="math notranslate nohighlight">\(k \geq 0\)</span> case with (ii). ◻</p>
@@ -656,8 +658,8 @@ Then the general case <span class="math notranslate nohighlight">\(k \in \mathbb
 <section id="trace">
 <h2>Trace<a class="headerlink" href="#trace" title="Link to this heading">#</a></h2>
 <p>The <strong>trace</strong> of a square matrix is the sum of its diagonal entries:
-$<span class="math notranslate nohighlight">\(\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n A_{ii}\)</span>$
-The trace has several nice
+$<span class="math notranslate nohighlight">\(\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n A_{ii}\)</span>$</p>
+<p>The trace has several nice
 algebraic properties:</p>
 <p>(i) <span class="math notranslate nohighlight">\(\operatorname{tr}(\mathbf{A}+\mathbf{B}) = \operatorname{tr}(\mathbf{A}) + \operatorname{tr}(\mathbf{B})\)</span></p>
 <p>(ii) <span class="math notranslate nohighlight">\(\operatorname{tr}(\alpha\mathbf{A}) = \alpha\operatorname{tr}(\mathbf{A})\)</span></p>
@@ -694,13 +696,13 @@ $<span class="math notranslate nohighlight">\(\det(\mathbf{A}) = \prod_i \lambda
 <p>A matrix <span class="math notranslate nohighlight">\(\mathbf{Q} \in \mathbb{R}^{n \times n}\)</span> is said to be
 <strong>orthogonal</strong> if its columns are pairwise orthonormal. This definition
 implies that
-$<span class="math notranslate nohighlight">\(\mathbf{Q}^{\!\top\!} \mathbf{Q} = \mathbf{Q}\mathbf{Q}^{\!\top\!} = \mathbf{I}\)</span><span class="math notranslate nohighlight">\(
-or equivalently, \)</span>\mathbf{Q}^{!\top!} = \mathbf{Q}^{-1}<span class="math notranslate nohighlight">\(. A nice thing
+$<span class="math notranslate nohighlight">\(\mathbf{Q}^{\!\top\!} \mathbf{Q} = \mathbf{Q}\mathbf{Q}^{\!\top\!} = \mathbf{I}\)</span>$</p>
+<p>or equivalently, <span class="math notranslate nohighlight">\(\mathbf{Q}^{\!\top\!} = \mathbf{Q}^{-1}\)</span>. A nice thing
 about orthogonal matrices is that they preserve inner products:
-\)</span><span class="math notranslate nohighlight">\((\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{y}) = \mathbf{x}^{\!\top\!} \mathbf{Q}^{\!\top\!} \mathbf{Q}\mathbf{y} = \mathbf{x}^{\!\top\!} \mathbf{I}\mathbf{y} = \mathbf{x}^{\!\top\!}\mathbf{y}\)</span><span class="math notranslate nohighlight">\(
-A direct result of this fact is that they also preserve 2-norms:
-\)</span><span class="math notranslate nohighlight">\(\|\mathbf{Q}\mathbf{x}\|_2 = \sqrt{(\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{x})} = \sqrt{\mathbf{x}^{\!\top\!}\mathbf{x}} = \|\mathbf{x}\|_2\)</span>$
-Therefore multiplication by an orthogonal matrix can be considered as a
+$<span class="math notranslate nohighlight">\((\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{y}) = \mathbf{x}^{\!\top\!} \mathbf{Q}^{\!\top\!} \mathbf{Q}\mathbf{y} = \mathbf{x}^{\!\top\!} \mathbf{I}\mathbf{y} = \mathbf{x}^{\!\top\!}\mathbf{y}\)</span>$</p>
+<p>A direct result of this fact is that they also preserve 2-norms:
+$<span class="math notranslate nohighlight">\(\|\mathbf{Q}\mathbf{x}\|_2 = \sqrt{(\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{x})} = \sqrt{\mathbf{x}^{\!\top\!}\mathbf{x}} = \|\mathbf{x}\|_2\)</span>$</p>
+<p>Therefore multiplication by an orthogonal matrix can be considered as a
 transformation that preserves length, but may rotate or reflect the
 vector about the origin.</p>
 </section>
@@ -725,10 +727,10 @@ with <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q
 <span class="math notranslate nohighlight">\(\mathbf{\Lambda} = \operatorname{diag}(\lambda_1, \dots, \lambda_n)\)</span>. Since by
 definition <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{q}_i = \lambda_i\mathbf{q}_i\)</span> for every
 <span class="math notranslate nohighlight">\(i\)</span>, the following relationship holds:
-$<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{Q} = \mathbf{Q}\mathbf{\Lambda}\)</span><span class="math notranslate nohighlight">\(
-Right-multiplying
-by \)</span>\mathbf{Q}^{!\top!}<span class="math notranslate nohighlight">\(, we arrive at the decomposition
-\)</span><span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}\)</span>$</p>
+$<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{Q} = \mathbf{Q}\mathbf{\Lambda}\)</span>$</p>
+<p>Right-multiplying
+by <span class="math notranslate nohighlight">\(\mathbf{Q}^{\!\top\!}\)</span>, we arrive at the decomposition
+$<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}\)</span>$</p>
 <section id="rayleigh-quotients">
 <h3>Rayleigh quotients<a class="headerlink" href="#rayleigh-quotients" title="Link to this heading">#</a></h3>
 <p>Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> be a symmetric matrix. The
@@ -737,8 +739,8 @@ expression <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\ma
 <p>There turns out to be an interesting connection between the quadratic
 form of a symmetric matrix and its eigenvalues. This connection is
 provided by the <strong>Rayleigh quotient</strong>
-$<span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}}\)</span>$
-The Rayleigh quotient has a couple of important properties which the
+$<span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}}\)</span>$</p>
+<p>The Rayleigh quotient has a couple of important properties which the
 reader can (and should!) easily verify from the definition:</p>
 <p>(i) <strong>Scale invariance</strong>: for any vector <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>
 and any scalar <span class="math notranslate nohighlight">\(\alpha \neq 0\)</span>,
@@ -750,8 +752,8 @@ and smallest eigenvalues of <span class="math notranslate nohighlight">\(\mathbf
 useful special case of the final result.</p>
 <p><em>Proposition.</em>
 For any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2 = 1\)</span>,
-$<span class="math notranslate nohighlight">\(\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})\)</span><span class="math notranslate nohighlight">\(
-with equality if and only if \)</span>\mathbf{x}$ is a corresponding
+$<span class="math notranslate nohighlight">\(\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})\)</span>$</p>
+<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a corresponding
 eigenvector.</p>
 <p><em>Proof.</em> We show only the <span class="math notranslate nohighlight">\(\max\)</span> case because the argument for the
 <span class="math notranslate nohighlight">\(\min\)</span> case is entirely analogous.</p>
@@ -761,19 +763,19 @@ the change of variable <span class="math notranslate nohighlight">\(\mathbf{y} =
 noting that the relationship between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is
 one-to-one and that <span class="math notranslate nohighlight">\(\|\mathbf{y}\|_2 = 1\)</span> since <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> is
 orthogonal. Hence
-$<span class="math notranslate nohighlight">\(\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \max_{\|\mathbf{y}\|_2 = 1} \mathbf{y}^{\!\top\!}\mathbf{\Lambda}\mathbf{y} = \max_{y_1^2+\dots+y_n^2=1} \sum_{i=1}^n \lambda_i y_i^2\)</span><span class="math notranslate nohighlight">\(
-Written this way, it is clear that \)</span>\mathbf{y}<span class="math notranslate nohighlight">\( maximizes this
+$<span class="math notranslate nohighlight">\(\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \max_{\|\mathbf{y}\|_2 = 1} \mathbf{y}^{\!\top\!}\mathbf{\Lambda}\mathbf{y} = \max_{y_1^2+\dots+y_n^2=1} \sum_{i=1}^n \lambda_i y_i^2\)</span>$</p>
+<p>Written this way, it is clear that <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> maximizes this
 expression exactly if and only if it satisfies
-\)</span>\sum_{i \in I} y_i^2 = 1<span class="math notranslate nohighlight">\( where
-\)</span>I = {i : \lambda_i = \max_{j=1,\dots,n} \lambda_j = \lambda_{\max}(\mathbf{A})}<span class="math notranslate nohighlight">\(
-and \)</span>y_j = 0<span class="math notranslate nohighlight">\( for \)</span>j \not\in I<span class="math notranslate nohighlight">\(. That is, \)</span>I<span class="math notranslate nohighlight">\( contains the index or
+<span class="math notranslate nohighlight">\(\sum_{i \in I} y_i^2 = 1\)</span> where
+<span class="math notranslate nohighlight">\(I = \{i : \lambda_i = \max_{j=1,\dots,n} \lambda_j = \lambda_{\max}(\mathbf{A})\}\)</span>
+and <span class="math notranslate nohighlight">\(y_j = 0\)</span> for <span class="math notranslate nohighlight">\(j \not\in I\)</span>. That is, <span class="math notranslate nohighlight">\(I\)</span> contains the index or
 indices of the largest eigenvalue. In this case, the maximal value of
 the expression is
-\)</span><span class="math notranslate nohighlight">\(\sum_{i=1}^n \lambda_i y_i^2 = \sum_{i \in I} \lambda_i y_i^2 = \lambda_{\max}(\mathbf{A}) \sum_{i \in I} y_i^2 = \lambda_{\max}(\mathbf{A})\)</span><span class="math notranslate nohighlight">\(
-Then writing \)</span>\mathbf{q}_1, \dots, \mathbf{q}_n<span class="math notranslate nohighlight">\( for the columns of
-\)</span>\mathbf{Q}<span class="math notranslate nohighlight">\(, we have
-\)</span><span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{Q}\mathbf{Q}^{\!\top\!}\mathbf{x} = \mathbf{Q}\mathbf{y} = \sum_{i=1}^n y_i\mathbf{q}_i = \sum_{i \in I} y_i\mathbf{q}_i\)</span>$
-where we have used the matrix-vector product identity.</p>
+$<span class="math notranslate nohighlight">\(\sum_{i=1}^n \lambda_i y_i^2 = \sum_{i \in I} \lambda_i y_i^2 = \lambda_{\max}(\mathbf{A}) \sum_{i \in I} y_i^2 = \lambda_{\max}(\mathbf{A})\)</span>$</p>
+<p>Then writing <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> for the columns of
+<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, we have
+$<span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{Q}\mathbf{Q}^{\!\top\!}\mathbf{x} = \mathbf{Q}\mathbf{y} = \sum_{i=1}^n y_i\mathbf{q}_i = \sum_{i \in I} y_i\mathbf{q}_i\)</span>$</p>
+<p>where we have used the matrix-vector product identity.</p>
 <p>Recall that <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> are eigenvectors of
 <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and form an orthonormal basis for <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>. Therefore
 by construction, the set <span class="math notranslate nohighlight">\(\{\mathbf{q}_i : i \in I\}\)</span> forms an
@@ -792,8 +794,8 @@ a corollary (since
 for unit <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>)</p>
 <p><em>Theorem.</em>
 (Min-max theorem) For all <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>,
-$<span class="math notranslate nohighlight">\(\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})\)</span><span class="math notranslate nohighlight">\(
-with equality if and only if \)</span>\mathbf{x}$ is a corresponding
+$<span class="math notranslate nohighlight">\(\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})\)</span>$</p>
+<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a corresponding
 eigenvector.</p>
 </section>
 </section>
@@ -818,22 +820,22 @@ eigenvalues are nonnegative, and positive definite if and only if all of
 its eigenvalues are positive.</p>
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(A\)</span> is positive semi-definite, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be
 an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>. Then
-$<span class="math notranslate nohighlight">\(0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2\)</span><span class="math notranslate nohighlight">\(
-Since \)</span>\mathbf{x} \neq \mathbf{0}<span class="math notranslate nohighlight">\( (by the assumption that it is an
-eigenvector), we have \)</span>|\mathbf{x}|_2^2 &gt; 0<span class="math notranslate nohighlight">\(, so we can divide both
-sides by \)</span>|\mathbf{x}|_2^2<span class="math notranslate nohighlight">\( to arrive at \)</span>\lambda \geq 0<span class="math notranslate nohighlight">\(. If
-\)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is positive definite, the inequality above holds strictly,
-so \)</span>\lambda &gt; 0$. This proves one direction.</p>
+$<span class="math notranslate nohighlight">\(0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2\)</span>$</p>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> (by the assumption that it is an
+eigenvector), we have <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2 &gt; 0\)</span>, so we can divide both
+sides by <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2\)</span> to arrive at <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span>. If
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite, the inequality above holds strictly,
+so <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>. This proves one direction.</p>
 <p>To simplify the proof of the other direction, we will use the machinery
 of Rayleigh quotients. Suppose that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric and all
 its eigenvalues are nonnegative. Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>,
-$<span class="math notranslate nohighlight">\(0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})\)</span><span class="math notranslate nohighlight">\(
-Since \)</span>\mathbf{x}^{!\top!}\mathbf{A}\mathbf{x}<span class="math notranslate nohighlight">\( matches
-\)</span>R_\mathbf{A}(\mathbf{x})<span class="math notranslate nohighlight">\( in sign, we conclude that \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is
-positive semi-definite. If the eigenvalues of \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( are all
-strictly positive, then \)</span>0 &lt; \lambda_{\min}(\mathbf{A})<span class="math notranslate nohighlight">\(, whence it
-follows that \)</span>\mathbf{A}$ is positive definite. ◻</p>
+$<span class="math notranslate nohighlight">\(0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})\)</span>$</p>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> matches
+<span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x})\)</span> in sign, we conclude that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
+positive semi-definite. If the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are all
+strictly positive, then <span class="math notranslate nohighlight">\(0 &lt; \lambda_{\min}(\mathbf{A})\)</span>, whence it
+follows that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite. ◻</p>
 <p>As an example of how these matrices arise, consider</p>
 <p><em>Proposition.</em>
 Suppose <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>. Then
@@ -841,8 +843,8 @@ Suppose <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{
 <span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>, then
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite.</p>
 <p><em>Proof.</em> For any <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,
-$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0\)</span><span class="math notranslate nohighlight">\(
-so \)</span>\mathbf{A}^{!\top!}\mathbf{A}$ is positive semi-definite.</p>
+$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0\)</span>$</p>
+<p>so <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite.</p>
 <p>Note that <span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2^2 = 0\)</span> implies
 <span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2 = 0\)</span>, which in turn implies
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span> (recall that this is a property of
@@ -861,8 +863,8 @@ If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive 
 <span class="math notranslate nohighlight">\(\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive definite.</p>
 <p><em>Proof.</em> Assuming <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and
 <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have for any <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> that
-$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{&gt; 0} &gt; 0\)</span>$
-as claimed. ◻</p>
+$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{&gt; 0} &gt; 0\)</span>$</p>
+<p>as claimed. ◻</p>
 <p>An obvious but frequently useful consequence of the two propositions we
 have just shown is that
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive
@@ -888,25 +890,25 @@ positive definite (consider its eigenvalues) and satisfies
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}} = \mathbf{A}\)</span>. Fixing
 a value <span class="math notranslate nohighlight">\(c \geq 0\)</span>, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is the set of
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> such that
-$<span class="math notranslate nohighlight">\(c = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}}\mathbf{x} = \|\mathbf{A}^{\frac{1}{2}}\mathbf{x}\|_2^2\)</span><span class="math notranslate nohighlight">\(
-where we have used the symmetry of \)</span>\mathbf{A}^{\frac{1}{2}}<span class="math notranslate nohighlight">\(. Making
+$<span class="math notranslate nohighlight">\(c = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}}\mathbf{x} = \|\mathbf{A}^{\frac{1}{2}}\mathbf{x}\|_2^2\)</span>$</p>
+<p>where we have used the symmetry of <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span>. Making
 the change of variable
-\)</span>\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}<span class="math notranslate nohighlight">\(, we have the condition
-\)</span>|\mathbf{z}|_2 = \sqrt{c}<span class="math notranslate nohighlight">\(. That is, the values \)</span>\mathbf{z}<span class="math notranslate nohighlight">\( lie on a
-sphere of radius \)</span>\sqrt{c}<span class="math notranslate nohighlight">\(. These can be parameterized as
-\)</span>\mathbf{z} = \sqrt{c}\hat{\mathbf{z}}<span class="math notranslate nohighlight">\( where \)</span>\hat{\mathbf{z}}<span class="math notranslate nohighlight">\( has
-\)</span>|\hat{\mathbf{z}}|_2 = 1<span class="math notranslate nohighlight">\(. Then since
-\)</span>\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{!\top!}<span class="math notranslate nohighlight">\(,
+<span class="math notranslate nohighlight">\(\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}\)</span>, we have the condition
+<span class="math notranslate nohighlight">\(\|\mathbf{z}\|_2 = \sqrt{c}\)</span>. That is, the values <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> lie on a
+sphere of radius <span class="math notranslate nohighlight">\(\sqrt{c}\)</span>. These can be parameterized as
+<span class="math notranslate nohighlight">\(\mathbf{z} = \sqrt{c}\hat{\mathbf{z}}\)</span> where <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}\)</span> has
+<span class="math notranslate nohighlight">\(\|\hat{\mathbf{z}}\|_2 = 1\)</span>. Then since
+<span class="math notranslate nohighlight">\(\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\)</span>,
 we have
-\)</span><span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\sqrt{c}\hat{\mathbf{z}} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\tilde{\mathbf{z}} = \mathbf{Q}^{!\top!}\hat{\mathbf{z}}<span class="math notranslate nohighlight">\( also
-satisfies \)</span>|\tilde{\mathbf{z}}|_2 = 1<span class="math notranslate nohighlight">\( since \)</span>\mathbf{Q}<span class="math notranslate nohighlight">\( is
+$<span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\sqrt{c}\hat{\mathbf{z}} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\)</span>$</p>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{z}} = \mathbf{Q}^{\!\top\!}\hat{\mathbf{z}}\)</span> also
+satisfies <span class="math notranslate nohighlight">\(\|\tilde{\mathbf{z}}\|_2 = 1\)</span> since <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> is
 orthogonal. Using this parameterization, we see that the solution set
-\)</span>{\mathbf{x} \in \mathbb{R}^n : f(\mathbf{x}) = c}<span class="math notranslate nohighlight">\( is the image of
+<span class="math notranslate nohighlight">\(\{\mathbf{x} \in \mathbb{R}^n : f(\mathbf{x}) = c\}\)</span> is the image of
 the unit sphere
-\)</span>{\tilde{\mathbf{z}} \in \mathbb{R}^n : |\tilde{\mathbf{z}}|_2 = 1}<span class="math notranslate nohighlight">\(
+<span class="math notranslate nohighlight">\(\{\tilde{\mathbf{z}} \in \mathbb{R}^n : \|\tilde{\mathbf{z}}\|_2 = 1\}\)</span>
 under the invertible linear map
-\)</span>\mathbf{x} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}$.</p>
+<span class="math notranslate nohighlight">\(\mathbf{x} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\)</span>.</p>
 <p>What we have gained with all these manipulations is a clear algebraic
 understanding of the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> in terms of a sequence of
 linear transformations applied to a well-understood set. We begin with
@@ -926,8 +928,8 @@ this vector points along the axis with length proportional to
 <span class="math notranslate nohighlight">\(\lambda_i^{-\frac{1}{2}}\)</span>. But after applying the rigid transformation
 <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, the resulting vector points in the direction of the
 corresponding eigenvector <span class="math notranslate nohighlight">\(\mathbf{q}_i\)</span>, since
-$<span class="math notranslate nohighlight">\(\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q}_i\)</span>$
-where we have used the matrix-vector product identity from earlier.</p>
+$<span class="math notranslate nohighlight">\(\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q}_i\)</span>$</p>
+<p>where we have used the matrix-vector product identity from earlier.</p>
 <p>In summary: the isocontours of
 <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> are
 ellipsoids such that the axes point in the directions of the
@@ -942,29 +944,29 @@ eigenvalues.</p>
 algebra. Its strength stems partially from the fact that <em>every matrix</em>
 <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> has an SVD (even non-square
 matrices)! The decomposition goes as follows:
-$<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\)</span><span class="math notranslate nohighlight">\(
-where
-\)</span>\mathbf{U} \in \mathbb{R}^{m \times m}<span class="math notranslate nohighlight">\( and
-\)</span>\mathbf{V} \in \mathbb{R}^{n \times n}<span class="math notranslate nohighlight">\( are orthogonal matrices and
-\)</span>\mathbf{\Sigma} \in \mathbb{R}^{m \times n}<span class="math notranslate nohighlight">\( is a diagonal matrix with
-the **singular values** of \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( (denoted \)</span>\sigma_i$) on its
+$<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\)</span>$</p>
+<p>where
+<span class="math notranslate nohighlight">\(\mathbf{U} \in \mathbb{R}^{m \times m}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{V} \in \mathbb{R}^{n \times n}\)</span> are orthogonal matrices and
+<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{m \times n}\)</span> is a diagonal matrix with
+the <strong>singular values</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (denoted <span class="math notranslate nohighlight">\(\sigma_i\)</span>) on its
 diagonal.</p>
 <p>By convention, the singular values are given in non-increasing order,
 i.e.
-$<span class="math notranslate nohighlight">\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{\min(m,n)} \geq 0\)</span><span class="math notranslate nohighlight">\(
-Only the first \)</span>r<span class="math notranslate nohighlight">\( singular values are nonzero, where \)</span>r<span class="math notranslate nohighlight">\( is the rank of
-\)</span>\mathbf{A}$.</p>
+$<span class="math notranslate nohighlight">\(\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{\min(m,n)} \geq 0\)</span>$</p>
+<p>Only the first <span class="math notranslate nohighlight">\(r\)</span> singular values are nonzero, where <span class="math notranslate nohighlight">\(r\)</span> is the rank of
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 <p>Observe that the SVD factors provide eigendecompositions for
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>:
 $<span class="math notranslate nohighlight">\(\begin{aligned}
 \mathbf{A}^{\!\top\!}\mathbf{A} &amp;= (\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} \\
 \mathbf{A}\mathbf{A}^{\!\top\!} &amp;= \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}
-\end{aligned}\)</span><span class="math notranslate nohighlight">\(
-It follows immediately that the columns of \)</span>\mathbf{V}<span class="math notranslate nohighlight">\(
-(the **right-singular vectors** of \)</span>\mathbf{A}<span class="math notranslate nohighlight">\() are eigenvectors of
-\)</span>\mathbf{A}^{!\top!}\mathbf{A}<span class="math notranslate nohighlight">\(, and the columns of \)</span>\mathbf{U}<span class="math notranslate nohighlight">\( (the
-**left-singular vectors** of \)</span>\mathbf{A}<span class="math notranslate nohighlight">\() are eigenvectors of
-\)</span>\mathbf{A}\mathbf{A}^{!\top!}$.</p>
+\end{aligned}\)</span>$</p>
+<p>It follows immediately that the columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>
+(the <strong>right-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span>, and the columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> (the
+<strong>left-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>.</p>
 <p>The matrices <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\)</span> and
 <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\)</span> are not necessarily the same
 size, but both are diagonal with the squared singular values
@@ -993,24 +995,24 @@ definitions) but it is a good exercise to convince yourself.</p>
 <span class="math notranslate nohighlight">\(\mathbf{a}\mathbf{b}^{\!\top\!}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{a} \in \mathbb{R}^m\)</span>
 and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. By inspection it is not hard to see
 that such an expression yields an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix such that
-$<span class="math notranslate nohighlight">\([\mathbf{a}\mathbf{b}^{\!\top\!}]_{ij} = a_ib_j\)</span>$
-It is not
+$<span class="math notranslate nohighlight">\([\mathbf{a}\mathbf{b}^{\!\top\!}]_{ij} = a_ib_j\)</span>$</p>
+<p>It is not
 immediately obvious, but the sum of outer products is actually
 equivalent to an appropriate matrix-matrix product! We formalize this
 statement as</p>
 <p><em>Proposition.</em>
 Let <span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m\)</span> and
 <span class="math notranslate nohighlight">\(\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n\)</span>. Then
-$<span class="math notranslate nohighlight">\(\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}\)</span><span class="math notranslate nohighlight">\(
-where
-\)</span><span class="math notranslate nohighlight">\(\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 &amp; \cdots &amp; \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 &amp; \cdots &amp; \mathbf{b}_k\end{bmatrix}\)</span>$</p>
+$<span class="math notranslate nohighlight">\(\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}\)</span>$</p>
+<p>where
+$<span class="math notranslate nohighlight">\(\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 &amp; \cdots &amp; \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 &amp; \cdots &amp; \mathbf{b}_k\end{bmatrix}\)</span>$</p>
 <p><em>Proof.</em> For each <span class="math notranslate nohighlight">\((i,j)\)</span>, we have
-$<span class="math notranslate nohighlight">\(\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}\)</span><span class="math notranslate nohighlight">\(
-This last expression should be recognized as an inner product between
-the \)</span>i<span class="math notranslate nohighlight">\(th row of \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( and the \)</span>j<span class="math notranslate nohighlight">\(th row of \)</span>\mathbf{B}<span class="math notranslate nohighlight">\(, or
-equivalently the \)</span>j<span class="math notranslate nohighlight">\(th column of \)</span>\mathbf{B}^{!\top!}<span class="math notranslate nohighlight">\(. Hence by the
+$<span class="math notranslate nohighlight">\(\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}\)</span>$</p>
+<p>This last expression should be recognized as an inner product between
+the <span class="math notranslate nohighlight">\(i\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and the <span class="math notranslate nohighlight">\(j\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>, or
+equivalently the <span class="math notranslate nohighlight">\(j\)</span>th column of <span class="math notranslate nohighlight">\(\mathbf{B}^{\!\top\!}\)</span>. Hence by the
 definition of matrix multiplication, it is equal to
-\)</span>[\mathbf{A}\mathbf{B}^{!\top!}]_{ij}$. ◻</p>
+<span class="math notranslate nohighlight">\([\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}\)</span>. ◻</p>
 </section>
 <section id="quadratic-forms">
 <h3>Quadratic forms<a class="headerlink" href="#quadratic-forms" title="Link to this heading">#</a></h3>
@@ -1019,8 +1021,8 @@ recall that the expression <span class="math notranslate nohighlight">\(\mathbf{
 is called a quadratic form of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. It is in some cases helpful
 to rewrite the quadratic form in terms of the individual elements that
 make up <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>:
-$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^n A_{ij}x_ix_j\)</span>$
-This identity is valid for any square matrix (need not be symmetric),
+$<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^n A_{ij}x_ix_j\)</span>$</p>
+<p>This identity is valid for any square matrix (need not be symmetric),
 although quadratic forms are usually only discussed in the context of
 symmetric matrices.</p>
 </section>

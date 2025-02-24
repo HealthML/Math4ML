@@ -44,13 +44,18 @@ together, and vectors can be multiplied by real numbers[^1] called
 
 The quintessential vector space is **Euclidean space**, which we denote
 $\mathbb{R}^n$. The vectors in this space consist of $n$-tuples of real
-numbers: $$\mathbf{x} = (x_1, x_2, \dots, x_n)$$ For our purposes, it
+numbers:
+$$\mathbf{x} = (x_1, x_2, \dots, x_n)$$
+
+For our purposes, it
 will be useful to think of them as $n \times 1$ matrices, or **column
 vectors**:
 $$\mathbf{x} = \begin{bmatrix}x_1 \\ x_2 \\ \vdots \\ x_n\end{bmatrix}$$
+
 Addition and scalar multiplication are defined component-wise on vectors
 in $\mathbb{R}^n$:
 $$\mathbf{x} + \mathbf{y} = \begin{bmatrix}x_1 + y_1 \\ \vdots \\ x_n + y_n\end{bmatrix}, \hspace{0.5cm} \alpha\mathbf{x} = \begin{bmatrix}\alpha x_1 \\ \vdots \\ \alpha x_n\end{bmatrix}$$
+
 Euclidean space is used to mathematically represent physical space, with
 notions such as distance, length, and angles. Although it becomes hard
 to visualize for $n > 3$, these concepts generalize mathematically in
@@ -155,6 +160,7 @@ $$\begin{aligned}
 \|\mathbf{x}\|_p &= \left(\sum_{i=1}^n |x_i|^p\right)^\frac{1}{p} \hspace{0.5cm}\hspace{0.5cm} (p \geq 1) \\
 \|\mathbf{x}\|_\infty &= \max_{1 \leq i \leq n} |x_i|
 \end{aligned}$$
+
 Note that the 1- and 2-norms are special cases of the
 $p$-norm, and the $\infty$-norm is the limit of the $p$-norm as $p$
 tends to infinity. We require $p \geq 1$ for the general definition of
@@ -166,6 +172,7 @@ all norms on $V$ are equivalent in the sense that for two norms
 $\|\cdot\|_A, \|\cdot\|_B$, there exist constants $\alpha, \beta > 0$
 such that
 $$\alpha\|\mathbf{x}\|_A \leq \|\mathbf{x}\|_B \leq \beta\|\mathbf{x}\|_A$$
+
 for all $\mathbf{x} \in V$. Therefore convergence in one norm implies
 convergence in any other norm. This rule may not apply in
 infinite-dimensional vector spaces such as function spaces, though.
@@ -188,6 +195,7 @@ product is called an **inner product space**.
 
 Note that any inner product on $V$ induces a norm on $V$:
 $$\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}$$
+
 One can verify that the axioms for norms are satisfied under this definition
 and follow (almost) directly from the axioms for inner products.
 Therefore any inner product space is also a normed space (and hence also
@@ -203,6 +211,7 @@ vectors $\mathbf{x}$ and $\mathbf{y}$ additionally have unit length
 
 The standard inner product on $\mathbb{R}^n$ is given by
 $$\langle \mathbf{x}, \mathbf{y} \rangle = \sum_{i=1}^n x_iy_i = \mathbf{x}^{\!\top\!}\mathbf{y}$$
+
 The matrix notation on the righthand side (see the Transposition section
 if it's unfamiliar) arises because this inner product is a special case
 of matrix multiplication where we regard the resulting $1 \times 1$
@@ -224,12 +233,14 @@ $$\|\mathbf{x}+\mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2.$$
 *Proof.* Suppose $\mathbf{x} \perp \mathbf{y}$, i.e.
 $\langle \mathbf{x}, \mathbf{y} \rangle = 0$. Then
 $$\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{y}, \mathbf{x} \rangle + \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2$$
+
 as claimed. ◻
 
 ### Cauchy-Schwarz inequality
 
 This inequality is sometimes useful in proving bounds:
 $$|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|$$
+
 for all $\mathbf{x}, \mathbf{y} \in V$. Equality holds exactly when
 $\mathbf{x}$ and $\mathbf{y}$ are scalar multiples of each other (or
 equivalently, when they are linearly dependent).
@@ -262,6 +273,7 @@ scaled by some constant. We say that a nonzero vector
 $\mathbf{x} \in \mathbb{R}^n$ is an **eigenvector** of $\mathbf{A}$
 corresponding to **eigenvalue** $\lambda$ if
 $$\mathbf{A}\mathbf{x} = \lambda\mathbf{x}$$
+
 The zero vector is excluded
 from this definition because
 $\mathbf{A}\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}$ for every
@@ -290,6 +302,7 @@ $$(\mathbf{A} + \gamma\mathbf{I})\mathbf{x} = \mathbf{A}\mathbf{x} + \gamma\math
 
 \(ii\) Suppose $\mathbf{A}$ is invertible. Then
 $$\mathbf{x} = \mathbf{A}^{-1}\mathbf{A}\mathbf{x} = \mathbf{A}^{-1}(\lambda\mathbf{x}) = \lambda\mathbf{A}^{-1}\mathbf{x}$$
+
 Dividing by $\lambda$, which is valid because the invertibility of
 $\mathbf{A}$ implies $\lambda \neq 0$, gives
 $\lambda^{-1}\mathbf{x} = \mathbf{A}^{-1}\mathbf{x}$.
@@ -303,6 +316,7 @@ $k \geq 0$ case with (ii). ◻
 
 The **trace** of a square matrix is the sum of its diagonal entries:
 $$\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n A_{ii}$$
+
 The trace has several nice
 algebraic properties:
 
@@ -353,11 +367,14 @@ A matrix $\mathbf{Q} \in \mathbb{R}^{n \times n}$ is said to be
 **orthogonal** if its columns are pairwise orthonormal. This definition
 implies that
 $$\mathbf{Q}^{\!\top\!} \mathbf{Q} = \mathbf{Q}\mathbf{Q}^{\!\top\!} = \mathbf{I}$$
+
 or equivalently, $\mathbf{Q}^{\!\top\!} = \mathbf{Q}^{-1}$. A nice thing
 about orthogonal matrices is that they preserve inner products:
 $$(\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{y}) = \mathbf{x}^{\!\top\!} \mathbf{Q}^{\!\top\!} \mathbf{Q}\mathbf{y} = \mathbf{x}^{\!\top\!} \mathbf{I}\mathbf{y} = \mathbf{x}^{\!\top\!}\mathbf{y}$$
+
 A direct result of this fact is that they also preserve 2-norms:
 $$\|\mathbf{Q}\mathbf{x}\|_2 = \sqrt{(\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{x})} = \sqrt{\mathbf{x}^{\!\top\!}\mathbf{x}} = \|\mathbf{x}\|_2$$
+
 Therefore multiplication by an orthogonal matrix can be considered as a
 transformation that preserves length, but may rotate or reflect the
 vector about the origin.
@@ -386,6 +403,7 @@ $\mathbf{\Lambda} = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$. Since by
 definition $\mathbf{A}\mathbf{q}_i = \lambda_i\mathbf{q}_i$ for every
 $i$, the following relationship holds:
 $$\mathbf{A}\mathbf{Q} = \mathbf{Q}\mathbf{\Lambda}$$
+
 Right-multiplying
 by $\mathbf{Q}^{\!\top\!}$, we arrive at the decomposition
 $$\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}$$
@@ -400,6 +418,7 @@ There turns out to be an interesting connection between the quadratic
 form of a symmetric matrix and its eigenvalues. This connection is
 provided by the **Rayleigh quotient**
 $$R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}}$$
+
 The Rayleigh quotient has a couple of important properties which the
 reader can (and should!) easily verify from the definition:
 
@@ -417,6 +436,7 @@ useful special case of the final result.
 *Proposition.* 
 For any $\mathbf{x}$ such that $\|\mathbf{x}\|_2 = 1$,
 $$\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$$
+
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
 
@@ -430,6 +450,7 @@ noting that the relationship between $\mathbf{x}$ and $\mathbf{y}$ is
 one-to-one and that $\|\mathbf{y}\|_2 = 1$ since $\mathbf{Q}$ is
 orthogonal. Hence
 $$\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \max_{\|\mathbf{y}\|_2 = 1} \mathbf{y}^{\!\top\!}\mathbf{\Lambda}\mathbf{y} = \max_{y_1^2+\dots+y_n^2=1} \sum_{i=1}^n \lambda_i y_i^2$$
+
 Written this way, it is clear that $\mathbf{y}$ maximizes this
 expression exactly if and only if it satisfies
 $\sum_{i \in I} y_i^2 = 1$ where
@@ -438,9 +459,11 @@ and $y_j = 0$ for $j \not\in I$. That is, $I$ contains the index or
 indices of the largest eigenvalue. In this case, the maximal value of
 the expression is
 $$\sum_{i=1}^n \lambda_i y_i^2 = \sum_{i \in I} \lambda_i y_i^2 = \lambda_{\max}(\mathbf{A}) \sum_{i \in I} y_i^2 = \lambda_{\max}(\mathbf{A})$$
+
 Then writing $\mathbf{q}_1, \dots, \mathbf{q}_n$ for the columns of
 $\mathbf{Q}$, we have
 $$\mathbf{x} = \mathbf{Q}\mathbf{Q}^{\!\top\!}\mathbf{x} = \mathbf{Q}\mathbf{y} = \sum_{i=1}^n y_i\mathbf{q}_i = \sum_{i \in I} y_i\mathbf{q}_i$$
+
 where we have used the matrix-vector product identity.
 
 Recall that $\mathbf{q}_1, \dots, \mathbf{q}_n$ are eigenvectors of
@@ -466,6 +489,7 @@ for unit $\mathbf{x}$)
 *Theorem.* 
 (Min-max theorem) For all $\mathbf{x} \neq \mathbf{0}$,
 $$\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})$$
+
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
 
@@ -497,6 +521,7 @@ its eigenvalues are positive.
 *Proof.* Suppose $A$ is positive semi-definite, and let $\mathbf{x}$ be
 an eigenvector of $\mathbf{A}$ with eigenvalue $\lambda$. Then
 $$0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2$$
+
 Since $\mathbf{x} \neq \mathbf{0}$ (by the assumption that it is an
 eigenvector), we have $\|\mathbf{x}\|_2^2 > 0$, so we can divide both
 sides by $\|\mathbf{x}\|_2^2$ to arrive at $\lambda \geq 0$. If
@@ -508,6 +533,7 @@ of Rayleigh quotients. Suppose that $\mathbf{A}$ is symmetric and all
 its eigenvalues are nonnegative. Then for all
 $\mathbf{x} \neq \mathbf{0}$,
 $$0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})$$
+
 Since $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$ matches
 $R_\mathbf{A}(\mathbf{x})$ in sign, we conclude that $\mathbf{A}$ is
 positive semi-definite. If the eigenvalues of $\mathbf{A}$ are all
@@ -526,6 +552,7 @@ $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive definite.
 
 *Proof.* For any $\mathbf{x} \in \mathbb{R}^n$,
 $$\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0$$
+
 so $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive semi-definite.
 
 Note that $\|\mathbf{A}\mathbf{x}\|_2^2 = 0$ implies
@@ -550,6 +577,7 @@ $\mathbf{A} + \epsilon\mathbf{I}$ is positive definite.
 *Proof.* Assuming $\mathbf{A}$ is positive semi-definite and
 $\epsilon > 0$, we have for any $\mathbf{x} \neq \mathbf{0}$ that
 $$\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{> 0} > 0$$
+
 as claimed. ◻
 
 An obvious but frequently useful consequence of the two propositions we
@@ -580,6 +608,7 @@ $\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}} = \mathbf{A}$. Fixing
 a value $c \geq 0$, the $c$-isocontour of $f$ is the set of
 $\mathbf{x} \in \mathbb{R}^n$ such that
 $$c = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}}\mathbf{x} = \|\mathbf{A}^{\frac{1}{2}}\mathbf{x}\|_2^2$$
+
 where we have used the symmetry of $\mathbf{A}^{\frac{1}{2}}$. Making
 the change of variable
 $\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}$, we have the condition
@@ -590,6 +619,7 @@ $\|\hat{\mathbf{z}}\|_2 = 1$. Then since
 $\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}$,
 we have
 $$\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\sqrt{c}\hat{\mathbf{z}} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}$$
+
 where $\tilde{\mathbf{z}} = \mathbf{Q}^{\!\top\!}\hat{\mathbf{z}}$ also
 satisfies $\|\tilde{\mathbf{z}}\|_2 = 1$ since $\mathbf{Q}$ is
 orthogonal. Using this parameterization, we see that the solution set
@@ -620,6 +650,7 @@ $\lambda_i^{-\frac{1}{2}}$. But after applying the rigid transformation
 $\mathbf{Q}$, the resulting vector points in the direction of the
 corresponding eigenvector $\mathbf{q}_i$, since
 $$\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q}_i$$
+
 where we have used the matrix-vector product identity from earlier.
 
 In summary: the isocontours of
@@ -636,6 +667,7 @@ algebra. Its strength stems partially from the fact that *every matrix*
 $\mathbf{A} \in \mathbb{R}^{m \times n}$ has an SVD (even non-square
 matrices)! The decomposition goes as follows:
 $$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}$$
+
 where
 $\mathbf{U} \in \mathbb{R}^{m \times m}$ and
 $\mathbf{V} \in \mathbb{R}^{n \times n}$ are orthogonal matrices and
@@ -646,6 +678,7 @@ diagonal.
 By convention, the singular values are given in non-increasing order,
 i.e.
 $$\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{\min(m,n)} \geq 0$$
+
 Only the first $r$ singular values are nonzero, where $r$ is the rank of
 $\mathbf{A}$.
 
@@ -655,6 +688,7 @@ $$\begin{aligned}
 \mathbf{A}^{\!\top\!}\mathbf{A} &= (\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} \\
 \mathbf{A}\mathbf{A}^{\!\top\!} &= \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}
 \end{aligned}$$
+
 It follows immediately that the columns of $\mathbf{V}$
 (the **right-singular vectors** of $\mathbf{A}$) are eigenvectors of
 $\mathbf{A}^{\!\top\!}\mathbf{A}$, and the columns of $\mathbf{U}$ (the
@@ -691,6 +725,7 @@ $\mathbf{a}\mathbf{b}^{\!\top\!}$, where $\mathbf{a} \in \mathbb{R}^m$
 and $\mathbf{b} \in \mathbb{R}^n$. By inspection it is not hard to see
 that such an expression yields an $m \times n$ matrix such that
 $$[\mathbf{a}\mathbf{b}^{\!\top\!}]_{ij} = a_ib_j$$
+
 It is not
 immediately obvious, but the sum of outer products is actually
 equivalent to an appropriate matrix-matrix product! We formalize this
@@ -700,11 +735,13 @@ statement as
 Let $\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m$ and
 $\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n$. Then
 $$\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}$$
+
 where
 $$\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 & \cdots & \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 & \cdots & \mathbf{b}_k\end{bmatrix}$$
 
 *Proof.* For each $(i,j)$, we have
 $$\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}$$
+
 This last expression should be recognized as an inner product between
 the $i$th row of $\mathbf{A}$ and the $j$th row of $\mathbf{B}$, or
 equivalently the $j$th column of $\mathbf{B}^{\!\top\!}$. Hence by the
@@ -719,6 +756,7 @@ is called a quadratic form of $\mathbf{A}$. It is in some cases helpful
 to rewrite the quadratic form in terms of the individual elements that
 make up $\mathbf{A}$ and $\mathbf{x}$:
 $$\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^n A_{ij}x_ix_j$$
+
 This identity is valid for any square matrix (need not be symmetric),
 although quadratic forms are usually only discussed in the context of
 symmetric matrices.
