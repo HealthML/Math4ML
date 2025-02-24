@@ -44,9 +44,12 @@ The single most important concept from calculus in the context of
 machine learning is the **gradient**. Gradients generalize derivatives
 to scalar functions of several variables. The gradient of
 $f : \mathbb{R}^d \to \mathbb{R}$, denoted $\nabla f$, is given by
-$$\nabla f = \begin{bmatrix}\pdv{f}{x_1} \\ \vdots \\ \pdv{f}{x_n}\end{bmatrix}
+
+$$\nabla f = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\nabla f]_i = \pdv{f}{x_i}$$ Gradients have the following very
+[\nabla f]_i = \frac{\partial f}{\partial x_i}$$
+
+Gradients have the following very
 important property: $\nabla f(\mathbf{x})$ points in the direction of
 **steepest ascent** from $\mathbf{x}$. Similarly,
 $-\nabla f(\mathbf{x})$ points in the direction of **steepest descent**
@@ -56,23 +59,31 @@ minimizing a function via **gradient descent**.
 ## The Jacobian
 
 The **Jacobian** of $f : \mathbb{R}^n \to \mathbb{R}^m$ is a matrix of
-first-order partial derivatives: $$\mathbf{J}_f = \begin{bmatrix}
-    \pdv{f_1}{x_1} & \hdots & \pdv{f_1}{x_n} \\
+first-order partial derivatives: 
+
+$$\mathbf{J}_f = \begin{bmatrix}
+    \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
     \vdots & \ddots & \vdots \\
-    \pdv{f_m}{x_1} & \hdots & \pdv{f_m}{x_n}\end{bmatrix}
+    \frac{\partial f_m}{\partial x_1} & \dots & \frac{\partial f_m}{\partial x_n}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\mathbf{J}_f]_{ij} = \pdv{f_i}{x_j}$$ Note the special case $m = 1$,
+[\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}$$
+
+Note the special case $m = 1$,
 where $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 
 ## The Hessian
 
 The **Hessian** matrix of $f : \mathbb{R}^d \to \mathbb{R}$ is a matrix
-of second-order partial derivatives: $$\nabla^2 f = \begin{bmatrix}
-    \pdv[2]{f}{x_1} & \hdots & \pdv{f}{x_1}{x_d} \\
+of second-order partial derivatives: 
+
+$$\nabla^2 f = \begin{bmatrix}
+    \frac{\partial f}{\partial^2 x_1} & \dots & \frac{\partial f}{\partial x_1 \partial x_d} \\
     \vdots & \ddots & \vdots \\
-    \pdv{f}{x_d}{x_1} & \hdots & \pdv[2]{f}{x_d}\end{bmatrix}
+    \frac{\partial f}{\partial x_d \partial x_1} & \dots & \frac{\partial f}{\partial^2 x_d}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\nabla^2 f]_{ij} = {\pdv{f}{x_i}{x_j}}$$ Recall that if the partial
+[\nabla^2 f]_{ij} = {\frac{\partial f}{\partial x_i \partial x_j}}$$ 
+
+Recall that if the partial
 derivatives are continuous, the order of differentiation can be
 interchanged (Clairaut's theorem), so the Hessian matrix will be
 symmetric. This will typically be the case for differentiable functions
@@ -88,10 +99,14 @@ information about the curvature of $f$.
 Since a lot of optimization reduces to finding points where the gradient
 vanishes, it is useful to have differentiation rules for matrix and
 vector expressions. We give some common rules here. Probably the two
-most important for our purposes are $$\begin{aligned}
+most important for our purposes are 
+
+$$\begin{aligned}
 \nabla_\mathbf{x} &(\mathbf{a}^{\!\top\!}\mathbf{x}) = \mathbf{a} \\
 \nabla_\mathbf{x} &(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}) = (\mathbf{A} + \mathbf{A}^{\!\top\!})\mathbf{x}
-\end{aligned}$$ Note that this second rule is defined only if
+\end{aligned}$$ 
+
+Note that this second rule is defined only if
 $\mathbf{A}$ is square. Furthermore, if $\mathbf{A}$ is symmetric, we
 can simplify the result to $2\mathbf{A}\mathbf{x}$.
 
@@ -104,7 +119,10 @@ for a composite function in terms of the derivatives of the simpler
 functions that make it up.
 
 The chain rule from single-variable calculus should be familiar:
-$$(f \circ g)'(x) = f'(g(x))g'(x)$$ where $\circ$ denotes function
+
+$$(f \circ g)'(x) = f'(g(x))g'(x)$$ 
+
+where $\circ$ denotes function
 composition. There is a natural generalization of this rule to
 multivariate functions.
 
@@ -112,8 +130,9 @@ multivariate functions.
 Suppose $f : \mathbb{R}^m \to \mathbb{R}^k$ and
 $g : \mathbb{R}^n \to \mathbb{R}^m$. Then
 $f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ and
+
 $$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})$$
-:::
+
 
 In the special case $k = 1$ we have the following corollary since
 $\nabla f = \mathbf{J}_f^{\!\top\!}$.
@@ -122,8 +141,9 @@ $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 Suppose $f : \mathbb{R}^m \to \mathbb{R}$ and
 $g : \mathbb{R}^n \to \mathbb{R}^m$. Then
 $f \circ g : \mathbb{R}^n \to \mathbb{R}$ and
+
 $$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))$$
-:::
+
 
 ## Taylor's theorem
 
@@ -134,12 +154,17 @@ one variable. We give the version presented in [@numopt].
 (Taylor's theorem) Suppose $f : \mathbb{R}^d \to \mathbb{R}$ is
 continuously differentiable, and let $\mathbf{h} \in \mathbb{R}^d$. Then
 there exists $t \in (0,1)$ such that
+
 $$f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x} + t\mathbf{h})^{\!\top\!}\mathbf{h}$$
+
 Furthermore, if $f$ is twice continuously differentiable, then
-$$\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f(\mathbf{x} + t\mathbf{h})\mathbf{h} \dd{t}$$
+
+$$\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f(\mathbf{x} + t\mathbf{h})\mathbf{h} \operatorname{d}{t}$$
+
 and there exists $t \in (0,1)$ such that
+
 $$f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})^{\!\top\!}\mathbf{h} + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2f(\mathbf{x}+t\mathbf{h})\mathbf{h}$$
-:::
+
 
 This theorem is used in proofs about conditions for local minima of
 unconstrained optimization problems. Some of the most important results
@@ -158,14 +183,20 @@ $\nabla f(\mathbf{x}^*) = \mathbf{0}$.
 towards a contradiction that $\nabla f(\mathbf{x}^*) \neq \mathbf{0}$.
 Let $\mathbf{h} = -\nabla f(\mathbf{x}^*)$, noting that by the
 continuity of $\nabla f$ we have
+
 $$\lim_{t \to 0} -\nabla f(\mathbf{x}^* + t\mathbf{h}) = -\nabla f(\mathbf{x}^*) = \mathbf{h}$$
+
 Hence
+
 $$\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) = \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*) = -\|\mathbf{h}\|_2^2 < 0$$
+
 Thus there exists $T > 0$ such that
 $\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) < 0$ for all
 $t \in [0,T]$. Now we apply Taylor's theorem: for any $t \in (0,T]$,
 there exists $t' \in (0,t)$ such that
+
 $$f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h}) < f(\mathbf{x}^*)$$
+
 whence it follows that $\mathbf{x}^*$ is not a local minimum, a
 contradiction. Hence $\nabla f(\mathbf{x}^*) = \mathbf{0}$. ◻
 :::
@@ -202,14 +233,20 @@ towards a contradiction that $\nabla^2 f(\mathbf{x}^*)$ is not positive
 semi-definite. Let $\mathbf{h}$ be such that
 $\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} < 0$, noting
 that by the continuity of $\nabla^2 f$ we have
+
 $$\lim_{t \to 0} \nabla^2 f(\mathbf{x}^* + t\mathbf{h}) = \nabla^2 f(\mathbf{x}^*)$$
+
 Hence
+
 $$\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} = \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} < 0$$
+
 Thus there exists $T > 0$ such that
 $\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} < 0$
 for all $t \in [0,T]$. Now we apply Taylor's theorem: for any
 $t \in (0,T]$, there exists $t' \in (0,t)$ such that
+
 $$f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + \underbrace{t\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}t^2\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t'\mathbf{h})\mathbf{h} < f(\mathbf{x}^*)$$
+
 where the middle term vanishes because
 $\nabla f(\mathbf{x}^*) = \mathbf{0}$ by the previous result. It follows
 that $\mathbf{x}^*$ is not a local minimum, a contradiction. Hence
@@ -231,7 +268,9 @@ definite, then $\mathbf{x}^*$ is a strict local minimum.
 $\mathbf{x}^*$ which is contained in the neighborhood. Applying Taylor's
 theorem, we have that for any $\mathbf{h}$ with $\|\mathbf{h}\|_2 < r$,
 there exists $t \in (0,1)$ such that
+
 $$f(\mathbf{x}^* + \mathbf{h}) = f(\mathbf{x}^*) + \underbrace{\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq f(\mathbf{x}^*)$$
+
 The last inequality holds because
 $\nabla^2 f(\mathbf{x}^* + t\mathbf{h})$ is positive semi-definite
 (since $\|t\mathbf{h}\|_2 = t\|\mathbf{h}\|_2 < \|\mathbf{h}\|_2 < r$),
@@ -295,7 +334,10 @@ convexity, and strong convexity.
 </figure>
 
 A set $\mathcal{X} \subseteq \mathbb{R}^d$ is **convex** if
-$$t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}$$ for all
+
+$$t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}$$
+
+for all
 $\mathbf{x}, \mathbf{y} \in \mathcal{X}$ and all $t \in [0,1]$.
 
 Geometrically, this means that all the points on the line segment
@@ -317,8 +359,10 @@ $f : \mathbb{R}^d \to \mathbb{R}$ unless otherwise noted. We'll start
 with the definitions and then give some results.
 
 A function $f$ is **convex** if
+
 $$f(t\mathbf{x} + (1-t)\mathbf{y}) \leq t f(\mathbf{x}) + (1-t)f(\mathbf{y})$$
-for all $\mathbf{x}, \mathbf{y} \in \dom f$ and all $t \in [0,1]$.
+
+for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$ and all $t \in [0,1]$.
 
 If the inequality holds strictly (i.e. $<$ rather than $\leq$) for all
 $t \in (0,1)$ and $\mathbf{x} \neq \mathbf{y}$, then we say that $f$ is
@@ -326,7 +370,10 @@ $t \in (0,1)$ and $\mathbf{x} \neq \mathbf{y}$, then we say that $f$ is
 
 A function $f$ is **strongly convex with parameter $m$** (or
 **$m$-strongly convex**) if the function
-$$\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$ is
+
+$$\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$ 
+
+is
 convex.
 
 These conditions are given in increasing order of strength; strong
@@ -370,7 +417,9 @@ Consider the line segment
 $\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]$,
 noting that $\mathbf{x}(t) \in \mathcal{X}$ by the convexity of
 $\mathcal{X}$. Then by the convexity of $f$,
+
 $$f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) < tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)$$
+
 for all $t \in (0,1)$.
 
 We can pick $t$ to be sufficiently close to $1$ that
@@ -405,7 +454,9 @@ Consider the line segment
 $\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]$,
 which again must lie entirely in $\mathcal{X}$. By the strict convexity
 of $f$,
+
 $$f(\mathbf{x}(t)) < tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)$$
+
 for all $t \in (0,1)$. But this contradicts the fact that $\mathbf{x}^*$
 is a global minimum. Therefore if $\tilde{\mathbf{x}}$ is a local
 minimum of $f$ in $\mathcal{X}$, then
@@ -454,7 +505,9 @@ Norms are convex.
 ::: proof
 *Proof.* Let $\|\cdot\|$ be a norm on a vector space $V$. Then for all
 $\mathbf{x}, \mathbf{y} \in V$ and $t \in [0,1]$,
+
 $$\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|$$
+
 where we have used respectively the triangle inequality, the homogeneity
 of norms, and the fact that $t$ and $1-t$ are nonnegative. Hence
 $\|\cdot\|$ is convex. ◻
@@ -462,9 +515,11 @@ $\|\cdot\|$ is convex. ◻
 
 ::: proposition
 Suppose $f$ is differentiable. Then $f$ is convex if and only if
+
 $$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle$$
-for all $\mathbf{x}, \mathbf{y} \in \dom f$.
-:::
+
+for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
+
 
 ::: proof
 *Proof.* To-do. ◻
@@ -474,14 +529,14 @@ for all $\mathbf{x}, \mathbf{y} \in \dom f$.
 Suppose $f$ is twice differentiable. Then
 
 (i) $f$ is convex if and only if $\nabla^2 f(\mathbf{x}) \succeq 0$ for
-    all $\mathbf{x} \in \dom f$.
+    all $\mathbf{x} \in \operatorname{dom} f$.
 
 (ii) If $\nabla^2 f(\mathbf{x}) \succ 0$ for all
-     $\mathbf{x} \in \dom f$, then $f$ is strictly convex.
+     $\mathbf{x} \in \operatorname{dom} f$, then $f$ is strictly convex.
 
 (iii) $f$ is $m$-strongly convex if and only if
       $\nabla^2 f(\mathbf{x}) \succeq mI$ for all
-      $\mathbf{x} \in \dom f$.
+      $\mathbf{x} \in \operatorname{dom} f$.
 :::
 
 ::: proof
@@ -494,13 +549,16 @@ If $f$ is convex and $\alpha \geq 0$, then $\alpha f$ is convex.
 
 ::: proof
 *Proof.* Suppose $f$ is convex and $\alpha \geq 0$. Then for all
-$\mathbf{x}, \mathbf{y} \in \dom(\alpha f) = \dom f$, $$\begin{aligned}
+$\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f$, 
+
+$$\begin{aligned}
 (\alpha f)(t\mathbf{x} + (1-t)\mathbf{y}) &= \alpha f(t\mathbf{x} + (1-t)\mathbf{y}) \\
 &\leq \alpha\left(tf(\mathbf{x}) + (1-t)f(\mathbf{y})\right) \\
 &= t(\alpha f(\mathbf{x})) + (1-t)(\alpha f(\mathbf{y})) \\
 &= t(\alpha f)(\mathbf{x}) + (1-t)(\alpha f)(\mathbf{y})
-\end{aligned}$$ so $\alpha f$ is convex. ◻
-:::
+\end{aligned}$$ 
+
+so $\alpha f$ is convex. ◻
 
 ::: proposition
 If $f$ and $g$ are convex, then $f+g$ is convex. Furthermore, if $g$ is
@@ -510,14 +568,17 @@ $m$-strongly convex, then $f+g$ is $m$-strongly convex.
 
 ::: proof
 *Proof.* Suppose $f$ and $g$ are convex. Then for all
-$\mathbf{x}, \mathbf{y} \in \dom (f+g) = \dom f \cap \dom g$,
+$\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g$,
+
 $$\begin{aligned}
 (f+g)(t\mathbf{x} + (1-t)\mathbf{y}) &= f(t\mathbf{x} + (1-t)\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) \\
 &\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) & \text{convexity of $f$} \\
 &\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + tg(\mathbf{x}) + (1-t)g(\mathbf{y}) & \text{convexity of $g$} \\
 &= t(f(\mathbf{x}) + g(\mathbf{x})) + (1-t)(f(\mathbf{y}) + g(\mathbf{y})) \\
 &= t(f+g)(\mathbf{x}) + (1-t)(f+g)(\mathbf{y})
-\end{aligned}$$ so $f + g$ is convex.
+\end{aligned}$$ 
+
+so $f + g$ is convex.
 
 If $g$ is strictly convex, the second inequality above holds strictly
 for $\mathbf{x} \neq \mathbf{y}$ and $t \in (0,1)$, so $f+g$ is strictly
@@ -526,13 +587,19 @@ convex.
 If $g$ is $m$-strongly convex, then the function
 $h(\mathbf{x}) \equiv g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$ is
 convex, so $f+h$ is convex. But
+
 $$(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$
+
 so $f+g$ is $m$-strongly convex. ◻
 :::
 
 ::: proposition
 If $f_1, \dots, f_n$ are convex and $\alpha_1, \dots, \alpha_n \geq 0$,
-then $$\sum_{i=1}^n \alpha_i f_i$$ is convex.
+then 
+
+$$\sum_{i=1}^n \alpha_i f_i$$ 
+
+is convex.
 :::
 
 ::: proof
@@ -547,14 +614,18 @@ for any appropriately-sized $\mathbf{A}$ and $\mathbf{b}$.
 
 ::: proof
 *Proof.* Suppose $f$ is convex and $g$ is defined like so. Then for all
-$\mathbf{x}, \mathbf{y} \in \dom g$, $$\begin{aligned}
+$\mathbf{x}, \mathbf{y} \in \operatorname{dom} g$, 
+
+$$\begin{aligned}
 g(t\mathbf{x} + (1-t)\mathbf{y}) &= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) + \mathbf{b}) \\
 &= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + \mathbf{b}) \\
 &= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + t\mathbf{b} + (1-t)\mathbf{b}) \\
 &= f(t(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)(\mathbf{A}\mathbf{y} + \mathbf{b})) \\
 &\leq tf(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)f(\mathbf{A}\mathbf{y} + \mathbf{b}) & \text{convexity of $f$} \\
 &= tg(\mathbf{x}) + (1-t)g(\mathbf{y})
-\end{aligned}$$ Thus $g$ is convex. ◻
+\end{aligned}$$ 
+
+Thus $g$ is convex. ◻
 :::
 
 ::: proposition
@@ -564,13 +635,17 @@ $h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}$ is convex.
 
 ::: proof
 *Proof.* Suppose $f$ and $g$ are convex and $h$ is defined like so. Then
-for all $\mathbf{x}, \mathbf{y} \in \dom h$, $$\begin{aligned}
+for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} h$, 
+
+$$\begin{aligned}
 h(t\mathbf{x} + (1-t)\mathbf{y}) &= \max\{f(t\mathbf{x} + (1-t)\mathbf{y}), g(t\mathbf{x} + (1-t)\mathbf{y})\} \\
 &\leq \max\{tf(\mathbf{x}) + (1-t)f(\mathbf{y}), tg(\mathbf{x}) + (1-t)g(\mathbf{y})\} \\
 &\leq \max\{tf(\mathbf{x}), tg(\mathbf{x})\} + \max\{(1-t)f(\mathbf{y}), (1-t)g(\mathbf{y})\} \\
 &= t\max\{f(\mathbf{x}), g(\mathbf{x})\} + (1-t)\max\{f(\mathbf{y}), g(\mathbf{y})\} \\
 &= th(\mathbf{x}) + (1-t)h(\mathbf{y})
-\end{aligned}$$ Note that in the first inequality we have used convexity
+\end{aligned}$$ 
+
+Note that in the first inequality we have used convexity
 of $f$ and $g$ plus the fact that $a \leq c, b \leq d$ implies
 $\max\{a,b\} \leq \max\{c,d\}$. In the second inequality we have used
 the fact that $\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}$.
@@ -651,14 +726,20 @@ $\mathbf{y} \in S$ if and only if $\mathbf{x}-\mathbf{y}^* \perp S$.
 $\|\mathbf{x}-\mathbf{y}\|$ over $\mathbf{y} \in S$. That is,
 $\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|$ for all
 $\mathbf{y} \in S$, with equality only if $\mathbf{y} = \mathbf{y}^*$.
-Fix $\mathbf{v} \in S$ and observe that $$\begin{aligned}
+Fix $\mathbf{v} \in S$ and observe that 
+
+$$\begin{aligned}
 g(t) &:= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
 &= \langle \mathbf{x}-\mathbf{y}^*+t\mathbf{v}, \mathbf{x}-\mathbf{y}^*+t\mathbf{v} \rangle \\
 &= \langle \mathbf{x}-\mathbf{y}^*, \mathbf{x}-\mathbf{y}^* \rangle - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\langle \mathbf{v}, \mathbf{v} \rangle \\
 &= \|\mathbf{x}-\mathbf{y}^*\|^2 - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\|\mathbf{v}\|^2
-\end{aligned}$$ must have a minimum at $t = 0$ as a consequence of this
+\end{aligned}$$ 
+
+must have a minimum at $t = 0$ as a consequence of this
 assumption. Thus
+
 $$0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle$$
+
 giving $\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}$. Since $\mathbf{v}$
 was arbitrary in $S$, we have $\mathbf{x}-\mathbf{y}^* \perp S$ as
 claimed.
@@ -668,7 +749,9 @@ for any $\mathbf{y} \in S$, $\mathbf{y}^*-\mathbf{y} \in S$ because
 $\mathbf{y}^* \in S$ and $S$ is closed under subtraction. Under the
 hypothesis, $\mathbf{x}-\mathbf{y}^* \perp \mathbf{y}^*-\mathbf{y}$, so
 by the Pythagorean theorem,
+
 $$\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|$$
+
 and in fact the inequality is strict when $\mathbf{y} \neq \mathbf{y}^*$
 since this implies $\|\mathbf{y}^*-\mathbf{y}\| > 0$. Thus
 $\mathbf{y}^*$ is the unique minimizer of $\|\mathbf{x}-\mathbf{y}\|$
@@ -677,7 +760,9 @@ over $\mathbf{y} \in S$. ◻
 
 Since a unique minimizer in $S$ can be found for any $\mathbf{x} \in V$,
 we can define an operator
-$$P\mathbf{x} = \argmin_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|$$
+
+$$P\mathbf{x} = \operatorname{argmin}_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|$$
+
 Observe that $P\mathbf{y} = \mathbf{y}$ for any $\mathbf{y} \in S$,
 since $\mathbf{y}$ has distance zero from itself and every other point
 in $S$ has positive distance from $\mathbf{y}$. Thus
@@ -697,17 +782,20 @@ possible to write down a more specific expression for $P$.
 ::: proposition
 If $\mathbf{e}_1, \dots, \mathbf{e}_m$ is an orthonormal basis for $S$,
 then
+
 $$P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i$$
-:::
 
 ::: proof
 *Proof.* Let $\mathbf{e}_1, \dots, \mathbf{e}_m$ be an orthonormal basis
 for $S$, and suppose $\mathbf{x} \in V$. Then for all $j = 1, \dots, m$,
+
 $$\begin{aligned}
 \left\langle \mathbf{x}-\sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i, \mathbf{e}_j \right\rangle &= \langle \mathbf{x}, \mathbf{e}_j \rangle - \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\underbrace{\langle \mathbf{e}_i, \mathbf{e}_j \rangle}_{\delta_{ij}} \\
 &= \langle \mathbf{x}, \mathbf{e}_j \rangle - \langle \mathbf{x}, \mathbf{e}_j \rangle \\
 &= 0
-\end{aligned}$$ We have shown that the claimed expression, call it
+\end{aligned}$$ 
+
+We have shown that the claimed expression, call it
 $\tilde{P}\mathbf{x}$, satisfies
 $\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j$ for every element
 $\mathbf{e}_j$ of the orthonormal basis for $S$. It follows (by
