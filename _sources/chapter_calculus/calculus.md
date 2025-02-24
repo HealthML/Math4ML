@@ -77,11 +77,11 @@ The **Hessian** matrix of $f : \mathbb{R}^d \to \mathbb{R}$ is a matrix
 of second-order partial derivatives: 
 
 $$\nabla^2 f = \begin{bmatrix}
-    \frac{\partial f}{\partial^2 x_1} & \dots & \frac{\partial f}{\partial x_1 \partial x_d} \\
+    \frac{\partial^2 f}{\partial x_1^2} & \dots & \frac{\partial^2 f}{\partial x_1 \partial x_d} \\
     \vdots & \ddots & \vdots \\
-    \frac{\partial f}{\partial x_d \partial x_1} & \dots & \frac{\partial f}{\partial^2 x_d}\end{bmatrix}
+    \frac{\partial^2 f}{\partial x_d \partial x_1} & \dots & \frac{\partial^2 f}{\partial x_d^2}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\nabla^2 f]_{ij} = {\frac{\partial f}{\partial x_i \partial x_j}}$$ 
+[\nabla^2 f]_{ij} = {\frac{\partial^2 f}{\partial x_i \partial x_j}}$$ 
 
 Recall that if the partial
 derivatives are continuous, the order of differentiation can be
