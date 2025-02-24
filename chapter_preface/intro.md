@@ -1,23 +1,23 @@
 # Notation
 
-  Notation                     Meaning
-  ---------------------------- ----------------------------------------------------------------------------------------
-  $\mathbb{R}$                 set of real numbers
-  $\mathbb{R}^n$               set (vector space) of $n$-tuples of real numbers, endowed with the usual inner product
-  $\mathbb{R}^{m \times n}$    set (vector space) of $m$-by-$n$ matrices
-  $\delta_{ij}$                Kronecker delta, i.e. $\delta_{ij} = 1$ if $i = j$, $0$ otherwise
-  $\nabla f(\mathbf{x})$       gradient of the function $f$ at $\mathbf{x}$
-  $\nabla^2 f(\mathbf{x})$     Hessian of the function $f$ at $\mathbf{x}$
-  $\mathbf{A}^{\!\top\!}$      transpose of the matrix $\mathbf{A}$
-  $\Omega$                     sample space
-  $\mathbb{P}(A)$              probability of event $A$
-  $p(X)$                       distribution of random variable $X$
-  $p(x)$                       probability density/mass function evaluated at $x$
-  $A^\text{c}$                 complement of event $A$
-  $A \mathbin{\dot{\cup}} B$   union of $A$ and $B$, with the extra requirement that $A \cap B = \varnothing$
-  $\mathbb{E}[X]$              expected value of random variable $X$
-  $\operatorname{Var}(X)$      variance of random variable $X$
-  $\operatorname{Cov}(X, Y)$   covariance of random variables $X$ and $Y$
+| Notation                  | Meaning |
+|---------------------------|--------------------------------------------------------------------------|
+| $\mathbb{R}$              | set of real numbers |
+| $\mathbb{R}^n$            | set (vector space) of $n$-tuples of real numbers, endowed with the usual inner product |
+| $\mathbb{R}^{m \times n}$ | set (vector space) of $m$-by-$n$ matrices |
+|  $\delta_{ij}$            | Kronecker delta, i.e. $\delta_{ij} = 1$ if $i = j$, $0$ otherwise |
+| $\nabla f(\mathbf{x})$    | gradient of the function $f$ at $\mathbf{x}$ |
+| $\nabla^2 f(\mathbf{x})$  | Hessian of the function $f$ at $\mathbf{x}$ |
+| $\mathbf{A}^{\!\top\!}$   | transpose of the matrix $\mathbf{A}$ |
+| $\Omega$                  | sample space |
+| $\mathbb{P}(A)$           | probability of event $A$ |
+| $p(X)$                    | distribution of random variable $X$ |
+| $p(x)$                    | probability density/mass function evaluated at $x$ |
+| $A^\text{c}$              | complement of event $A$ |
+| $A \mathbin{\dot{\cup}} B$| union of $A$ and $B$, with the extra requirement that $A \cap B = \varnothing$ |
+| $\mathbb{E}[X]$           | expected value of random variable $X$ |
+| $\operatorname{Var}(X)$   | variance of random variable $X$ |
+| $\operatorname{Cov}(X, Y)$| covariance of random variables $X$ and $Y$ |
 
 Other notes:
 
