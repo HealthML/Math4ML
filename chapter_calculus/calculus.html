@@ -173,8 +173,6 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter_preface/intro.html">Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
-
-
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Calculus and Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_probability/probability.html">Probability</a></li>
 </ul>
@@ -377,8 +375,6 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>
@@ -440,36 +436,44 @@ eliminates the need to discuss minimization and maximization separately.</p>
 <p>The single most important concept from calculus in the context of
 machine learning is the <strong>gradient</strong>. Gradients generalize derivatives
 to scalar functions of several variables. The gradient of
-<span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>, denoted <span class="math notranslate nohighlight">\(\nabla f\)</span>, is given by
-$<span class="math notranslate nohighlight">\(\nabla f = \begin{bmatrix}\pdv{f}{x_1} \\ \vdots \\ \pdv{f}{x_n}\end{bmatrix}
+<span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>, denoted <span class="math notranslate nohighlight">\(\nabla f\)</span>, is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\nabla f = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\nabla f]_i = \pdv{f}{x_i}\)</span><span class="math notranslate nohighlight">\( Gradients have the following very
-important property: \)</span>\nabla f(\mathbf{x})<span class="math notranslate nohighlight">\( points in the direction of
-**steepest ascent** from \)</span>\mathbf{x}<span class="math notranslate nohighlight">\(. Similarly,
-\)</span>-\nabla f(\mathbf{x})<span class="math notranslate nohighlight">\( points in the direction of **steepest descent**
-from \)</span>\mathbf{x}$. We will use this fact frequently when iteratively
+[\nabla f]_i = \frac{\partial f}{\partial x_i}\end{split}\]</div>
+<p>Gradients have the following very
+important property: <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> points in the direction of
+<strong>steepest ascent</strong> from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. Similarly,
+<span class="math notranslate nohighlight">\(-\nabla f(\mathbf{x})\)</span> points in the direction of <strong>steepest descent</strong>
+from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. We will use this fact frequently when iteratively
 minimizing a function via <strong>gradient descent</strong>.</p>
 </section>
 <section id="the-jacobian">
 <h2>The Jacobian<a class="headerlink" href="#the-jacobian" title="Link to this heading">#</a></h2>
 <p>The <strong>Jacobian</strong> of <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}^m\)</span> is a matrix of
-first-order partial derivatives: $<span class="math notranslate nohighlight">\(\mathbf{J}_f = \begin{bmatrix}
-    \pdv{f_1}{x_1} &amp; \hdots &amp; \pdv{f_1}{x_n} \\
+first-order partial derivatives:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{J}_f = \begin{bmatrix}
+    \frac{\partial f_1}{\partial x_1} &amp; \dots &amp; \frac{\partial f_1}{\partial x_n} \\
     \vdots &amp; \ddots &amp; \vdots \\
-    \pdv{f_m}{x_1} &amp; \hdots &amp; \pdv{f_m}{x_n}\end{bmatrix}
+    \frac{\partial f_m}{\partial x_1} &amp; \dots &amp; \frac{\partial f_m}{\partial x_n}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\mathbf{J}_f]_{ij} = \pdv{f_i}{x_j}\)</span><span class="math notranslate nohighlight">\( Note the special case \)</span>m = 1<span class="math notranslate nohighlight">\(,
-where \)</span>\nabla f = \mathbf{J}_f^{!\top!}$.</p>
+[\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}\end{split}\]</div>
+<p>Note the special case <span class="math notranslate nohighlight">\(m = 1\)</span>,
+where <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
 </section>
 <section id="the-hessian">
 <h2>The Hessian<a class="headerlink" href="#the-hessian" title="Link to this heading">#</a></h2>
 <p>The <strong>Hessian</strong> matrix of <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is a matrix
-of second-order partial derivatives: $<span class="math notranslate nohighlight">\(\nabla^2 f = \begin{bmatrix}
-    \pdv[2]{f}{x_1} &amp; \hdots &amp; \pdv{f}{x_1}{x_d} \\
+of second-order partial derivatives:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\nabla^2 f = \begin{bmatrix}
+    \frac{\partial f}{\partial^2 x_1} &amp; \dots &amp; \frac{\partial f}{\partial x_1 \partial x_d} \\
     \vdots &amp; \ddots &amp; \vdots \\
-    \pdv{f}{x_d}{x_1} &amp; \hdots &amp; \pdv[2]{f}{x_d}\end{bmatrix}
+    \frac{\partial f}{\partial x_d \partial x_1} &amp; \dots &amp; \frac{\partial f}{\partial^2 x_d}\end{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\nabla^2 f]_{ij} = {\pdv{f}{x_i}{x_j}}\)</span>$ Recall that if the partial
+[\nabla^2 f]_{ij} = {\frac{\partial f}{\partial x_i \partial x_j}}\end{split}\]</div>
+<p>Recall that if the partial
 derivatives are continuous, the order of differentiation can be
 interchanged (Clairaut’s theorem), so the Hessian matrix will be
 symmetric. This will typically be the case for differentiable functions
@@ -484,12 +488,15 @@ information about the curvature of <span class="math notranslate nohighlight">\(
 <p>Since a lot of optimization reduces to finding points where the gradient
 vanishes, it is useful to have differentiation rules for matrix and
 vector expressions. We give some common rules here. Probably the two
-most important for our purposes are $<span class="math notranslate nohighlight">\(\begin{aligned}
+most important for our purposes are</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 \nabla_\mathbf{x} &amp;(\mathbf{a}^{\!\top\!}\mathbf{x}) = \mathbf{a} \\
 \nabla_\mathbf{x} &amp;(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}) = (\mathbf{A} + \mathbf{A}^{\!\top\!})\mathbf{x}
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( Note that this second rule is defined only if
-\)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is square. Furthermore, if \)</span>\mathbf{A}<span class="math notranslate nohighlight">\( is symmetric, we
-can simplify the result to \)</span>2\mathbf{A}\mathbf{x}$.</p>
+\end{aligned}\end{split}\]</div>
+<p>Note that this second rule is defined only if
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is square. Furthermore, if <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric, we
+can simplify the result to <span class="math notranslate nohighlight">\(2\mathbf{A}\mathbf{x}\)</span>.</p>
 <section id="the-chain-rule">
 <h3>The chain rule<a class="headerlink" href="#the-chain-rule" title="Link to this heading">#</a></h3>
 <p>Most functions that we wish to optimize are not completely arbitrary
@@ -497,66 +504,71 @@ functions, but rather are composed of simpler functions which we know
 how to handle. The chain rule gives us a way to calculate derivatives
 for a composite function in terms of the derivatives of the simpler
 functions that make it up.</p>
-<p>The chain rule from single-variable calculus should be familiar:
-$<span class="math notranslate nohighlight">\((f \circ g)'(x) = f'(g(x))g'(x)\)</span><span class="math notranslate nohighlight">\( where \)</span>\circ$ denotes function
+<p>The chain rule from single-variable calculus should be familiar:</p>
+<div class="math notranslate nohighlight">
+\[(f \circ g)'(x) = f'(g(x))g'(x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
 composition. There is a natural generalization of this rule to
 multivariate functions.</p>
 <div class="proposition docutils">
 <p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
 <span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
-<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and
-$<span class="math notranslate nohighlight">\(\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\)</span>$</p>
-</div>
+<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\]</div>
 <p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
 <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
 <div class="corollary docutils">
 <p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
 <span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
-<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and
-$<span class="math notranslate nohighlight">\(\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\)</span>$</p>
-</div>
-</section>
-</section>
-<section id="taylor-s-theorem">
-<h2>Taylor’s theorem<a class="headerlink" href="#taylor-s-theorem" title="Link to this heading">#</a></h2>
+<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\]</div>
+<h2 class="rubric" id="taylor-s-theorem">Taylor’s theorem</h2>
 <p>Taylor’s theorem has natural generalizations to functions of more than
 one variable. We give the version presented in [&#64;numopt].</p>
 <div class="theorem docutils">
 <p>(Taylor’s theorem) Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> is
 continuously differentiable, and let <span class="math notranslate nohighlight">\(\mathbf{h} \in \mathbb{R}^d\)</span>. Then
-there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that
-$<span class="math notranslate nohighlight">\(f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x} + t\mathbf{h})^{\!\top\!}\mathbf{h}\)</span><span class="math notranslate nohighlight">\(
-Furthermore, if \)</span>f<span class="math notranslate nohighlight">\( is twice continuously differentiable, then
-\)</span><span class="math notranslate nohighlight">\(\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f(\mathbf{x} + t\mathbf{h})\mathbf{h} \dd{t}\)</span><span class="math notranslate nohighlight">\(
-and there exists \)</span>t \in (0,1)<span class="math notranslate nohighlight">\( such that
-\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})^{\!\top\!}\mathbf{h} + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2f(\mathbf{x}+t\mathbf{h})\mathbf{h}\)</span>$</p>
-</div>
+there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x} + t\mathbf{h})^{\!\top\!}\mathbf{h}\]</div>
+<p>Furthermore, if <span class="math notranslate nohighlight">\(f\)</span> is twice continuously differentiable, then</p>
+<div class="math notranslate nohighlight">
+\[\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f(\mathbf{x} + t\mathbf{h})\mathbf{h} \operatorname{d}{t}\]</div>
+<p>and there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})^{\!\top\!}\mathbf{h} + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2f(\mathbf{x}+t\mathbf{h})\mathbf{h}\]</div>
 <p>This theorem is used in proofs about conditions for local minima of
 unconstrained optimization problems. Some of the most important results
 are given in the next section.</p>
-</section>
-<section id="conditions-for-local-minima">
-<h2>Conditions for local minima<a class="headerlink" href="#conditions-for-local-minima" title="Link to this heading">#</a></h2>
+<h2 class="rubric" id="conditions-for-local-minima">Conditions for local minima</h2>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(f\)</span> is continuously
 differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, then
 <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>.</p>
 </div>
+</div>
+</div>
+</div>
 <div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose
 towards a contradiction that <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) \neq \mathbf{0}\)</span>.
 Let <span class="math notranslate nohighlight">\(\mathbf{h} = -\nabla f(\mathbf{x}^*)\)</span>, noting that by the
-continuity of <span class="math notranslate nohighlight">\(\nabla f\)</span> we have
-$<span class="math notranslate nohighlight">\(\lim_{t \to 0} -\nabla f(\mathbf{x}^* + t\mathbf{h}) = -\nabla f(\mathbf{x}^*) = \mathbf{h}\)</span><span class="math notranslate nohighlight">\(
-Hence
-\)</span><span class="math notranslate nohighlight">\(\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) = \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*) = -\|\mathbf{h}\|_2^2 &lt; 0\)</span><span class="math notranslate nohighlight">\(
-Thus there exists \)</span>T &gt; 0<span class="math notranslate nohighlight">\( such that
-\)</span>\mathbf{h}^{!\top!}\nabla f(\mathbf{x}^* + t\mathbf{h}) &lt; 0<span class="math notranslate nohighlight">\( for all
-\)</span>t \in [0,T]<span class="math notranslate nohighlight">\(. Now we apply Taylor's theorem: for any \)</span>t \in (0,T]<span class="math notranslate nohighlight">\(,
-there exists \)</span>t’ \in (0,t)<span class="math notranslate nohighlight">\( such that
-\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-whence it follows that \)</span>\mathbf{x}^<em><span class="math notranslate nohighlight">\( is not a local minimum, a
-contradiction. Hence \)</span>\nabla f(\mathbf{x}^</em>) = \mathbf{0}$. ◻</p>
+continuity of <span class="math notranslate nohighlight">\(\nabla f\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[\lim_{t \to 0} -\nabla f(\mathbf{x}^* + t\mathbf{h}) = -\nabla f(\mathbf{x}^*) = \mathbf{h}\]</div>
+<p>Hence</p>
+<div class="math notranslate nohighlight">
+\[\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) = \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*) = -\|\mathbf{h}\|_2^2 &lt; 0\]</div>
+<p>Thus there exists <span class="math notranslate nohighlight">\(T &gt; 0\)</span> such that
+<span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) &lt; 0\)</span> for all
+<span class="math notranslate nohighlight">\(t \in [0,T]\)</span>. Now we apply Taylor’s theorem: for any <span class="math notranslate nohighlight">\(t \in (0,T]\)</span>,
+there exists <span class="math notranslate nohighlight">\(t' \in (0,t)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; f(\mathbf{x}^*)\]</div>
+<p>whence it follows that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a
+contradiction. Hence <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. ◻</p>
 </div>
 <p>The proof shows us why the vanishing gradient is necessary for an
 extremum: if <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> is nonzero, there always exists a
@@ -585,19 +597,22 @@ continuously differentiable in a neighborhood of <span class="math notranslate n
 towards a contradiction that <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is not positive
 semi-definite. Let <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> be such that
 <span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} &lt; 0\)</span>, noting
-that by the continuity of <span class="math notranslate nohighlight">\(\nabla^2 f\)</span> we have
-$<span class="math notranslate nohighlight">\(\lim_{t \to 0} \nabla^2 f(\mathbf{x}^* + t\mathbf{h}) = \nabla^2 f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-Hence
-\)</span><span class="math notranslate nohighlight">\(\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} = \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} &lt; 0\)</span><span class="math notranslate nohighlight">\(
-Thus there exists \)</span>T &gt; 0<span class="math notranslate nohighlight">\( such that
-\)</span>\mathbf{h}^{!\top!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} &lt; 0<span class="math notranslate nohighlight">\(
-for all \)</span>t \in [0,T]<span class="math notranslate nohighlight">\(. Now we apply Taylor's theorem: for any
-\)</span>t \in (0,T]<span class="math notranslate nohighlight">\(, there exists \)</span>t’ \in (0,t)<span class="math notranslate nohighlight">\( such that
-\)</span><span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + \underbrace{t\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}t^2\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t'\mathbf{h})\mathbf{h} &lt; f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-where the middle term vanishes because
-\)</span>\nabla f(\mathbf{x}^<em>) = \mathbf{0}<span class="math notranslate nohighlight">\( by the previous result. It follows
-that \)</span>\mathbf{x}^</em><span class="math notranslate nohighlight">\( is not a local minimum, a contradiction. Hence
-\)</span>\nabla^2 f(\mathbf{x}^*)$ is positive semi-definite. ◻</p>
+that by the continuity of <span class="math notranslate nohighlight">\(\nabla^2 f\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[\lim_{t \to 0} \nabla^2 f(\mathbf{x}^* + t\mathbf{h}) = \nabla^2 f(\mathbf{x}^*)\]</div>
+<p>Hence</p>
+<div class="math notranslate nohighlight">
+\[\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} = \mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^*)\mathbf{h} &lt; 0\]</div>
+<p>Thus there exists <span class="math notranslate nohighlight">\(T &gt; 0\)</span> such that
+<span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} &lt; 0\)</span>
+for all <span class="math notranslate nohighlight">\(t \in [0,T]\)</span>. Now we apply Taylor’s theorem: for any
+<span class="math notranslate nohighlight">\(t \in (0,T]\)</span>, there exists <span class="math notranslate nohighlight">\(t' \in (0,t)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + \underbrace{t\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}t^2\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t'\mathbf{h})\mathbf{h} &lt; f(\mathbf{x}^*)\]</div>
+<p>where the middle term vanishes because
+<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span> by the previous result. It follows
+that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a contradiction. Hence
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is positive semi-definite. ◻</p>
 </div>
 <p>Now we give sufficient conditions for local minima.</p>
 <div class="proposition docutils">
@@ -611,16 +626,17 @@ definite, then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(B\)</span> be an open ball of radius <span class="math notranslate nohighlight">\(r &gt; 0\)</span> centered at
 <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> which is contained in the neighborhood. Applying Taylor’s
 theorem, we have that for any <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(\|\mathbf{h}\|_2 &lt; r\)</span>,
-there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that
-$<span class="math notranslate nohighlight">\(f(\mathbf{x}^* + \mathbf{h}) = f(\mathbf{x}^*) + \underbrace{\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-The last inequality holds because
-\)</span>\nabla^2 f(\mathbf{x}^* + t\mathbf{h})<span class="math notranslate nohighlight">\( is positive semi-definite
-(since \)</span>|t\mathbf{h}|_2 = t|\mathbf{h}|_2 &lt; |\mathbf{h}|_2 &lt; r<span class="math notranslate nohighlight">\(),
+there exists <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}^* + \mathbf{h}) = f(\mathbf{x}^*) + \underbrace{\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*)}_0 + \frac{1}{2}\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq f(\mathbf{x}^*)\]</div>
+<p>The last inequality holds because
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\)</span> is positive semi-definite
+(since <span class="math notranslate nohighlight">\(\|t\mathbf{h}\|_2 = t\|\mathbf{h}\|_2 &lt; \|\mathbf{h}\|_2 &lt; r\)</span>),
 so
-\)</span>\mathbf{h}^{!\top!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq 0<span class="math notranslate nohighlight">\(.
-Since \)</span>f(\mathbf{x}^<em>) \leq f(\mathbf{x}^</em> + \mathbf{h})<span class="math notranslate nohighlight">\( for all
-directions \)</span>\mathbf{h}<span class="math notranslate nohighlight">\( with \)</span>|\mathbf{h}|_2 &lt; r<span class="math notranslate nohighlight">\(, we conclude that
-\)</span>\mathbf{x}^*$ is a local minimum.</p>
+<span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla^2 f(\mathbf{x}^* + t\mathbf{h})\mathbf{h} \geq 0\)</span>.
+Since <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) \leq f(\mathbf{x}^* + \mathbf{h})\)</span> for all
+directions <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> with <span class="math notranslate nohighlight">\(\|\mathbf{h}\|_2 &lt; r\)</span>, we conclude that
+<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum.</p>
 <p>Now further suppose that <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}^*)\)</span> is strictly positive
 definite. Since the Hessian is continuous we can choose another ball
 <span class="math notranslate nohighlight">\(B'\)</span> with radius <span class="math notranslate nohighlight">\(r' &gt; 0\)</span> centered at <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> such that
@@ -649,6 +665,7 @@ cases we can verify it analytically (usually by showing that
 strictly positive definite, the continuity assumption on <span class="math notranslate nohighlight">\(f\)</span> implies
 this condition, so we don’t have to worry.</p>
 </section>
+</section>
 <section id="convexity">
 <h2>Convexity<a class="headerlink" href="#convexity" title="Link to this heading">#</a></h2>
 <p><strong>Convexity</strong> is a term that pertains to both sets and functions. For
@@ -670,9 +687,11 @@ convexity, and strong convexity.</p>
 </figure>
 <figcaption>What convex sets look like</figcaption>
 </figure>
-<p>A set <span class="math notranslate nohighlight">\(\mathcal{X} \subseteq \mathbb{R}^d\)</span> is <strong>convex</strong> if
-$<span class="math notranslate nohighlight">\(t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}\)</span><span class="math notranslate nohighlight">\( for all
-\)</span>\mathbf{x}, \mathbf{y} \in \mathcal{X}<span class="math notranslate nohighlight">\( and all \)</span>t \in [0,1]$.</p>
+<p>A set <span class="math notranslate nohighlight">\(\mathcal{X} \subseteq \mathbb{R}^d\)</span> is <strong>convex</strong> if</p>
+<div class="math notranslate nohighlight">
+\[t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}\]</div>
+<p>for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \mathcal{X}\)</span> and all <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>.</p>
 <p>Geometrically, this means that all the points on the line segment
 between any two points in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> are also in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. See
 Figure <a class="reference internal" href="#fig:convexset"><span class="xref myst">1</span></a>{reference-type=”ref”
@@ -689,15 +708,18 @@ that it is convex. Fortunately, we often want to minimize over all of
 <p>In the remainder of this section, assume
 <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> unless otherwise noted. We’ll start
 with the definitions and then give some results.</p>
-<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>convex</strong> if
-$<span class="math notranslate nohighlight">\(f(t\mathbf{x} + (1-t)\mathbf{y}) \leq t f(\mathbf{x}) + (1-t)f(\mathbf{y})\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>\mathbf{x}, \mathbf{y} \in \dom f<span class="math notranslate nohighlight">\( and all \)</span>t \in [0,1]$.</p>
+<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>convex</strong> if</p>
+<div class="math notranslate nohighlight">
+\[f(t\mathbf{x} + (1-t)\mathbf{y}) \leq t f(\mathbf{x}) + (1-t)f(\mathbf{y})\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span> and all <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>.</p>
 <p>If the inequality holds strictly (i.e. <span class="math notranslate nohighlight">\(&lt;\)</span> rather than <span class="math notranslate nohighlight">\(\leq\)</span>) for all
 <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>, then we say that <span class="math notranslate nohighlight">\(f\)</span> is
 <strong>strictly convex</strong>.</p>
 <p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>strongly convex with parameter <span class="math notranslate nohighlight">\(m\)</span></strong> (or
-<strong><span class="math notranslate nohighlight">\(m\)</span>-strongly convex</strong>) if the function
-$<span class="math notranslate nohighlight">\(\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span>$ is
+<strong><span class="math notranslate nohighlight">\(m\)</span>-strongly convex</strong>) if the function</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\]</div>
+<p>is
 convex.</p>
 <p>These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.</p>
@@ -731,9 +753,10 @@ towards a contradiction that there exists
 <p>Consider the line segment
 <span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
 noting that <span class="math notranslate nohighlight">\(\mathbf{x}(t) \in \mathcal{X}\)</span> by the convexity of
-<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,
-$<span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) &lt; tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>t \in (0,1)$.</p>
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) &lt; tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>.</p>
 <p>We can pick <span class="math notranslate nohighlight">\(t\)</span> to be sufficiently close to <span class="math notranslate nohighlight">\(1\)</span> that
 <span class="math notranslate nohighlight">\(\mathbf{x}(t) \in N\)</span>; then <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)\)</span> by
 the definition of <span class="math notranslate nohighlight">\(N\)</span>, but <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; f(\mathbf{x}^*)\)</span> by the
@@ -760,13 +783,14 @@ the previous result. Hence <span class="math notranslate nohighlight">\(f(\mathb
 Consider the line segment
 <span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
 which again must lie entirely in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. By the strict convexity
-of <span class="math notranslate nohighlight">\(f\)</span>,
-$<span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>t \in (0,1)<span class="math notranslate nohighlight">\(. But this contradicts the fact that \)</span>\mathbf{x}^<em><span class="math notranslate nohighlight">\(
-is a global minimum. Therefore if \)</span>\tilde{\mathbf{x}}<span class="math notranslate nohighlight">\( is a local
-minimum of \)</span>f<span class="math notranslate nohighlight">\( in \)</span>\mathcal{X}<span class="math notranslate nohighlight">\(, then
-\)</span>\tilde{\mathbf{x}} = \mathbf{x}^</em><span class="math notranslate nohighlight">\(, so \)</span>\mathbf{x}^*<span class="math notranslate nohighlight">\( is the unique
-minimum in \)</span>\mathcal{X}$. ◻</p>
+of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}(t)) &lt; tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>. But this contradicts the fact that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>
+is a global minimum. Therefore if <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> is a local
+minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, then
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x}^*\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is the unique
+minimum in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
 </div>
 <p>It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>
@@ -801,29 +825,31 @@ but this is usually not the easiest way.</p>
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> be a norm on a vector space <span class="math notranslate nohighlight">\(V\)</span>. Then for all
-<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>,
-$<span class="math notranslate nohighlight">\(\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
-where we have used respectively the triangle inequality, the homogeneity
-of norms, and the fact that \)</span>t<span class="math notranslate nohighlight">\( and \)</span>1-t<span class="math notranslate nohighlight">\( are nonnegative. Hence
-\)</span>|\cdot|$ is convex. ◻</p>
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|\]</div>
+<p>where we have used respectively the triangle inequality, the homogeneity
+of norms, and the fact that <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(1-t\)</span> are nonnegative. Hence
+<span class="math notranslate nohighlight">\(\|\cdot\|\)</span> is convex. ◻</p>
 </div>
 <div class="proposition docutils">
-<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable. Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if
-$<span class="math notranslate nohighlight">\(f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle\)</span><span class="math notranslate nohighlight">\(
-for all \)</span>\mathbf{x}, \mathbf{y} \in \dom f$.</p>
-</div>
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable. Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>.</p>
 <div class="proof docutils">
 <p><em>Proof.</em> To-do. ◻</p>
+</div>
 </div>
 <div class="proposition docutils">
 <p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice differentiable. Then</p>
 <p>(i) <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for
-all <span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>.</p>
+all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
 <p>(ii) If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succ 0\)</span> for all
-<span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>, then <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</p>
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>, then <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</p>
 <p>(iii) <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if and only if
 <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all
-<span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>.</p>
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Omitted. ◻</p>
@@ -833,40 +859,49 @@ all <span class="math notranslate nohighlight">\(\mathbf{x} \in \dom f\)</span>.
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>. Then for all
-<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom(\alpha f) = \dom f\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 (\alpha f)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \alpha f(t\mathbf{x} + (1-t)\mathbf{y}) \\
 &amp;\leq \alpha\left(tf(\mathbf{x}) + (1-t)f(\mathbf{y})\right) \\
 &amp;= t(\alpha f(\mathbf{x})) + (1-t)(\alpha f(\mathbf{y})) \\
 &amp;= t(\alpha f)(\mathbf{x}) + (1-t)(\alpha f)(\mathbf{y})
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( so \)</span>\alpha f$ is convex. ◻</p>
-</div>
+\end{aligned}\end{split}\]</div>
+<p>so <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex. ◻</p>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is convex. Furthermore, if <span class="math notranslate nohighlight">\(g\)</span> is
 strictly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is strictly convex, and if <span class="math notranslate nohighlight">\(g\)</span> is
 <span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex.</p>
 </div>
+</div>
 <div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex. Then for all
-<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom (f+g) = \dom f \cap \dom g\)</span>,
-$<span class="math notranslate nohighlight">\(\begin{aligned}
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 (f+g)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(t\mathbf{x} + (1-t)\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) \\
-&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) &amp; \text{convexity of \)</span>f<span class="math notranslate nohighlight">\(} \\
-&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + tg(\mathbf{x}) + (1-t)g(\mathbf{y}) &amp; \text{convexity of \)</span>g<span class="math notranslate nohighlight">\(} \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) &amp; \text{convexity of $f$} \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + tg(\mathbf{x}) + (1-t)g(\mathbf{y}) &amp; \text{convexity of $g$} \\
 &amp;= t(f(\mathbf{x}) + g(\mathbf{x})) + (1-t)(f(\mathbf{y}) + g(\mathbf{y})) \\
 &amp;= t(f+g)(\mathbf{x}) + (1-t)(f+g)(\mathbf{y})
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( so \)</span>f + g$ is convex.</p>
+\end{aligned}\end{split}\]</div>
+<p>so <span class="math notranslate nohighlight">\(f + g\)</span> is convex.</p>
 <p>If <span class="math notranslate nohighlight">\(g\)</span> is strictly convex, the second inequality above holds strictly
 for <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span> and <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>, so <span class="math notranslate nohighlight">\(f+g\)</span> is strictly
 convex.</p>
 <p>If <span class="math notranslate nohighlight">\(g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then the function
 <span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span> is
-convex, so <span class="math notranslate nohighlight">\(f+h\)</span> is convex. But
-$<span class="math notranslate nohighlight">\((f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span><span class="math notranslate nohighlight">\(
-so \)</span>f+g<span class="math notranslate nohighlight">\( is \)</span>m$-strongly convex. ◻</p>
+convex, so <span class="math notranslate nohighlight">\(f+h\)</span> is convex. But</p>
+<div class="math notranslate nohighlight">
+\[(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\]</div>
+<p>so <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex. ◻</p>
 </div>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(f_1, \dots, f_n\)</span> are convex and <span class="math notranslate nohighlight">\(\alpha_1, \dots, \alpha_n \geq 0\)</span>,
-then $<span class="math notranslate nohighlight">\(\sum_{i=1}^n \alpha_i f_i\)</span>$ is convex.</p>
+then</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^n \alpha_i f_i\]</div>
+<p>is convex.</p>
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Follows from the previous two propositions by induction. ◻</p>
@@ -878,14 +913,17 @@ for any appropriately-sized <span class="math notranslate nohighlight">\(\mathbf
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(g\)</span> is defined like so. Then for all
-<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom g\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} g\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 g(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) + \mathbf{b}) \\
 &amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + \mathbf{b}) \\
 &amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + t\mathbf{b} + (1-t)\mathbf{b}) \\
 &amp;= f(t(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)(\mathbf{A}\mathbf{y} + \mathbf{b})) \\
-&amp;\leq tf(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)f(\mathbf{A}\mathbf{y} + \mathbf{b}) &amp; \text{convexity of \)</span>f<span class="math notranslate nohighlight">\(} \\
+&amp;\leq tf(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)f(\mathbf{A}\mathbf{y} + \mathbf{b}) &amp; \text{convexity of $f$} \\
 &amp;= tg(\mathbf{x}) + (1-t)g(\mathbf{y})
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( Thus \)</span>g$ is convex. ◻</p>
+\end{aligned}\end{split}\]</div>
+<p>Thus <span class="math notranslate nohighlight">\(g\)</span> is convex. ◻</p>
 </div>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then
@@ -893,16 +931,19 @@ g(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{
 </div>
 <div class="proof docutils">
 <p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex and <span class="math notranslate nohighlight">\(h\)</span> is defined like so. Then
-for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \dom h\)</span>, $<span class="math notranslate nohighlight">\(\begin{aligned}
+for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} h\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 h(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \max\{f(t\mathbf{x} + (1-t)\mathbf{y}), g(t\mathbf{x} + (1-t)\mathbf{y})\} \\
 &amp;\leq \max\{tf(\mathbf{x}) + (1-t)f(\mathbf{y}), tg(\mathbf{x}) + (1-t)g(\mathbf{y})\} \\
 &amp;\leq \max\{tf(\mathbf{x}), tg(\mathbf{x})\} + \max\{(1-t)f(\mathbf{y}), (1-t)g(\mathbf{y})\} \\
 &amp;= t\max\{f(\mathbf{x}), g(\mathbf{x})\} + (1-t)\max\{f(\mathbf{y}), g(\mathbf{y})\} \\
 &amp;= th(\mathbf{x}) + (1-t)h(\mathbf{y})
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( Note that in the first inequality we have used convexity
-of \)</span>f<span class="math notranslate nohighlight">\( and \)</span>g<span class="math notranslate nohighlight">\( plus the fact that \)</span>a \leq c, b \leq d<span class="math notranslate nohighlight">\( implies
-\)</span>\max{a,b} \leq \max{c,d}<span class="math notranslate nohighlight">\(. In the second inequality we have used
-the fact that \)</span>\max{a+b, c+d} \leq \max{a,c} + \max{b,d}$.</p>
+\end{aligned}\end{split}\]</div>
+<p>Note that in the first inequality we have used convexity
+of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> plus the fact that <span class="math notranslate nohighlight">\(a \leq c, b \leq d\)</span> implies
+<span class="math notranslate nohighlight">\(\max\{a,b\} \leq \max\{c,d\}\)</span>. In the second inequality we have used
+the fact that <span class="math notranslate nohighlight">\(\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}\)</span>.</p>
 <p>Thus <span class="math notranslate nohighlight">\(h\)</span> is convex. ◻</p>
 </div>
 </section>
@@ -965,36 +1006,42 @@ is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathb
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. That is,
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|\)</span> for all
 <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, with equality only if <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{y}^*\)</span>.
-Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that $<span class="math notranslate nohighlight">\(\begin{aligned}
+Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 g(t) &amp;:= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
 &amp;= \langle \mathbf{x}-\mathbf{y}^*+t\mathbf{v}, \mathbf{x}-\mathbf{y}^*+t\mathbf{v} \rangle \\
 &amp;= \langle \mathbf{x}-\mathbf{y}^*, \mathbf{x}-\mathbf{y}^* \rangle - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\langle \mathbf{v}, \mathbf{v} \rangle \\
 &amp;= \|\mathbf{x}-\mathbf{y}^*\|^2 - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\|\mathbf{v}\|^2
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( must have a minimum at \)</span>t = 0<span class="math notranslate nohighlight">\( as a consequence of this
-assumption. Thus
-\)</span><span class="math notranslate nohighlight">\(0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle\)</span><span class="math notranslate nohighlight">\(
-giving \)</span>\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}<span class="math notranslate nohighlight">\(. Since \)</span>\mathbf{v}<span class="math notranslate nohighlight">\(
-was arbitrary in \)</span>S<span class="math notranslate nohighlight">\(, we have \)</span>\mathbf{x}-\mathbf{y}^* \perp S$ as
+\end{aligned}\end{split}\]</div>
+<p>must have a minimum at <span class="math notranslate nohighlight">\(t = 0\)</span> as a consequence of this
+assumption. Thus</p>
+<div class="math notranslate nohighlight">
+\[0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle\]</div>
+<p>giving <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}\)</span>. Since <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>
+was arbitrary in <span class="math notranslate nohighlight">\(S\)</span>, we have <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span> as
 claimed.</p>
 <p><span class="math notranslate nohighlight">\((\impliedby)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>. Observe that
 for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*-\mathbf{y} \in S\)</span> because
 <span class="math notranslate nohighlight">\(\mathbf{y}^* \in S\)</span> and <span class="math notranslate nohighlight">\(S\)</span> is closed under subtraction. Under the
 hypothesis, <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{y}^*-\mathbf{y}\)</span>, so
-by the Pythagorean theorem,
-$<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|\)</span><span class="math notranslate nohighlight">\(
-and in fact the inequality is strict when \)</span>\mathbf{y} \neq \mathbf{y}^<em><span class="math notranslate nohighlight">\(
-since this implies \)</span>|\mathbf{y}^</em>-\mathbf{y}| &gt; 0<span class="math notranslate nohighlight">\(. Thus
-\)</span>\mathbf{y}^*<span class="math notranslate nohighlight">\( is the unique minimizer of \)</span>|\mathbf{x}-\mathbf{y}|<span class="math notranslate nohighlight">\(
-over \)</span>\mathbf{y} \in S$. ◻</p>
+by the Pythagorean theorem,</p>
+<div class="math notranslate nohighlight">
+\[\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|\]</div>
+<p>and in fact the inequality is strict when <span class="math notranslate nohighlight">\(\mathbf{y} \neq \mathbf{y}^*\)</span>
+since this implies <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\| &gt; 0\)</span>. Thus
+<span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>
+over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. ◻</p>
 </div>
 <p>Since a unique minimizer in <span class="math notranslate nohighlight">\(S\)</span> can be found for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>,
-we can define an operator
-$<span class="math notranslate nohighlight">\(P\mathbf{x} = \argmin_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\)</span><span class="math notranslate nohighlight">\(
-Observe that \)</span>P\mathbf{y} = \mathbf{y}<span class="math notranslate nohighlight">\( for any \)</span>\mathbf{y} \in S<span class="math notranslate nohighlight">\(,
-since \)</span>\mathbf{y}<span class="math notranslate nohighlight">\( has distance zero from itself and every other point
-in \)</span>S<span class="math notranslate nohighlight">\( has positive distance from \)</span>\mathbf{y}<span class="math notranslate nohighlight">\(. Thus
-\)</span>P(P\mathbf{x}) = P\mathbf{x}<span class="math notranslate nohighlight">\( for any \)</span>\mathbf{x}<span class="math notranslate nohighlight">\( (i.e., \)</span>P^2 = P<span class="math notranslate nohighlight">\()
-because \)</span>P\mathbf{x} \in S<span class="math notranslate nohighlight">\(. The identity \)</span>P^2 = P$ is actually one of
+we can define an operator</p>
+<div class="math notranslate nohighlight">
+\[P\mathbf{x} = \operatorname{argmin}_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\]</div>
+<p>Observe that <span class="math notranslate nohighlight">\(P\mathbf{y} = \mathbf{y}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>,
+since <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> has distance zero from itself and every other point
+in <span class="math notranslate nohighlight">\(S\)</span> has positive distance from <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. Thus
+<span class="math notranslate nohighlight">\(P(P\mathbf{x}) = P\mathbf{x}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> (i.e., <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
+because <span class="math notranslate nohighlight">\(P\mathbf{x} \in S\)</span>. The identity <span class="math notranslate nohighlight">\(P^2 = P\)</span> is actually one of
 the defining properties of a <strong>projection</strong>, the other being linearity.</p>
 <p>An immediate consequence of the previous result is that
 <span class="math notranslate nohighlight">\(\mathbf{x} - P\mathbf{x} \perp S\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, and
@@ -1005,23 +1052,26 @@ for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. 
 possible to write down a more specific expression for <span class="math notranslate nohighlight">\(P\)</span>.</p>
 <div class="proposition docutils">
 <p>If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
-then
-$<span class="math notranslate nohighlight">\(P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\)</span>$</p>
-</div>
+then</p>
+<div class="math notranslate nohighlight">
+\[P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\]</div>
 <div class="proof docutils">
 <p><em>Proof.</em> Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> be an orthonormal basis
-for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,
-$<span class="math notranslate nohighlight">\(\begin{aligned}
+for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
 \left\langle \mathbf{x}-\sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i, \mathbf{e}_j \right\rangle &amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\underbrace{\langle \mathbf{e}_i, \mathbf{e}_j \rangle}_{\delta_{ij}} \\
 &amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \langle \mathbf{x}, \mathbf{e}_j \rangle \\
 &amp;= 0
-\end{aligned}\)</span><span class="math notranslate nohighlight">\( We have shown that the claimed expression, call it
-\)</span>\tilde{P}\mathbf{x}<span class="math notranslate nohighlight">\(, satisfies
-\)</span>\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j<span class="math notranslate nohighlight">\( for every element
-\)</span>\mathbf{e}_j<span class="math notranslate nohighlight">\( of the orthonormal basis for \)</span>S<span class="math notranslate nohighlight">\(. It follows (by
+\end{aligned}\end{split}\]</div>
+<p>We have shown that the claimed expression, call it
+<span class="math notranslate nohighlight">\(\tilde{P}\mathbf{x}\)</span>, satisfies
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j\)</span> for every element
+<span class="math notranslate nohighlight">\(\mathbf{e}_j\)</span> of the orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>. It follows (by
 linearity of the inner product) that
-\)</span>\mathbf{x} - \tilde{P}\mathbf{x} \perp S<span class="math notranslate nohighlight">\(, so the previous result
-implies \)</span>P = \tilde{P}$. ◻</p>
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp S\)</span>, so the previous result
+implies <span class="math notranslate nohighlight">\(P = \tilde{P}\)</span>. ◻</p>
+</div>
 </div>
 <p>The fact that <span class="math notranslate nohighlight">\(P\)</span> is a linear operator (and thus a proper projection, as
 earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>) follows readily from this result.</p>
@@ -1101,8 +1151,6 @@ earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-s-theorem">Taylor’s theorem</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-local-minima">Conditions for local minima</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convexity">Convexity</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-sets">Convex sets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-convex-functions">Basics of convex functions</a></li>
