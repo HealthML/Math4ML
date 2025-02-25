@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Machine Learning for Human Phenotype Classification &#8212; Mathematics for Machine Learning</title>
+    <title>Diagnosing Breast cancer biopsies using Logistic Regression &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -174,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../chapter_linear_algebra/linear_algebra.html">Linear Algebra</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_calculus/calculus.html">Calculus and Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter_probability/probability.html">Probability</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Machine Learning for Human Phenotype Classification</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagnosing Breast cancer biopsies using Logistic Regression</a></li>
 
 </ul>
 
@@ -358,7 +358,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Machine Learning for Human Phenotype Classification</h1>
+    <h1>Diagnosing Breast cancer biopsies using Logistic Regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -368,11 +368,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Machine Learning for Human Phenotype Classification</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression">Diagnosing Breast cancer biopsies using Logistic Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classificaiton">Binary Classificaiton</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Diagnosing Breast cancer biopsies using Logistic Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classificaiton">Binary Classificaiton</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-data">plot the data</a><ul class="visible nav section-nav flex-column">
@@ -415,8 +412,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="machine-learning-for-human-phenotype-classification">
-<h1>Machine Learning for Human Phenotype Classification<a class="headerlink" href="#machine-learning-for-human-phenotype-classification" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="diagnosing-breast-cancer-biopsies-using-logistic-regression">
+<h1>Diagnosing Breast cancer biopsies using Logistic Regression<a class="headerlink" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression" title="Link to this heading">#</a></h1>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -446,8 +443,6 @@
 </div>
 </details>
 </div>
-<section id="diagnosing-breast-cancer-biopsies-using-logistic-regression">
-<h2>Diagnosing Breast cancer biopsies using Logistic Regression<a class="headerlink" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression" title="Link to this heading">#</a></h2>
 <p>Wisconsin Diagnostic Breast Cancer (WDBC, 1993) data from UCI Machine Learning repository.</p>
 <ul class="simple">
 <li><p>569 samples from patients with known diagnosis</p></li>
@@ -531,7 +526,7 @@ While the original data consists of 30 features and all presented methods work w
 </div>
 <p>Note that we have added a constant feature to the matrix <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> with the column name ‘bias’.</p>
 <section id="binary-classificaiton">
-<h3>Binary Classificaiton<a class="headerlink" href="#binary-classificaiton" title="Link to this heading">#</a></h3>
+<h2>Binary Classificaiton<a class="headerlink" href="#binary-classificaiton" title="Link to this heading">#</a></h2>
 <p><strong>Classification</strong> refers to the task of predicting a <strong>class label</strong> <span class="math notranslate nohighlight">\(y\)</span>, <em>i.e.</em>, the diagnosis, from a <strong>feature vector</strong> <span class="math notranslate nohighlight">\(\bf{x}\)</span>.
 For the case, where <span class="math notranslate nohighlight">\(y\)</span> can take one of two values, we speak of binary classification.</p>
 <p>In machine learning, we assume that we are given pairs of <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span>, the so-called <strong>training data</strong>, we would like to <strong>train</strong> a function <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> that predicts the value of <span class="math notranslate nohighlight">\(y\)</span>.</p>
@@ -564,7 +559,6 @@ Malignant samples &#39;M&#39;: 149
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="plot-the-data">
@@ -979,7 +973,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0009s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9277s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2838s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
@@ -1006,7 +1000,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" src="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" />
@@ -1028,7 +1022,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" src="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" />
@@ -1084,10 +1078,10 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0013s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9455s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2942s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />
@@ -1393,11 +1387,8 @@ Specificity: 0.828
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Machine Learning for Human Phenotype Classification</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression">Diagnosing Breast cancer biopsies using Logistic Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classificaiton">Binary Classificaiton</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Diagnosing Breast cancer biopsies using Logistic Regression</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classificaiton">Binary Classificaiton</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-data">plot the data</a><ul class="visible nav section-nav flex-column">
