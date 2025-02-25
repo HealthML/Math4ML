@@ -458,7 +458,13 @@
 <p><img alt="title" src="../_images/breast_cancer_nuclei_12938_2011_Article_597_Fig3_HTML.jpg" /></p>
 <p>We are given a number of features that describe the nuclei that have been determined from image processing techniques [Street et al, 1992].
 While the original data consists of 30 features and all presented methods work with 30 features, we restrict ourselves to 2 features, the <em>concavity</em> and the <em>texture</em> of the nuclei for illustrative purposes.</p>
-<div class="cell docutils container">
+<p>Let’s load the data:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">])</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;bias&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -466,6 +472,7 @@ While the original data consists of 30 features and all presented methods work w
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(398, 2)
 </pre></div>
@@ -533,7 +540,12 @@ Then given a new image for which we don’t know the diagnosis, we can predict t
 We call the new image the <strong>test data</strong>.</p>
 <p>The shape of the nulei has been determined and coded in a number of features.
 Let’s look at the data:</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -542,6 +554,7 @@ Let’s look at the data:</p>
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(398,)
 [&#39;B&#39; &#39;M&#39;]
@@ -556,7 +569,12 @@ Malignant samples &#39;M&#39;: 149
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="plot-the-data">
 <h1>plot the data<a class="headerlink" href="#plot-the-data" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">scatter_plot_kde2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
@@ -566,6 +584,7 @@ Malignant samples &#39;M&#39;: 149
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
 </pre></div>
@@ -600,7 +619,12 @@ w_{1} \\ w_{2} \\ b
 \end{matrix}
 \right].\end{split}\]</div>
 <p>Note, that we have included the bias <span class="math notranslate nohighlight">\(b\)</span> into the vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> by creating a new feature in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> equal to 1.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
@@ -611,6 +635,7 @@ w_{1} \\ w_{2} \\ b
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
 </pre></div>
@@ -618,7 +643,12 @@ w_{1} \\ w_{2} \\ b
 <img alt="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" src="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
@@ -629,6 +659,7 @@ w_{1} \\ w_{2} \\ b
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
 </pre></div>
@@ -667,7 +698,12 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
 <span class="c1"># Set up the figure</span>
@@ -691,7 +727,6 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 
 <span class="n">ax</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
 
-
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{xw}</span><span class="s1">$&#39;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$p(y=c_1|\mathbf</span><span class="si">{x}</span><span class="s1">)$&#39;</span><span class="p">)</span>
 
@@ -711,11 +746,17 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/291124841f3e66e99a66ea54197679adc1944edbd40d7afbfa510e66caf130c0.png" src="../_images/291124841f3e66e99a66ea54197679adc1944edbd40d7afbfa510e66caf130c0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span><span class="mf">8.0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># create 100 points on a line</span>
 <span class="c1"># Set up the figure</span>
@@ -754,6 +795,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/df04f58c1cb4604fc4aabf71bc5fd8a6beae969340981123a961591894ccb041.png" src="../_images/df04f58c1cb4604fc4aabf71bc5fd8a6beae969340981123a961591894ccb041.png" />
 </div>
@@ -775,7 +817,12 @@ p(y_n=c_2|\mathbf{x}_n; \mathbf{w})= 1-\pi(\mathbf{x}_n\mathbf{w}) = \frac{1}{1+
 <p>The <strong>loss function</strong> measures the <strong>errors</strong> we make on the <strong>training data</strong>.
 So for each error, we record a loss.
 As we are trying to assign high probabilities to the correct class, we would like to obtain a function that records a loss, whenever we assign low probability to the correct class <span class="math notranslate nohighlight">\(c_{true}\)</span>.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.00001</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.00001</span><span class="p">)</span>
 <span class="n">yy</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
@@ -790,6 +837,7 @@ As we are trying to assign high probabilities to the correct class, we would lik
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 10.0)
 </pre></div>
@@ -813,7 +861,12 @@ regularizer = 0.5 \cdot \lambda \cdot \sum_{d=1}^{D}{w_d}^2
 \]</div>
 <p>The (hyper)-parameter <span class="math notranslate nohighlight">\(\lambda\)</span> weighs the importance of the regularizer vs. the loss. In this example, we always use <span class="math notranslate nohighlight">\(\lambda=10^{-3}\)</span>.</p>
 <p>In-depth discussion of the regularizer is beyond the scope of this lecture.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">yy</span> <span class="o">=</span> <span class="mf">0.001</span><span class="o">*</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">*</span> <span class="n">xx</span>
@@ -828,6 +881,7 @@ regularizer = 0.5 \cdot \lambda \cdot \sum_{d=1}^{D}{w_d}^2
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Weight Shrinkage&#39;)
 </pre></div>
@@ -848,7 +902,12 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 <h2>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h2>
 <p>Now that we have an objective, how do we obtain a good set of parameters?</p>
 <p>Let’s look at the objective in 2 dimensions.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -857,6 +916,7 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
@@ -901,7 +961,12 @@ Therefore the algorithm is called <strong>steepest descent</strong>.</p>
 Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1} = \mathbf{w}^{t} - \alpha \cdot \nabla_{\mathbf{w}^{t}} (L)\)</span>.</p>
 <p>A typical value for <span class="math notranslate nohighlight">\(\alpha\)</span> is around <span class="math notranslate nohighlight">\(10^{-4}\)</span>.</p>
 <p>A problem with steepest descent is that the estimate tends to oscillate and often even overshoots and diverges (leading to an increase in the objetive). Getting the learning rate right is very hard, trading off progress in learning and risk of diverging. Many tricks exit to improve learning in gradient descent, such as weight decay, where the learning rate is gradually reduced during learning.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -909,11 +974,12 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0008s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0009s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2913s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9277s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
@@ -924,7 +990,12 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <section id="using-curvature-information">
 <h4>Using curvature information<a class="headerlink" href="#using-curvature-information" title="Link to this heading">#</a></h4>
 <p>We can build a better learning algorithm by using second order information, utilizing a second-order Taylor-series expansion around the current weight estimate <span class="math notranslate nohighlight">\(\mathbf{w}^t\)</span>.</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -933,14 +1004,20 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" src="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -949,8 +1026,9 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" src="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" />
@@ -991,7 +1069,12 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 \[
 \mathbf{w}^{t+1} = \mathbf{w}^{t} - \mathbf{H}_{\mathbf{w}^t}^{-1} \nabla{L}\left(\mathbf{w}^{t}\right)
 \]</div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">irls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -999,11 +1082,12 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0012s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2889s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9455s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />
@@ -1156,7 +1240,12 @@ We observe that the curvature information provided by <span class="math notransl
 <section id="train-error-vs-test-error">
 <h3>Train error vs. Test error<a class="headerlink" href="#train-error-vs-test-error" title="Link to this heading">#</a></h3>
 <p>Let us compute these quantities on the test data:</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
@@ -1165,6 +1254,7 @@ We observe that the curvature information provided by <span class="math notransl
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number samples: 398
 number M: 149
@@ -1177,7 +1267,12 @@ Specificity: 0.904
 <img alt="../_images/b3e6046ef8aa7efa172fc36643721e9e1770ec29705c48ef85a3ef9fcd302981.png" src="../_images/b3e6046ef8aa7efa172fc36643721e9e1770ec29705c48ef85a3ef9fcd302981.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">testing_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">])</span>
@@ -1188,6 +1283,7 @@ Specificity: 0.904
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number samples: 171
 number M: 63
@@ -1200,7 +1296,12 @@ Specificity: 0.828
 <img alt="../_images/f17d9a85257153cbcb5f3d22bd08f15b96052ca6a3832f69103b084dbdd4dc07.png" src="../_images/f17d9a85257153cbcb5f3d22bd08f15b96052ca6a3832f69103b084dbdd4dc07.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
@@ -1211,6 +1312,7 @@ Specificity: 0.828
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
 </pre></div>
