@@ -17,7 +17,6 @@ kernelspec:
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-
 ### Some imports
 # All packages are included in the Anaconda python distribution and integral part of a machine learning Python environment).
 import numpy as np               # efficient matrix-vector operations
@@ -59,8 +58,9 @@ Wisconsin Diagnostic Breast Cancer (WDBC, 1993) data from UCI Machine Learning r
 We are given a number of features that describe the nuclei that have been determined from image processing techniques [Street et al, 1992].
 While the original data consists of 30 features and all presented methods work with 30 features, we restrict ourselves to 2 features, the *concavity* and the *texture* of the nuclei for illustrative purposes.
 
-
+Let's load the data:
 ```{code-cell} ipython3
+:tags: [hide-input]
 X, y = util.load_data(columns=["concavity_mean", "texture_mean"])
 print (X.drop(['bias'], axis=1).shape)
 X.drop(['bias'], axis=1).head()
@@ -89,6 +89,7 @@ The shape of the nulei has been determined and coded in a number of features.
 Let's look at the data:
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 print (y.shape)
 print (y.unique())
 print ("Benign samples    'B': {:}".format((y=='B').sum()))
@@ -98,6 +99,7 @@ print ("Malignant samples 'M': {:}".format((y=='M').sum()))
 # plot the data
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 f, ax = plt.subplots(figsize=(7, 7))
 ax = util.scatter_plot_kde2(X,y)
 plt.ylim([8,39.9])
@@ -141,6 +143,7 @@ w_{1} \\ w_{2} \\ b
 Note, that we have included the bias $b$ into the vector $\mathbf{w}$ by creating a new feature in $\mathbf{x}$ equal to 1.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True)
@@ -150,6 +153,7 @@ plt.xlim([-0.01,0.45])
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True, second_line=True)
@@ -204,6 +208,7 @@ def logistic(a):
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 a = np.linspace(-8.0,8.0,100) # create 100 points on a line
 # Set up the figure
 f, ax = plt.subplots(figsize=(7, 6))
@@ -226,7 +231,6 @@ plt.pcolormesh(xx1, xx2, logistic(xx1), cmap='bwr', alpha=0.05)
 
 ax.patch.set_facecolor('white')
 
-
 ax = plt.xlabel(r'$\mathbf{xw}$')
 ax = plt.ylabel(r'$p(y=c_1|\mathbf{x})$')
 
@@ -246,6 +250,7 @@ ax = plt.title("The logistic sigmoid")
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 a = np.linspace(-8.0,8.0,100) # create 100 points on a line
 # Set up the figure
 f, ax = plt.subplots(figsize=(7, 6))
@@ -307,6 +312,7 @@ So for each error, we record a loss.
 As we are trying to assign high probabilities to the correct class, we would like to obtain a function that records a loss, whenever we assign low probability to the correct class $c_{true}$.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 xx = np.arange(0.00001,1.0,0.00001)
 yy = -np.log(xx)
 fig, ax = plt.subplots(figsize=(8, 8))
@@ -341,6 +347,7 @@ The (hyper)-parameter $\lambda$ weighs the importance of the regularizer vs. the
 In-depth discussion of the regularizer is beyond the scope of this lecture.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 xx = np.arange(-5,5,0.01)
 yy = 0.001*0.5 * xx * xx
 f, ax = plt.subplots(figsize=(8, 8))
@@ -368,6 +375,7 @@ Now that we have an objective, how do we obtain a good set of parameters?
 Let's look at the objective in 2 dimensions.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(9, 8))
 ax = util.eval_optimizer(X,y)
@@ -433,6 +441,7 @@ A typical value for $\alpha$ is around $10^{-4}$.
 A problem with steepest descent is that the estimate tends to oscillate and often even overshoots and diverges (leading to an increase in the objetive). Getting the learning rate right is very hard, trading off progress in learning and risk of diverging. Many tricks exit to improve learning in gradient descent, such as weight decay, where the learning rate is gradually reduced during learning.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 f, ax = plt.subplots(figsize=(9, 8))
 ax = util.eval_optimizer(X,y, steep=True)
 # plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png", dpi=600)
@@ -449,6 +458,7 @@ In the image above, where we applied weight decay, multiplying the learning rate
 We can build a better learning algorithm by using second order information, utilizing a second-order Taylor-series expansion around the current weight estimate $\mathbf{w}^t$.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(10, 10))
 ax = util.eval_optimizer1D(X, y, taylor1=True, taylor2=False)
@@ -456,6 +466,7 @@ ax = util.eval_optimizer1D(X, y, taylor1=True, taylor2=False)
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(10, 10))
 ax = util.eval_optimizer1D(X, y, taylor1=True, taylor2=True)
@@ -505,6 +516,7 @@ $$
 $$
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 f, ax = plt.subplots(figsize=(9,8))
 ax = util.eval_optimizer(X,y, steep=True, irls=True)
 # plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png", dpi=600)
@@ -624,9 +636,6 @@ $$
 
 #### Confusion matrix
 
-```{code-cell} ipython3
-
-```
 
 |          | Predicted Positive | Predicted Negative |
 |----------| ------------------ |:------------------:|
@@ -657,6 +666,7 @@ Let us compute these quantities on the test data:
 
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(4.5,3.8))
 util.plot_confusion_matrix(x=X, y=y, x_test=X, y_test=y,threshold=0.5)
@@ -664,6 +674,7 @@ util.plot_confusion_matrix(x=X, y=y, x_test=X, y_test=y,threshold=0.5)
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 X_test,y_test = util.load_data(testing_data=True, columns=["concavity_mean", "texture_mean"])
 
@@ -673,6 +684,7 @@ util.plot_confusion_matrix(x=X, y=y, x_test=X_test, y_test=y_test,threshold=0.5)
 ```
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y,X_test=X_test, y_test=y_test, threshold=0.5, prob=True)
