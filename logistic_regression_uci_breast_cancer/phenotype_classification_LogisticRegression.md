@@ -13,7 +13,7 @@ kernelspec:
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
-# Machine Learning for Human Phenotype Classification
+# Diagnosing Breast cancer biopsies using Logistic Regression
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -38,9 +38,6 @@ import time                      # timing (for example to benchmark an algorithm
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
-## Diagnosing Breast cancer biopsies using Logistic Regression
-
-+++
 
 Wisconsin Diagnostic Breast Cancer (WDBC, 1993) data from UCI Machine Learning repository.
 
