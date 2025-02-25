@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -417,7 +417,12 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="machine-learning-for-human-phenotype-classification">
 <h1>Machine Learning for Human Phenotype Classification<a class="headerlink" href="#machine-learning-for-human-phenotype-classification" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Some imports</span>
 <span class="c1"># All packages are included in the Anaconda python distribution and integral part of a machine learning Python environment).</span>
@@ -439,6 +444,7 @@
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <section id="diagnosing-breast-cancer-biopsies-using-logistic-regression">
 <h2>Diagnosing Breast cancer biopsies using Logistic Regression<a class="headerlink" href="#diagnosing-breast-cancer-biopsies-using-logistic-regression" title="Link to this heading">#</a></h2>
@@ -556,11 +562,14 @@ Malignant samples &#39;M&#39;: 149
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">scatter_plot_kde2</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/scatter.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
+</pre></div>
+</div>
 <img alt="../_images/44e6ac127b26e75c82cd0f7c43eb8d20cd4710760c0977495b3db20107e54699.png" src="../_images/44e6ac127b26e75c82cd0f7c43eb8d20cd4710760c0977495b3db20107e54699.png" />
 </div>
 </div>
@@ -598,11 +607,14 @@ w_{1} \\ w_{2} \\ b
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/scatter_decision_boundary.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
+</pre></div>
+</div>
 <img alt="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" src="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" />
 </div>
 </div>
@@ -613,11 +625,14 @@ w_{1} \\ w_{2} \\ b
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">second_line</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
+</pre></div>
+</div>
 <img alt="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" src="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" />
 </div>
 </div>
@@ -692,7 +707,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 <span class="c1"># plt.scatter(Xw, (y.values[:,np.newaxis]==&quot;M&quot;) , (y.values[:,np.newaxis]==&quot;M&quot;), size=20)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The logistic sigmoid&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -723,8 +738,6 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;decision function&#39;</span><span class="p">,</span><span class="sa">r</span><span class="s1">&#39;$\pi(\mathbf</span><span class="si">{xw}</span><span class="s1">)$&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s2">&quot;R&quot;</span><span class="p">])</span>
 
 
-
-
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{xw}</span><span class="s1">$&#39;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$p(y=c_1|\mathbf</span><span class="si">{x}</span><span class="s1">)$&#39;</span><span class="p">)</span>
 
@@ -737,7 +750,7 @@ p(y=c_1|\mathbf{x}) = \pi(\mathbf{xw})
 <span class="c1"># plt.scatter(Xw, (y.values[:,np.newaxis]==&quot;M&quot;) , (y.values[:,np.newaxis]==&quot;M&quot;), size=20)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The logistic sigmoid&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/logistic_sigmoid_data.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -773,11 +786,14 @@ As we are trying to assign high probabilities to the correct class, we would lik
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$p(y_n=c_</span><span class="si">{true}</span><span class="s2">|\mathbf</span><span class="si">{x}</span><span class="s2">)$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/log_error.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/log_error.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 10.0)
+</pre></div>
+</div>
 <img alt="../_images/ca97a551d5c80d3248c7ad58aff37c77d17b398f7c7925ea14a987354d4f5c5d.png" src="../_images/ca97a551d5c80d3248c7ad58aff37c77d17b398f7c7925ea14a987354d4f5c5d.png" />
 </div>
 </div>
@@ -808,11 +824,14 @@ regularizer = 0.5 \cdot \lambda \cdot \sum_{d=1}^{D}{w_d}^2
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$w_d$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;regularizer ($\lambda=10^{-3}$)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weight Shrinkage&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/regularizer.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/regularizer.png&quot;,dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Weight Shrinkage&#39;)
+</pre></div>
+</div>
 <img alt="../_images/ea280625f6dcca8a85696cdd3ba86f8a0f652fae22c16305b49aaf1729e023a8.png" src="../_images/ea280625f6dcca8a85696cdd3ba86f8a0f652fae22c16305b49aaf1729e023a8.png" />
 </div>
 </div>
@@ -834,7 +853,7 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/objective_heatmap_2d.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -886,15 +905,15 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0008s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2583s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2913s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
@@ -910,7 +929,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer1D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">taylor1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taylor2</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/derivative_1D.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/derivative_1D.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -926,7 +945,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer1D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">taylor1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">taylor2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/newton_step_1D.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/newton_step_1D.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -976,15 +995,15 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">eval_optimizer</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">steep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">irls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0012s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2770s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.2889s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />
@@ -1142,7 +1161,7 @@ We observe that the curvature information provided by <span class="math notransl
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
 <span class="n">util</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">x_test</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;confusion_matrix_train.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;confusion_matrix_train.png&quot;,dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -1165,7 +1184,7 @@ Specificity: 0.904
 
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">3.8</span><span class="p">))</span>
 <span class="n">util</span><span class="o">.</span><span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">x_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;confusion_matrix_test.png&quot;</span><span class="p">,</span><span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;confusion_matrix_test.png&quot;,dpi=600)</span>
 </pre></div>
 </div>
 </div>
@@ -1188,11 +1207,14 @@ Specificity: 0.828
 <span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./uci_breast_cancer/plots/scatter_decision_boundary_test.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/scatter_decision_boundary_test.png&quot;, dpi=600)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
+</pre></div>
+</div>
 <img alt="../_images/666f04392f5601645cd9461d2a12f7488a2db1df5e24a05ba7e7ef50fc2e2085.png" src="../_images/666f04392f5601645cd9461d2a12f7488a2db1df5e24a05ba7e7ef50fc2e2085.png" />
 </div>
 </div>

@@ -16,10 +16,8 @@ kernelspec:
 # Machine Learning for Human Phenotype Classification
 
 ```{code-cell} ipython3
----
-slideshow:
-  slide_type: skip
----
+:tags: [hide-input]
+
 ### Some imports
 # All packages are included in the Anaconda python distribution and integral part of a machine learning Python environment).
 import numpy as np               # efficient matrix-vector operations
@@ -104,7 +102,7 @@ f, ax = plt.subplots(figsize=(7, 7))
 ax = util.scatter_plot_kde2(X,y)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
-plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
 ```
 
 There are many ways to draw a function that separates the samples. But what is a good one?
@@ -148,7 +146,7 @@ f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
-plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary.png", dpi=600)
 ```
 
 ```{code-cell} ipython3
@@ -157,7 +155,7 @@ f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True, second_line=True)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
-plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png", dpi=600)
 ```
 
 The classifier predicts all samples on one side of the **decision boundary** to belong to one class, all others to the other class. 
@@ -244,7 +242,7 @@ plt.legend(['decision function',r'$\pi(\mathbf{xw})$','$c_1$ (M)',"$c_2$ (B)"])
 # plt.scatter(Xw, (y.values[:,np.newaxis]=="M") , (y.values[:,np.newaxis]=="M"), size=20)
 
 ax = plt.title("The logistic sigmoid")
-plt.savefig("./uci_breast_cancer/plots/logistic_sigmoid_data.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/logistic_sigmoid_data.png", dpi=600)
 ```
 
 ```{code-cell} ipython3
@@ -269,8 +267,6 @@ plt.xticks([-8,-4,0,4,8])
 plt.legend(['decision function',r'$\pi(\mathbf{xw})$','B',"R"])
 
 
-
-
 ax = plt.xlabel(r'$\mathbf{xw}$')
 ax = plt.ylabel(r'$p(y=c_1|\mathbf{x})$')
 
@@ -283,7 +279,7 @@ plt.hist(Xw[y.values=='M'], bins, alpha=0.5, label='M', color='r', density=True)
 # plt.scatter(Xw, (y.values[:,np.newaxis]=="M") , (y.values[:,np.newaxis]=="M"), size=20)
 
 ax = plt.title("The logistic sigmoid")
-plt.savefig("./uci_breast_cancer/plots/logistic_sigmoid_data.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/logistic_sigmoid_data.png", dpi=600)
 ```
 
 Conversely, the probabily to belong to the class $c_2$ (Benign) is given by $1-\pi(a)$.
@@ -320,7 +316,7 @@ plt.ylabel(r"$-\ln( p(c_{true}|\mathbf{x}) )$")
 plt.xlabel(r"$p(y_n=c_{true}|\mathbf{x})$")
 plt.xlim([-0.01,1.0])
 plt.ylim([0,10])
-plt.savefig("./uci_breast_cancer/plots/log_error.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/log_error.png", dpi=600)
 ```
 
 By summing this loss over all samples, we obtain the **log-loss** or **cross-entropy** function.
@@ -354,7 +350,7 @@ plt.ylim([-0.00006,0.013])
 plt.xlabel("$w_d$")
 plt.ylabel(r"regularizer ($\lambda=10^{-3}$)")
 plt.title("Weight Shrinkage")
-plt.savefig("./uci_breast_cancer/plots/regularizer.png",dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/regularizer.png",dpi=600)
 ```
 
 ## Combined objective
@@ -375,7 +371,7 @@ Let's look at the objective in 2 dimensions.
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(9, 8))
 ax = util.eval_optimizer(X,y)
-plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d.png", dpi=600)
 ```
 
 The image visualizes the objective $L$ as a function of the two weights $w_1$ and $w_2$, with objective values going from low (yellow) to high (red). The **minimum** is marked by a blue dot.
@@ -439,7 +435,7 @@ A problem with steepest descent is that the estimate tends to oscillate and ofte
 ```{code-cell} ipython3
 f, ax = plt.subplots(figsize=(9, 8))
 ax = util.eval_optimizer(X,y, steep=True)
-plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest.png", dpi=600)
 ```
 
 In the image above, where we applied weight decay, multiplying the learning rate by $1-10^{-6}$ after each iteration, the learning does not converge to the minimum (the blue dot) after 200.000 iterations.
@@ -456,14 +452,14 @@ We can build a better learning algorithm by using second order information, util
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(10, 10))
 ax = util.eval_optimizer1D(X, y, taylor1=True, taylor2=False)
-plt.savefig("./uci_breast_cancer/plots/derivative_1D.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/derivative_1D.png", dpi=600)
 ```
 
 ```{code-cell} ipython3
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(10, 10))
 ax = util.eval_optimizer1D(X, y, taylor1=True, taylor2=True)
-plt.savefig("./uci_breast_cancer/plots/newton_step_1D.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/newton_step_1D.png", dpi=600)
 ```
 
 The image depicts the idea for a single weight $w_1$. At the current estimate $w_1^{t}$, we compute the first and second derivatives of the objective to form a parabolic fit to the objective $L$. Then, we obtain $w_1^{t+1}$ as the minimum of that parabolic and iterate.
@@ -511,7 +507,7 @@ $$
 ```{code-cell} ipython3
 f, ax = plt.subplots(figsize=(9,8))
 ax = util.eval_optimizer(X,y, steep=True, irls=True)
-plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/objective_heatmap_2d_steepest_irls.png", dpi=600)
 ```
 
 The blue line corresponds to minimization using the Newton-Raphson algorithm.
@@ -664,7 +660,7 @@ Let us compute these quantities on the test data:
 importlib.reload(util)
 f, ax = plt.subplots(figsize=(4.5,3.8))
 util.plot_confusion_matrix(x=X, y=y, x_test=X, y_test=y,threshold=0.5)
-plt.savefig("confusion_matrix_train.png",dpi=600)
+# plt.savefig("confusion_matrix_train.png",dpi=600)
 ```
 
 ```{code-cell} ipython3
@@ -673,7 +669,7 @@ X_test,y_test = util.load_data(testing_data=True, columns=["concavity_mean", "te
 
 f, ax = plt.subplots(figsize=(4.5,3.8))
 util.plot_confusion_matrix(x=X, y=y, x_test=X_test, y_test=y_test,threshold=0.5)
-plt.savefig("confusion_matrix_test.png",dpi=600)
+# plt.savefig("confusion_matrix_test.png",dpi=600)
 ```
 
 ```{code-cell} ipython3
@@ -682,7 +678,7 @@ f, ax = plt.subplots(figsize=(7,7))
 ax, clf = util.plotfun2D_logreg(X,y,X_test=X_test, y_test=y_test, threshold=0.5, prob=True)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
-plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_test.png", dpi=600)
+# plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_test.png", dpi=600)
 ```
 
 ## Conclusions
