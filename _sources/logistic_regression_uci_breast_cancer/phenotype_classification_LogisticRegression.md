@@ -149,15 +149,6 @@ plt.xlim([-0.01,0.45])
 # plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary.png", dpi=600)
 ```
 
-```{code-cell} ipython3
-:tags: [hide-input]
-importlib.reload(util)
-f, ax = plt.subplots(figsize=(7,7))
-ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True, second_line=True)
-plt.ylim([8,39.9])
-plt.xlim([-0.01,0.45])
-# plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png", dpi=600)
-```
 
 The classifier predicts all samples on one side of the **decision boundary** to belong to one class, all others to the other class. 
 

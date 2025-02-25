@@ -637,30 +637,6 @@ w_{1} \\ w_{2} \\ b
 <img alt="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" src="../_images/cb80f14f9ee62d25a0e87e549095c3a6904d2de9533e71a54e60a817179a67c2.png" />
 </div>
 </div>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">util</span><span class="p">)</span>
-<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">,</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">plotfun2D_logreg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">second_line</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span><span class="mf">39.9</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.45</span><span class="p">])</span>
-<span class="c1"># plt.savefig(&quot;./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png&quot;, dpi=600)</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-0.01, 0.45)
-</pre></div>
-</div>
-<img alt="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" src="../_images/a17542888a33125c991b25c99f333098ebd061de49320beb504bb7533d9b08ce.png" />
-</div>
-</div>
 <p>The classifier predicts all samples on one side of the <strong>decision boundary</strong> to belong to one class, all others to the other class.</p>
 <p>As we observe, with a linear function, we have to accept that there are missclassifications, especially if we have a large training data set, the training data is rarely <strong>linearly separable</strong>.</p>
 <section id="the-logistic-sigmoid">
@@ -863,7 +839,7 @@ L(\mathbf{w}) = \underbrace{-\sum_{n\in c_1} \ln( \pi(\mathbf{x}_n\mathbf{w}) ) 
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0008s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" src="../_images/1f8b3524c17a8f5a1148d5047eac5892563888d4790b87d58b48ff007d5b19d1.png" />
@@ -921,10 +897,10 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0008s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0011s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9962s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.0424s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" src="../_images/eda167e06517284deb6f543f84fd46da32606966fbb735cd3da3f6e03a51c616.png" />
@@ -951,7 +927,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" src="../_images/e82e17482951f89ded9955733b0f414e45e017064606c85496aeec40acfdcb71.png" />
@@ -973,7 +949,7 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0006s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
 <img alt="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" src="../_images/aef24da1d22414a8c355fd8f43a2449185a54c3e442674540549d54afcbea6b7.png" />
@@ -1029,10 +1005,10 @@ Iterate by setting <span class="math notranslate nohighlight">\(\mathbf{w}^{t+1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0007s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 7, 0.0009s]: objective: 1.141e+02, gradient l2 norm : 1.091e-07
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 8.9745s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[iteration 200000, 9.0242s]: objective: 1.142e+02, gradient l2 norm : 1.310e-01
 </pre></div>
 </div>
 <img alt="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" src="../_images/40a80d4cfc4090b15d0dd8c4d1074d3e314232bf8b0ae282d99358018524349d.png" />

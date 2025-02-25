@@ -35,3 +35,13 @@ plt.hist(Xw[y.values=='M'], bins, alpha=0.5, label='M', color='r', density=True)
 ax = plt.title("The logistic sigmoid")
 # plt.savefig("./uci_breast_cancer/plots/logistic_sigmoid_data.png", dpi=600)
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+importlib.reload(util)
+f, ax = plt.subplots(figsize=(7,7))
+ax, clf = util.plotfun2D_logreg(X,y, threshold=0.5, prob=True, second_line=True)
+plt.ylim([8,39.9])
+plt.xlim([-0.01,0.45])
+# plt.savefig("./uci_breast_cancer/plots/scatter_decision_boundary_secondline.png", dpi=600)
+```
