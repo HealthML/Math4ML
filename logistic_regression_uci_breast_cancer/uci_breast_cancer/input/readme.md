@@ -1,1 +1,0 @@
-this is where the input data for the Breast Cancer Classification using Logistic Regression demo is located.
