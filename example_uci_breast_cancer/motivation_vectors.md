@@ -64,8 +64,72 @@ X.drop(['bias'], axis=1).head()
 We are given a number of features that describe the nuclei that have been determined from image processing techniques [Street et al, 1992].
 While the original data consists of 30 features and all presented methods work with 30 features, we restrict ourselves to 2 features, the average *concavity* and the *texture* of the nuclei for illustrative purposes. For each sample, we can represent these features as a vector in $\mathbb{R}^2$.
 
-Given the information encoded in these **feature vectors**, we would like to diagnose wether the biopsies are malignant or benign, i.e., to **classify** the samples. Before we dive deeper into classification, we should have a deeper look into vectors, their properties, the operations that we can perform on them and the spaces they live in.
+The shape of the nuclei has been determined and coded in a number of features.
+Let's look at the data:
 
+```{code-cell} ipython3
+:tags: [hide-input]
+print (y.shape)
+print (y.unique())
+print ("Benign samples    'B': {:}".format((y=='B').sum()))
+print ("Malignant samples 'M': {:}".format((y=='M').sum()))
+```
+
+# plot the data
+
+```{code-cell} ipython3
+:tags: [hide-input]
+f, ax = plt.subplots(figsize=(7, 7))
+ax = util.scatter_plot_kde2(X,y)
+plt.ylim([8,39.9])
+plt.xlim([-0.01,0.45])
+# plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
+```
+
+
+Given the information encoded in these **feature vectors**, we would like to diagnose wether the biopsies are malignant or benign, i.e., to **classify** the samples. 
+
++++
+
+### Binary Classificaiton
+
++++
+
+**Classification** refers to the task of predicting a **class label** $y$, *i.e.*, the diagnosis, from a **feature vector** $\bf{x}$.
+For the case, where $y$ can take one of two values, we speak of binary classification.
+
+In machine learning, we assume that we are given pairs of $(\mathbf{x}, y)$, the so-called **training data**, we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
+
+For the task at hand, this means that we use the image features to determine wether a patient likely has a benign or malignant diagnosis.
+Then given a new image for which we don't know the diagnosis, we can predict the diagnosis based on what we have learned from from the training data.
+We call a new image the **test data**.
+
++++
+
+The shape of the nuclei has been determined and coded in a number of features.
+Let's look at the data:
+
+```{code-cell} ipython3
+:tags: [hide-input]
+print (y.shape)
+print (y.unique())
+print ("Benign samples    'B': {:}".format((y=='B').sum()))
+print ("Malignant samples 'M': {:}".format((y=='M').sum()))
+```
+
+# plot the data
+
+```{code-cell} ipython3
+:tags: [hide-input]
+f, ax = plt.subplots(figsize=(7, 7))
+ax = util.scatter_plot_kde2(X,y)
+plt.ylim([8,39.9])
+plt.xlim([-0.01,0.45])
+# plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
+```
+
+There are many ways to draw a function that separates the samples. But what is a good one?
+Before we dive deeper into this question, we should have a deeper look into vectors, their properties, the operations that we can perform on them and the spaces they live in.
 
 +++
 
