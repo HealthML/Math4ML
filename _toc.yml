@@ -11,6 +11,13 @@ chapters:
     sections:
     - file: example_uci_breast_cancer/motivation_vectors
     - file: chapter_linear_algebra/vector_spaces
+    - file: chapter_linear_algebra/transposition
+    - file: chapter_linear_algebra/eigenvectors
+    - file: chapter_linear_algebra/trace_determinant
+    - file: chapter_linear_algebra/orthogonal_matrices
+    - file: chapter_linear_algebra/symmetric_matrices
+    - file: chapter_linear_algebra/psd_matrices
+    - file: chapter_linear_algebra/svd
   - file: chapter_calculus/calculus
   - file: chapter_probability/probability
 #  - file: example_uci_breast_cancer/phenotype_classification_LogisticRegression

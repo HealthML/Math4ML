@@ -4,6 +4,7 @@ In this chapter we present important classes of spaces in which our data will li
 vector spaces, metric spaces, normed spaces, and inner product spaces.
 Generally speaking, these are defined in such a way as to capture one or more important properties of Euclidean space but in a more general way.
 
+<!---
 ## Motivation
 ## Vector spaces
 ## Metric spaces
@@ -39,3 +40,4 @@ Generally speaking, these are defined in such a way as to capture one or more im
 ## The matrix sign function
 ## The matrix hyperbolic sine and cosine
 ## The matrix hyperbolic tangent
+--->
