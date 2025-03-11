@@ -25,4 +25,9 @@ chapters:
   - file: chapter3/main.ipynb
   - file: chapter4/main.ipynb
   - file: chapter5/main.ipynb
+  - file: chapter7/main.ipynb
+  - file: chapter8/main.ipynb
+  - file: chapter9/main.ipynb
+  - file: chapter10/main.ipynb
+  - file: chapter11/main.ipynb
 #  - file: example_uci_breast_cancer/phenotype_classification_LogisticRegression
