@@ -118,7 +118,7 @@ Let's load the dataset and split it into training and test sets. We will use 80%
 
 ```{code-cell} ipython3
 
-data = pd.read_csv('../datasets/breast_cancer_data/data_processed.csv')
+data = pd.read_csv('./uci_breast_cancer/input/data_processed.csv')
 print(data.shape)
 # y includes our labels and x includes our features
 y = data.diagnosis      # M or B 
