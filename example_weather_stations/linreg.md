@@ -127,7 +127,7 @@ def load_data(year = None):
     load data from a weather station in Potsdam
     """
     names = ['station', 'date' , 'type', 'measurement', 'e1','e2', 'E', 'e3']
-    data = pd.read_csv('../datasets/weatherstations/GM000003342.csv', names = names)
+    data = pd.read_csv('./weatherstations/GM000003342.csv', names = names)
     # convert the date column to datetime format
     data['date'] = pd.to_datetime(data['date'], format="%Y%m%d") # 47876 unique days
     types = data['type'].unique()

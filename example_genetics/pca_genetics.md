@@ -122,11 +122,11 @@ We consider five ancestries in the dataset:
 - **AMR** - Admixed American  
 
 ```{code-cell} ipython3
-snpreader = Bed('./../datasets/genetic_data/example2.bed', count_A1=True)
+snpreader = Bed('./genetic_data/example2.bed', count_A1=True)
 data = snpreader.read()
 print(data.shape)
 # y includes our labels and x includes our features
-labels = pd.read_csv("./../datasets/genetic_data/1kg_annotations_edit.txt", sep="\t", index_col="Sample")
+labels = pd.read_csv("./genetic_data/1kg_annotations_edit.txt", sep="\t", index_col="Sample")
 list1 = data.iid[:,1].tolist()  #list with the Sample numbers present in genetic dataset
 labels = labels[labels.index.isin(list1)]  #filter labels DataFrame so it only contains the sampleIDs present in genetic data
 y = labels.SuperPopulation  # EUR, AFR, AMR, EAS, SAS
