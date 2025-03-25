@@ -11,6 +11,10 @@ chapters:
     sections:
     - file: example_uci_breast_cancer/motivation_vectors
     - file: chapter_linear_algebra/vector_spaces
+    - file: chapter_linear_algebra/subspaces
+    - file: chapter_linear_algebra/metric_spaces
+    - file: chapter_linear_algebra/normed_spaces
+    - file: chapter_linear_algebra/inner_product_spaces
     - file: chapter_linear_algebra/transposition
     - file: chapter_linear_algebra/eigenvectors
     - file: chapter_linear_algebra/trace_determinant
