@@ -7,9 +7,7 @@ jupytext:
     jupytext_version: 1.16.7
 ---
 
-+++ {"vscode": {"languageId": "plaintext"}}
-
-# Week 8 - Second order optimization
+# Week 9 - BFGS
 
 ```{code-cell}
 import numpy as np
@@ -40,6 +38,7 @@ class LogisticRegression():
         self.lr = lr
         self.tol = tol
         self.l2 = l2
+        self.iteration = 0
 
 
     def fit(self, X, y):
@@ -53,7 +52,6 @@ class LogisticRegression():
         for i in range(self.num_iter):
 
             gradient = self.perform_update(X, y)
-
             objective = self.objective(X,y)
             objective_values.append(objective)
 
@@ -132,7 +130,49 @@ class LogisticRegression():
             hessian_diag = self.hessian_diag(X,y, pi)
             update = - 1/(hessian_diag[:,None]+eps) *gradient * self.lr
 
+        if self.method=='bfgs':
+
+            gradient = self.gradient(X,y, pi)
+            if self.iteration==0:
+                # self.hessian_inv = np.eye(X.shape[1])
+                self.hessian_inv = np.linalg.inv(self.hessian(X,y,pi))
+                self.gradient_previous = gradient  # previous gradient
+                self.w_previous = self.w  # previous w
+            if self.iteration > 1:
+                y_grad = gradient - self.gradient_previous
+                x = self.w - self.w_previous
+                denominator = (y_grad.T@x)
+
+                self.hessian_inv = (np.eye(X.shape[1]) - (x@y_grad.T)/denominator) @ self.hessian_inv @  (np.eye(X.shape[1]) - (y_grad@x.T)/denominator) + (x@x.T)/denominator
+            # self.hessian_inv = self.hessian_inv - (self.hessian_inv@y@y.T@self.hessian_inv)/(y.T@self.hessian_inv@y) + (x@x.T)/(y.T@x)
+
+            update = - self.hessian_inv @ gradient 
+
+            t=1
+            alpha = 0.1
+            beta = 0.5
+
+            i = 0
+            fx = self.objective_w(X,y,self.w)
+            while True: 
+                # equation from the lecture https://github.com/HealthML/Math4ML-Lecture/blob/master/math4ml_2_Calculus_05_Unconstrained_Optimization_Convexity_handout.pdf
+                left_side = self.objective_w(X,y,self.w+t*update)
+                right_side = fx + alpha*t*np.dot(gradient.T, update)
+                # if (left_side < right_side) or t<0.001:
+                if (left_side < right_side) or t<0.01:
+                    # if t<0.01:
+                    #     print('Small t reached')
+                    break
+                t = t*beta
+                i +=1
+
+            update = - self.hessian_inv @ gradient * t 
+
+            self.gradient_previous = gradient
+            self.w_previous = self.w
+
         self.w = self.w +  update
+        self.iteration += 1
         return gradient
 
 
@@ -183,8 +223,6 @@ class LogisticRegression():
 ```
 
 ```{code-cell}
-
-
 repeat = 10
 n_samples = 1000
 n_features = 400
@@ -196,11 +234,23 @@ np.random.seed(10)
 iterations = []
 for i in range(repeat):
     X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=1, n_clusters_per_class=2)
-    log = LogisticRegression(l2=0.5, lr=1, num_iter=1000, method='backtracking', tol=tol  )
+    log = LogisticRegression(l2=0.1, lr=1, num_iter=1000, method='bfgs', tol=tol  )
     log.fit(X,y)
     iterations.append(log.training_length)
 t_end = time.time()
 print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
+print('\n')
+
+# t_start = time.time()
+# np.random.seed(10)
+# iterations = []
+# for i in range(repeat):
+#     X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=1, n_clusters_per_class=2)
+#     log = LogisticRegression(l2=0.5, lr=1, num_iter=1000, method='backtracking', tol=tol  )
+#     log.fit(X,y)
+#     iterations.append(log.training_length)
+# t_end = time.time()
+# print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
 
 print('\n')
 t_start = time.time()
@@ -208,7 +258,7 @@ np.random.seed(10)
 iterations = []
 for i in range(repeat):
     X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=1, n_clusters_per_class=3)
-    log = LogisticRegression(l2=0.5, lr=1, num_iter=1000, method='hessian', tol=tol  )
+    log = LogisticRegression(l2=0.1, lr=1, num_iter=1000, method='hessian', tol=tol  )
     log.fit(X,y)
     iterations.append(log.training_length)
 t_end = time.time()
@@ -227,31 +277,27 @@ for i in range(repeat):
 t_end = time.time()
 print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
 
-print('\n')
-t_start = time.time()
-np.random.seed(10)
-iterations = []
-for i in range(repeat):
-    X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=2, n_clusters_per_class=2)
-    log = LogisticRegression(l2=0.1, lr=0.25 ,num_iter=1001, method='diagonal_hessian', tol=tol)
-    log.fit(X,y)
-    iterations.append(log.training_length)
-t_end = time.time()
-print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
+# print('\n')
+# t_start = time.time()
+# np.random.seed(10)
+# iterations = []
+# for i in range(repeat):
+#     X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=2, n_clusters_per_class=2)
+#     log = LogisticRegression(l2=0.1, lr=0.25 ,num_iter=1001, method='diagonal_hessian', tol=tol)
+#     log.fit(X,y)
+#     iterations.append(log.training_length)
+# t_end = time.time()
+# print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
 
-print('\n')
-t_start = time.time()
-np.random.seed(10)
-iterations = []
-for i in range(repeat):
-    X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=2, n_clusters_per_class=2)
-    log = LogisticRegression(l2=0.1, lr=0.25 ,num_iter=1000, method='efficient_diagonal_hessian', tol=tol)
-    log.fit(X,y)
-    iterations.append(log.training_length)
-t_end = time.time()
-print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
-```
-
-```{code-cell}
-
+# print('\n')
+# t_start = time.time()
+# np.random.seed(10)
+# iterations = []
+# for i in range(repeat):
+#     X, y = sklearn.datasets.make_classification(n_samples=n_samples, n_classes=2, n_features=n_features, n_informative=n_informative, n_redundant=0, class_sep=2, n_clusters_per_class=2)
+#     log = LogisticRegression(l2=0.1, lr=0.25 ,num_iter=1000, method='efficient_diagonal_hessian', tol=tol)
+#     log.fit(X,y)
+#     iterations.append(log.training_length)
+# t_end = time.time()
+# print(f'Average time: {(t_end- t_start)/repeat}, average iterations {np.mean(iterations)}')
 ```

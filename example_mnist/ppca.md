@@ -97,9 +97,6 @@ class PPCA_CF(PPCA):
         L_M = np.diag(eig_val[:self.M])
         self.W_ML = np.dot(U_M, np.sqrt(L_M - self.sigma*np.eye(self.M)))
                                         
-        
-        
-
 
 # Fetch MNIST data
 mnist = fetch_openml('mnist_784', version=1, as_frame=False)
@@ -142,6 +139,3 @@ plt.suptitle('Image reconstruction p(x|z)', fontsize=20)
 plt.show()
 ```
 
-```{code-cell} ipython3
-
-```
