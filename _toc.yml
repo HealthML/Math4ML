@@ -18,14 +18,16 @@ chapters:
     - file: chapter_linear_algebra/normed_spaces
     - file: chapter_linear_algebra/inner_product_spaces
     - file: chapter_linear_algebra/transposition
-    - file: chapter_linear_algebra/eigenvectors
-    - file: chapter_linear_algebra/trace_determinant
-    - file: chapter_linear_algebra/orthogonal_matrices
-    - file: chapter_linear_algebra/symmetric_matrices
-    - file: chapter_linear_algebra/psd_matrices
-    - file: chapter_linear_algebra/svd
-  - file: chapter_calculus/calculus
-  - file: chapter_probability/probability
+##########
+#    - file: chapter_linear_algebra/eigenvectors
+#    - file: chapter_linear_algebra/trace_determinant
+#    - file: chapter_linear_algebra/orthogonal_matrices
+#    - file: chapter_linear_algebra/symmetric_matrices
+#    - file: chapter_linear_algebra/psd_matrices
+#    - file: chapter_linear_algebra/svd
+#  - file: chapter_calculus/calculus
+#  - file: chapter_probability/probability
+#############
 #  - file: example_weather_stations/univariate_linreg 
 #  - file: example_weather_stations/linreg 
 #  - file: example_weather_stations/ridge_regression
