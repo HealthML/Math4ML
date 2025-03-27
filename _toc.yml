@@ -36,7 +36,9 @@ chapters:
     - file: chapter_calculus/chain_rule
   - file: chapter_taylor/overview_taylor
     sections:
-    - file: chapter_taylor/taylor
+    - file: chapter_taylor/mean_value_theorem
+    - file: chapter_taylor/taylor_theorem
+    - file: chapter_taylor/optima
   - file: chapter_convexity/overview_convexity
     sections:
     - file: chapter_convexity/convexity
@@ -63,6 +65,8 @@ chapters:
     - file: chapter_decompositions/symmetric_matrices
     - file: chapter_decompositions/psd_matrices
     - file: chapter_decompositions/svd
+    - file: chapter_decompositions/big_picture
+    - file: chapter_decompositions/pseudoinverse
 #############
 #  - file: example_weather_stations/univariate_linreg 
 #  - file: example_weather_stations/linreg 
