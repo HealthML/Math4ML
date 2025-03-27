@@ -56,13 +56,106 @@ Although it becomes hard to visualize for $n > 3$, these concepts generalize mat
 Even when you're working in more general settings than $\mathbb{R}^n$, it is often useful to visualize vector addition and scalar multiplication in terms of 2D vectors in the plane or 3D vectors in space.
 
 
-:::{prf:theorem} TTT
-:label: theoremvectorspace
-Test
-:::
+Here's how you can neatly integrate the proof that polynomials form a vector space, and then connect that intuitively to an ML example using polynomial features:
+
+---
+
+## Example: Polynomials as a Vector Space
+
+Consider the set \( P_n \) of all real-valued polynomials with degree at most \( n \):
+
+\[
+P_n = \{ a_0 + a_1x + a_2x^2 + \dots + a_nx^n \mid a_i \in \mathbb{R} \}.
+\]
+
+We show that \( P_n \) is a vector space by verifying the vector space axioms:
+
+### Proof:
+
+Let \( p(x), q(x), r(x) \in P_n \) be arbitrary polynomials:
+
+- **Closure under addition:**  
+  The sum \( p(x) + q(x) \) is:
+  \[
+  (p+q)(x) = (a_0 + b_0) + (a_1 + b_1)x + \dots + (a_n + b_n)x^n.
+  \]
+  Clearly, this is also a polynomial of degree at most \( n \), so \( p(x) + q(x) \in P_n \).
+
+- **Closure under scalar multiplication:**  
+  For any scalar \( \alpha \in \mathbb{R} \), the scalar multiplication \(\alpha p(x)\) is:
+  \[
+  (\alpha p)(x) = \alpha a_0 + \alpha a_1 x + \dots + \alpha a_n x^n,
+  \]
+  which remains in \( P_n \).
+
+- **Existence of additive identity:**  
+  The zero polynomial \(0(x) = 0 + 0x + \dots + 0x^n\) serves as the additive identity:
+  \[
+  p(x) + 0(x) = p(x).
+  \]
+
+- **Existence of additive inverse:**  
+  For every polynomial \( p(x) = a_0 + a_1 x + \dots + a_n x^n \), there exists \(-p(x)\):
+  \[
+  -p(x) = -a_0 - a_1 x - \dots - a_n x^n,
+  \]
+  such that \( p(x) + (-p(x)) = 0(x) \).
+
+- **Commutativity and associativity:**  
+  Addition of polynomials and scalar multiplication clearly satisfy commutativity and associativity due to the commutativity and associativity of real numbers.
+
+- **Distributivity:**  
+  Scalar multiplication distributes over polynomial addition, and addition of scalars distributes over scalar multiplication, directly inherited from real numbers.
+
+Thus, all vector space axioms are satisfied, and \( P_n \) is indeed a vector space.
+
+---
+
+## Polynomial Features in Machine Learning
+
+Using polynomial vector spaces, we can enhance simple machine learning algorithms by explicitly representing complex, nonlinear relationships.
+
+### Example: Polynomial Features in Linear Regression and Nearest Centroid Classifier
+
+Consider a simple ML task—fitting or classifying data that's clearly nonlinear:
+
+- **Original Data**: \(\mathbf{x} \in \mathbb{R}\), one-dimensional feature.
+- **Polynomial Feature Map**: Transform the input into a polynomial vector space, e.g.:
+  \[
+  \phi(x) = [1, x, x^2, \dots, x^n]^\top.
+  \]
+
+#### Linear Regression with Polynomial Features:
+Instead of fitting a line \( y = w_0 + w_1 x \), we fit:
+\[
+y = w_0 + w_1 x + w_2 x^2 + \dots + w_n x^n = \mathbf{w}^\top \phi(x)
+\]
+
+This can model more complex curves while still being linear in the parameters \( \mathbf{w} \).
+
+#### Nearest Centroid Classifier with Polynomial Features:
+Instead of measuring Euclidean distance in the original feature space, we measure it in the polynomial feature space:
+
+- Centroids become averages of polynomial features:
+  \[
+  \mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k} \phi(x_i).
+  \]
+
+- Classification uses distances in this polynomial space:
+  \[
+  \hat{y} = \arg\min_k \|\phi(x)-\mathbf{c}_k\|.
+  \]
+
+This simple feature mapping enables the classifier to separate nonlinear boundaries (circles, ellipses, curves) easily and effectively.
+
+---
+
+### Insights for Students:
+
+- Recognizing polynomials as vector spaces gives a clear mathematical justification for methods using polynomial features.
+- Polynomial vector spaces allow linear methods to handle nonlinear patterns by embedding data into higher-dimensional spaces.
+- Even simple classifiers or regressors gain expressive power through such explicit polynomial feature expansions.
 
 
-:::{prf:proof}
-This is the proof of the theorem {prf:ref}`theoremvectorspace`.
-:::
+
 

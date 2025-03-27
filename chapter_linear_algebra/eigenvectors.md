@@ -1,4 +1,3 @@
-
 ## Eigenthings
 
 For a square matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$, there may
@@ -17,7 +16,10 @@ $\lambda$.
 We now give some useful results about how eigenvalues change after
 various manipulations.
 
-*Proposition.*
+
+
+:::{prf:proposition}
+:label: eigenvalues_eigenvectors_properties
 Let $\mathbf{x}$ be an eigenvector of $\mathbf{A}$ with corresponding
 eigenvalue $\lambda$. Then
 
@@ -30,8 +32,10 @@ eigenvalue $\lambda$. Then
 (iii) $\mathbf{A}^k\mathbf{x} = \lambda^k\mathbf{x}$ for any
       $k \in \mathbb{Z}$ (where $\mathbf{A}^0 = \mathbf{I}$ by
       definition).
+:::
 
 
+:::{prf:proof}
 *Proof.* (i) follows readily:
 
 $$(\mathbf{A} + \gamma\mathbf{I})\mathbf{x} = \mathbf{A}\mathbf{x} + \gamma\mathbf{I}\mathbf{x} = \lambda\mathbf{x} + \gamma\mathbf{x} = (\lambda + \gamma)\mathbf{x}$$
@@ -47,7 +51,7 @@ $\lambda^{-1}\mathbf{x} = \mathbf{A}^{-1}\mathbf{x}$.
 \(iii\) The case $k \geq 0$ follows immediately by induction on $k$.
 Then the general case $k \in \mathbb{Z}$ follows by combining the
 $k \geq 0$ case with (ii). ◻
-
+:::
 
 ## Trace
 
@@ -179,14 +183,16 @@ We can further show that the Rayleigh quotient is bounded by the largest
 and smallest eigenvalues of $\mathbf{A}$. But first we will show a
 useful special case of the final result.
 
-*Proposition.* 
+:::{prf:proposition}
 For any $\mathbf{x}$ such that $\|\mathbf{x}\|_2 = 1$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
+:::
 
+:::{prf:proof}
 *Proof.* We show only the $\max$ case because the argument for the
 $\min$ case is entirely analogous.
 
@@ -229,21 +235,21 @@ $\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \lambda
 from which we have the general inequality
 $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$
 for all unit-length $\mathbf{x}$. ◻
-
+:::
 
 By the scale invariance of the Rayleigh quotient, we immediately have as
 a corollary (since
 $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = R_{\mathbf{A}}(\mathbf{x})$
 for unit $\mathbf{x}$)
 
-*Theorem.* 
-(Min-max theorem) For all $\mathbf{x} \neq \mathbf{0}$,
+:::{prf:theorem} Min-max theorem
+*Theorem.*  For all $\mathbf{x} \neq \mathbf{0}$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
-
+:::
 
 ## Positive (semi-)definite matrices
 

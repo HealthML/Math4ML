@@ -52,3 +52,43 @@ for all $\mathbf{x} \in V$. Therefore convergence in one norm implies
 convergence in any other norm. This rule may not apply in
 infinite-dimensional vector spaces such as function spaces, though.
 
+
+
+## Normed Spaces in Machine Learning
+
+Normed spaces generalize the idea of **length** and thus naturally appear whenever machine learning algorithms quantify vector magnitude or enforce regularization.
+
+### Examples:
+
+1. **Regularization (Ridge and Lasso)**  
+   - Regularization methods in machine learning, such as **ridge regression** (L2 regularization) and **lasso regression** (L1 regularization), explicitly use norms on parameter vectors:
+
+     - **L2 Regularization (Ridge):**
+     $$
+     \text{Loss}_{ridge}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2
+     $$
+     (penalizes the squared Euclidean norm, encouraging small parameter values.)
+
+     - **L1 Regularization (Lasso):**
+     $$
+     \text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1
+     $$
+     (penalizes the sum of absolute parameter values, promoting sparsity in the solution.)
+
+2. **Measuring Errors and Convergence (Gradient Descent)**  
+   - When running optimization algorithms such as **gradient descent**, one commonly uses norms to measure how far parameter updates move between iterations:
+     $$
+     \|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2
+     $$
+     The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.
+
+---
+
+### Summary of ML Examples:
+
+| Concept           | ML Examples                                             |
+|-------------------|---------------------------------------------------------|
+| Metric Space      | k-NN classifier, Clustering (k-means, DBSCAN), Text similarity (Levenshtein) |
+| Normed Space      | L1/L2 regularization (ridge, lasso), Gradient descent convergence |
+
+These examples highlight the practical and foundational role of metrics and norms in machine learning, illustrating how abstract mathematical concepts directly influence algorithm design and performance.
