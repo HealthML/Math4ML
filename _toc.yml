@@ -45,7 +45,16 @@ chapters:
     - file: chapter_optimization/optimization
     - file: chapter_optimization/optimization_second_order
     - file: chapter_optimization/bfgs
-  - file: chapter_probability/probability
+  - file: chapter_probability/overview_probability
+    sections:
+    - file: chapter_probability/probability_basics
+    - file: chapter_probability/random_variables
+    - file: chapter_probability/expectation
+    - file: chapter_probability/covariance
+    - file: chapter_probability/joint_distributions
+    - file: chapter_probability/estimation
+    - file: chapter_probability/random_vectors
+    - file: chapter_probability/gaussian
   - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
     sections:
     - file: chapter_decompositions/eigenvectors
