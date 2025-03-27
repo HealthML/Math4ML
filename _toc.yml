@@ -1,6 +1,15 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
 
+# proposal for new chapters:
+# vectors and spaces
+# mulrivariable calculus: gradients and hessians
+# probability and statistics
+# optimization
+# Eigenvalues and eigenvectors
+# Singular value decomposition
+# Advanced topics
+
 format: jb-book
 root: index
 chapters:
