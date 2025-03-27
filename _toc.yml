@@ -29,12 +29,22 @@ chapters:
     - file: example_uci_breast_cancer/nearest_centroid_norms
     - file: chapter_spaces/inner_product_spaces
     - file: chapter_spaces/transposition
-
   - file: chapter_calculus/overview_calculus
     sections:
     - file: chapter_calculus/gradients
     - file: chapter_calculus/hessians
     - file: chapter_calculus/chain_rule
+  - file: chapter_taylor/overview_taylor
+    sections:
+    - file: chapter_taylor/taylor
+  - file: chapter_convexity/overview_convexity
+    sections:
+    - file: chapter_convexity/convexity
+  - file: chapter_optimization/overview_optimization
+    sections:
+    - file: chapter_optimization/optimization
+    - file: chapter_optimization/optimization_second_order
+    - file: chapter_optimization/bfgs
   - file: chapter_probability/probability
   - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
     sections:
