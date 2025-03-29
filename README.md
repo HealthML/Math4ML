@@ -2,3 +2,5 @@
 Lecture script for the Mathematics for Machine Learning lecture at HPI
 
 This script is based on the Mathematics for Machine Learning scripts at UC Berkeley that can be found at [math4ml](https://github.com/gwthomas/math4ml).
+
+Link to the book [click here](https://healthml.github.io/Math4ML/)
