@@ -32,14 +32,14 @@ Metric spaces provide a generalized framework for measuring **distances** or sim
 ### Examples:
 
 1. **Nearest Neighbor Classifiers (k-NN)**  
-   - In k-NN, classification depends entirely on distances between points. While typically the Euclidean distance (metric) is used:
-     $$
-     d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2,
-     $$
-     other metrics such as the Manhattan (1-norm) or Minkowski (p-norm) can also be employed.
+In k-NN, classification depends entirely on distances between points. While typically the Euclidean distance (metric) is used:
+     
+$$d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2,$$
+     
+other metrics such as the Manhattan (1-norm) or Minkowski (p-norm) can also be employed.
 
 2. **Clustering Algorithms (k-means, DBSCAN)**  
-   - Clustering methods rely fundamentally on the notion of a "distance" or metric. For example, **DBSCAN** clusters points that lie within a certain "distance" radius (metric-defined neighborhoods).
+Clustering methods rely fundamentally on the notion of a "distance" or metric. For example, **DBSCAN** clusters points that lie within a certain "distance" radius (metric-defined neighborhoods).
 
 3. **String or Text Similarity (non-vector metrics)**  
-   - Metrics can also be defined on non-numeric data. For example, the **Levenshtein distance** (edit distance) is widely used to measure similarity between strings, DNA sequences, or words in natural language processing (NLP). The Levenshtein distance counts how many single-character edits (insertions, deletions, substitutions) are needed to transform one string into another.
+Metrics can also be defined on non-numeric data. For example, the **Levenshtein distance** (edit distance) is widely used to measure similarity between strings, DNA sequences, or words in natural language processing (NLP). The Levenshtein distance counts how many single-character edits (insertions, deletions, substitutions) are needed to transform one string into another.

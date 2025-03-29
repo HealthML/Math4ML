@@ -1,4 +1,4 @@
-# Calculus and Optimization
+# Multivariate Calculus
 
 Much of machine learning is about minimizing a **cost function** (also
 called an **objective function** in the optimization community), which

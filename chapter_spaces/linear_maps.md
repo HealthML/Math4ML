@@ -23,13 +23,12 @@ The **rank** of a linear map $T$ is the dimension of its range, and the
 
 An **affine space** is a geometric structure closely related to vector spaces, but without a distinguished origin. Formally, an affine space can be thought of as a vector space that's been "shifted" away from the origin.
 
-Given a vector space \( V \), an affine space is defined as:
+Given a vector space $V$, an affine space is defined as:
 
-\[
-A = \{\mathbf{v} + \mathbf{a} \mid \mathbf{v} \in V\}
-\]
+$$A = \{\mathbf{v} + \mathbf{a} \mid \mathbf{v} \in V\}$$
 
-for some fixed vector \(\mathbf{a}\). Unlike a subspace, an affine space:
+for some fixed vector $\mathbf{a}$.
+Unlike a subspace, an affine space:
 
 - **Does not necessarily contain the zero vector**.
 - Is **not closed under addition or scalar multiplication** unless specifically shifted back to the origin.
@@ -45,27 +44,23 @@ The separating hyperplane for classifiers like SVM or logistic regression (with 
 
 ### Affine Map
 Some of the most important affine spaces are those induced by affine maps.
-Given vector spaces \( V \) and \( W \), a function \( f: V \to W \) is called an **affine map** (or affine transformation) if it can be expressed in the form:
+Given vector spaces $V$ and $W$, a function $f: V \to W$ is called an **affine map** (or affine transformation) if it can be expressed in the form:
 
-\[
-f(\mathbf{x}) = L(\mathbf{x}) + \mathbf{b}
-\]
+$$f(\mathbf{x}) = L(\mathbf{x}) + \mathbf{b}$$
 
 where:
 
-- \( L : V \to W \) is a linear map (i.e., a transformation satisfying \(L(\alpha \mathbf{x} + \beta \mathbf{y}) = \alpha L(\mathbf{x}) + \beta L(\mathbf{y})\)),
-- \(\mathbf{b} \in W\) is a fixed vector representing a translation (shift).
+- $L : V \to W$ is a linear map (i.e., a transformation satisfying $L(\alpha \mathbf{x} + \beta \mathbf{y}) = \alpha L(\mathbf{x}) + \beta L(\mathbf{y})$),
+- $\mathbf{b} \in W$ is a fixed vector representing a translation (shift).
 
-An **affine space** induced by this affine map is the set of all possible outputs of \(f\):
+An **affine space** induced by this affine map is the set of all possible outputs of $f$:
 
-\[
-A = \{ L(\mathbf{x}) + \mathbf{b} \mid \mathbf{x} \in V \}.
-\]
+$$A = \{ L(\mathbf{x}) + \mathbf{b} \mid \mathbf{x} \in V \}.$$
 
 #### Properties:
 
-- If \(\mathbf{b} = \mathbf{0}\), the affine map reduces to a linear map, and \(A\) is a vector subspace.
-- If \(\mathbf{b} \neq \mathbf{0}\), the affine space \(A\) is essentially a vector subspace (the image of \(L\)) shifted away from the origin by \(\mathbf{b}\).
+- If $\mathbf{b} = \mathbf{0}$, the affine map reduces to a linear map, and $A$ is a vector subspace.
+- If $\mathbf{b} \neq \mathbf{0}$, the affine space $A$ is essentially a vector subspace (the image of $L$) shifted away from the origin by $\mathbf{b}$.
 
 #### Intuition:
 
@@ -87,7 +82,7 @@ Here's an intuitive idea of how PCA works, without any advanced linear algebra:
 
 - Suppose you have a dataset represented as points scattered in a high-dimensional space, like a cloud of points.
 
-- PCA finds a few (\( k \)) "directions" in space along which the data varies most strongly. These so-called principal components form new axes or coordinates for representing your data. Typically, these new axes summarize your original data quite effectively.
+- PCA finds a few ($k$) "directions" in space along which the data varies most strongly. These so-called principal components form new axes or coordinates for representing your data. Typically, these new axes summarize your original data quite effectively.
 
 - The set of all possible points you can represent using these new axes (directions) is exactly a **subspace**:
     - It includes the zero vector (imagine your new axes intersecting exactly at the origin).
@@ -95,7 +90,7 @@ Here's an intuitive idea of how PCA works, without any advanced linear algebra:
     - Scaling any point by a scalar (stretching or shrinking) also keeps the result in the subspace.
 
 - **Subspace property:**  
-  The set of all linear combinations of the first \( k \) principal components forms a subspace of the original feature space. This subspace naturally includes the zero vector, and any addition or scalar multiplication within this reduced-dimensional space remains within it.
+  The set of all linear combinations of the first $k$ principal components forms a subspace of the original feature space. This subspace naturally includes the zero vector, and any addition or scalar multiplication within this reduced-dimensional space remains within it.
 
 Thus, PCA essentially identifies a smaller, simpler subspace within the larger, complicated original feature space, providing a practical and computationally useful example of subspaces in machine learning.
 
@@ -106,12 +101,12 @@ Imagine projecting a three-dimensional cloud of points onto a two-dimensional pl
 
 #### Example 2: Linear Regression
 
-In linear regression, the predicted values \(\hat{\mathbf{y}}\) of a linear model form a **column space** of the data matrix \(\mathbf{X}\):
+In linear regression, the predicted values $\hat{\mathbf{y}}$ of a linear model form a **column space** of the data matrix $\mathbf{X}$:
 
 - Given:
-\[
-\hat{\mathbf{y}} = \mathbf{X}\mathbf{\beta}, \quad \mathbf{X} \in \mathbb{R}^{n\times d}, \quad \mathbf{\beta} \in \mathbb{R}^{d\times 1}
-\]
+
+$$\hat{\mathbf{y}} = \mathbf{X}\mathbf{\beta}, \quad \mathbf{X} \in \mathbb{R}^{n\times d}, \quad \mathbf{\beta} \in \mathbb{R}^{d\times 1}$$
 
 - **Subspace property:**  
-  The set of all possible predictions \(\hat{\mathbf{y}}\) for different coefficients \(\mathbf{\beta}\) is the column space of \(\mathbf{X}\), a subspace of \(\mathbb{R}^n\). It contains the zero vector (achieved by setting all \(\mathbf{\beta}\) to zero), and is closed under vector addition and scalar multiplication.
+  The set of all possible predictions $\hat{\mathbf{y}}$ for different coefficients $\mathbf{\beta}$ is the column space of $\mathbf{X}$, a subspace of $\mathbb{R}^n$.
+  It contains the zero vector (achieved by setting all $\mathbf{\beta}$ to zero), and is closed under vector addition and scalar multiplication.

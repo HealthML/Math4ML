@@ -21,52 +21,5 @@ method. It is expensive to calculate but can drastically reduce the
 number of iterations needed to converge to a local minimum by providing
 information about the curvature of $f$.
 
-## Matrix calculus
-
-Since a lot of optimization reduces to finding points where the gradient
-vanishes, it is useful to have differentiation rules for matrix and
-vector expressions. We give some common rules here. Probably the two
-most important for our purposes are 
-
-$$\begin{aligned}
-\nabla_\mathbf{x} &(\mathbf{a}^{\!\top\!}\mathbf{x}) = \mathbf{a} \\
-\nabla_\mathbf{x} &(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}) = (\mathbf{A} + \mathbf{A}^{\!\top\!})\mathbf{x}
-\end{aligned}$$ 
-
-Note that this second rule is defined only if
-$\mathbf{A}$ is square. Furthermore, if $\mathbf{A}$ is symmetric, we
-can simplify the result to $2\mathbf{A}\mathbf{x}$.
-
-### The chain rule
-
-Most functions that we wish to optimize are not completely arbitrary
-functions, but rather are composed of simpler functions which we know
-how to handle. The chain rule gives us a way to calculate derivatives
-for a composite function in terms of the derivatives of the simpler
-functions that make it up.
-
-The chain rule from single-variable calculus should be familiar:
-
-$$(f \circ g)'(x) = f'(g(x))g'(x)$$ 
-
-where $\circ$ denotes function
-composition. There is a natural generalization of this rule to
-multivariate functions.
-
-*Proposition.*
-Suppose $f : \mathbb{R}^m \to \mathbb{R}^k$ and
-$g : \mathbb{R}^n \to \mathbb{R}^m$. Then
-$f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ and
-
-$$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})$$
 
 
-In the special case $k = 1$ we have the following corollary since
-$\nabla f = \mathbf{J}_f^{\!\top\!}$.
-
- corollary
-Suppose $f : \mathbb{R}^m \to \mathbb{R}$ and
-$g : \mathbb{R}^n \to \mathbb{R}^m$. Then
-$f \circ g : \mathbb{R}^n \to \mathbb{R}$ and
-
-$$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))$$

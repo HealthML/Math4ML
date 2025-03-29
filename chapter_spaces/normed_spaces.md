@@ -61,29 +61,28 @@ Normed spaces generalize the idea of **length** and thus naturally appear whenev
 ### Examples:
 
 1. **Regularization (Ridge and Lasso)**  
-   - Regularization methods in machine learning, such as **ridge regression** (L2 regularization) and **lasso regression** (L1 regularization), explicitly use norms on parameter vectors:
+Regularization methods in machine learning, such as **ridge regression** (L2 regularization) and **lasso regression** (L1 regularization), explicitly use norms on parameter vectors:
 
-     - **L2 Regularization (Ridge):**
-     $$
-     \text{Loss}_{ridge}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2
-     $$
-     (penalizes the squared Euclidean norm, encouraging small parameter values.)
+- **L2 Regularization (Ridge):**
 
-     - **L1 Regularization (Lasso):**
-     $$
-     \text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1
-     $$
-     (penalizes the sum of absolute parameter values, promoting sparsity in the solution.)
+$$\text{Loss}_{ridge}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2$$
+
+(penalizes the squared Euclidean norm, encouraging small parameter values.)
+
+- **L1 Regularization (Lasso):**
+     
+$$\text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1$$
+
+(penalizes the sum of absolute parameter values, promoting sparsity in the solution.)
 
 2. **Measuring Errors and Convergence (Gradient Descent)**  
-   - When running optimization algorithms such as **gradient descent**, one commonly uses norms to measure how far parameter updates move between iterations:
-     $$
-     \|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2
-     $$
-     The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.
+When running optimization algorithms such as **gradient descent**, one commonly uses norms to measure how far parameter updates move between iterations:
+     
+$$\|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2$$
+
+The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.
 
 ---
-
 ### Summary of ML Examples:
 
 | Concept           | ML Examples                                             |

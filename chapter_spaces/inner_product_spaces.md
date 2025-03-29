@@ -84,11 +84,10 @@ Inner product spaces allow us to generalize ideas of angles, lengths, and orthog
 Many linear classifiers (like perceptrons, logistic regression, and linear SVMs) rely directly on the standard inner product (dot product):
 
 - **Decision functions** for linear classifiers often take the form:
-  \[
-  f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b = \langle \mathbf{w}, \mathbf{x} \rangle + b
-  \]
+  
+$$f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b = \langle \mathbf{w}, \mathbf{x} \rangle + b$$
 
-This explicitly uses the inner product to measure similarity between the feature vector \(\mathbf{x}\) and the learned weight vector \(\mathbf{w}\).
+This explicitly uses the inner product to measure similarity between the feature vector $\mathbf{x}$ and the learned weight vector $\mathbf{w}$.
 
 ---
 
@@ -96,19 +95,18 @@ This explicitly uses the inner product to measure similarity between the feature
 
 The notion of inner product spaces provides a powerful generalization called **kernels**, leading to the idea of **kernel methods** in machine learning. Kernels allow us to implicitly map data into high-dimensional spaces where classification or regression tasks become simpler.
 
-A kernel function \( k(\mathbf{x}, \mathbf{y}) \) is defined as:
-\[
-k(\mathbf{x}, \mathbf{y}) = \langle \phi(\mathbf{x}), \phi(\mathbf{y}) \rangle
-\]
+A kernel function $k(\mathbf{x}, \mathbf{y})$ is defined as:
+
+$$k(\mathbf{x}, \mathbf{y}) = \langle \phi(\mathbf{x}), \phi(\mathbf{y}) \rangle$$
 
 where:
-- \(\phi(\mathbf{x})\) is a feature mapping from the original feature space into a possibly high-dimensional (or even infinite-dimensional) inner product space.
+- $\phi(\mathbf{x})$ is a feature mapping from the original feature space into a possibly high-dimensional (or even infinite-dimensional) inner product space.
 - This new space is called a **Reproducing Kernel Hilbert Space (RKHS)**.
 
 Common kernels include:
 
-- **Polynomial kernel**: \( k(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^\top \mathbf{y} + c)^d \)
-- **Gaussian (RBF) kernel**: \( k(\mathbf{x}, \mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2) \)
+- **Polynomial kernel**: $k(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^\top \mathbf{y} + c)^d$
+- **Gaussian (RBF) kernel**: $k(\mathbf{x}, \mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2)$
 
 ---
 
@@ -120,18 +118,16 @@ The nearest centroid classifier assigns points to the nearest centroid based on 
 
 Instead of explicitly computing the centroid in the original space, we can implicitly compute distances in a high-dimensional space using kernels.
 
-Given data points \( \mathbf{x}_i \), the centroid \(\mathbf{c}_k\) for class \(k\) in the mapped space is given by:
-\[
-\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i)
-\]
+Given data points $\mathbf{x}_i$, the centroid $\mathbf{c}_k$ for class $k$ in the mapped space is given by:
+
+$$\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i)$$
 
 Then the distance to the centroid becomes:
-\[
-\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 
+
+$$\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 
 = \langle \phi(\mathbf{x}) - \mathbf{c}_k, \phi(\mathbf{x}) - \mathbf{c}_k \rangle
 = k(\mathbf{x},\mathbf{x}) - \frac{2}{N_k}\sum_{i:y_i=k}k(\mathbf{x}, \mathbf{x}_i) 
-+ \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i, \mathbf{x}_j)
-\]
++ \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i, \mathbf{x}_j)$$
 
 Thus, a kernelized nearest centroid classifier can classify points using arbitrary inner product spaces defined by kernels, allowing the classifier to handle complex, nonlinear patterns in the data.
 

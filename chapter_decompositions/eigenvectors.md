@@ -36,11 +36,11 @@ eigenvalue $\lambda$. Then
 
 
 :::{prf:proof}
-*Proof.* (i) follows readily:
+(i) follows readily:
 
 $$(\mathbf{A} + \gamma\mathbf{I})\mathbf{x} = \mathbf{A}\mathbf{x} + \gamma\mathbf{I}\mathbf{x} = \lambda\mathbf{x} + \gamma\mathbf{x} = (\lambda + \gamma)\mathbf{x}$$
 
-\(ii\) Suppose $\mathbf{A}$ is invertible. Then
+(ii) Suppose $\mathbf{A}$ is invertible. Then
 
 $$\mathbf{x} = \mathbf{A}^{-1}\mathbf{A}\mathbf{x} = \mathbf{A}^{-1}(\lambda\mathbf{x}) = \lambda\mathbf{A}^{-1}\mathbf{x}$$
 
@@ -48,7 +48,7 @@ Dividing by $\lambda$, which is valid because the invertibility of
 $\mathbf{A}$ implies $\lambda \neq 0$, gives
 $\lambda^{-1}\mathbf{x} = \mathbf{A}^{-1}\mathbf{x}$.
 
-\(iii\) The case $k \geq 0$ follows immediately by induction on $k$.
+(iii) The case $k \geq 0$ follows immediately by induction on $k$.
 Then the general case $k \in \mathbb{Z}$ follows by combining the
 $k \geq 0$ case with (ii). ◻
 :::

@@ -18,23 +18,24 @@ Recall, the **nearest centroid classifier** assigns each new point to the class 
 ### Different metrics and norms:
 
 1. **Manhattan (L1) distance**:
-\[
-d_{L_1}(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|_1 = \sum_{i=1}^{n}|x_i - y_i|
-\]
-- **Effect on classifier**: Sensitive to coordinate-wise differences, leading to axis-aligned decision boundaries that can look like diamonds or squares.
+
+$$d_{L_1}(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|_1 = \sum_{i=1}^{n}|x_i - y_i|$$
+
+**Effect on classifier**: Sensitive to coordinate-wise differences, leading to axis-aligned decision boundaries that can look like diamonds or squares.
 
 2. **Chebyshev (L∞) distance**:
-\[
-d_{L_{\infty}}(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|_{\infty} = \max_i |x_i - y_i|
-\]
-- **Effect on classifier**: Classifier decisions are based on the largest difference across all dimensions, leading to box-like decision boundaries.
+
+$$d_{L_{\infty}}(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|_{\infty} = \max_i |x_i - y_i|$$
+
+**Effect on classifier**: Classifier decisions are based on the largest difference across all dimensions, leading to box-like decision boundaries.
 
 3. **Mahalanobis distance** (a metric derived from data covariance structure):
-\[
-d_{Mahal}(\mathbf{x}, \mathbf{y}) = \sqrt{(\mathbf{x}-\mathbf{y})^T\mathbf{\Sigma}^{-1}(\mathbf{x}-\mathbf{y})}
-\]
+
+$$d_{Mahal}(\mathbf{x}, \mathbf{y}) = \sqrt{(\mathbf{x}-\mathbf{y})^T\mathbf{\Sigma}^{-1}(\mathbf{x}-\mathbf{y})}$$
+
 where \(\mathbf{\Sigma}\) is the covariance matrix.
-- **Effect on classifier**: Takes into account data correlation, stretching or rotating decision boundaries according to feature covariance.
+
+**Effect on classifier**: Takes into account data correlation, stretching or rotating decision boundaries according to feature covariance.
 
 ---
 
