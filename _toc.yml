@@ -71,13 +71,14 @@ chapters:
     - file: chapter_decompositions/low_rank_approximation
     - file: chapter_decompositions/matrix_norms
 #############
-#  - file: example_weather_stations/univariate_linreg 
-#  - file: example_weather_stations/linreg 
-#  - file: example_weather_stations/ridge_regression
-#  - file: example_uci_breast_cancer/nearest_centroid 
+  - file: example_weather_stations/univariate_linreg 
+  - file: example_weather_stations/linreg 
+  - file: example_weather_stations/ridge_regression
+  - file: example_bayesian_linreg/bayesian_linreg
+  - file: example_uci_breast_cancer/nearest_centroid 
 #  - file: example_uci_breast_cancer/pca
-#  - file: example_genetics/pca_genetics 
-#  - file: example_mnist/ppca 
-#  - file: example_optimization/optimization
-#  - file: example_optimization/optimization_second_order 
-#  - file: example_optimization/bfgs 
+  - file: example_genetics/pca_genetics 
+  - file: example_mnist/ppca 
+  - file: example_optimization/optimization
+  - file: example_optimization/optimization_second_order 
+  - file: example_optimization/bfgs 

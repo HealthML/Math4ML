@@ -1,3 +1,16 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 ## Vector spaces
 
 **Vector spaces** are the basic setting in which linear algebra happens.
@@ -57,12 +70,12 @@ Even when you're working in more general settings than $\mathbb{R}^n$, it is oft
 
 ## Visualizing Vector Addition
 
-Below is a Python script using Matplotlib to visualize vector addition in 2D space. This script illustrates how vectors combine graphically.
-
-### Python script:
-```python
+```{code-cell} ipython3
+:tags: [hide-input]
 import matplotlib.pyplot as plt
 import numpy as np
+
+#  Below is a Python script using Matplotlib to visualize vector addition in 2D space. This script illustrates how vectors combine graphically.
 
 # Define vectors
 vector_a = np.array([2, 3])
@@ -100,7 +113,7 @@ plt.title('Visualization of Vector Addition')
 # Aspect ratio
 plt.gca().set_aspect('equal', adjustable='box')
 
-plt.legend()
+plt.legend(loc='lower right')
 plt.show()
 ```
 
@@ -133,26 +146,26 @@ Let $p(x), q(x), r(x) \in P_n$ be arbitrary polynomials:
 - **Closure under addition:**  
   The sum $p(x) + q(x)$ is:
   
-  $$(p+q)(x) = (a_0 + b_0) + (a_1 + b_1)x + \dots + (a_n + b_n)x^n.$$
-  
+$$(p+q)(x) = (a_0 + b_0) + (a_1 + b_1)x + \dots + (a_n + b_n)x^n.$$
+
   Clearly, this is also a polynomial of degree at most $n$, so $p(x) + q(x) \in P_n$.
 
 - **Closure under scalar multiplication:**  
   For any scalar $\alpha \in \mathbb{R}$, the scalar multiplication $\alpha p(x)$ is:
   
-  $$(\alpha p)(x) = \alpha a_0 + \alpha a_1 x + \dots + \alpha a_n x^n,$$
-  
+$$(\alpha p)(x) = \alpha a_0 + \alpha a_1 x + \dots + \alpha a_n x^n,$$
+
   which remains in $P_n$.
 
 - **Existence of additive identity:**  
   The zero polynomial $0(x) = 0 + 0x + \dots + 0x^n$ serves as the additive identity:
   
-  $$p(x) + 0(x) = p(x).$$
+$$p(x) + 0(x) = p(x).$$
 
 - **Existence of additive inverse:**  
   For every polynomial $p(x) = a_0 + a_1 x + \dots + a_n x^n$, there exists $-p(x)$:
   
-  $$-p(x) = -a_0 - a_1 x - \dots - a_n x^n,$$
+$$-p(x) = -a_0 - a_1 x - \dots - a_n x^n,$$
   
   such that $p(x) + (-p(x)) = 0(x)$.
 
@@ -175,7 +188,7 @@ Consider a simple ML task—fitting or classifying data that's clearly nonlinear
 - **Original Data**: $\mathbf{x} \in \mathbb{R}$, one-dimensional feature.
 - **Polynomial Feature Map**: Transform the input into a polynomial vector space, e.g.:
   
-  $$\phi(x) = [1, x, x^2, \dots, x^n]^\top.$$
+$$\phi(x) = [1, x, x^2, \dots, x^n]^\top.$$
 
 #### Linear Regression with Polynomial Features:
 Instead of fitting a line $y = w_0 + w_1 x$, we fit:
