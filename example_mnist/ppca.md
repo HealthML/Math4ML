@@ -11,14 +11,80 @@ kernelspec:
   name: python3
 ---
 
-# Week 10 - Probabilistic PCA
+# Probabilistic PCA
+We will present **Probabilistic PCA (PPCA)**.  
+
+### Key Aspects of Probabilistic PCA  
+- Unlike standard PCA, **Probabilistic PCA** is formulated as a probabilistic model, allowing us to **sample new data points** from the learned distribution.  
+- We will use the **closed-form solution** for PPCA to compute the principal components.  
+- An alternative approach to solving PPCA is using the **Expectation-Maximization (EM) algorithm**, which iteratively estimates the latent variables and model parameters.  
+
+PPCA is particularly useful when working with noisy or missing data, as it naturally integrates probabilistic modeling into dimensionality reduction.  
+
+
+## Math behind PPCA
+
+We introduce an explicit laten variale $z$ corresponding to the principal-component subspace. 
+The prior distribution of $z$ is given by:
+
+
+$$
+p(\mathbf{z}) = \mathcal{N}(\mathbf{z} \mid \mathbf{0}, \mathbf{I})
+$$
+
+We can define the conditional distrubution of the observed variable $\mathbf{x}$, conditioned on the laten variable $\mathbf{z}$ as:
+$$
+p(\mathbf{x}|\mathbf{z}) = \mathcal{N}(\mathbf{x} \mid \mathbf{W}\mathbf{z} + \mathbf{\mu}, \sigma^2\mathbf{I}).
+$$
+
+Therefore we can express $\mathbf{x}$ as a linear transformation of the latent variable $z$ plus a Gaussian noise term $\epsilon$:
+
+$$ 
+\mathbf{x} = \mathbf{W}\mathbf{z} + \mathbf{\mu} + \mathbf{\epsilon}
+$$
+
+The marginal distribution $p(\mathbf{x})$ of the observed variable could be obtained from the sum and product rules of probability:
+$$
+p(\mathbf{x}) = \int p(\mathbf{x}|\mathbf{z})p(\mathbf{z})d\mathbf{z} 
+
+$$
+
+This distribution is Gaussian given by:
+
+$$
+p(\mathbf{x}) = \mathcal{N}(\mathbf{x} \mid \mathbf{\mu}, \mathbf{C})
+$$
+
+where 
+$$
+\mathbf{C} = \mathbf{W}\mathbf{W}^T + \sigma^2\mathbf{I}
+$$
+
+The last equation is the posterior distribution of the latent variable $z$ given the observed variable $x$:
+$$
+p(\mathbf{z}|\mathbf{x}) = \mathcal{N}(\mathbf{z} \mid \mathbf{M}^{-1}\mathbf{W}^T(\mathbf{x}-\mathbf{\mu}), \sigma^{-2}\mathbf{M})
+$$
+
+where:
+$$\mathbf{M} = \mathbf{W}^T\mathbf{W} + \sigma^2\mathbf{I}$$
+
+To sum up, the PPCA model could be defined by following distributions:
+- laten variable distribution $p(\mathbf{z}) $
+- distribution of the observed variable conditioned on the latent variable $p(\mathbf{x}|\mathbf{z})$
+- predictive distribution $p(\mathbf{x})$
+- posterior distribution $p(\mathbf{z}|\mathbf{x})$
+
+Note that all the distribution are multivariate Gaussian distributions.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 from sklearn.datasets import fetch_openml
+```
 
+```{code-cell} ipython3
 class PPCA():
     '''
     X - dataset
@@ -66,9 +132,32 @@ class PPCA():
         mean = np.linalg.multi_dot([M_matrix_inv, self.W_ML.T, (x - self.mean)])
         variance = self.sigma * M_matrix_inv                                    
         distribution = stats.multivariate_normal(mean, variance)
-        return distribution.rvs()
-                                       
+        return distribution.rvs()                                    
+```
 
+## Closed form solution
+The closed-form solution for PPCA is derived from the maximum likelihood estimation of the model parameters. The likelihood is represented by:
+$$
+p(\mathbf{X} \mid \mathbf{\mu}, \mathbf{W}, \sigma^2) 
+$$
+where $\mathbf{X}$ is the observed data matrix. 
+We need to find the values of $\mathbf{\mu}$, $\mathbf{W}$, and $\sigma^2$ that maximize the likelihood function.
+
+The solution for $\mathbf{\mu} = \mathbf{\bar{x}}$ where $\mathbf{\bar{x}}$ is the mean of the data.
+
+The solution for $\mathbf{W}$ is given by:
+$$
+\mathbf{W_{ML}} = \mathbf{U}_M (\mathbf{L}_M - \sigma^2\mathbf{I})^{1/2}
+$$
+where $\mathbf{U}_M$ is the matrix of the eigenvectors of the data covariance matrix, and $\mathbf{L}_M$ is the diagonal matrix of the corresponding eigenvalues. We assume the arangement of the eigenvectors in order of decreasing values of the corresponding eigenvalues.
+
+The solution for $\sigma^2$ is given by:
+$$
+\sigma^2 = \frac{1}{D-M} \sum_{i=M+1}^{D} \lambda_i
+
+where $D$ is the number of dimensions of the data, $M$ is the number of principal components, and $\lambda_i$ are the eigenvalues of the data covariance matrix.
+
+```{code-cell} ipython3
 # ## Closed-form solution (CF)
 
 class PPCA_CF(PPCA):
@@ -96,8 +185,11 @@ class PPCA_CF(PPCA):
         U_M = eig_vec[:, :self.M]
         L_M = np.diag(eig_val[:self.M])
         self.W_ML = np.dot(U_M, np.sqrt(L_M - self.sigma*np.eye(self.M)))
-                                        
+```
 
+## PPCA on MNIST dataset
+
+```{code-cell} ipython3
 # Fetch MNIST data
 mnist = fetch_openml('mnist_784', version=1, as_frame=False)
 

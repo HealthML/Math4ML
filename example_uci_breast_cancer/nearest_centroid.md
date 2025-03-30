@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Week 2 - Nearest centroid classifier
+# Nearest centroid classifier
 
 +++
 
@@ -25,7 +25,7 @@ We will use the **Wisconsin Diagnostic Breast Cancer (WDBC, 1993)** dataset from
 
 +++
 
-## Nearest Centroid Classifier
+### Nearest Centroid Classifier Algorithm
 
 In the following exercise, we will use the **Nearest Centroid Classifier**, which is a very simple algorithm.
 
@@ -55,7 +55,7 @@ Where:
 - $\|\mathbf{x} - \mathbf{c}_k\|$ is the distance between the observation and the centroid (usually Euclidean distance)
 
 ### Notes
-- The algorithm does not assign a probability of belonging to any class, only the class label based on the closest centroid.
+The algorithm does not assign a probability of belonging to any class, only the class label based on the closest centroid.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -68,7 +68,7 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 ```
 
-## Implementing the Nearest Centroid Classifier
+### Implementing the Nearest Centroid Classifier
 
 We will implement the **Nearest Centroid Classifier** with two methods: 
 
@@ -110,9 +110,7 @@ class NearestCentroidClassifier:
 
 ```
 
-+++ {"vscode": {"languageId": "bat"}}
-
-## Loading the dataset and splitting it into training and test sets
+### Loading the dataset and splitting it into training and test sets
 
 Let's load the dataset and split it into training and test sets. We will use 80% of the data for training and 20% for testing.
 
@@ -131,7 +129,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 
 ```
 
-## Training the classifier and evaluating its performance
+### Training the classifier and evaluating its performance
 
 We will train the classifier using the training set and then evaluate its performance on the test set.
 
@@ -152,7 +150,7 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 x_train.shape
 ```
 
-## Let's look at the data and centroid
+### Let's look at the data and centroid
 
 As the data has 17 features, it is not possible to visualize directly. To overcome this, we will project the data into a 2-dimensional space. We will use the **Principal Component Analysis (PCA)** algorithm for this dimensionality reduction.
 
@@ -199,8 +197,4 @@ plt.scatter(X_train_pca[y_train == 'B'][:, 0], X_train_pca[y_train == 'B'][:, 3]
 plt.scatter(centroid_pca[0][:, 0], centroid_pca[0][:, 3], c='blue', s=200, marker='*', label='Centroid Malignant', edgecolors='black')
 plt.scatter(centroid_pca[1][:, 0], centroid_pca[1][:, 3], c='red', s=200, marker='*', label='Centroid Benign', edgecolors='black')
 plt.legend()
-```
-
-```{code-cell} ipython3
-
 ```

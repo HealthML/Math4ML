@@ -37,7 +37,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 ```
 
-Belowe is the function to load the dataset: 
+Below is the function to load the dataset: 
 
 ```{code-cell} ipython3
 
@@ -98,8 +98,6 @@ ax1.legend(lines1 + lines2, labels1 + labels2)
 plt.title('Weather Data for the Year 2000')
 plt.show()
 ```
-
-## Task
 
 ## Task
 
@@ -195,10 +193,7 @@ In the next week, we will implement a linear regression model that can handle no
 
 ```{code-cell} ipython3
 
-
-
 df = load_weather_data(year = YEAR)
-
 
 np.random.seed(2)
 idx = np.random.permutation(df.shape[0])
@@ -240,8 +235,4 @@ def plot_regression(N_train = 10):
 N = 20
 fig, reg = plot_regression(N)
 plt.show()
-```
-
-```{code-cell} ipython3
-
 ```

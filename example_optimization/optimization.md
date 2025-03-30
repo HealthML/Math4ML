@@ -9,9 +9,38 @@ jupytext:
 
 +++ {"vscode": {"languageId": "plaintext"}}
 
-# Week 7 - Optimization
+# Optimization
+Machine learning often relies on the concept of learning, which is performed using optimization algorithms. One of the most popular optimization methods is Gradient Descent. Another approach, though less commonly used, is Newton's Method.  
 
-```{code-cell}
+
+## Gradient Descent  
+Gradient Descent is described by the equation:  
+
+$$
+\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla J(\mathbf{w})
+$$  
+
+It is a first-order method, meaning it only requires gradient information to update the weights.  
+
+## Newton's Method  
+Newton's Method, on the other hand, utilizes second-order information by incorporating the Hessian matrix.  
+
+- Second-order methods generally require fewer iterations to converge.  
+- However, they are more computationally expensive due to the need to compute the Hessian, which can be very large.  
+
+
+### Minimized function
+The function we aim to minimize is:  
+
+$$
+f(x_1, x_2) = 2\cosh(x_1) + \cosh(x_2) + \cosh(0.1x_1x_2)
+$$  
+
+For this function:  
+- The gradient consists of two elements.  
+- The Hessian is a $2 \times 2$ matrix, containing four elements.  
+
+```{code-cell} ipython3
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -83,15 +112,8 @@ def newtons_method():
 
 ```
 
-```{code-cell}
-
+```{code-cell} ipython3
 gradient_descent()
 newtons_method()
 plt.show(block=True)
-
-
-
-
-
-
 ```

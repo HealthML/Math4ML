@@ -55,6 +55,65 @@ Euclidean space is used to mathematically represent physical space, with notions
 Although it becomes hard to visualize for $n > 3$, these concepts generalize mathematically in obvious ways. 
 Even when you're working in more general settings than $\mathbb{R}^n$, it is often useful to visualize vector addition and scalar multiplication in terms of 2D vectors in the plane or 3D vectors in space.
 
+## Visualizing Vector Addition
+
+Below is a Python script using Matplotlib to visualize vector addition in 2D space. This script illustrates how vectors combine graphically.
+
+### Python script:
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define vectors
+vector_a = np.array([2, 3])
+vector_b = np.array([4, 1])
+
+# Vector addition
+vector_sum = vector_a + vector_b
+
+# Plotting vectors
+plt.figure(figsize=(6, 6))
+ax = plt.gca()
+
+# Plot vector a
+ax.quiver(0, 0, vector_a[0], vector_a[1], angles='xy', scale_units='xy', scale=1, color='blue', label='$\\mathbf{a}$')
+ax.text(vector_a[0]/2, vector_a[1]/2, '$\\mathbf{a}$', color='blue', fontsize=14)
+
+# Plot vector b starting from the tip of vector a
+ax.quiver(vector_a[0], vector_a[1], vector_b[0], vector_b[1], angles='xy', scale_units='xy', scale=1, color='green', label='$\\mathbf{b}$')
+ax.text(vector_a[0] + vector_b[0]/2, vector_a[1] + vector_b[1]/2, '$\\mathbf{b}$', color='green', fontsize=14)
+
+# Plot resultant vector
+ax.quiver(0, 0, vector_sum[0], vector_sum[1], angles='xy', scale_units='xy', scale=1, color='red', label='$\\mathbf{a} + \\mathbf{b}$')
+ax.text(vector_sum[0]/2, vector_sum[1]/2, '$\\mathbf{a}+\\mathbf{b}$', color='red', fontsize=14)
+
+# Set limits and grid
+ax.set_xlim(0, 7)
+ax.set_ylim(0, 5)
+plt.grid()
+
+# Axes labels and title
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('Visualization of Vector Addition')
+
+# Aspect ratio
+plt.gca().set_aspect('equal', adjustable='box')
+
+plt.legend()
+plt.show()
+```
+
+### Explanation:
+
+- **Blue arrow** represents vector $\mathbf{a}$.
+- **Green arrow** represents vector $\mathbf{b}$ placed at the tip of vector $\mathbf{a}$.
+- **Red arrow** shows the resulting vector $\mathbf{a} + \mathbf{b}$.
+
+This visualization intuitively demonstrates how vectors combine to produce a resultant vector in Euclidean space.
+
+
+
 
 Here's how you can neatly integrate the proof that polynomials form a vector space, and then connect that intuitively to an ML example using polynomial features:
 

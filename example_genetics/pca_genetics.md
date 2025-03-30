@@ -11,6 +11,8 @@ kernelspec:
   name: python3
 ---
 
+# Principal Components Analysis of Genetic Data
+
 ```{code-cell} ipython3
 :tags: [hide-input]
 
@@ -19,6 +21,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pysnptools.snpreader import Bed
 ```
+
+We will be looking at Principal Component Analysis (PCA) algorithm. The algorith is a technique used for applications like dimensionality reduction, lossy data compression, feature extraction and data visualization. 
+
+The PCA performs the orthogonal projection of the data onto a lower dimensional linear space. The goal is to find the directions (principal components) in which the variance of the data is maximized.
+An alternative definition of PCA is based on minimizing the sum-of-sqares of the projection errors.
 
 ## Implementation
 
@@ -193,5 +200,4 @@ plt.plot(pca.variance_explained().cumsum() / pca.variance_explained().sum())
 plt.xlabel("PC dimension")
 plt.ylabel("cumulative fraction of variance explained")
 plt.show()
-
 ```

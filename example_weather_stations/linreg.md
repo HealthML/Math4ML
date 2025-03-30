@@ -13,11 +13,11 @@ kernelspec:
 
 +++ {"vscode": {"languageId": "plaintext"}}
 
-# Week 3 - Linear regression
+# Linear regression
 
 +++
 
-In week 1, we introduced **univariate linear regression**. However, the problem was that the fitted model was linear, while the data was not.  
+We have already introduced **univariate linear regression**. However, the problem was that the fitted model was linear, while the data was not.  
 
 To increase the **expressiveness** of the model, we can apply **feature engineering**. For example, if we have a single feature $x_1$, we can create a feature vector:  
 
@@ -146,15 +146,11 @@ def load_data(year = None):
     
     df['days'] = (df.index - df.index.min()).days
     return df
-
 ```
 
 By selecting the degree of the polynomial, you can increase the expressiveness of the model. This also controls how prone the model is to overfitting. A higher-degree polynomial makes the model more flexible but also more likely to overfit the data.  
 
 To evaluate this, we compare the performance on the training set and the test set.  
-
-
-
 
 ```{code-cell} ipython3
 
@@ -288,10 +284,6 @@ def get_gradient_finite_differences(X,y,w,p,e):
         w_diff[i] += e/2
         grad[i] = (get_loss(X,y,w+w_diff,p) - get_loss(X,y,w-w_diff,p)) / e
     return grad
-
-
-    
-
 ```
 
 Compare the analytical gradient with the numerical gradient
@@ -306,13 +298,12 @@ w_check = np.array([[1.7,1]]).T
 grad_analytical = get_gradient(X,y,w_check,p)
 grad_numerical = get_gradient_finite_differences(X,y,w_check,p,0.001)
 print(np.isclose(grad_analytical, grad_numerical))
-
 ```
 
 Let's create the dataset and train the model. Model training will be performed using the gradient descent algorithm, which iteratively updates the model's parameters using the following formula:
 
-```math
-\theta := \theta - \alpha \nabla J(\theta)
+$$\theta := \theta - \alpha \nabla J(\theta)$$
+
 
 ```{code-cell} ipython3
 
@@ -352,9 +343,5 @@ plt.show()
 
 
 
-
-```
-
-```{code-cell} ipython3
 
 ```
