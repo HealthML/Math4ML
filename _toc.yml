@@ -1,21 +1,18 @@
 # Table of contents
 # Learn more at https://jupyterbook.org/customize/toc.html
 
-# proposal for new chapters:
-# vectors and spaces
-# mulrivariable calculus: gradients and hessians
-# probability and statistics
-# optimization
-# Eigenvalues and eigenvectors
-# Singular value decomposition
-# Advanced topics
-
 format: jb-book
 root: index
+options:
+  numbered: True
 chapters:
   - file: chapter_preface/intro
     sections:
     - file: chapter_preface/notation
+    - file: chapter_preface/classification
+    - file: chapter_preface/regression
+    - file: chapter_preface/clustering
+    - file: chapter_preface/representation_learning
   - file: chapter_spaces/overview_spaces # chapter_linear_algebra/linear_algebra
     sections:
     - file: example_uci_breast_cancer/motivation_vectors
