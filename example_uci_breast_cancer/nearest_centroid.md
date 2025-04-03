@@ -17,7 +17,7 @@ kernelspec:
 
 ## Classification Problem
 
-This week, we will focus on a **classification problem**. As mentioned earlier, classification is a task where the model predicts the class label $y$ for a given feature vector $x$. 
+This week, we will focus on a **classification problem**. As mentioned earlier, classification is a task where the model predicts the class label $y$ for a given feature vector $\mathbf{x}$. 
 
 The task will be to predict whether a given patient has breast cancer or not.
 

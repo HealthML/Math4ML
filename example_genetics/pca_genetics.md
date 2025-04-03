@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
++++ {"slideshow": {"slide_type": "slide"}}
 
 # Principal Components Analysis of Genetic Data
 
@@ -24,8 +25,12 @@ from pysnptools.snpreader import Bed
 
 We will be looking at Principal Component Analysis (PCA) algorithm. The algorith is a technique used for applications like dimensionality reduction, lossy data compression, feature extraction and data visualization. 
 
++++ {"slideshow": {"slide_type": "subslide"}}
+
 The PCA performs the orthogonal projection of the data onto a lower dimensional linear space. The goal is to find the directions (principal components) in which the variance of the data is maximized.
 An alternative definition of PCA is based on minimizing the sum-of-sqares of the projection errors.
+
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Implementation
 
@@ -49,6 +54,10 @@ def empirical_covariance(X):
     covariance = X_centered.T @ X_centered / (N - 1)  # Compute the covariance matrix
     return mean, covariance
 ```
+
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 
 ```{code-cell} ipython3
 
@@ -116,6 +125,7 @@ class PCA:
         return self.pc_variances
 ```
 
++++ {"slideshow": {"slide_type": "slide"}}
 
 In the example below, we will use the PCA algorithm to reduce the dimensionality of a genetic dataset.  
 After reducing the dimensionality, we will plot the results and examine whether clusters of ancestries are visible.  
@@ -128,6 +138,10 @@ We consider five ancestries in the dataset:
 - **SAS** - South Asian  
 - **AMR** - Admixed American  
 
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+
 ```{code-cell} ipython3
 snpreader = Bed('./genetic_data/example2.bed', count_A1=True)
 data = snpreader.read()
@@ -139,6 +153,10 @@ labels = labels[labels.index.isin(list1)]  #filter labels DataFrame so it only c
 y = labels.SuperPopulation  # EUR, AFR, AMR, EAS, SAS
 X = data.val[:, ~np.isnan(data.val).any(axis=0)]  #load genetic data to X, removing NaN values
 ```
+
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 
 ```{code-cell} ipython3
 
@@ -156,6 +174,10 @@ for rank in range(5):    #more correct: X_pc.shape[1]+1
     X_reconstruction = pca_lowrank.reverse_transform(X_lowrank)
     print("L1 reconstruction error for rank %i PCA : %.4E " % (rank, np.absolute(X - X_reconstruction).sum()))
 ```
+
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 
 ```{code-cell} ipython3
 
@@ -201,3 +223,4 @@ plt.xlabel("PC dimension")
 plt.ylabel("cumulative fraction of variance explained")
 plt.show()
 ```
+

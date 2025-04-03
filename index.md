@@ -4,7 +4,9 @@ Machine learning (ML) and data science involve algorithms that automatically lea
 
 Our assumption is that the reader is already familiar with the basic concepts of multivariable calculus, linear algebra and probability theory (at the level of Mathematik 2 and Mathematik 3 in the ITSE Bachelor).
 
-This script is based on the Mathematics for Machine Learning scripts at UC Berkeley that can be found at [math4ml](https://github.com/gwthomas/math4ml).
+This work is based on Mathematics for Machine Learning ([math4ml](https://github.com/gwthomas/math4ml)) by Garrett Thomas, Department of Electrical Engineering and Computer Sciences, University of California, Berkeley, downloaded on February 23, 2025. The original note by Garrett Thomas, which includes the permissive phrase "You are free to distribute this document as you wish.", has been used as a frame that provides the mathematical topics. However, it has been significantly expanded to include more explanations, more detailed proofs, and applications from the machine learning domain. This expanded version, including additional explanations, proofs, and applications, is distributed under a Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+
 
 ## Why Mathematical Foundations?
 
@@ -21,4 +23,4 @@ Throughout the chapters, each mathematical topic is motivated by practical machi
 We invite you to explore the table of contents below to discover the mathematical foundations that will empower you to master machine learning and data science:
 
 ```{tableofcontents}
-```
+```d

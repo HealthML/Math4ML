@@ -56,9 +56,18 @@ Wisconsin Diagnostic Breast Cancer (WDBC, 1993) data from UCI Machine Learning r
 Let's load the data:
 ```{code-cell} ipython3
 :tags: [hide-input]
-X, y = util.load_data(columns=["concavity_mean", "texture_mean"])
-print (X.drop(['bias'], axis=1).shape)
-X.drop(['bias'], axis=1).head()
+
+from sklearn.model_selection import train_test_split
+  
+# fetch dataset from Kaggle
+import kagglehub
+path = kagglehub.dataset_download("uciml/breast-cancer-wisconsin-data/versions/2")
+df = pd.read_csv(path+"/data.csv")
+
+# data (as pandas dataframes) 
+X = df[["concavity_mean", "texture_mean"]]
+y = df["diagnosis"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
 ```
 
 We are given a number of features that describe the nuclei that have been determined from image processing techniques [Street et al, 1992].
@@ -69,8 +78,8 @@ Let's look at the data:
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-print (y.shape)
-print (y.unique())
+print (y_train.shape)
+print (y_train.unique())
 print ("Benign samples    'B': {:}".format((y=='B').sum()))
 print ("Malignant samples 'M': {:}".format((y=='M').sum()))
 ```
@@ -80,7 +89,7 @@ print ("Malignant samples 'M': {:}".format((y=='M').sum()))
 ```{code-cell} ipython3
 :tags: [hide-input]
 f, ax = plt.subplots(figsize=(7, 7))
-ax = util.scatter_plot_kde2(X,y)
+ax = util.scatter_plot_kde2(X_train,y_train)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
 # plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
@@ -111,8 +120,8 @@ Let's look at the data:
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-print (y.shape)
-print (y.unique())
+print (y_train.shape)
+print (y_train.unique())
 print ("Benign samples    'B': {:}".format((y=='B').sum()))
 print ("Malignant samples 'M': {:}".format((y=='M').sum()))
 ```
@@ -122,7 +131,7 @@ print ("Malignant samples 'M': {:}".format((y=='M').sum()))
 ```{code-cell} ipython3
 :tags: [hide-input]
 f, ax = plt.subplots(figsize=(7, 7))
-ax = util.scatter_plot_kde2(X,y)
+ax = util.scatter_plot_kde2(X_train,y_train)
 plt.ylim([8,39.9])
 plt.xlim([-0.01,0.45])
 # plt.savefig("./uci_breast_cancer/plots/scatter.png", dpi=600)
