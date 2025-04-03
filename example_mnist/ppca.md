@@ -137,23 +137,29 @@ class PPCA():
 
 ## Closed form solution
 The closed-form solution for PPCA is derived from the maximum likelihood estimation of the model parameters. The likelihood is represented by:
+
 $$
 p(\mathbf{X} \mid \mathbf{\mu}, \mathbf{W}, \sigma^2) 
 $$
+
 where $\mathbf{X}$ is the observed data matrix. 
 We need to find the values of $\mathbf{\mu}$, $\mathbf{W}$, and $\sigma^2$ that maximize the likelihood function.
 
 The solution for $\mathbf{\mu} = \mathbf{\bar{x}}$ where $\mathbf{\bar{x}}$ is the mean of the data.
 
 The solution for $\mathbf{W}$ is given by:
+
 $$
 \mathbf{W_{ML}} = \mathbf{U}_M (\mathbf{L}_M - \sigma^2\mathbf{I})^{1/2}
 $$
+
 where $\mathbf{U}_M$ is the matrix of the eigenvectors of the data covariance matrix, and $\mathbf{L}_M$ is the diagonal matrix of the corresponding eigenvalues. We assume the arangement of the eigenvectors in order of decreasing values of the corresponding eigenvalues.
 
 The solution for $\sigma^2$ is given by:
+
 $$
 \sigma^2 = \frac{1}{D-M} \sum_{i=M+1}^{D} \lambda_i
+$$
 
 where $D$ is the number of dimensions of the data, $M$ is the number of principal components, and $\lambda_i$ are the eigenvalues of the data covariance matrix.
 
@@ -188,6 +194,10 @@ class PPCA_CF(PPCA):
 ```
 
 ## PPCA on MNIST dataset
+
+We will implement PPCA on the MNIST dataset. First we train the model. Then we will sample from $p(\mathbf{x})$ and visualize the generated samples.
+
+Then we will use one image to sample from the posterior distribution $p(\mathbf{z}|\mathbf{x})$, then using the sampled latent variable $\mathbf{z}$ we generate and show images using conditional distribution $p(\mathbf{x}|\mathbf{z})$.
 
 ```{code-cell} ipython3
 # Fetch MNIST data

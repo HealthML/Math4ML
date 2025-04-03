@@ -115,8 +115,11 @@ class NearestCentroidClassifier:
 Let's load the dataset and split it into training and test sets. We will use 80% of the data for training and 20% for testing.
 
 ```{code-cell} ipython3
+# fetch dataset from Kaggle
+import kagglehub
+path = kagglehub.dataset_download("uciml/breast-cancer-wisconsin-data/versions/2")
+data = pd.read_csv(path+"/data.csv")
 
-data = pd.read_csv('./uci_breast_cancer/input/data_processed.csv')
 print(data.shape)
 # y includes our labels and x includes our features
 y = data.diagnosis      # M or B 

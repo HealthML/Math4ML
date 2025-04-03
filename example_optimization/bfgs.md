@@ -17,10 +17,63 @@ import sklearn.datasets
 from tqdm import tqdm
 ```
 
-We will implement the BFGS algorithm for unconstrained optimization. The algorithm is implemented in the `bfgs` function, which takes the following arguments.  
+## BFGS Quasi-Newton Method
 
-The BFGS algorithm approximates the Hessian matrix without needing to compute the second derivative of the function.  
-Additionally, it avoids matrix inversion, which is computationally expensive.  
+The BFGS algorithm iteratively approximates the inverse Hessian matrix $\mathbf{H}^{-1}$ to find the minimum of a function $J(\mathbf{w})$.
+
+### Update Rule
+The parameter update at each iteration is given by:
+
+$$
+\mathbf{w}_{k+1} = \mathbf{w}_k - \eta_k \mathbf{H}_k^{-1} \nabla J(\mathbf{w}_k)
+$$
+
+where:
+- $\eta_k$ is the step size determined by line search
+- $\mathbf{H}_k^{-1}$ is the approximate inverse Hessian
+- $\nabla J(\mathbf{w}_k)$ is the gradient at $\mathbf{w}_k$
+
+### Algorithm Steps
+
+1. **Initialize**:
+   - $\mathbf{H}_0^{-1}$ = exact inverse Hessian
+   - $\mathbf{g}_0 = \nabla J(\mathbf{w}_0)$
+   - Store initial $\mathbf{w}_0$ and $\mathbf{g}_0$
+
+2. **For each iteration $k \geq 1$**:
+
+   a. Compute differences:
+   $$
+   \begin{aligned}
+   \mathbf{y}_k &= \nabla J(\mathbf{w}_k) - \nabla J(\mathbf{w}_{k-1}) \\
+   \mathbf{s}_k &= \mathbf{w}_k - \mathbf{w}_{k-1}
+   \end{aligned}
+   $$
+
+   b. Update inverse Hessian approximation using BFGS formula:
+   $$
+   \mathbf{H}_k^{-1} = \left(\mathbf{I} - \frac{\mathbf{s}_k \mathbf{y}_k^\top}{\mathbf{y}_k^\top \mathbf{s}_k}\right) \mathbf{H}_{k-1}^{-1} \left(\mathbf{I} - \frac{\mathbf{y}_k \mathbf{s}_k^\top}{\mathbf{y}_k^\top \mathbf{s}_k}\right) + \frac{\mathbf{s}_k \mathbf{s}_k^\top}{\mathbf{y}_k^\top \mathbf{s}_k}
+   $$
+
+3. **Compute search direction**:
+   $$
+   \mathbf{d}_k = -\mathbf{H}_k^{-1} \nabla J(\mathbf{w}_k)
+   $$
+
+4. **Determine step size $\eta_k$** satisfying Wolfe conditions:
+   $$
+   J(\mathbf{w}_k + \eta_k \mathbf{d}_k) \leq J(\mathbf{w}_k) + c_1 \eta_k \nabla J(\mathbf{w}_k)^\top \mathbf{d}_k
+   $$
+   $$
+   \nabla J(\mathbf{w}_k + \eta_k \mathbf{d}_k)^\top \mathbf{d}_k \geq c_2 \nabla J(\mathbf{w}_k)^\top \mathbf{d}_k
+   $$
+   where $0 < c_1 < c_2 < 1$
+
+5. **Update parameters**:
+   $$
+   \mathbf{w}_{k+1} = \mathbf{w}_k + \eta_k \mathbf{d}_k
+   $$
+
 
 ```{code-cell} ipython3
 def sigmoid(a):
@@ -223,9 +276,6 @@ class LogisticRegression():
     def hessian_diag(self, X, y, pi):
         hessian_diag = np.sum((pi*(1-pi))*X**2, axis=0)/X.shape[0] + self.l2
         return hessian_diag
-
-    
-
 
 ```
 

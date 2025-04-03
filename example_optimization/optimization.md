@@ -9,26 +9,33 @@ jupytext:
 
 +++ {"vscode": {"languageId": "plaintext"}}
 
-# Optimization
 Machine learning often relies on the concept of learning, which is performed using optimization algorithms. One of the most popular optimization methods is Gradient Descent. Another approach, though less commonly used, is Newton's Method.  
 
 
-## Gradient Descent  
-Gradient Descent is described by the equation:  
+### Gradient Descent  
+Gradient Descent is described by the update rule:  
 
 $$
 \mathbf{w} \leftarrow \mathbf{w} - \eta \nabla J(\mathbf{w})
 $$  
 
-It is a first-order method, meaning it only requires gradient information to update the weights.  
-
-## Newton's Method  
-Newton's Method, on the other hand, utilizes second-order information by incorporating the Hessian matrix.  
-
-- Second-order methods generally require fewer iterations to converge.  
-- However, they are more computationally expensive due to the need to compute the Hessian, which can be very large.  
+It is a **first-order** optimization method, meaning it uses only gradient information. $\nabla J(\mathbf{w})$ is the gradient of the cost function $J(\mathbf{w})$ with respect to the weights $\mathbf{w}$, and $\eta$ is the learning rate.
 
 
+### Newton's Method  
+Newton's Method incorporates **second-order** information via the Hessian matrix. Its update rule is:  
+
+$$
+\mathbf{w} \leftarrow \mathbf{w} - \mathbf{H}^{-1}\nabla J(\mathbf{w})
+$$  
+
+where:  
+- $\mathbf{H}$ is the Hessian matrix of $J(\mathbf{w})$  
+
+**Key Properties:**  
+- Fewer iterations needed for convergence (vs. first-order methods)  
+- Computationally expensive (Hessian calculation and inversion)  
+- $\mathbf{H}^{-1}$ scales and rotates the gradient for better descent direction
 ### Minimized function
 The function we aim to minimize is:  
 
@@ -87,9 +94,8 @@ def gradient_descent():
             print(f'Gradient descent number of iterations: {i}')
             break
 
-    plt.figure()
     draw_function()
-    plt.plot(solutions[0,:], solutions[1,:])
+    plt.plot(solutions[0,:], solutions[1,:], label='Gradient descent')
     plt.scatter(solutions[0,:], solutions[1,:],s=4 )
     plt.title('Gradient descent')
 
@@ -105,11 +111,11 @@ def newtons_method():
         if np.abs(func_values[-1]-func_values[-2]) < EPS:
             print(f'Newtons methods number of iterations: {i}')
             break
-    plt.figure()
-    draw_function()
-    plt.plot(solutions[0,:], solutions[1,:])
-    plt.scatter(solutions[0,:], solutions[1,:])
-
+    
+    plt.plot(solutions[0,:], solutions[1,:], label='Newton\'s method')
+    plt.scatter(solutions[0,:], solutions[1,:], )
+    plt.legend()
+    plt.title('Newton\'s method')
 ```
 
 ```{code-cell} ipython3

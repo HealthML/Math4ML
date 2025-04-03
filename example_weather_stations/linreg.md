@@ -238,7 +238,6 @@ Unlike standard linear regression, which has a **closed-form solution**, p-norm 
 
 To verify whether the analytical gradient is correctly computed, we can use a gradient check. The idea is to compute the gradient analytically and then compare it to a numerically estimated gradient. This provides a simple way to debug the implementation:  
 
-
 $$
 \nabla L_p = = \frac{L_p(X, y, w + w_{\text{diff}}, p) - L_p(X, y, w - w_{\text{diff}}, p)}{\epsilon}
 $$ 

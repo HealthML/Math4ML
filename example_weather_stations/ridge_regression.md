@@ -157,7 +157,6 @@ def load_temperature_data(year = None):
 year = 1900
 df = load_temperature_data(year = year)
 
-
 np.random.seed(2)
 idx = np.random.permutation(df.shape[0])
 
@@ -203,16 +202,59 @@ fig, reg = plot_regression(N)
 plt.show()
 ```
 
-# Kernel ridge regression
-The Ridge regression can be expressed in terms of kernel functions. The kernelized version give the ability to use different kernels allowing to increase the expressivenes of the model.
-We will use the closed form solution to find the optimal weights. The use of kernel functions allows us to learn a non-linear function. In this notebook, we will also explore the implementation details and visualize the results.
+## Kernel Methods in Regression
 
+### What is a Kernel?
+A **kernel function** is a way of computing the similarity between two data points in a transformed feature space, without explicitly performing the transformation:
+$$
+k(\mathbf{x}, \mathbf{x'}) = \phi(\mathbf{x})^	top \phi(\mathbf{x'})
+$$
+where $\phi(\mathbf{x})$ is the feature mapping function.
+
+### Linear Model and its Kernel Form
+The prediction in a linear model takes the form:
+$$
+\mathbf{y} = \mathbf{w}^\top\phi(\mathbf{x})
+$$
+where $\mathbf{w}$ is the weight vector and $\phi(\mathbf{x})$ maps inputs to a higher-dimensional space.
+
+The **equivalent kernel representation** of this model is given by:
+$$
+\mathbf{y} = \mathbf{w}^\top \phi(\mathbf{x}) = \mathbf{k}(\mathbf{x})^\top(\mathbf{K} + \lambda \mathbf{I})^{-1}\mathbf{t}
+$$
+where:
+$$
+\mathbf{K}_{nm} = \phi(\mathbf{x}_n)^\top \phi(\mathbf{x}_m) = k(\mathbf{x}_n, \mathbf{x}_m)
+$$
+and $\mathbf{k}(\mathbf{x})$ is the vector with elements:
+$$
+k_n(\mathbf{x}) = k(\mathbf{x}_n, \mathbf{x})
+$$
+
+The vector \mathbf{t} is the target vector, and $\lambda$ is the regularization parameter.
+
+### Kernel Ridge Regression
+Unlike standard linear regression, kernel ridge regression does **not involve training** in the traditional sense. Instead, predictions are made based on the training data points.
+
+This formulation provides significant flexibility in modeling complex relationships in data, allowing us to capture non-linear patterns effectively. By simply substituting the kernel function $k(\mathbf{x}, \mathbf{x'})$, we can use the same closed-form solution while varying the expressiveness of the model.
+
+### Why Are Kernels Useful?
+One of the most powerful aspects of kernels is that they allow us to **implicitly operate in high-dimensional spaces** without explicitly computing feature transformations. This is particularly useful because:
+- **Computational Efficiency**: Instead of performing expensive explicit transformations via $\phi(\mathbf{x})$, we compute inner products directly using the kernel function, reducing complexity.
+- **Increased Expressiveness**: By choosing different kernel functions (e.g., polynomial, Gaussian, sigmoid), we can model increasingly complex relationships in data that a simple linear regression model cannot capture.
+- **Flexibility**: The same regression framework can be applied to different problems simply by swapping the kernel function, making it highly adaptable.
+
+In essence, kernels enable us to **extend linear regression to non-linear cases**, making it possible to learn from complex datasets while maintaining a closed-form mathematical solution.
+
+## Kernel ridge regression - Implementation
 
 We implement the following kernels:
 - Linear kernel
 - Polynomial kernel
 - Minkowski kernel
 - Squared exponential kernel
+
+We will test the implemented algorithm on weather dataset.
 
 ```{code-cell} ipython3
 import numpy as np
