@@ -21,7 +21,9 @@ This week, we will use **univariate linear regression** to make predictions. We 
 
 ## Dataset
 
-The dataset consists of weather data recorded in Potsdam over the years. It includes measurements such as:
+We look at a data set distributed bz the DAILY GLOBAL HISTORICAL CLIMATOLOGY NETWORK (GHCN-DAILY) [1].
+
+The dataset consists of daily weather data recorded in Potsdam Babelsberg from January 1st, 1893 up to January 30th, 2024 [2,3]. It includes measurements such as:
 
 - Maximum temperature
 - Minimum temperature
@@ -36,6 +38,22 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 ```
+
+[1] Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012:  An overview 
+of the Global Historical Climatology Network-Daily Database.  Journal of Atmospheric 
+and Oceanic Technology, 29, 897-910, doi:10.1175/JTECH-D-11-00103.1.
+
+[2] Menne, M.J., I. Durre, B. Korzeniewski, S. McNeal, K. Thomas, X. Yin, S. Anthony, R. Ray, 
+R.S. Vose, B.E.Gleason, and T.G. Houston, 2012: Global Historical Climatology Network - 
+Daily (GHCN-Daily), Version 3. [indicate subset used following decimal, 
+e.g. Version 3.12]. 
+NOAA National Climatic Data Center. http://doi.org/10.7289/V5D21VHZ [2024/01/31].
+
+[3] Klein Tank, A.M.G. and Coauthors, 2002. Daily dataset of 20th-century surface
+air temperature and precipitation series for the European Climate Assessment.
+Int. J. of Climatol., 22, 1441-1453.
+Data and metadata available at http://eca.knmi.nl
+
 
 Below is the function to load the dataset: 
 

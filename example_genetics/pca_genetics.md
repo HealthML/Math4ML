@@ -127,7 +127,12 @@ class PCA:
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
-In the example below, we will use the PCA algorithm to reduce the dimensionality of a genetic dataset.  
+In the example below, we will use the PCA algorithm to reduce the dimensionality of a genetic dataset from the 1000 genomes project [1,2].
+
+[1] Auton, A. et al. A global reference for human genetic variation. Nature 526, 68–74 (2015)
+
+[2] Altshuler, D. M. et al. Integrating common and rare genetic variation in diverse human populations. Nature 467, 52–58 (2010)
+
 After reducing the dimensionality, we will plot the results and examine whether clusters of ancestries are visible.  
 
 We consider five ancestries in the dataset:  
@@ -136,7 +141,7 @@ We consider five ancestries in the dataset:
 - **AFR** - African  
 - **EAS** - East Asian  
 - **SAS** - South Asian  
-- **AMR** - Admixed American  
+- **AMR** - Native American  
 
 
 +++ {"slideshow": {"slide_type": "subslide"}}
