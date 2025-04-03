@@ -23,4 +23,4 @@ Throughout the chapters, each mathematical topic is motivated by practical machi
 We invite you to explore the table of contents below to discover the mathematical foundations that will empower you to master machine learning and data science:
 
 ```{tableofcontents}
-```d
+```
