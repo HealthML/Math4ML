@@ -18,7 +18,7 @@ various manipulations.
 
 
 
-:::{prf:proposition}
+{prf:proposition} Eigenvalues and eigenvectors
 :label: eigenvalues_eigenvectors_properties
 Let $\mathbf{x}$ be an eigenvector of $\mathbf{A}$ with corresponding
 eigenvalue $\lambda$. Then
@@ -32,7 +32,7 @@ eigenvalue $\lambda$. Then
 (iii) $\mathbf{A}^k\mathbf{x} = \lambda^k\mathbf{x}$ for any
       $k \in \mathbb{Z}$ (where $\mathbf{A}^0 = \mathbf{I}$ by
       definition).
-:::
+
 
 
 :::{prf:proof}
@@ -183,14 +183,15 @@ We can further show that the Rayleigh quotient is bounded by the largest
 and smallest eigenvalues of $\mathbf{A}$. But first we will show a
 useful special case of the final result.
 
-:::{prf:proposition}
+{prf:proposition} Rayleigh quotient bounds
+:label: rayleigh_quotient_bounds
 For any $\mathbf{x}$ such that $\|\mathbf{x}\|_2 = 1$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
-:::
+
 
 :::{prf:proof}
 *Proof.* We show only the $\max$ case because the argument for the
@@ -242,14 +243,14 @@ a corollary (since
 $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = R_{\mathbf{A}}(\mathbf{x})$
 for unit $\mathbf{x}$)
 
-:::{prf:theorem} Min-max theorem
+{prf:theorem} Min-max theorem
 *Theorem.*  For all $\mathbf{x} \neq \mathbf{0}$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
-:::
+
 
 ## Positive (semi-)definite matrices
 

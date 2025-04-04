@@ -129,7 +129,6 @@ x = data.drop(list,axis = 1 )
 
 x["bias"] = np.ones(x.shape[0])
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
-
 ```
 
 ### Training the classifier and evaluating its performance

@@ -1,0 +1,81 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+options:
+  numbered: True
+chapters:
+# week 1
+  - file: chapter_preface/intro
+    sections:
+    - file: chapter_preface/notation
+    - file: chapter_preface/classification
+    - file: chapter_preface/regression
+    - file: chapter_preface/clustering
+    - file: chapter_preface/representation_learning
+  - file: chapter_spaces/overview_spaces # chapter_linear_algebra/linear_algebra
+    sections:
+    - file: chapter_spaces/vector_spaces
+    - file: example_uci_breast_cancer/linear_classification
+    - file: chapter_spaces/hyperplanes
+    - file: chapter_spaces/subspaces
+    - file: chapter_spaces/linear_maps
+    - file: chapter_spaces/metric_spaces
+    - file: chapter_spaces/normed_spaces
+    - file: example_uci_breast_cancer/nearest_centroid_norms
+# week 2
+#    - file: chapter_spaces/inner_product_spaces
+#    - file: chapter_spaces/transposition
+#  - file: chapter_calculus/overview_calculus
+#    sections:
+#    - file: chapter_calculus/gradients
+#    - file: chapter_calculus/hessians
+#    - file: chapter_calculus/chain_rule
+#  - file: chapter_taylor/overview_taylor
+#    sections:
+#    - file: chapter_taylor/mean_value_theorem
+#    - file: chapter_taylor/taylor_theorem
+#    - file: chapter_taylor/optima
+#  - file: chapter_convexity/overview_convexity
+#    sections:
+#    - file: chapter_convexity/convexity
+#  - file: chapter_optimization/overview_optimization
+#    sections:
+#    - file: chapter_optimization/optimization
+#    - file: chapter_optimization/optimization_second_order
+#    - file: chapter_optimization/bfgs
+#    - file: chapter_optimization/orthogonal_projection
+#  - file: chapter_probability/overview_probability
+#    sections:
+#    - file: chapter_probability/probability_basics
+#    - file: chapter_probability/random_variables
+#    - file: chapter_probability/expectation
+#    - file: chapter_probability/covariance
+#    - file: chapter_probability/joint_distributions
+#    - file: chapter_probability/estimation
+#    - file: chapter_probability/random_vectors
+#    - file: chapter_probability/gaussian
+#  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
+#    sections:
+#    - file: chapter_decompositions/eigenvectors
+#    - file: chapter_decompositions/trace_determinant
+#    - file: chapter_decompositions/orthogonal_matrices
+#    - file: chapter_decompositions/symmetric_matrices
+#    - file: chapter_decompositions/psd_matrices
+#    - file: chapter_decompositions/svd
+#    - file: chapter_decompositions/big_picture
+#    - file: chapter_decompositions/pseudoinverse
+#    - file: chapter_decompositions/low_rank_approximation
+#    - file: chapter_decompositions/matrix_norms
+#############
+#  - file: example_weather_stations/univariate_linreg 
+#  - file: example_weather_stations/linreg 
+#  - file: example_weather_stations/ridge_regression
+#  - file: example_bayesian_linreg/bayesian_linreg
+#  - file: example_uci_breast_cancer/nearest_centroid 
+#  - file: example_genetics/pca_genetics 
+#  - file: example_mnist/ppca 
+#  - file: example_optimization/optimization
+#  - file: example_optimization/optimization_second_order 
+#  - file: example_optimization/bfgs 

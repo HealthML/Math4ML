@@ -39,7 +39,7 @@ Taylor's theorem is a powerful tool in mathematics that allows us to approximate
 # Taylor's theorem
 Taylor's theorem has natural generalizations to functions of more than one variable.
 
-:::{prf:theorem} Taylor's theorem
+{prf:theorem} Taylor's theorem
 Suppose $f : \mathbb{R}^d \to \mathbb{R}$ is continuously differentiable, and let $\mathbf{h} \in \mathbb{R}^d$.
 
 Then there exists $t \in (0,1)$ such that
@@ -53,7 +53,7 @@ $$\nabla f(\mathbf{x} + \mathbf{h}) = \nabla f(\mathbf{x}) + \int_0^1 \nabla^2 f
 and there exists $t \in (0,1)$ such that
 
 $$f(\mathbf{x} + \mathbf{h}) = f(\mathbf{x}) + \nabla f(\mathbf{x})^\top\mathbf{h} + \frac{1}{2}\mathbf{h}^\top\nabla^2f(\mathbf{x}+t\mathbf{h})\mathbf{h}$$
-:::
+{end theorem}
 
 This theorem is used in proofs about conditions for local minima of unconstrained optimization problems.
 It is also used in proofs about the convergence of gradient descent algorithms.

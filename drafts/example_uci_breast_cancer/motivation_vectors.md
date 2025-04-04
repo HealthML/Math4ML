@@ -28,10 +28,11 @@ sns.set_context("talk")
 sns.set(font_scale=1.5)          # bigger fonts in images
 
 import matplotlib.pyplot as plt  # basic plotting
-
+import sys
+sys.path.append("../datasets/uci_breast_cancer")   # add dataset directory to path
 # some not so standard imports:
 # import importlib                 # enable reloading of libraries
-import plotting_util as util     # useful plotting tools for teaching (see plotting_utils.py)
+import plotting_util as util     # useful plotting tools for teaching (see ../datasets/uci_breast_cancer/plotting_utils.py)
 # importlib.reload(util)
 # import time                      # timing (for example to benchmark an algorithm)
 ```
@@ -98,22 +99,6 @@ plt.xlim([-0.01,0.45])
 
 Given the information encoded in these **feature vectors**, we would like to diagnose wether the biopsies are malignant or benign, i.e., to **classify** the samples. 
 
-+++
-
-### Binary Classificaiton
-
-+++
-
-**Classification** refers to the task of predicting a **class label** $y$, *i.e.*, the diagnosis, from a **feature vector** $\bf{x}$.
-For the case, where $y$ can take one of two values, we speak of binary classification.
-
-In machine learning, we assume that we are given pairs of $(\mathbf{x}, y)$, the so-called **training data**, we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
-
-For the task at hand, this means that we use the image features to determine wether a patient likely has a benign or malignant diagnosis.
-Then given a new image for which we don't know the diagnosis, we can predict the diagnosis based on what we have learned from from the training data.
-We call a new image the **test data**.
-
-+++
 
 The shape of the nuclei has been determined and coded in a number of features.
 Let's look at the data:
