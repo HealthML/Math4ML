@@ -24,11 +24,12 @@ parts:
         sections:
         - file: chapter_spaces/vector_spaces
         - file: chapter_spaces/polynomial_vector_space
-        - file: chapter_spaces/hyperplanes
-        - file: chapter_spaces/subspaces
-        - file: chapter_spaces/linear_maps
-        - file: chapter_spaces/metric_spaces
-        - file: chapter_spaces/normed_spaces
+#        - file: chapter_spaces/multinomial_polynomial_vector_space
+#        - file: chapter_spaces/hyperplanes
+#        - file: chapter_spaces/subspaces
+#        - file: chapter_spaces/linear_maps
+#        - file: chapter_spaces/metric_spaces
+#        - file: chapter_spaces/normed_spaces
 #    - file: example_uci_breast_cancer/nearest_centroid_norms
 # end of week 1
 # week 2
