@@ -4,25 +4,31 @@
 format: jb-book
 root: index
 options:
-  numbered: True
-chapters:
-# week 1
-  - file: chapter_ml_basics/intro
+  numbered: true
 
-    sections:
-    - file: chapter_ml_basics/classification
-    - file: chapter_ml_basics/regression
-    - file: chapter_ml_basics/clustering
-    - file: chapter_ml_basics/representation_learning
-  - file: chapter_spaces/overview_spaces # chapter_linear_algebra/linear_algebra
-    sections:
-    - file: chapter_spaces/vector_spaces
-#    - file: example_uci_breast_cancer/linear_classification
-    - file: chapter_spaces/hyperplanes
-    - file: chapter_spaces/subspaces
-    - file: chapter_spaces/linear_maps
-    - file: chapter_spaces/metric_spaces
-    - file: chapter_spaces/normed_spaces
+parts:
+  - caption: Mathematics for Machine Learning
+    options:
+      numbered: true
+    chapters:
+    # week 1
+      - file: chapter_ml_basics/intro
+
+        sections:
+        - file: chapter_ml_basics/classification
+        - file: chapter_ml_basics/regression
+        - file: chapter_ml_basics/clustering
+        - file: chapter_ml_basics/representation_learning
+      
+      - file: chapter_spaces/overview_spaces
+        sections:
+        - file: chapter_spaces/vector_spaces
+        - file: chapter_spaces/polynomial_vector_space
+        - file: chapter_spaces/hyperplanes
+        - file: chapter_spaces/subspaces
+        - file: chapter_spaces/linear_maps
+        - file: chapter_spaces/metric_spaces
+        - file: chapter_spaces/normed_spaces
 #    - file: example_uci_breast_cancer/nearest_centroid_norms
 # end of week 1
 # week 2
@@ -80,3 +86,13 @@ chapters:
 #  - file: example_optimization/optimization
 #  - file: example_optimization/optimization_second_order 
 #  - file: example_optimization/bfgs 
+# Appendix
+  - caption: Appendix
+    options:
+      numbered: true
+    chapters:
+      - file: appendix/proofs
+        title: Detailed Proofs
+        sections:
+          - file: appendix/proof_vector_spaces
+            title: Vector Spaces

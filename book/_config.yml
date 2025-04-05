@@ -16,9 +16,9 @@ latex:
   latex_documents:
     targetname: book.tex
 
-# sphinx:
-#   extra_extensions:
-#     - sphinx_proof
+sphinx:
+  extra_extensions:
+    - sphinx_proof
 parse:
   myst_enable_extensions:
     - colon_fence  # For :label: syntax

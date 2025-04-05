@@ -1,4 +1,4 @@
-# Mathematics for Machine Learning
+# Preface
 
 Machine learning (ML) and data science involve algorithms that automatically learn patterns and relationships directly from data. At their core, many ML methods rely heavily on fundamental mathematical concepts—especially linear algebra, calculus, probability, and optimization—to understand, analyze, and make predictions from data.
 

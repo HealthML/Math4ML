@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-## Vector spaces
+# Vector spaces
 
 **Vector spaces** are the basic setting in which linear algebra happens.
 A vector space $V$ is a set (the elements of which are called
@@ -45,7 +45,7 @@ $V$ must satisfy
      for all $\mathbf{x}, \mathbf{y} \in V$ and
      $\alpha, \beta \in \mathbb{R}$
 
-### Euclidean space
+## Euclidean space
 
 The quintessential vector space is **Euclidean space**, which we denote
 $\mathbb{R}^n$. The vectors in this space consist of $n$-tuples of real
@@ -67,8 +67,6 @@ $$\mathbf{x} + \mathbf{y} = \begin{bmatrix}x_1 + y_1 \\ \vdots \\ x_n + y_n\end{
 Euclidean space is used to mathematically represent physical space, with notions such as distance, length, and angles.
 Although it becomes hard to visualize for $n > 3$, these concepts generalize mathematically in obvious ways. 
 Even when you're working in more general settings than $\mathbb{R}^n$, it is often useful to visualize vector addition and scalar multiplication in terms of 2D vectors in the plane or 3D vectors in space.
-
-## Visualizing Vector Addition
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -108,7 +106,7 @@ plt.grid()
 # Axes labels and title
 plt.xlabel('x-axis')
 plt.ylabel('y-axis')
-plt.title('Visualization of Vector Addition')
+plt.title('Vector Addition')
 
 # Aspect ratio
 plt.gca().set_aspect('equal', adjustable='box')
@@ -116,103 +114,148 @@ plt.gca().set_aspect('equal', adjustable='box')
 plt.legend(loc='lower right')
 plt.show()
 ```
+This visualization intuitively demonstrates how vectors combine to produce a resultant vector in Euclidean space by vector addition. The blue arrow represents vector $\mathbf{a}$, the green arrow represents vector $\mathbf{b}$ placed at the tip of vector $\mathbf{a}$, and the red arrow shows the resulting vector $\mathbf{a} + \mathbf{b}$.
 
-### Explanation:
+```{code-cell} ipython3
+:tags: [hide-input]
+import matplotlib.pyplot as plt
+import numpy as np
 
-- **Blue arrow** represents vector $\mathbf{a}$.
-- **Green arrow** represents vector $\mathbf{b}$ placed at the tip of vector $\mathbf{a}$.
-- **Red arrow** shows the resulting vector $\mathbf{a} + \mathbf{b}$.
+# Define original vector
+vector_a = np.array([1.5, 2])
 
-This visualization intuitively demonstrates how vectors combine to produce a resultant vector in Euclidean space.
+# Scalars to multiply with
+scalars = [-1, 1.3]
 
+# Colors for different scalars
+colors = ['purple', 'green']
+labels = [r'$-1 \cdot \mathbf{a}$', r'$1.3 \cdot \mathbf{a}$']
 
+# Plotting
+plt.figure(figsize=(6, 6))
+ax = plt.gca()
 
+# Plot original vector
+ax.quiver(0, 0, vector_a[0], vector_a[1], angles='xy', scale_units='xy', scale=1, color='blue', label=r'$\mathbf{a}$')
+ax.text(vector_a[0]/2, vector_a[1]/2, r'$\mathbf{a}$', color='blue', fontsize=14)
 
-Here's how you can neatly integrate the proof that polynomials form a vector space, and then connect that intuitively to an ML example using polynomial features:
+# Plot scaled vectors
+for i, scalar in enumerate(scalars):
+    scaled_vector = scalar * vector_a
+    ax.quiver(0, 0, scaled_vector[0], scaled_vector[1], angles='xy', scale_units='xy', scale=1, color=colors[i], label=labels[i], alpha=0.5)
+    ax.text(scaled_vector[0]/2, scaled_vector[1]/2, labels[i], color=colors[i], fontsize=14)
 
-## Example: Polynomials as a Vector Space
+# Set limits and grid
+ax.set_xlim(-3, 3)
+ax.set_ylim(-3, 3)
+plt.grid()
 
-Consider the set $P_n$ of all real-valued polynomials with degree at most $n$:
+# Axes labels and title
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('Scalar Multiplication of a Vector')
 
+# Aspect ratio
+ax.set_aspect('equal', adjustable='box')
 
-$$P_n = \{ a_0 + a_1x + a_2x^2 + \dots + a_nx^n \mid a_i \in \mathbb{R} \}.$$
+plt.legend(loc='upper left')
+plt.show()
+```
+This script shows the original vector $\mathbf{a}$ (in blue), and three scaled versions using scalars -1 and 0.5, and 2. The scaled vectors demonstrate inversion, shrinking, and stretching, respectively.
 
-We show that $P_n$ is a vector space by verifying the vector space axioms:
+## $k$-means clustering in Euclidean space
 
-### Proof:
+Now, we have explored the basic properties of Euclidean space, we can apply these concepts to machine learning tasks.
+We will discuss the $k$-means clustering algorithm in Euclidean space, which is a popular unsupervised learning method used to partition data into distinct groups based on their feature vectors. It only uses the operations of vector addition and scalar multiplication, which are the basic operations of a vector space.
 
-Let $p(x), q(x), r(x) \in P_n$ be arbitrary polynomials:
+The algorithm works as follows:
 
-- **Closure under addition:**  
-  The sum $p(x) + q(x)$ is:
-  
-$$(p+q)(x) = (a_0 + b_0) + (a_1 + b_1)x + \dots + (a_n + b_n)x^n.$$
+1. **Initialization**: Randomly select $k$ initial cluster centroids from the dataset.
 
-  Clearly, this is also a polynomial of degree at most $n$, so $p(x) + q(x) \in P_n$.
+2. Iterate over the following steps until convergence:
+  - **Assignment Step**: For each data point, assign it to the nearest cluster centroid based on the Euclidean distance.
 
-- **Closure under scalar multiplication:**  
-  For any scalar $\alpha \in \mathbb{R}$, the scalar multiplication $\alpha p(x)$ is:
-  
-$$(\alpha p)(x) = \alpha a_0 + \alpha a_1 x + \dots + \alpha a_n x^n,$$
+$$
+\text{argmin}_k \|\mathbf{x} - \mathbf{c}_k\|^2
+$$
 
-  which remains in $P_n$.
+  where $\mathbf{c}_k$ is the centroid of cluster $k$ and $\mathbf{x}$ is the data point.
 
-- **Existence of additive identity:**  
-  The zero polynomial $0(x) = 0 + 0x + \dots + 0x^n$ serves as the additive identity:
-  
-$$p(x) + 0(x) = p(x).$$
+  - **Update Step**: Recalculate the centroid vectors of the clusters by taking the mean of all data vectors assigned to each cluster. This uses the vector addition and scalar multiplication operations:
 
-- **Existence of additive inverse:**  
-  For every polynomial $p(x) = a_0 + a_1 x + \dots + a_n x^n$, there exists $-p(x)$:
-  
-$$-p(x) = -a_0 - a_1 x - \dots - a_n x^n,$$
-  
-  such that $p(x) + (-p(x)) = 0(x)$.
+$$
+\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k} \mathbf{x}_i
+$$
 
-- **Commutativity and associativity:**  
-  Addition of polynomials and scalar multiplication clearly satisfy commutativity and associativity due to the commutativity and associativity of real numbers.
+  where $N_k$ is the number of points assigned to cluster $k$ and $y_i$ is the label of the data point $\mathbf{x}_i$.
 
-- **Distributivity:**  
-  Scalar multiplication distributes over polynomial addition, and addition of scalars distributes over scalar multiplication, directly inherited from real numbers.
+We will implement a python class for the $k$-means algorithm, which will include methods for fitting the model to the data and predicting cluster assignments for new data points.
 
-Thus, all vector space axioms are satisfied, and $P_n$ is indeed a vector space.
+```{code-cell} ipython3
+import numpy as np
 
-## Polynomial Features in Machine Learning
+class KMeans:
+    def __init__(self, n_clusters=3):
+        self.n_clusters = n_clusters
 
-Using polynomial vector spaces, we can enhance simple machine learning algorithms by explicitly representing complex, nonlinear relationships.
+    def fit(self, X, num_iterations=10):
+        # Randomly initialize cluster centers
+        self.centers = X[np.random.choice(X.shape[0], self.n_clusters, replace=False)]
+        self.labels = np.zeros(X.shape[0])
 
-### Example: Polynomial Features in Linear Regression and Nearest Centroid Classifier
+        for _ in range(num_iterations):  # Iterate a fixed number of times
+          old_labels = self.labels.copy()
 
-Consider a simple ML task—fitting or classifying data that's clearly nonlinear:
+          # Assign clusters based on closest center
+          distances = np.linalg.norm(X[:, np.newaxis] - self.centers, axis=2)
+          self.labels = np.argmin(distances, axis=1)
 
-- **Original Data**: $\mathbf{x} \in \mathbb{R}$, one-dimensional feature.
-- **Polynomial Feature Map**: Transform the input into a polynomial vector space, e.g.:
-  
-$$\phi(x) = [1, x, x^2, \dots, x^n]^\top.$$
+          # Update cluster centers
+          for i in range(self.n_clusters):
+              self.centers[i] = X[self.labels == i].mean(axis=0)
+          
+          # Check for convergence (optional)
+          if np.all(self.labels == old_labels):
+              break
 
-#### Linear Regression with Polynomial Features:
-Instead of fitting a line $y = w_0 + w_1 x$, we fit:
+    def predict(self, X):
+        distances = np.linalg.norm(X[:, np.newaxis] - self.centers, axis=2)
+        return np.argmin(distances, axis=1)
+```
 
-$$y = w_0 + w_1 x + w_2 x^2 + \dots + w_n x^n = \mathbf{w}^\top \phi(x)$$
+Now we can generate a dataset of random vectors in $\mathbb{R}^2$ and apply the $k$-means algorithm to it to find the optimal cluster centers $\mathbf{c}_k$ and the cluster assignments for all data vectors.
 
-This can model more complex curves while still being linear in the parameters $\mathbf{w}$.
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
 
-#### Nearest Centroid Classifier with Polynomial Features:
-Instead of measuring Euclidean distance in the original feature space, we measure it in the polynomial feature space:
+np.random.seed(0) 
+n=50 # samples per c1uster
+centers= [ [3,4], [8,3], [2,10], [9,9], ]
+dataset=np.zeros((0,3))
+sigmas = [ 0.5, 1, 1.5, 2 ]
 
-- Centroids become averages of polynomial features:
+# Generate clusters
+for i in range(len(centers)):
+    correlation=(np.random.rand()-0.5)*2
+    center=centers[i]
+    sigma=sigmas[i]
+    cluster=np.random.multivariate_normal(center, [[sigma, correlation],[correlation, sigma]], n)
+    label=np.zeros((n,1))+i
+    cluster=np.hstack([cluster,label])
+    dataset=np.vstack([dataset,cluster])
 
-$$\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k} \phi(x_i).$$
+# Create a KMeans instance and fit it to the dataset
+kmeans = KMeans(n_clusters=4)
+kmeans.fit(dataset[:,:2], num_iterations=10)
+cluster_assignments = kmeans.predict(dataset[:,:2])
 
-- Classification uses distances in this polynomial space:
+# plot the cluster centers and the clustering of the dataset
+plt.figure(figsize=(10,10))
+ax = plt.scatter(kmeans.centers[:,0], kmeans.centers[:,1], c='red', s=200, alpha=0.5)
+ax = plt.scatter(dataset[:,0], dataset[:,1], c=cluster_assignments, s=100, alpha=0.5)
+ax = plt.title("$k$-means clustering of a dataset and cluster centers")
+```
+In the plot, the red dots represent the cluster centers $\mathbf{c}_k$ found by the $k$-means algorithm, while the colored points represent the data vectors $\mathbf{x}_n$ assigned to each cluster. The colors indicate which cluster each point belongs to.
 
-$$\hat{y} = \arg\min_k \|\phi(x)-\mathbf{c}_k\|.$$
-
-This simple feature mapping enables the classifier to separate nonlinear boundaries (circles, ellipses, curves) easily and effectively.
-
-
-### Insights for Students:
-
-- Recognizing polynomials as vector spaces gives a clear mathematical justification for methods using polynomial features.
-- Polynomial vector spaces allow linear methods to handle nonlinear patterns by embedding data into higher-dimensional spaces.
-- Even simple classifiers or regressors gain expressive power through such explicit polynomial feature expansions.

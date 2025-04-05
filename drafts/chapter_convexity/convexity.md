@@ -8,12 +8,13 @@ In this section, we present basic results regarding convexity, strict
 convexity, and strong convexity.
 
 ### Convex sets
- ::: center
+
+::: center
 ![image](../figures/convex-set.png)
 A convex set
 :::
 
- ::: center
+::: center
 ![image](../figures/nonconvex-set.png)
 A non-convex set
 :::
