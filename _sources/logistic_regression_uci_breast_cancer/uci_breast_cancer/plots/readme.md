@@ -1,1 +1,0 @@
-this is where the plots for the Breast Cancer Classification using Logistic Regression demo go.
