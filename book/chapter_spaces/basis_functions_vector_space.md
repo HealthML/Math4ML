@@ -163,8 +163,8 @@ for ax, y_vals, title in zip(axes, functions, titles):
     ax.plot(x, y_vals, color='royalblue')
     ax.set_title(title)
     ax.grid(True)
-    ax.set_xlabel("$x$")
-    ax.set_ylabel("$\phi(x)$")
+    ax.set_xlabel(r"$x$")
+    ax.set_ylabel(r"$\phi(x)$")
 
 plt.tight_layout()
 plt.show()
