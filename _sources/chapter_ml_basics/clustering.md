@@ -79,7 +79,7 @@ class KMeans:
 
 kmeans = KMeans(n_clusters=4)
 kmeans.fit(dataset[:,:2], num_iterations=0)
-plt.figure(figsize=(10,10))
+plt.figure(figsize=(5,5))
 ax = plt.scatter(kmeans.centers[:,0], kmeans.centers[:,1], c='red', s=200, alpha=0.5)
 ax = plt.scatter(dataset[:,0], dataset[:,1], c=dataset[:,2], s=100, alpha=0.5)
 ax = plt.title("Generated Dataset with Random Cluster Centers")
@@ -95,7 +95,7 @@ It does this by iteratively assigning points to the nearest cluster center and u
 
 for i in range(6):
     kmeans.iterate(dataset[:,:2])
-    plt.figure(figsize=(10,10))
+    plt.figure(figsize=(5,5))
     ax = plt.scatter(kmeans.centers[:,0], kmeans.centers[:,1], c='red', s=200, alpha=0.5)
     ax = plt.scatter(dataset[:,0], dataset[:,1], c=kmeans.predict(dataset[:,:2]), s=100, alpha=0.5)
     ax = plt.title("KMeans Clustering after {} iterations".format(i+1))

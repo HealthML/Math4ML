@@ -229,13 +229,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Vector spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Vector Space of Polynomials</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/proof_vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
 </ul>
 </details></li>
 </ul>
@@ -451,7 +445,15 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-space">Euclidean space</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering-in-euclidean-space"><span class="math notranslate nohighlight">\(k\)</span>-means clustering in Euclidean space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering-in-euclidean-space"><span class="math notranslate nohighlight">\(k\)</span>-means Clustering in Euclidean space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nearest-centroid-classifier-in-euclidean-space">Nearest Centroid Classifier in Euclidean space</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-algorithm">Training the Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-nearest-centroid-classifier">Implementing the Nearest Centroid Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-cancer-diagnosis-as-a-binary-classification-problem">Breast Cancer Diagnosis as a Binary Classification Problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
             </nav>
         </div>
@@ -628,7 +630,7 @@ Even when you’re working in more general settings than <span class="math notra
 <p>This script shows the original vector <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> (in blue), and three scaled versions using scalars -1 and 0.5, and 2. The scaled vectors demonstrate inversion, shrinking, and stretching, respectively.</p>
 </section>
 <section id="k-means-clustering-in-euclidean-space">
-<h2><span class="math notranslate nohighlight">\(k\)</span>-means clustering in Euclidean space<a class="headerlink" href="#k-means-clustering-in-euclidean-space" title="Link to this heading">#</a></h2>
+<h2><span class="math notranslate nohighlight">\(k\)</span>-means Clustering in Euclidean space<a class="headerlink" href="#k-means-clustering-in-euclidean-space" title="Link to this heading">#</a></h2>
 <p>Now, we have explored the basic properties of Euclidean space, we can apply these concepts to machine learning tasks.
 We will discuss the <span class="math notranslate nohighlight">\(k\)</span>-means clustering algorithm in Euclidean space, which is a popular unsupervised learning method used to partition data into distinct groups based on their feature vectors. It only uses the operations of vector addition and scalar multiplication, which are the basic operations of a vector space.</p>
 <p>The algorithm works as follows:</p>
@@ -653,37 +655,42 @@ We will discuss the <span class="math notranslate nohighlight">\(k\)</span>-mean
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(N_k\)</span> is the number of points assigned to cluster <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> is the label of the data point <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>.</p>
 <p>We will implement a python class for the <span class="math notranslate nohighlight">\(k\)</span>-means algorithm, which will include methods for fitting the model to the data and predicting cluster assignments for new data points.</p>
+<p>We will implement <strong><span class="math notranslate nohighlight">\(k\)</span>-means Clustering</strong> with two methods:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> – This method performs the clustering by the iterative procedure above.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> – This method returns cluster assignments for data points based on their proximity to the cluster centers.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">class</span> <span class="nc">KMeans</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
 
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="c1"># Randomly initialize cluster centers</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">centers</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="c1"># Randomly initialize cluster centers</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">centers</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+      <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>  <span class="c1"># Iterate a fixed number of times</span>
-          <span class="n">old_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>  <span class="c1"># Iterate a fixed number of times</span>
+        <span class="n">old_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-          <span class="c1"># Assign clusters based on closest center</span>
-          <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Assign clusters based on closest center</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-          <span class="c1"># Update cluster centers</span>
-          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
-              <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-          
-          <span class="c1"># Check for convergence (optional)</span>
-          <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">==</span> <span class="n">old_labels</span><span class="p">):</span>
-              <span class="k">break</span>
+        <span class="c1"># Update cluster centers</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Check for convergence (optional)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">labels</span> <span class="o">==</span> <span class="n">old_labels</span><span class="p">):</span>
+          <span class="k">break</span>
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+      <span class="c1"># Assign clusters based on closest center</span>
+      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -721,7 +728,7 @@ We will discuss the <span class="math notranslate nohighlight">\(k\)</span>-mean
 <span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="c1"># plot the cluster centers and the clustering of the dataset</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">cluster_assignments</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;$k$-means clustering of a dataset and cluster centers&quot;</span><span class="p">)</span>
@@ -730,10 +737,181 @@ We will discuss the <span class="math notranslate nohighlight">\(k\)</span>-mean
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/254b8c16a4343ab19392192f1a8d1a05b4f4619ad737bea88dd97f9be3ba661b.png" src="../_images/254b8c16a4343ab19392192f1a8d1a05b4f4619ad737bea88dd97f9be3ba661b.png" />
+<img alt="../_images/c97f0ab7e4ef24059f8a0ee7bef58e7cc0a50a22b0ccd62aba4145bac06ffd6e.png" src="../_images/c97f0ab7e4ef24059f8a0ee7bef58e7cc0a50a22b0ccd62aba4145bac06ffd6e.png" />
 </div>
 </div>
 <p>In the plot, the red dots represent the cluster centers <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> found by the <span class="math notranslate nohighlight">\(k\)</span>-means algorithm, while the colored points represent the data vectors <span class="math notranslate nohighlight">\(\mathbf{x}_n\)</span> assigned to each cluster. The colors indicate which cluster each point belongs to.</p>
+</section>
+<section id="nearest-centroid-classifier-in-euclidean-space">
+<h2>Nearest Centroid Classifier in Euclidean space<a class="headerlink" href="#nearest-centroid-classifier-in-euclidean-space" title="Link to this heading">#</a></h2>
+<p>As another example of a machine learning algorithm that uses only simple vector operations let’s look at the <strong>Nearest Centroid Classifier</strong>.
+As mentioned earlier, classification is a task where the model predicts the class label <span class="math notranslate nohighlight">\(y\)</span> for a given feature vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.
+This algorithm is a straightforward classification method that uses the concept of centroids to classify data points based on their proximity to the centroids of different classes.</p>
+<section id="training-the-algorithm">
+<h3>Training the Algorithm<a class="headerlink" href="#training-the-algorithm" title="Link to this heading">#</a></h3>
+<p>Training the algorithm involves calculating the centroid for each class. The centroid is the mean of the feature vectors for each class, and it can be calculated using the formula:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{c}_k = \frac{1}{N_k} \sum_{i=1}^{N_k} \mathbf{x}_i \quad \text{for class} \ k
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> is the centroid for class <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(N_k\)</span> is the number of samples in class <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> is the feature vector of the <span class="math notranslate nohighlight">\(i\)</span>-th sample in class <span class="math notranslate nohighlight">\(k\)</span></p></li>
+</ul>
+</section>
+<section id="prediction">
+<h3>Prediction<a class="headerlink" href="#prediction" title="Link to this heading">#</a></h3>
+<p>Prediction involves assigning the class to the observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> by measuring the distance between the observation and the centroids. The class is assigned to the centroid that is closest to the observation. The prediction is made using the formula:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y} = \arg\min_k \, \|\mathbf{x} - \mathbf{c}_k\|
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{y}\)</span> is the predicted class label</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is the feature vector of the observation</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> is the centroid of class <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{c}_k\|\)</span> is the distance between the observation and the centroid (usually Euclidean distance)</p></li>
+</ul>
+</section>
+<section id="implementing-the-nearest-centroid-classifier">
+<h3>Implementing the Nearest Centroid Classifier<a class="headerlink" href="#implementing-the-nearest-centroid-classifier" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>    
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>We will implement the <strong>Nearest Centroid Classifier</strong> with two methods:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fit()</span></code> – This method trains the model by calculating the centroid for each class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict()</span></code> – This method makes predictions based on the trained centroids.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NearestCentroidClassifier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_0</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_1</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_0</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_1</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the model using binary-labeled data X and y.</span>
+<span class="sd">        Assumes only two unique class labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Only binary classification supported.&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_1</span> <span class="o">=</span> <span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_0</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">centroid_1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict labels for X based on closest centroid (Euclidean distance).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dist_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centroid_0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dist_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centroid_1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dist_1</span> <span class="o">&lt;</span> <span class="n">dist_0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="breast-cancer-diagnosis-as-a-binary-classification-problem">
+<h3>Breast Cancer Diagnosis as a Binary Classification Problem<a class="headerlink" href="#breast-cancer-diagnosis-as-a-binary-classification-problem" title="Link to this heading">#</a></h3>
+<p>We will again use the <strong>Wisconsin Diagnostic Breast Cancer (WDBC, 1993)</strong> dataset. TThe data consists of two numerical features that describe the distribution of cells in breast tissue samples that are visible under the microscope together with the diagnosis wether the tissue is <em>benign</em> (<em>B</em>) or <em>malignant</em> (<em>M</em>).
+The two features represent the average <em>concavity</em> and <em>texture</em> of the nuclei and have been determined from image processing techniques [1].</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fetch dataset from Kaggle</span>
+<span class="kn">import</span> <span class="nn">kagglehub</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">kagglehub</span><span class="o">.</span><span class="n">dataset_download</span><span class="p">(</span><span class="s2">&quot;uciml/breast-cancer-wisconsin-data/versions/2&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s2">&quot;/data.csv&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;concavity_mean&quot;</span><span class="p">,</span> <span class="s2">&quot;texture_mean&quot;</span><span class="p">]]</span> <span class="c1"># pick two features</span>
+<span class="c1"># normalize the columns of x individually</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+
+<span class="c1"># y includes our labels and x includes our features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">diagnosis</span>      <span class="c1"># M or B </span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;diagnosis&#39;</span><span class="p">]</span>
+
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Create and train the Nearest Centroid Classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">NearestCentroidClassifier</span><span class="p">()</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">y_train</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Centroids: &quot;</span><span class="p">,</span> <span class="n">classifier</span><span class="o">.</span><span class="n">centroid_0</span><span class="p">,</span> <span class="n">classifier</span><span class="o">.</span><span class="n">centroid_1</span><span class="p">)</span>
+<span class="c1"># Predict the classes for the test data</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="c1"># Calculate and print the accuracy</span>
+<span class="nb">print</span><span class="p">((</span><span class="s2">&quot;Accuracy: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)))</span>
+
+<span class="c1"># Create meshgrid for plotting decision boundaries</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+<span class="c1"># Predict the class for each point in the meshgrid</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">Z_bin</span> <span class="o">=</span> <span class="n">Z</span><span class="o">==</span><span class="n">y_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">zz</span> <span class="o">=</span> <span class="n">Z_bin</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># Plot the decision boundary</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="c1"># Plot also the training points</span>
+<span class="n">y_bin</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">==</span><span class="n">y_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">concavity_mean</span><span class="p">[</span><span class="n">y_bin</span><span class="p">],</span> <span class="n">x_train</span><span class="o">.</span><span class="n">texture_mean</span><span class="p">[</span><span class="n">y_bin</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">concavity_mean</span><span class="p">[</span><span class="o">~</span><span class="n">y_bin</span><span class="p">],</span> <span class="n">x_train</span><span class="o">.</span><span class="n">texture_mean</span><span class="p">[</span><span class="o">~</span><span class="n">y_bin</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;$c_1$ (M)&quot;</span><span class="p">,</span> <span class="s2">&quot;$c_2$ (B)&quot;</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">x_test</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">concavity_mean</span><span class="p">,</span> <span class="n">x_test</span><span class="o">.</span><span class="n">texture_mean</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+  <span class="n">legend</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;$c_1$ (M)&quot;</span><span class="p">,</span> <span class="s2">&quot;$c_2$ (B)&quot;</span><span class="p">,</span> <span class="s2">&quot;?&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">centroid_0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">classifier</span><span class="o">.</span><span class="n">centroid_0</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">centroid_1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">classifier</span><span class="o">.</span><span class="n">centroid_1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Breast Cancer Diagnosis&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;concavity (normalized to range [0,1])&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;texture (normalized to range [0,1])&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centroids:  [0.10661361 0.27544877] [0.38011234 0.4145867 ]
+Accuracy: 0.86
+</pre></div>
+</div>
+<img alt="../_images/a6dfd3a66ba14539c16a27450c5430f1aaf0fa3673c7cc2496739d6241367df4.png" src="../_images/a6dfd3a66ba14539c16a27450c5430f1aaf0fa3673c7cc2496739d6241367df4.png" />
+</div>
+</div>
+<p>In the plot, the red and blue dots represent the training data points for malignant and benign samples, respectively. The white dots represent the test data points. The decision boundary is shown in the background, where the color indicates the predicted class for each point in the feature space. The large circles indicate the centroids of each class.</p>
+</section>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>We have introduced the concept of vector spaces and their properties as well as Euclidean Space as an important vector space. We have also discussed the <span class="math notranslate nohighlight">\(k\)</span>-means clustering algorithm and the Nearest Centroid Classifier, both of which operate in Euclidean space using basic vector operations.</p>
 </section>
 </section>
 
@@ -802,7 +980,15 @@ We will discuss the <span class="math notranslate nohighlight">\(k\)</span>-mean
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#euclidean-space">Euclidean space</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering-in-euclidean-space"><span class="math notranslate nohighlight">\(k\)</span>-means clustering in Euclidean space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering-in-euclidean-space"><span class="math notranslate nohighlight">\(k\)</span>-means Clustering in Euclidean space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nearest-centroid-classifier-in-euclidean-space">Nearest Centroid Classifier in Euclidean space</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-algorithm">Training the Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-the-nearest-centroid-classifier">Implementing the Nearest Centroid Classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breast-cancer-diagnosis-as-a-binary-classification-problem">Breast Cancer Diagnosis as a Binary Classification Problem</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
   </nav></div>
 

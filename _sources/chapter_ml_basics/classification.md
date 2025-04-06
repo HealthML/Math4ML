@@ -15,7 +15,7 @@ kernelspec:
 
 **Classification** is a supervised learning task where the goal is to predict discrete labels, or categories, for new observations based on previously labeled examples. It is among the most widely-used tasks in machine learning and appears in numerous practical scenarios, from medical diagnoses and spam detection, to facial recognition and natural language processing.
 
-In machine learning, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
+In classification, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
 
 - **Inputs**: A collection of feature vectors, typically represented as vectors in a vector space, for example Euclidean space:
   
@@ -93,7 +93,7 @@ The data consists of two numerical features that describe the distribution of ce
 
 ![title](../../datasets/uci_breast_cancer/figures/breast_cancer_nuclei_12938_2011_Article_597_Fig3_HTML.jpg)
 
-The two features represent the average *concavity* and *texture* of the nuclei and have been determined from image processing techniques [Street et al, 1992].
+The two features represent the average *concavity* and *texture* of the nuclei and have been determined from image processing techniques [1].
 In machine learning, we typically represent the features that belong to a sample with index $n\in \{1,2,\dots, N\}$ as a vector $\mathbf{x}_n$ that lives in an appropriate vector space $V$.
 In this example, the vector space is $\mathbb{R}^2$, the 2-dimensional Euclidean space.
 
@@ -151,4 +151,4 @@ Many classification algorithms, including logistic regression, are probabilistic
 
 
 ## References
-[Street et al, 1992] N. Street, W. Wolberg, O.L. Mangasarian:  Nuclear Feature Extraction For Breast Tumor Diagnosis. IS&T/SPIE 1993.
+[1] N. Street, W. Wolberg, O.L. Mangasarian:  Nuclear Feature Extraction For Breast Tumor Diagnosis. IS&T/SPIE 1993.

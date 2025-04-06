@@ -229,13 +229,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vectors and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Vector Space of Polynomials</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/proof_vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
 </ul>
 </details></li>
 </ul>
@@ -467,7 +461,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="classification">
 <h1>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h1>
 <p><strong>Classification</strong> is a supervised learning task where the goal is to predict discrete labels, or categories, for new observations based on previously labeled examples. It is among the most widely-used tasks in machine learning and appears in numerous practical scenarios, from medical diagnoses and spam detection, to facial recognition and natural language processing.</p>
-<p>In machine learning, we are given pairs of <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span>, the so-called <strong>training data</strong> and we would like to <strong>train</strong> a function <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> that predicts the value of <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>In classification, we are given pairs of <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span>, the so-called <strong>training data</strong> and we would like to <strong>train</strong> a function <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> that predicts the value of <span class="math notranslate nohighlight">\(y\)</span>.</p>
 <ul class="simple">
 <li><p><strong>Inputs</strong>: A collection of feature vectors, typically represented as vectors in a vector space, for example Euclidean space:</p></li>
 </ul>
@@ -555,7 +549,7 @@ Malignant samples &#39;M&#39;: 212
 </div>
 <p>The data consists of two numerical features that describe the distribution of cells in breast tissue samples that are visible under the microscope together with the diagnosis wether the tissue is <em>benign</em> (<em>B</em>) or <em>malignant</em> (<em>M</em>).</p>
 <p><img alt="title" src="../_images/breast_cancer_nuclei_12938_2011_Article_597_Fig3_HTML.jpg" /></p>
-<p>The two features represent the average <em>concavity</em> and <em>texture</em> of the nuclei and have been determined from image processing techniques [Street et al, 1992].
+<p>The two features represent the average <em>concavity</em> and <em>texture</em> of the nuclei and have been determined from image processing techniques [1].
 In machine learning, we typically represent the features that belong to a sample with index <span class="math notranslate nohighlight">\(n\in \{1,2,\dots, N\}\)</span> as a vector <span class="math notranslate nohighlight">\(\mathbf{x}_n\)</span> that lives in an appropriate vector space <span class="math notranslate nohighlight">\(V\)</span>.
 In this example, the vector space is <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, the 2-dimensional Euclidean space.</p>
 <div class="cell tag_hide-input docutils container">
@@ -640,7 +634,7 @@ f(\mathbf{x}) = \mathrm{sign}(\mathbf{w}^{\top}\mathbf{x} + b)
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<p>[Street et al, 1992] N. Street, W. Wolberg, O.L. Mangasarian:  Nuclear Feature Extraction For Breast Tumor Diagnosis. IS&amp;T/SPIE 1993.</p>
+<p>[1] N. Street, W. Wolberg, O.L. Mangasarian:  Nuclear Feature Extraction For Breast Tumor Diagnosis. IS&amp;T/SPIE 1993.</p>
 </section>
 </section>
 

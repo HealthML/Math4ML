@@ -229,13 +229,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vectors and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Vector Space of Polynomials</a></li>
-</ul>
-</details></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/proof_vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
 </ul>
 </details></li>
 </ul>
@@ -537,7 +531,7 @@ document.write(`
 
 <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">],</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">dataset</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Generated Dataset with Random Cluster Centers&quot;</span><span class="p">)</span>
@@ -546,7 +540,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/58b9b45de51aee027391f2c1b1adfaf4b5a8937cd7a0cc77e2a4387a6c3cb105.png" src="../_images/58b9b45de51aee027391f2c1b1adfaf4b5a8937cd7a0cc77e2a4387a6c3cb105.png" />
+<img alt="../_images/0c43fd473fcc7fdc8c317146cdd38115254062a4e879e89ae7a4ad01634eec14.png" src="../_images/0c43fd473fcc7fdc8c317146cdd38115254062a4e879e89ae7a4ad01634eec14.png" />
 </div>
 </div>
 <p>The dataset consists of four clusters, each represented by a different color. The goal of clustering is to identify these groups based on the data points’ proximity in the feature space. We will use the <strong><span class="math notranslate nohighlight">\(k\)</span>-means</strong> algorithm to achieve this. The red dots in the plot represent the initial cluster centers, which are randomly selected from the dataset.</p>
@@ -561,7 +555,7 @@ It does this by iteratively assigning points to the nearest cluster center and u
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
     <span class="n">kmeans</span><span class="o">.</span><span class="n">iterate</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;KMeans Clustering after </span><span class="si">{}</span><span class="s2"> iterations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
@@ -570,12 +564,12 @@ It does this by iteratively assigning points to the nearest cluster center and u
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/fb56eff2f1adaa39762cd8a88e9e7d25860f8fb40dffa06d67f8416abb3e4f8b.png" src="../_images/fb56eff2f1adaa39762cd8a88e9e7d25860f8fb40dffa06d67f8416abb3e4f8b.png" />
-<img alt="../_images/7c620ca6a59b7790e17fd92904b646c0704367077574a8c75cc4aa2a26a65541.png" src="../_images/7c620ca6a59b7790e17fd92904b646c0704367077574a8c75cc4aa2a26a65541.png" />
-<img alt="../_images/235ce581aa32e270037888b186122871b05210a0a29aacbf62c337d4aad47473.png" src="../_images/235ce581aa32e270037888b186122871b05210a0a29aacbf62c337d4aad47473.png" />
-<img alt="../_images/5cca5428899161df378c9680a21071e2195d45fe08af575bbbc5d5dd61a22cd9.png" src="../_images/5cca5428899161df378c9680a21071e2195d45fe08af575bbbc5d5dd61a22cd9.png" />
-<img alt="../_images/04b2884fa045e37fdf3ef702f6fd1bd70f1f42d880ff59426caf14ec8f63444d.png" src="../_images/04b2884fa045e37fdf3ef702f6fd1bd70f1f42d880ff59426caf14ec8f63444d.png" />
-<img alt="../_images/da8a44a28be3ee715f5ed03d2c4767e584b3fadfe9138be2b9ad9fda3418e8c7.png" src="../_images/da8a44a28be3ee715f5ed03d2c4767e584b3fadfe9138be2b9ad9fda3418e8c7.png" />
+<img alt="../_images/1680a3d6b95ab7a89d405b2376ca2ec082e6ac26094d6cf96ad339027084b33c.png" src="../_images/1680a3d6b95ab7a89d405b2376ca2ec082e6ac26094d6cf96ad339027084b33c.png" />
+<img alt="../_images/052e06a69fed0ffb1b978a769c06c982e4e55284aaefefc355f3e514d29b1687.png" src="../_images/052e06a69fed0ffb1b978a769c06c982e4e55284aaefefc355f3e514d29b1687.png" />
+<img alt="../_images/3eec0975c01280ad29d8a46eca4a2144a117712cce223c896414961e6c713d7d.png" src="../_images/3eec0975c01280ad29d8a46eca4a2144a117712cce223c896414961e6c713d7d.png" />
+<img alt="../_images/d18042718941308391beaebfafaf53b4921e598cd2b7323f266056604a5f3762.png" src="../_images/d18042718941308391beaebfafaf53b4921e598cd2b7323f266056604a5f3762.png" />
+<img alt="../_images/4001f19796678926371f268a0d971e096e62af276cee1cccde1eda59bb6f5e06.png" src="../_images/4001f19796678926371f268a0d971e096e62af276cee1cccde1eda59bb6f5e06.png" />
+<img alt="../_images/d813a58062929fcda3ee2db224322220f6f6a2cffa6c9f50c0409794e31fd6f9.png" src="../_images/d813a58062929fcda3ee2db224322220f6f6a2cffa6c9f50c0409794e31fd6f9.png" />
 </div>
 </div>
 <p>The plots show the updated cluster centers (red dots) and the data points colored according to their assigned clusters for each iteration. As the algorithm iterates, the cluster centers move closer to the actual centers of the clusters in the dataset, demonstrating how clustering algorithms can effectively uncover underlying patterns in unlabeled data.</p>
