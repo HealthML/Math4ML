@@ -24,7 +24,7 @@ parts:
         sections:
         - file: chapter_spaces/vector_spaces
         - file: chapter_spaces/polynomial_vector_space
-#        - file: chapter_spaces/multinomial_polynomial_vector_space
+        - file: chapter_spaces/basis_functions_vector_space
 #        - file: chapter_spaces/hyperplanes
 #        - file: chapter_spaces/subspaces
 #        - file: chapter_spaces/linear_maps
@@ -88,12 +88,12 @@ parts:
 #  - file: example_optimization/optimization_second_order 
 #  - file: example_optimization/bfgs 
 # Appendix
-  - caption: Appendix
-    options:
-      numbered: true
-    chapters:
-      - file: appendix/proofs
-        title: Detailed Proofs
-        sections:
-          - file: appendix/proof_vector_spaces
-            title: Vector Spaces
+#  - caption: Appendix
+#    options:
+#      numbered: true
+#    chapters:
+#      - file: appendix/proofs
+#        title: Detailed Proofs
+#        sections:
+#          - file: appendix/proof_vector_spaces
+#            title: Vector Spaces
