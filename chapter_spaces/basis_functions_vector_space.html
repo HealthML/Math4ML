@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -623,8 +623,8 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;royalblue&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$\phi(x)$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi(x)$&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -633,12 +633,6 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:39: SyntaxWarning: invalid escape sequence &#39;\p&#39;
-&lt;&gt;:39: SyntaxWarning: invalid escape sequence &#39;\p&#39;
-/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_53245/822638156.py:39: SyntaxWarning: invalid escape sequence &#39;\p&#39;
-  ax.set_ylabel(&quot;$\phi(x)$&quot;)
-</pre></div>
-</div>
 <img alt="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" src="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" />
 </div>
 </div>
@@ -1070,7 +1064,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/c3fffb64bd2314fc3eb7ec7c48ccfe30dcd43d93454a965e61a01b3351f9d84e.png" src="../_images/c3fffb64bd2314fc3eb7ec7c48ccfe30dcd43d93454a965e61a01b3351f9d84e.png" />
+<img alt="../_images/e61c697e06d7960a03e44c355f7e220e7b990e494221a4aeebf949b1490f675d.png" src="../_images/e61c697e06d7960a03e44c355f7e220e7b990e494221a4aeebf949b1490f675d.png" />
 </div>
 </div>
 <p>We see that both feature transformations perform well on the <strong>concentric circles</strong> dataset and the <strong>XOR</strong> dataset, but the <strong>polynomial features</strong> are not as effective on the <strong>two moons</strong> dataset as the RBF features, which can capture the local structure of the data.</p>
