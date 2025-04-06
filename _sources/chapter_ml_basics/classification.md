@@ -15,7 +15,7 @@ kernelspec:
 
 **Classification** is a supervised learning task where the goal is to predict discrete labels, or categories, for new observations based on previously labeled examples. It is among the most widely-used tasks in machine learning and appears in numerous practical scenarios, from medical diagnoses and spam detection, to facial recognition and natural language processing.
 
-In classification, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
+In classification, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts a categorical value for $y$.
 
 - **Inputs**: A collection of feature vectors, typically represented as vectors in a vector space, for example Euclidean space:
   

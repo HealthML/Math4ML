@@ -15,7 +15,7 @@ kernelspec:
 
 **Regression** is a supervised learning task focused on predicting continuous numeric values rather than discrete categories. Common regression tasks include predicting the price of a house, forecasting weather conditions, estimating the age of a person from an image, or determining the severity of a disease based on medical test results.
 
-In classification, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts the value of $y$.
+In regression, we are given pairs of $(\mathbf{x}, y)$, the so-called **training data** and we would like to **train** a function $f(\mathbf{x})$ that predicts a continuous value of $y\in\mathbb{R}$.
 
 - **Inputs**: A collection of feature vectors, typically represented as vectors in a vector space, for example Euclidean space:
   
