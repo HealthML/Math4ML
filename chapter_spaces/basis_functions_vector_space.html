@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -52,40 +52,6 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script kind="utterances">
-
-    var commentsRunWhenDOMLoaded = cb => {
-    if (document.readyState != 'loading') {
-        cb()
-    } else if (document.addEventListener) {
-        document.addEventListener('DOMContentLoaded', cb)
-    } else {
-        document.attachEvent('onreadystatechange', function() {
-        if (document.readyState == 'complete') cb()
-        })
-    }
-}
-
-var addUtterances = () => {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://utteranc.es/client.js";
-    script.async = "async";
-
-    script.setAttribute("repo", "https://github.com/HealthML/Math4ML-comments.git");
-    script.setAttribute("issue-term", "pathname");
-    script.setAttribute("theme", "github-light");
-    script.setAttribute("label", "💬 comment");
-    script.setAttribute("crossorigin", "anonymous");
-
-    sections = document.querySelectorAll("div.section");
-    if (sections !== null) {
-        section = sections[sections.length-1];
-        section.appendChild(script);
-    }
-}
-commentsRunWhenDOMLoaded(addUtterances);
-</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -98,7 +64,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_spaces/basis_functions_vector_space.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Vector Space of Polynomials" href="polynomial_vector_space.html" />
+    <link rel="prev" title="Vector spaces" href="vector_spaces.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -218,16 +184,11 @@ commentsRunWhenDOMLoaded(addUtterances);
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Vector Space of Polynomials</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Basis Functions Form a Vector Space</a></li>
 </ul>
 </details></li>
@@ -532,7 +493,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🔢 1. <strong>Monomial Feature</strong><a class="headerlink" href="#monomial-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = x_1^{n_1} \cdot x_2^{n_2} \cdot \dots \cdot x_d^{n_d}
+\phi(\mathbf{x}) = x_1^2 \cdot x_2
 \]</div>
 <ul class="simple">
 <li><p>Represents interaction and nonlinearity.</p></li>
@@ -544,7 +505,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🌐 2. <strong>Radial Basis Function (RBF)</strong><a class="headerlink" href="#radial-basis-function-rbf" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\boldsymbol{\mu}\|^2)
+\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}\|^2)
 \]</div>
 <ul class="simple">
 <li><p>Peaks at the origin and decays radially.</p></li>
@@ -556,7 +517,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🎵 3. <strong>Fourier Feature</strong><a class="headerlink" href="#fourier-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \sin(\mathbf{w}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \sin(\omega^\top \mathbf{x}), \quad \omega = [1, 1]
 \]</div>
 <ul class="simple">
 <li><p>Encodes periodicity or oscillations in space.</p></li>
@@ -568,7 +529,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🧠 4. <strong>Neural Net Activation (Tanh)</strong><a class="headerlink" href="#neural-net-activation-tanh" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \tanh(\mathbf{w}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \tanh(w^\top \mathbf{x}), \quad w = [1, 1]
 \]</div>
 <ul class="simple">
 <li><p>S-shaped nonlinearity common in neural networks.</p></li>
@@ -586,8 +547,8 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># 1D input range</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -633,7 +594,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" src="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" />
+<img alt="../_images/7a495256f6fd94991320a5e888411c35eb014ec7312040e31e8dac26a4a9808c.png" src="../_images/7a495256f6fd94991320a5e888411c35eb014ec7312040e31e8dac26a4a9808c.png" />
 </div>
 </div>
 <p>What This Shows:</p>
@@ -667,8 +628,8 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Define a 2D input grid</span>
 <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -716,7 +677,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/48d11384ef64f2d737a10efe47d9caafef885a96e1f01fb4a9335e13566f2a2d.png" src="../_images/48d11384ef64f2d737a10efe47d9caafef885a96e1f01fb4a9335e13566f2a2d.png" />
+<img alt="../_images/b4281ebd45b84cd8f701ad9aaa86122d3c1e76c488b05c84cec7e424d9d3e00e.png" src="../_images/b4281ebd45b84cd8f701ad9aaa86122d3c1e76c488b05c84cec7e424d9d3e00e.png" />
 </div>
 </div>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -804,10 +765,10 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Generate circles (small number to keep it clear)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -823,7 +784,7 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/25f7ead5a63f5448c9bf3199525262956f81f4bd0ea32c6e93a7516e8f5832dd.png" src="../_images/25f7ead5a63f5448c9bf3199525262956f81f4bd0ea32c6e93a7516e8f5832dd.png" />
+<img alt="../_images/65b62f0722240d43a74255b9be59d6fb1c31fc8d29dbd9b857351ee30acbe03e.png" src="../_images/65b62f0722240d43a74255b9be59d6fb1c31fc8d29dbd9b857351ee30acbe03e.png" />
 </div>
 </div>
 <p>The space <span class="math notranslate nohighlight">\( P_n^2 \)</span> gives you a natural <strong>feature map</strong> to transform the data into a higher-dimensional space where the classes may become linearly separable. The transformation is defined as:</p>
@@ -834,7 +795,7 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 <p>So let’s implement this in Python.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes degree-2 polynomial features for 2D input X.</span>
 <span class="sd">    Input shape: (n_samples, 2)</span>
@@ -865,7 +826,7 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 <span class="n">x2_sq</span> <span class="o">=</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
 
 <span class="c1"># Plot 3D view of transformed space</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
@@ -896,7 +857,7 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/ee0d78a40555d71a1f72c379c9352574ed09488e7817753e569e244a4dd75ff7.png" src="../_images/ee0d78a40555d71a1f72c379c9352574ed09488e7817753e569e244a4dd75ff7.png" />
+<img alt="../_images/3a44720b10d96d4ab297e4e991bfadfc32536bca060afdb44606ce92c974da26.png" src="../_images/3a44720b10d96d4ab297e4e991bfadfc32536bca060afdb44606ce92c974da26.png" />
 </div>
 </div>
 <p>We see that in the transformed space <span class="math notranslate nohighlight">\( P_2^2 \)</span> (right), the data points are more spread out and the clusters are linearly separable.
@@ -908,7 +869,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestCentroid</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestCentroid</span>
 
 <span class="c1"># Model A: Nearest Centroid on raw features</span>
 <span class="n">model_raw</span> <span class="o">=</span> <span class="n">NearestCentroid</span><span class="p">()</span>
@@ -953,7 +914,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/3dbc7789f8c74cc64e4df65c4616d4e480c09e84ad9c120fb9d33c14aacd3cfc.png" src="../_images/3dbc7789f8c74cc64e4df65c4616d4e480c09e84ad9c120fb9d33c14aacd3cfc.png" />
+<img alt="../_images/ae0768d51ad7fbaa901f46ad9fa4c3cf4def2fcb9ed41fd1be85326241663a1f.png" src="../_images/ae0768d51ad7fbaa901f46ad9fa4c3cf4def2fcb9ed41fd1be85326241663a1f.png" />
 </div>
 </div>
 <p>The left plot shows the decision boundary of the Nearest Centroid Classifier using the original features, while the right plot shows the decision boundary after applying polynomial feature expansion. The polynomial transformation allows the classifier to separate the classes effectively. Note that the Nearest Centroid classifier is a linear classifier. While the decision boundary forms a circle in the original space <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, it is a flat hyperplane in the transformed space. This is a key point when using non-linear basis functions in the context of linear machine learning methods: Learned functions are linear in the transformed space, but can be nonlinear in the original space.</p>
@@ -969,20 +930,20 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_moons</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestCentroid</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_moons</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestCentroid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># --- Polynomial feature function (degree 2) ---</span>
-<span class="k">def</span> <span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
     <span class="n">x1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x2</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="c1"># --- RBF feature function ---</span>
-<span class="k">def</span> <span class="nf">rbf_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rbf_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">centers</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 
 <span class="c1"># --- RBF centers: grid over input space</span>
@@ -1064,7 +1025,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/e61c697e06d7960a03e44c355f7e220e7b990e494221a4aeebf949b1490f675d.png" src="../_images/e61c697e06d7960a03e44c355f7e220e7b990e494221a4aeebf949b1490f675d.png" />
+<img alt="../_images/c80883ba1026327a6c0677e34eb44ddbb7d36e8f6698fb418769742fe2e821c1.png" src="../_images/c80883ba1026327a6c0677e34eb44ddbb7d36e8f6698fb418769742fe2e821c1.png" />
 </div>
 </div>
 <p>We see that both feature transformations perform well on the <strong>concentric circles</strong> dataset and the <strong>XOR</strong> dataset, but the <strong>polynomial features</strong> are not as effective on the <strong>two moons</strong> dataset as the RBF features, which can capture the local structure of the data.</p>
@@ -1102,12 +1063,12 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="polynomial_vector_space.html"
+       href="vector_spaces.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Vector Space of Polynomials</p>
+        <p class="prev-next-title">Vector spaces</p>
       </div>
     </a>
 </div>
@@ -1179,6 +1140,25 @@ By Christoph Lippert
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
   </div>
   
 </div>

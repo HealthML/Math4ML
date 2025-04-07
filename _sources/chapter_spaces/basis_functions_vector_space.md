@@ -83,7 +83,7 @@ $ \phi_j(\mathbf{x}) $: Feature functions — could be:
 ### 🔢 1. **Monomial Feature**  
 
 $$
-\phi(\mathbf{x}) = x_1^{n_1} \cdot x_2^{n_2} \cdot \dots \cdot x_d^{n_d}
+\phi(\mathbf{x}) = x_1^2 \cdot x_2
 $$
 
 - Represents interaction and nonlinearity.
@@ -93,7 +93,7 @@ $$
 ### 🌐 2. **Radial Basis Function (RBF)**  
 
 $$
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\boldsymbol{\mu}\|^2)
+\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}\|^2)
 $$
 
 - Peaks at the origin and decays radially.
@@ -103,7 +103,7 @@ $$
 ### 🎵 3. **Fourier Feature**  
 
 $$
-\phi(\mathbf{x}) = \sin(\mathbf{w}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \sin(\omega^\top \mathbf{x}), \quad \omega = [1, 1]
 $$
 
 - Encodes periodicity or oscillations in space.
@@ -113,7 +113,7 @@ $$
 ### 🧠 4. **Neural Net Activation (Tanh)**  
 
 $$
-\phi(\mathbf{x}) = \tanh(\mathbf{w}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \tanh(w^\top \mathbf{x}), \quad w = [1, 1]
 $$
 
 - S-shaped nonlinearity common in neural networks.
