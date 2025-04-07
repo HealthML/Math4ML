@@ -93,7 +93,7 @@ $$
 ### 🌐 2. **Radial Basis Function (RBF)**  
 
 $$
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\mathsymbol{\mu}\|^2)
+\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\boldsymbol{\mu}\|^2)
 $$
 
 - Peaks at the origin and decays radially.
