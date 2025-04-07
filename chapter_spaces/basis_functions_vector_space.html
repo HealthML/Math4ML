@@ -532,7 +532,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🔢 1. <strong>Monomial Feature</strong><a class="headerlink" href="#monomial-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = x_1^2 \cdot x_2
+\phi(\mathbf{x}) = x_1^{n_1} \cdot x_2^{n_2} \cdot \dots \cdot x_d^{n_d}
 \]</div>
 <ul class="simple">
 <li><p>Represents interaction and nonlinearity.</p></li>
@@ -544,7 +544,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🌐 2. <strong>Radial Basis Function (RBF)</strong><a class="headerlink" href="#radial-basis-function-rbf" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}\|^2)
+\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\mathsymbol{\mu}\|^2)
 \]</div>
 <ul class="simple">
 <li><p>Peaks at the origin and decays radially.</p></li>
@@ -556,7 +556,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🎵 3. <strong>Fourier Feature</strong><a class="headerlink" href="#fourier-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \sin(\omega^\top \mathbf{x}), \quad \omega = [1, 1]
+\phi(\mathbf{x}) = \sin(\boldsymbol{\omega}^\top \mathbf{x}+b)
 \]</div>
 <ul class="simple">
 <li><p>Encodes periodicity or oscillations in space.</p></li>
@@ -568,7 +568,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <h3>🧠 4. <strong>Neural Net Activation (Tanh)</strong><a class="headerlink" href="#neural-net-activation-tanh" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \tanh(w^\top \mathbf{x}), \quad w = [1, 1]
+\phi(\mathbf{x}) = \tanh(\mathbf{w}^\top \mathbf{x}+b)
 \]</div>
 <ul class="simple">
 <li><p>S-shaped nonlinearity common in neural networks.</p></li>
