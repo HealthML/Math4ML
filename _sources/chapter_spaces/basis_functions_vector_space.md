@@ -103,7 +103,7 @@ $$
 ### 🎵 3. **Fourier Feature**  
 
 $$
-\phi(\mathbf{x}) = \sin(\boldsymbol{\omega}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \sin(\mathbf{w}^\top \mathbf{x}+b)
 $$
 
 - Encodes periodicity or oscillations in space.
