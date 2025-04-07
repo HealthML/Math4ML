@@ -58,3 +58,20 @@ html:
     utterances              :
       repo: "https://github.com/HealthML/Math4ML-comments.git"  # The repository where issues are stored
   announcement              : "" # A banner announcement at the top of the site.
+  extra-footer: |
+    <script src=“https://giscus.app/client.js”
+        data-repo=“HealthML/Math4ML”
+        data-repo-id=“R_kgDON-O79w”
+        data-category=“Comments”
+        data-category-id=“DIC_kwDON-O7984Co2qc”
+        data-mapping=“pathname”
+        data-strict=“1”
+        data-reactions-enabled=“1"
+        data-emit-metadata=“0”
+        data-input-position=“top”
+        data-theme=“preferred_color_scheme”
+        data-lang=“en”
+        data-loading=“lazy”
+        crossorigin=“anonymous”
+        async>
+    </script>
