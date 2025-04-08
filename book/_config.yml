@@ -26,8 +26,6 @@ parse:
     - linkify       # Optional: turns URLs into links
     - smartquotes   # Optional: improves typography
 
-
-
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
   - references.bib
@@ -53,8 +51,21 @@ html:
     plausible_analytics_domain: ""
     plausible_analytics_url: "https://plausible.io/js/script.js"
     google_analytics_id       : ""  # A GA id that can be used to track book views.
-  comments:
-    hypothesis              : false
-    utterances              :
-      repo: "https://github.com/HealthML/Math4ML-comments.git"  # The repository where issues are stored
   announcement              : "" # A banner announcement at the top of the site.
+  extra_footer: |
+    <script src="https://giscus.app/client.js"
+            data-repo="HealthML/Math4ML"
+            data-repo-id="R_kgDON-O79w"
+            data-category="Comments"
+            data-category-id="DIC_kwDON-O7984Co2qc"
+            data-mapping="pathname"
+            data-strict="1"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            data-loading="lazy"
+            crossorigin="anonymous"
+            async>
+    </script>
