@@ -78,37 +78,40 @@ Hence, $ V_\Phi $ is a vector space over $ \mathbb{R} $.
 
 ## Common Basis Functions in $ V_\Phi $ in Machine Learning
 
-$ \phi_j(\mathbf{x}) $: Feature functions — could be:
+$ \phi_i(\mathbf{x}) $: Feature functions — could be:
 
 ### 🔢 1. **Monomial Feature**  
 
 $$
-\phi(\mathbf{x}) = x_1^{n_1} \cdot x_2^{n_2} \cdot \dots \cdot x_d^{n_d}
+\phi_i(\mathbf{x}) = x_1^{n_{1i}} \cdot x_2^{n_{2i}} \cdot \dots \cdot x_d^{n_{di}}
 $$
 
 - Represents interaction and nonlinearity.
-- Common in polynomial regression and kernel methods.
+- Common in polynomial regression.
 - Curved and asymmetric — useful for modeling feature interactions.
+- Each monomial feature function is parameterized by the exponents.
 
 ### 🌐 2. **Radial Basis Function (RBF)**  
 
 $$
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}-\boldsymbol{\mu}\|^2)
+\phi(\mathbf{x}) = \exp(-\gamma_i \|\mathbf{x}-\boldsymbol{\mu}_i\|^2)
 $$
 
 - Peaks at the origin and decays radially.
 - Encodes **locality** — only nearby inputs have large activation.
 - Basis of RBF networks and RBF kernel SVMs.
+- Each RBF feature is parameterized by the location vector $\boldsymbol{\mu}_i$ and the scale $\gamma_i$.
 
 ### 🎵 3. **Fourier Feature**  
 
 $$
-\phi(\mathbf{x}) = \sin(\mathbf{w}^\top \mathbf{x}+b)
+\phi(\mathbf{x}) = \sin(\mathbf{w}_i^\top \mathbf{x}+b_i)
 $$
 
 - Encodes periodicity or oscillations in space.
 - Used in signal processing and random Fourier features for kernel approximation.
 - Smooth but non-monotonic.
+- Each Fourier Feature is prametrized by a weight vector $\mathbf{w}_i$ that relates features to frequencies and a phase shift $ b_i $.
 
 ### 🧠 4. **Neural Net Activation (Tanh)**  
 
