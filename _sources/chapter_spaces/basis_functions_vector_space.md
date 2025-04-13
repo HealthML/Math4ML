@@ -13,13 +13,16 @@ kernelspec:
 # Basis Functions Form a Vector Space
 
 We can generalize the polynomial-feature-based vector space to a broader class of functions expressed as linear combinations of basis functions, not just monomials.
-In machine learning, many models can be understood as learning a function $ f(\mathbf{x}) $ that maps input features $ \mathbf{x} \in \mathbb{R}^d $ to an output — such as a predicted value in regression or a class score in classification. A powerful and general approach is to express this function as a **linear combination of basis functions**,  
+In machine learning, many models can be understood as learning a function $ f(\mathbf{x}) $ that maps input features $ \mathbf{x} \in \mathbb{R}^d $ to an output — such as a predicted value in regression or a class score in classification, with the decision boundary $ f(\mathbf{x}) = 0$. A powerful and general approach is to express this function as a **linear combination of basis functions**,  
 
 $$
 f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}),
 $$
 
 where $\mathbf{x}$ and $ f(\mathbf{x}) $ are the model input and output, e.g., in regression or classifiction, $ \Phi = \{ \phi_1, \phi_2, \dots, \phi_m \} $ is a set of fixed **basis functions**, and the coefficients $ a_j \in \mathbb{R} $ are **learnable weights** optimized during training. The basis functions $ \phi_j(\mathbf{x}) $ transform the raw input vector $ \mathbf{x} $ into a new **feature space** where the target function can be represented more easily. These functions can take many forms — from simple monomials to radial basis functions (RBFs), Fourier components, or neural network activations — and the choice of $ \Phi $ plays a central role in the model's expressiveness and generalization. Understanding the structure of these functions and the space they span lays the foundation for many classical and modern learning algorithms.
+
+
+
 
 :::{prf:theorem} Linear function spaces over general basis functions
 :label: thm-feature-map-vector-space
@@ -78,47 +81,149 @@ Hence, $ V_\Phi $ is a vector space over $ \mathbb{R} $.
 
 ## Common Basis Functions in $ V_\Phi $ in Machine Learning
 
-$ \phi_j(\mathbf{x}) $: Feature functions — could be:
+$ \phi_i(\mathbf{x}) $: Feature functions — could be:
 
 ### 🔢 1. **Monomial Feature**  
 
 $$
-\phi(\mathbf{x}) = x_1^2 \cdot x_2
+\phi_i(\mathbf{x}) = x_1^{n_{1i}} \cdot x_2^{n_{2i}} \cdot \dots \cdot x_d^{n_{di}}
 $$
 
 - Represents interaction and nonlinearity.
-- Common in polynomial regression and kernel methods.
+- Common in polynomial regression.
 - Curved and asymmetric — useful for modeling feature interactions.
+- Each monomial feature function is parameterized by the exponents.
+- The total degree of the monomial is $ n_{1i} + n_{2i} + \dots + n_{di} $.
+- For a maximum total degree $ d $, and dimensionality of $\mathbf{x}=m$, the number of monomial features is given by the combinatorial formula:
+
+$$
+\binom{d+m}{m} = \frac{(d+m)!}{d! \cdot m!}
+$$
+- For example, for $ d=2 $ and $ m=2 $, the monomial features are:
+
+$$
+\begin{align*}
+\phi_1(\mathbf{x}) &= x_1^2 \\
+\phi_2(\mathbf{x}) &= x_1x_2 \\
+\phi_3(\mathbf{x}) &= x_2^2 \\
+\phi_4(\mathbf{x}) &= x_1 \\
+\phi_5(\mathbf{x}) &= x_2 \\
+\phi_6(\mathbf{x}) &= 1
+\end{align*}
+$$
+
+
+```{code-cell} ipython3
+import numpy as np
+from itertools import combinations_with_replacement, product
+
+def monomial_features(X, max_degree):
+    """
+    Computes all monomial features for input X up to a given total degree.
+    
+    Parameters:
+    -----------
+    X : ndarray of shape (n_samples, n_features)
+        Input data.
+    max_degree : int
+        Maximum total degree of monomials to include.
+    
+    Returns:
+    --------
+    X_mono : ndarray of shape (n_samples, n_output_features)
+        Transformed feature matrix with monomial terms up to max_degree.
+    """
+    n_samples, n_features = X.shape
+
+    # Generate all exponent tuples (k1, ..., kd) with sum <= max_degree
+    exponents = []
+    for degree in range(max_degree + 1):
+        for exp in product(range(degree + 1), repeat=n_features):
+            if sum(exp) == degree:
+                exponents.append(exp)
+    
+    # Compute each monomial term: x_1^k1 * x_2^k2 * ...
+    X_mono = np.ones((n_samples, len(exponents)))
+    for j, powers in enumerate(exponents):
+        for feature_idx, power in enumerate(powers):
+            if power > 0:
+                X_mono[:, j] *= X[:, feature_idx] ** power
+
+    return X_mono
+```
 
 ### 🌐 2. **Radial Basis Function (RBF)**  
 
 $$
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}\|^2)
+\phi_i(\mathbf{x}) = \exp(-\gamma_i \|\mathbf{x}-\boldsymbol{\mu}_i\|^2)
 $$
 
 - Peaks at the origin and decays radially.
 - Encodes **locality** — only nearby inputs have large activation.
 - Basis of RBF networks and RBF kernel SVMs.
+- Each RBF feature is parameterized by the center vector $\boldsymbol{\mu}_i$ and the scale $\gamma_i$.
+- The RBF is a **Gaussian** function that is symmetric around the center $ \boldsymbol{\mu}_i $.
+- strategies to choose $ \boldsymbol{\mu}_i $ include:
+  - Randomly selecting points from the training data.
+  - Using clustering algorithms (e.g., k-means) to find representative centers.
+  - Using a grid or lattice of points in the input space.
+
+```{code-cell} ipython3
+def rbf_features(X, centers, gamma=1.0):
+    """
+    Computes RBF features for input X given centers and gamma.
+    X shape: (n_samples, n_features)
+    centers shape: (n_centers, n_features)
+    Output shape: (n_samples, n_centers)
+    """
+    return np.exp(-gamma * np.linalg.norm(X[:, np.newaxis] - centers, axis=2)**2)
+```
 
 ### 🎵 3. **Fourier Feature**  
 
 $$
-\phi(\mathbf{x}) = \sin(\omega^\top \mathbf{x}), \quad \omega = [1, 1]
+\phi_i(\mathbf{x}) = \sin(\mathbf{w}_i^\top \mathbf{x}+b_i)
 $$
 
 - Encodes periodicity or oscillations in space.
 - Used in signal processing and random Fourier features for kernel approximation.
 - Smooth but non-monotonic.
+- Each Fourier Feature is prametrized by a weight vector $ \mathbf{w}_i $ that relates features to frequencies and a phase shift $ b_i $.
 
+
+```{code-cell} ipython3
+def fourier_features(X, frequencies, phase_shifts):
+    """
+    Computes Fourier features for input X given frequencies and phase shifts.
+    X shape: (n_samples, n_features)
+    frequencies shape: (n_frequencies, n_features)
+    phase_shifts shape: (n_frequencies,)
+    Output shape: (n_samples, n_frequencies)
+    """
+    return np.sin(X @ frequencies.T + phase_shifts)
+```
 ### 🧠 4. **Neural Net Activation (Tanh)**  
 
 $$
-\phi(\mathbf{x}) = \tanh(w^\top \mathbf{x}), \quad w = [1, 1]
+\phi(\mathbf{x}) = \tanh(\mathbf{w}^\top \mathbf{x}+b)
 $$
 
 - S-shaped nonlinearity common in neural networks.
 - Compresses input into [−1, 1] range.
 - Nonlinear but continuous and differentiable.
+- Each neural activation is parameterized by a weight vector $ \mathbf{w} $ and a bias $ b $.
+
+```{code-cell} ipython3
+def nn_activation(X, weights, bias):
+    """
+    Computes neural net activation for input X given weights and bias.
+    X shape: (n_samples, n_features)
+    weights shape: (n_features,)
+    bias shape: ()
+    Output shape: (n_samples,)
+    """
+    return np.tanh(X @ weights + bias)
+```
 
 ### Visualization of Basis Functions
 
@@ -135,17 +240,18 @@ x = np.linspace(-4, 4, 500).reshape(-1, 1)
 # --- Feature Functions ---
 
 # 1. Monomial: x^3
-phi_monomial = x[:, 0]**3
+phi_monomial = monomial_features(x, max_degree=3)
+phi_monomial = phi_monomial[:, 3]  # Select x^3
 
 # 2. RBF centered at 0
 gamma = 0.5
-phi_rbf = np.exp(-gamma * (x[:, 0]**2))
+phi_rbf = rbf_features(x, np.array([[0]]), gamma=gamma)
 
 # 3. Fourier: sin(2x)
-phi_fourier = np.sin(2 * x[:, 0])
+phi_fourier = fourier_features(x, np.array([[2]]), phase_shifts=np.array([0]))
 
 # 4. Neural Net Activation: tanh(2x)
-phi_nn = np.tanh(2 * x[:, 0])
+phi_nn = nn_activation(x, np.array([2]), bias=0)
 
 # --- Plotting ---
 fig, axes = plt.subplots(1, 4, figsize=(18, 4))
@@ -195,17 +301,18 @@ X_grid = np.c_[X1.ravel(), X2.ravel()]  # shape: (10000, 2)
 # --- Basis Functions ---
 
 # 1. Monomial: x1^2 * x2
-monomial = (X_grid[:, 0] ** 2) * X_grid[:, 1]
+monomial = monomial_features(X_grid, max_degree=2)
+monomial = monomial[:, 3]  # Select x1^2 * x2
 
 # 2. RBF centered at origin
 gamma = 2.0
-rbf = np.exp(-gamma * (X_grid[:, 0] ** 2 + X_grid[:, 1] ** 2))
+rbf = rbf_features(X_grid, np.array([[0, 0]]), gamma=gamma)
 
 # 3. Fourier: sin(w^T x), with w = [1, 1]
-fourier = np.sin(X_grid @ np.array([1, 1]))
+fourier = fourier_features(X_grid, np.array([[1, 1]]), phase_shifts=np.array([0]))
 
 # 4. Neural Net Activation: tanh(w^T x + b), w = [1, 1], b = 0
-nn_activation = np.tanh(X_grid @ np.array([1, 1]))
+nn_activation = nn_activation(X_grid, np.array([1, 1]), bias=0)
 
 # --- Plotting ---
 fig, axes = plt.subplots(1, 4, figsize=(18, 4))
@@ -310,36 +417,22 @@ plt.ylabel("$x_2$")
 plt.show()
 ```
 
-The space $ P_n^2 $ gives you a natural **feature map** to transform the data into a higher-dimensional space where the classes may become linearly separable. The transformation is defined as:
+The space $ P_2^2 $ gives you a natural **feature map** to transform the data into a higher-dimensional space where the classes may become linearly separable. The transformation is defined as:
 
 $$
-\phi: \mathbb{R}^2 \to \mathbb{R}^m, \quad \mathbf{x} \mapsto [1, x_1, x_2, x_1^2, x_1x_2, x_2^2, \dots]
+\phi: \mathbb{R}^2 \to \mathbb{R}^6, \quad \mathbf{x} \mapsto [1, x_1, x_2, x_1^2, x_1x_2, x_2^2]
 $$
 
-So let's implement this in Python.
-
-```{code-cell} ipython3
-def polynomial_features_deg2(X):
-    """
-    Computes degree-2 polynomial features for 2D input X.
-    Input shape: (n_samples, 2)
-    Output shape: (n_samples, 5) with features:
-    [x1, x2, x1^2, x1*x2, x2^2]
-    """
-    x1 = X[:, 0]
-    x2 = X[:, 1]
-    return np.column_stack([x1, x2, x1**2, x1 * x2, x2**2])
-```
-Let's visualize the transformation of the concentric circles dataset using polynomial features.
+Let's visualize the transformation of the concentric circles dataset using polynomial features up to degree 2.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
 # Polynomial transform (degree 2, no bias)
-X_poly = polynomial_features_deg2(X)
+X_poly = monomial_features(X, max_degree=2)
 
 # Extract original and new features
 x1, x2 = X[:, 0], X[:, 1]
-x1_sq = X_poly[:, 2]
+x1_sq = X_poly[:, 3]
 x2_sq = X_poly[:, 4]
 
 # Plot 3D view of transformed space
@@ -359,9 +452,9 @@ ax1.axis('equal')
 
 # Transformed 3D space (x1^2 vs x2^2)
 ax2 = fig.add_subplot(1, 2, 2, projection='3d')
-ax2.scatter(x1_sq, x2_sq, X_poly[:, 3], c=y, cmap='coolwarm', s=60)
+ax2.scatter(x1_sq, x2_sq, X_poly[:, 5], c=y, cmap='coolwarm', s=60)
 for i in range(len(X)):
-    ax2.text(x1_sq[i], x2_sq[i], X_poly[i, 3], str(i), fontsize=9)
+    ax2.text(x1_sq[i], x2_sq[i], X_poly[i, 5], str(i), fontsize=9)
 ax2.set_xlabel(r"$x_1^2$")
 ax2.set_ylabel(r"$x_2^2$")
 ax2.set_zlabel(r"$x_1 x_2$")
@@ -370,7 +463,7 @@ ax2.set_title(r"Transformed Feature Space ($P_2^2$)")
 plt.tight_layout()
 plt.show()
 ```
-We see that in the transformed space $ P_2^2 $ (right), the data points are more spread out and the clusters are linearly separable.
+We see that in the additional dimensions in the transformed space $ P_2^2 $ (right), the data points are more spread out and the clusters become linearly separable.
 So, let's apply the Nearest Centroid Classifier to the original and the transformed data.
 
 ```{code-cell} ipython3
@@ -382,7 +475,7 @@ model_raw = NearestCentroid()
 model_raw.fit(X, y)
 
 # Model B: Nearest Centroid on polynomially transformed features
-X_poly = polynomial_features_deg2(X)
+X_poly = monomial_features(X, max_degree=2)
 model_poly = NearestCentroid()
 model_poly.fit(X_poly, y)
 
@@ -395,7 +488,7 @@ grid = np.c_[xx.ravel(), yy.ravel()]
 Z_raw = model_raw.predict(grid).reshape(xx.shape)
 
 # Predict with polynomial model
-grid_poly = polynomial_features_deg2(grid)
+grid_poly = monomial_features(grid, max_degree=2)
 Z_poly = model_poly.predict(grid_poly).reshape(xx.shape)
 
 # Plot
@@ -433,16 +526,6 @@ from sklearn.datasets import make_circles, make_moons
 from sklearn.neighbors import NearestCentroid
 from sklearn.preprocessing import StandardScaler
 
-# --- Polynomial feature function (degree 2) ---
-def polynomial_features_deg2(X):
-    x1 = X[:, 0]
-    x2 = X[:, 1]
-    return np.column_stack([x1, x2, x1**2, x1 * x2, x2**2])
-
-# --- RBF feature function ---
-def rbf_features(X, centers, gamma=1.0):
-    return np.exp(-gamma * np.sum((X[:, np.newaxis, :] - centers[np.newaxis, :, :]) ** 2, axis=2))
-
 # --- RBF centers: grid over input space
 grid_centers = np.array([[x, y] for x in np.linspace(-2, 2, 5) for y in np.linspace(-2, 2, 5)])
 
@@ -476,7 +559,7 @@ for i, (name, X, y) in enumerate(datasets):
     model_raw.fit(X, y)
 
     # Polynomial model
-    X_poly = polynomial_features_deg2(X)
+    X_poly = monomial_features(X, max_degree=2)
     model_poly = NearestCentroid()
     model_poly.fit(X_poly, y)
 
@@ -489,7 +572,7 @@ for i, (name, X, y) in enumerate(datasets):
     xx, yy = np.meshgrid(np.linspace(-2, 2, 300),
                          np.linspace(-2, 2, 300))
     grid = np.c_[xx.ravel(), yy.ravel()]
-    grid_poly = polynomial_features_deg2(grid)
+    grid_poly = monomial_features(grid, max_degree=2)
     grid_rbf = rbf_features(grid, grid_centers, gamma=2.0)
 
     # Predictions

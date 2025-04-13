@@ -1,4 +1,16 @@
-## Normed spaces
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+# Normed spaces
 
 Norms generalize the notion of length from Euclidean space.
 
@@ -14,6 +26,7 @@ $\|\cdot\| : V \to \mathbb{R}$ that satisfies
       (the **triangle inequality** again)
 
 for all $\mathbf{x}, \mathbf{y} \in V$ and all $\alpha \in \mathbb{R}$.
+
 A vector space endowed with a norm is called a **normed vector space**,
 or simply a **normed space**.
 
@@ -23,7 +36,7 @@ $d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x}-\mathbf{y}\|$
 
 One can verify that the axioms for metrics are satisfied under this definition and
 follow directly from the axioms for norms. Therefore any normed space is
-also a metric space.[^3]
+also a metric space.
 
 We will typically only be concerned with a few specific norms on
 $\mathbb{R}^n$:
@@ -34,6 +47,71 @@ $$\begin{aligned}
 \|\mathbf{x}\|_p &= \left(\sum_{i=1}^n |x_i|^p\right)^\frac{1}{p} \hspace{0.5cm}\hspace{0.5cm} (p \geq 1) \\
 \|\mathbf{x}\|_\infty &= \max_{1 \leq i \leq n} |x_i|
 \end{aligned}$$
+
+Here's a visualization of the **unit norm balls** in $\mathbb{R}^2$ for the most common norms:
+
+- $\ell_p$ norms for different values of $p$ \( p = 1, 2, 3, \infty \)
+- A **counterexample** for \( p = 0.5 \), shown as a dashed line, labeled clearly as “not a norm”
+
+These “balls” show the set of all points $\mathbf{x} \in \mathbb{R}^2$ such that $\|\mathbf{x}\| = 1$ under each norm.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def unit_norm_ball(p, num_points=300):
+    """
+    Generate points on the unit ball of the Lp norm in R^2.
+    """
+    theta = np.linspace(0, 2 * np.pi, num_points)
+    x = np.cos(theta)
+    y = np.sin(theta)
+
+    if p == np.inf:
+        # Infinity norm: max(|x|, |y|) = 1 (a square)
+        return np.array([
+            [-1, -1], [1, -1], [1, 1], [-1, 1], [-1, -1]  # square
+        ]).T
+    else:
+        norm = (np.abs(x)**p + np.abs(y)**p)**(1/p)
+        return x / norm, y / norm
+
+# Norm values to plot
+norms = [0.5, 1, 2, 3, np.inf]
+colors = ['gray', 'red', 'blue', 'green', 'orange']
+styles = ['--', '-', '-', '-', '-']
+labels = [
+    r"$\|\mathbf{x}\|_{0.5}$ (not a norm)",
+    r"$\|\mathbf{x}\|_1$",
+    r"$\|\mathbf{x}\|_2$",
+    r"$\|\mathbf{x}\|_3$",
+    r"$\|\mathbf{x}\|_\infty$"
+]
+
+# Set up plot
+plt.figure(figsize=(8, 8))
+
+for p, color, style, label in zip(norms, colors, styles, labels):
+    x, y = unit_norm_ball(p)
+    plt.plot(x, y, linestyle=style, color=color, label=label)
+
+# Decorations
+plt.gca().set_aspect('equal')
+plt.title("Unit Norm Balls in $\\mathbb{R}^2$")
+plt.xlabel("$x_1$")
+plt.ylabel("$x_2$")
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.grid(True, linestyle=':')
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+- The **solid curves** for \( p = 1, 2, 3, \infty \) all enclose **convex shapes**—valid norm balls.
+- The **dashed gray curve** for \( p = 0.5 \) appears **star-shaped and non-convex**, violating the triangle inequality and thus **not forming a norm**.
+- It’s a powerful visual cue for why the condition \( p \geq 1 \) is essential for valid norms.
+
 
 Note that the 1- and 2-norms are special cases of the
 $p$-norm, and the $\infty$-norm is the limit of the $p$-norm as $p$

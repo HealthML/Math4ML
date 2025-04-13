@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_spaces/basis_functions_vector_space.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Vector spaces" href="vector_spaces.html" />
+    <link rel="next" title="Subspaces" href="subspaces.html" />
+    <link rel="prev" title="Polynomials" href="polynomial_vector_space.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,12 +185,21 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Polynomials</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metric_spaces.html">Metric spaces</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="normed_spaces.html">Normed spaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -434,7 +444,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="basis-functions-form-a-vector-space">
 <h1>Basis Functions Form a Vector Space<a class="headerlink" href="#basis-functions-form-a-vector-space" title="Link to this heading">#</a></h1>
 <p>We can generalize the polynomial-feature-based vector space to a broader class of functions expressed as linear combinations of basis functions, not just monomials.
-In machine learning, many models can be understood as learning a function <span class="math notranslate nohighlight">\( f(\mathbf{x}) \)</span> that maps input features <span class="math notranslate nohighlight">\( \mathbf{x} \in \mathbb{R}^d \)</span> to an output — such as a predicted value in regression or a class score in classification. A powerful and general approach is to express this function as a <strong>linear combination of basis functions</strong>,</p>
+In machine learning, many models can be understood as learning a function <span class="math notranslate nohighlight">\( f(\mathbf{x}) \)</span> that maps input features <span class="math notranslate nohighlight">\( \mathbf{x} \in \mathbb{R}^d \)</span> to an output — such as a predicted value in regression or a class score in classification, with the decision boundary <span class="math notranslate nohighlight">\( f(\mathbf{x}) = 0\)</span>. A powerful and general approach is to express this function as a <strong>linear combination of basis functions</strong>,</p>
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}),
@@ -488,54 +498,172 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <hr class="docutils" />
 <section id="common-basis-functions-in-v-phi-in-machine-learning">
 <h2>Common Basis Functions in <span class="math notranslate nohighlight">\( V_\Phi \)</span> in Machine Learning<a class="headerlink" href="#common-basis-functions-in-v-phi-in-machine-learning" title="Link to this heading">#</a></h2>
-<p><span class="math notranslate nohighlight">\( \phi_j(\mathbf{x}) \)</span>: Feature functions — could be:</p>
+<p><span class="math notranslate nohighlight">\( \phi_i(\mathbf{x}) \)</span>: Feature functions — could be:</p>
 <section id="monomial-feature">
 <h3>🔢 1. <strong>Monomial Feature</strong><a class="headerlink" href="#monomial-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = x_1^2 \cdot x_2
+\phi_i(\mathbf{x}) = x_1^{n_{1i}} \cdot x_2^{n_{2i}} \cdot \dots \cdot x_d^{n_{di}}
 \]</div>
 <ul class="simple">
 <li><p>Represents interaction and nonlinearity.</p></li>
-<li><p>Common in polynomial regression and kernel methods.</p></li>
+<li><p>Common in polynomial regression.</p></li>
 <li><p>Curved and asymmetric — useful for modeling feature interactions.</p></li>
+<li><p>Each monomial feature function is parameterized by the exponents.</p></li>
+<li><p>The total degree of the monomial is <span class="math notranslate nohighlight">\( n_{1i} + n_{2i} + \dots + n_{di} \)</span>.</p></li>
+<li><p>For a maximum total degree <span class="math notranslate nohighlight">\( d \)</span>, and dimensionality of <span class="math notranslate nohighlight">\(\mathbf{x}=m\)</span>, the number of monomial features is given by the combinatorial formula:</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[
+\binom{d+m}{m} = \frac{(d+m)!}{d! \cdot m!}
+\]</div>
+<ul class="simple">
+<li><p>For example, for <span class="math notranslate nohighlight">\( d=2 \)</span> and <span class="math notranslate nohighlight">\( m=2 \)</span>, the monomial features are:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\phi_1(\mathbf{x}) &amp;= x_1^2 \\
+\phi_2(\mathbf{x}) &amp;= x_1x_2 \\
+\phi_3(\mathbf{x}) &amp;= x_2^2 \\
+\phi_4(\mathbf{x}) &amp;= x_1 \\
+\phi_5(\mathbf{x}) &amp;= x_2 \\
+\phi_6(\mathbf{x}) &amp;= 1
+\end{align*}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations_with_replacement</span><span class="p">,</span> <span class="n">product</span>
+
+<span class="k">def</span> <span class="nf">monomial_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">max_degree</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes all monomial features for input X up to a given total degree.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    X : ndarray of shape (n_samples, n_features)</span>
+<span class="sd">        Input data.</span>
+<span class="sd">    max_degree : int</span>
+<span class="sd">        Maximum total degree of monomials to include.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    X_mono : ndarray of shape (n_samples, n_output_features)</span>
+<span class="sd">        Transformed feature matrix with monomial terms up to max_degree.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># Generate all exponent tuples (k1, ..., kd) with sum &lt;= max_degree</span>
+    <span class="n">exponents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">repeat</span><span class="o">=</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span> <span class="o">==</span> <span class="n">degree</span><span class="p">:</span>
+                <span class="n">exponents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+    
+    <span class="c1"># Compute each monomial term: x_1^k1 * x_2^k2 * ...</span>
+    <span class="n">X_mono</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exponents</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">powers</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">exponents</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">feature_idx</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">powers</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">power</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_mono</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">*=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">feature_idx</span><span class="p">]</span> <span class="o">**</span> <span class="n">power</span>
+
+    <span class="k">return</span> <span class="n">X_mono</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="radial-basis-function-rbf">
 <h3>🌐 2. <strong>Radial Basis Function (RBF)</strong><a class="headerlink" href="#radial-basis-function-rbf" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \exp(-\gamma \|\mathbf{x}\|^2)
+\phi_i(\mathbf{x}) = \exp(-\gamma_i \|\mathbf{x}-\boldsymbol{\mu}_i\|^2)
 \]</div>
 <ul class="simple">
 <li><p>Peaks at the origin and decays radially.</p></li>
 <li><p>Encodes <strong>locality</strong> — only nearby inputs have large activation.</p></li>
 <li><p>Basis of RBF networks and RBF kernel SVMs.</p></li>
+<li><p>Each RBF feature is parameterized by the center vector <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_i\)</span> and the scale <span class="math notranslate nohighlight">\(\gamma_i\)</span>.</p></li>
+<li><p>The RBF is a <strong>Gaussian</strong> function that is symmetric around the center <span class="math notranslate nohighlight">\( \boldsymbol{\mu}_i \)</span>.</p></li>
+<li><p>strategies to choose <span class="math notranslate nohighlight">\( \boldsymbol{\mu}_i \)</span> include:</p>
+<ul>
+<li><p>Randomly selecting points from the training data.</p></li>
+<li><p>Using clustering algorithms (e.g., k-means) to find representative centers.</p></li>
+<li><p>Using a grid or lattice of points in the input space.</p></li>
 </ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rbf_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes RBF features for input X given centers and gamma.</span>
+<span class="sd">    X shape: (n_samples, n_features)</span>
+<span class="sd">    centers shape: (n_centers, n_features)</span>
+<span class="sd">    Output shape: (n_samples, n_centers)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">-</span> <span class="n">centers</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="fourier-feature">
 <h3>🎵 3. <strong>Fourier Feature</strong><a class="headerlink" href="#fourier-feature" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \sin(\omega^\top \mathbf{x}), \quad \omega = [1, 1]
+\phi_i(\mathbf{x}) = \sin(\mathbf{w}_i^\top \mathbf{x}+b_i)
 \]</div>
 <ul class="simple">
 <li><p>Encodes periodicity or oscillations in space.</p></li>
 <li><p>Used in signal processing and random Fourier features for kernel approximation.</p></li>
 <li><p>Smooth but non-monotonic.</p></li>
+<li><p>Each Fourier Feature is prametrized by a weight vector <span class="math notranslate nohighlight">\( \mathbf{w}_i \)</span> that relates features to frequencies and a phase shift <span class="math notranslate nohighlight">\( b_i \)</span>.</p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fourier_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">phase_shifts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes Fourier features for input X given frequencies and phase shifts.</span>
+<span class="sd">    X shape: (n_samples, n_features)</span>
+<span class="sd">    frequencies shape: (n_frequencies, n_features)</span>
+<span class="sd">    phase_shifts shape: (n_frequencies,)</span>
+<span class="sd">    Output shape: (n_samples, n_frequencies)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">phase_shifts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="neural-net-activation-tanh">
 <h3>🧠 4. <strong>Neural Net Activation (Tanh)</strong><a class="headerlink" href="#neural-net-activation-tanh" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\phi(\mathbf{x}) = \tanh(w^\top \mathbf{x}), \quad w = [1, 1]
+\phi(\mathbf{x}) = \tanh(\mathbf{w}^\top \mathbf{x}+b)
 \]</div>
 <ul class="simple">
 <li><p>S-shaped nonlinearity common in neural networks.</p></li>
 <li><p>Compresses input into [−1, 1] range.</p></li>
 <li><p>Nonlinear but continuous and differentiable.</p></li>
+<li><p>Each neural activation is parameterized by a weight vector <span class="math notranslate nohighlight">\( \mathbf{w} \)</span> and a bias <span class="math notranslate nohighlight">\( b \)</span>.</p></li>
 </ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">nn_activation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">bias</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes neural net activation for input X given weights and bias.</span>
+<span class="sd">    X shape: (n_samples, n_features)</span>
+<span class="sd">    weights shape: (n_features,)</span>
+<span class="sd">    bias shape: ()</span>
+<span class="sd">    Output shape: (n_samples,)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">weights</span> <span class="o">+</span> <span class="n">bias</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="visualization-of-basis-functions">
 <h3>Visualization of Basis Functions<a class="headerlink" href="#visualization-of-basis-functions" title="Link to this heading">#</a></h3>
@@ -547,8 +675,8 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># 1D input range</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -556,17 +684,18 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="c1"># --- Feature Functions ---</span>
 
 <span class="c1"># 1. Monomial: x^3</span>
-<span class="n">phi_monomial</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">phi_monomial</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">phi_monomial</span> <span class="o">=</span> <span class="n">phi_monomial</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># Select x^3</span>
 
 <span class="c1"># 2. RBF centered at 0</span>
 <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">phi_rbf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">phi_rbf</span> <span class="o">=</span> <span class="n">rbf_features</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">]]),</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
 
 <span class="c1"># 3. Fourier: sin(2x)</span>
-<span class="n">phi_fourier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">phi_fourier</span> <span class="o">=</span> <span class="n">fourier_features</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">]]),</span> <span class="n">phase_shifts</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span>
 
 <span class="c1"># 4. Neural Net Activation: tanh(2x)</span>
-<span class="n">phi_nn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">phi_nn</span> <span class="o">=</span> <span class="n">nn_activation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">]),</span> <span class="n">bias</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># --- Plotting ---</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -594,7 +723,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/7a495256f6fd94991320a5e888411c35eb014ec7312040e31e8dac26a4a9808c.png" src="../_images/7a495256f6fd94991320a5e888411c35eb014ec7312040e31e8dac26a4a9808c.png" />
+<img alt="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" src="../_images/792e4cc328d7ade3045f230be3a8cdf2b5c488a74ea4f551c83513a2416bf07f.png" />
 </div>
 </div>
 <p>What This Shows:</p>
@@ -628,8 +757,8 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Define a 2D input grid</span>
 <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -640,17 +769,18 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 <span class="c1"># --- Basis Functions ---</span>
 
 <span class="c1"># 1. Monomial: x1^2 * x2</span>
-<span class="n">monomial</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_grid</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_grid</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">monomial</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">monomial</span> <span class="o">=</span> <span class="n">monomial</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># Select x1^2 * x2</span>
 
 <span class="c1"># 2. RBF centered at origin</span>
 <span class="n">gamma</span> <span class="o">=</span> <span class="mf">2.0</span>
-<span class="n">rbf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_grid</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">X_grid</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">rbf</span> <span class="o">=</span> <span class="n">rbf_features</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">)</span>
 
 <span class="c1"># 3. Fourier: sin(w^T x), with w = [1, 1]</span>
-<span class="n">fourier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">X_grid</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">fourier</span> <span class="o">=</span> <span class="n">fourier_features</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]),</span> <span class="n">phase_shifts</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span>
 
 <span class="c1"># 4. Neural Net Activation: tanh(w^T x + b), w = [1, 1], b = 0</span>
-<span class="n">nn_activation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">X_grid</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="n">nn_activation</span> <span class="o">=</span> <span class="n">nn_activation</span><span class="p">(</span><span class="n">X_grid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">bias</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># --- Plotting ---</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -677,7 +807,7 @@ V_\Phi = \left\{ f(\mathbf{x}) = \sum_{j=1}^m a_j \cdot \phi_j(\mathbf{x}) \;\mi
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/b4281ebd45b84cd8f701ad9aaa86122d3c1e76c488b05c84cec7e424d9d3e00e.png" src="../_images/b4281ebd45b84cd8f701ad9aaa86122d3c1e76c488b05c84cec7e424d9d3e00e.png" />
+<img alt="../_images/e8c7cf400a25adc30d32936ae987f992c81bb4b3e1abd3e049e015cb353e64d5.png" src="../_images/e8c7cf400a25adc30d32936ae987f992c81bb4b3e1abd3e049e015cb353e64d5.png" />
 </div>
 </div>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -765,10 +895,10 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_circles</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># Generate circles (small number to keep it clear)</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -784,32 +914,15 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/65b62f0722240d43a74255b9be59d6fb1c31fc8d29dbd9b857351ee30acbe03e.png" src="../_images/65b62f0722240d43a74255b9be59d6fb1c31fc8d29dbd9b857351ee30acbe03e.png" />
+<img alt="../_images/25f7ead5a63f5448c9bf3199525262956f81f4bd0ea32c6e93a7516e8f5832dd.png" src="../_images/25f7ead5a63f5448c9bf3199525262956f81f4bd0ea32c6e93a7516e8f5832dd.png" />
 </div>
 </div>
-<p>The space <span class="math notranslate nohighlight">\( P_n^2 \)</span> gives you a natural <strong>feature map</strong> to transform the data into a higher-dimensional space where the classes may become linearly separable. The transformation is defined as:</p>
+<p>The space <span class="math notranslate nohighlight">\( P_2^2 \)</span> gives you a natural <strong>feature map</strong> to transform the data into a higher-dimensional space where the classes may become linearly separable. The transformation is defined as:</p>
 <div class="math notranslate nohighlight">
 \[
-\phi: \mathbb{R}^2 \to \mathbb{R}^m, \quad \mathbf{x} \mapsto [1, x_1, x_2, x_1^2, x_1x_2, x_2^2, \dots]
+\phi: \mathbb{R}^2 \to \mathbb{R}^6, \quad \mathbf{x} \mapsto [1, x_1, x_2, x_1^2, x_1x_2, x_2^2]
 \]</div>
-<p>So let’s implement this in Python.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Computes degree-2 polynomial features for 2D input X.</span>
-<span class="sd">    Input shape: (n_samples, 2)</span>
-<span class="sd">    Output shape: (n_samples, 5) with features:</span>
-<span class="sd">    [x1, x2, x1^2, x1*x2, x2^2]</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">x1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">x2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x2</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s visualize the transformation of the concentric circles dataset using polynomial features.</p>
+<p>Let’s visualize the transformation of the concentric circles dataset using polynomial features up to degree 2.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -818,15 +931,15 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Polynomial transform (degree 2, no bias)</span>
-<span class="n">X_poly</span> <span class="o">=</span> <span class="n">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_poly</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># Extract original and new features</span>
 <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">x1_sq</span> <span class="o">=</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">x1_sq</span> <span class="o">=</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="n">x2_sq</span> <span class="o">=</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>
 
 <span class="c1"># Plot 3D view of transformed space</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
@@ -842,9 +955,9 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 
 <span class="c1"># Transformed 3D space (x1^2 vs x2^2)</span>
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_sq</span><span class="p">,</span> <span class="n">x2_sq</span><span class="p">,</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_sq</span><span class="p">,</span> <span class="n">x2_sq</span><span class="p">,</span> <span class="n">X_poly</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
-    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x1_sq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x2_sq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_poly</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x1_sq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x2_sq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_poly</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1^2$&quot;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2^2$&quot;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1 x_2$&quot;</span><span class="p">)</span>
@@ -857,10 +970,10 @@ p(\mathbf{x}) = 3 + 2x_1 - x_2 + 5x_1x_2 - x_2^2
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/3a44720b10d96d4ab297e4e991bfadfc32536bca060afdb44606ce92c974da26.png" src="../_images/3a44720b10d96d4ab297e4e991bfadfc32536bca060afdb44606ce92c974da26.png" />
+<img alt="../_images/28f459758f346071be4c9532a54ef4a814e195f39c6892a37493346a539cf182.png" src="../_images/28f459758f346071be4c9532a54ef4a814e195f39c6892a37493346a539cf182.png" />
 </div>
 </div>
-<p>We see that in the transformed space <span class="math notranslate nohighlight">\( P_2^2 \)</span> (right), the data points are more spread out and the clusters are linearly separable.
+<p>We see that in the additional dimensions in the transformed space <span class="math notranslate nohighlight">\( P_2^2 \)</span> (right), the data points are more spread out and the clusters become linearly separable.
 So, let’s apply the Nearest Centroid Classifier to the original and the transformed data.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -869,14 +982,14 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestCentroid</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestCentroid</span>
 
 <span class="c1"># Model A: Nearest Centroid on raw features</span>
 <span class="n">model_raw</span> <span class="o">=</span> <span class="n">NearestCentroid</span><span class="p">()</span>
 <span class="n">model_raw</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 <span class="c1"># Model B: Nearest Centroid on polynomially transformed features</span>
-<span class="n">X_poly</span> <span class="o">=</span> <span class="n">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_poly</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">model_poly</span> <span class="o">=</span> <span class="n">NearestCentroid</span><span class="p">()</span>
 <span class="n">model_poly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
@@ -889,7 +1002,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 <span class="n">Z_raw</span> <span class="o">=</span> <span class="n">model_raw</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># Predict with polynomial model</span>
-<span class="n">grid_poly</span> <span class="o">=</span> <span class="n">polynomial_features_deg2</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">grid_poly</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">Z_poly</span> <span class="o">=</span> <span class="n">model_poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid_poly</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># Plot</span>
@@ -914,7 +1027,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/ae0768d51ad7fbaa901f46ad9fa4c3cf4def2fcb9ed41fd1be85326241663a1f.png" src="../_images/ae0768d51ad7fbaa901f46ad9fa4c3cf4def2fcb9ed41fd1be85326241663a1f.png" />
+<img alt="../_images/3dbc7789f8c74cc64e4df65c4616d4e480c09e84ad9c120fb9d33c14aacd3cfc.png" src="../_images/3dbc7789f8c74cc64e4df65c4616d4e480c09e84ad9c120fb9d33c14aacd3cfc.png" />
 </div>
 </div>
 <p>The left plot shows the decision boundary of the Nearest Centroid Classifier using the original features, while the right plot shows the decision boundary after applying polynomial feature expansion. The polynomial transformation allows the classifier to separate the classes effectively. Note that the Nearest Centroid classifier is a linear classifier. While the decision boundary forms a circle in the original space <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, it is a flat hyperplane in the transformed space. This is a key point when using non-linear basis functions in the context of linear machine learning methods: Learned functions are linear in the transformed space, but can be nonlinear in the original space.</p>
@@ -930,21 +1043,11 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_moons</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestCentroid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
-
-<span class="c1"># --- Polynomial feature function (degree 2) ---</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-    <span class="n">x1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">x2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span><span class="p">,</span> <span class="n">x2</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
-
-<span class="c1"># --- RBF feature function ---</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rbf_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">centers</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span><span class="p">,</span> <span class="n">make_moons</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NearestCentroid</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># --- RBF centers: grid over input space</span>
 <span class="n">grid_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
@@ -979,7 +1082,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
     <span class="n">model_raw</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
     <span class="c1"># Polynomial model</span>
-    <span class="n">X_poly</span> <span class="o">=</span> <span class="n">polynomial_features_deg2</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X_poly</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">model_poly</span> <span class="o">=</span> <span class="n">NearestCentroid</span><span class="p">()</span>
     <span class="n">model_poly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
@@ -992,7 +1095,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
     <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span>
                          <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
-    <span class="n">grid_poly</span> <span class="o">=</span> <span class="n">polynomial_features_deg2</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">grid_poly</span> <span class="o">=</span> <span class="n">monomial_features</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">max_degree</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">grid_rbf</span> <span class="o">=</span> <span class="n">rbf_features</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">grid_centers</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
 
     <span class="c1"># Predictions</span>
@@ -1025,7 +1128,7 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/c80883ba1026327a6c0677e34eb44ddbb7d36e8f6698fb418769742fe2e821c1.png" src="../_images/c80883ba1026327a6c0677e34eb44ddbb7d36e8f6698fb418769742fe2e821c1.png" />
+<img alt="../_images/57f06ac7cb49e50f9f3d32554fcd96a0f1697f6089c3f7c1a7b78dfdc031a754.png" src="../_images/57f06ac7cb49e50f9f3d32554fcd96a0f1697f6089c3f7c1a7b78dfdc031a754.png" />
 </div>
 </div>
 <p>We see that both feature transformations perform well on the <strong>concentric circles</strong> dataset and the <strong>XOR</strong> dataset, but the <strong>polynomial features</strong> are not as effective on the <strong>two moons</strong> dataset as the RBF features, which can capture the local structure of the data.</p>
@@ -1063,13 +1166,22 @@ So, let’s apply the Nearest Centroid Classifier to the original and the transf
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="vector_spaces.html"
+       href="polynomial_vector_space.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Vector spaces</p>
+        <p class="prev-next-title">Polynomials</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="subspaces.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Subspaces</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

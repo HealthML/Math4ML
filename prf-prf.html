@@ -27,13 +27,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -189,12 +189,21 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_spaces/overview_spaces.html">Vectors and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_spaces/overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="chapter_spaces/vector_spaces.html">Vector spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_spaces/polynomial_vector_space.html">Polynomials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_spaces/basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_spaces/metric_spaces.html">Metric spaces</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="chapter_spaces/normed_spaces.html">Normed spaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -350,7 +359,10 @@ document.write(`
    <h1>Proof Index</h1>
 
    <div class="modindex-jumpbox">
-   <a href="#cap-thm-feature-map-vector-space"><strong>thm-feature-map-vector-space</strong></a>
+   <a href="#cap-thm-feature-map-vector-space"><strong>thm-feature-map-vector-space</strong></a> | 
+   <a href="#cap-thm-nullspace-subspace"><strong>thm-nullspace-subspace</strong></a> | 
+   <a href="#cap-thm-polynomial-vector-space"><strong>thm-polynomial-vector-space</strong></a> | 
+   <a href="#cap-thm-rank-nullity"><strong>thm-rank-nullity</strong></a>
    </div>
 
    <table class="indextable modindextable">
@@ -361,6 +373,30 @@ document.write(`
        <td></td>
        <td>
        <a href="chapter_spaces/basis_functions_vector_space.html#thm-feature-map-vector-space"><code class="xref">thm-feature-map-vector-space</code></a> <em>(chapter_spaces/basis_functions_vector_space)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-nullspace-subspace"><td></td><td>
+       <strong>thm-nullspace-subspace</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_spaces/subspaces.html#thm-nullspace-subspace"><code class="xref">thm-nullspace-subspace</code></a> <em>(chapter_spaces/subspaces)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-polynomial-vector-space"><td></td><td>
+       <strong>thm-polynomial-vector-space</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_spaces/polynomial_vector_space.html#thm-polynomial-vector-space"><code class="xref">thm-polynomial-vector-space</code></a> <em>(chapter_spaces/polynomial_vector_space)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-rank-nullity"><td></td><td>
+       <strong>thm-rank-nullity</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_spaces/subspaces.html#thm-rank-nullity"><code class="xref">thm-rank-nullity</code></a> <em>(chapter_spaces/subspaces)</em></td><td>
        <em>theorem</em></td></tr>
    </table>
 

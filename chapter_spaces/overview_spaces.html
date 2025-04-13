@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Vectors and the Spaces they live in &#8212; Mathematics for Machine Learning</title>
+    <title>Vectors, Functions and the Spaces they live in &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Vector spaces" href="vector_spaces.html" />
-    <link rel="prev" title="Overview of Machine Learning Concepts" href="../chapter_ml_basics/intro.html" />
+    <link rel="prev" title="Representation Learning" href="../chapter_ml_basics/representation_learning.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,12 +185,21 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Vectors and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Vectors, Functions and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Polynomials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metric_spaces.html">Metric spaces</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="normed_spaces.html">Normed spaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -393,7 +402,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Vectors and the Spaces they live in</h1>
+    <h1>Vectors, Functions and the Spaces they live in</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -407,15 +416,104 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="vectors-and-the-spaces-they-live-in">
-<h1>Vectors and the Spaces they live in<a class="headerlink" href="#vectors-and-the-spaces-they-live-in" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="vectors-functions-and-the-spaces-they-live-in">
+<h1>Vectors, Functions and the Spaces they live in<a class="headerlink" href="#vectors-functions-and-the-spaces-they-live-in" title="Link to this heading">#</a></h1>
 <p>In this chapter we present important classes of spaces in which our data will live and our operations will take place:
 vector spaces, metric spaces, normed spaces, and inner product spaces.
-Generally speaking, these are defined in such a way as to capture one or more important properties of Euclidean space but in a more general way.</p>
+Generally speaking, these are defined in such a way as to capture one or more important properties of Euclidean space but in a more general way. Classical Euclidean spaces that in machine learning are most commonly used to model the inputs and outputs of a machine learning algorithm are finite-dimensional.
+Functions on the other hand are not finite-dimensional, and in fact, most of the spaces we will be working with are often infinite-dimensional. Functions are the most common objects in these infinite-dimensional spaces, and we will see that they can be treated as vectors.</p>
+<p>Vectors and functions, though seemingly different, share many common properties by virtue of inhabiting vector spaces. In a finite-dimensional vector space like <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, vectors are ordered tuples of numbers that can be easily visualized as points or arrows in Euclidean space. They obey the familiar rules of addition and scalar multiplication, which makes them very intuitive to work with. Functions, on the other hand, are objects that map inputs to outputs and generally reside in infinite-dimensional spaces. Despite this, many function spaces also exhibit vector space structure; for instance, if <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are functions, then so is <span class="math notranslate nohighlight">\(\alpha f + \beta g\)</span> for any scalars <span class="math notranslate nohighlight">\(\alpha, \beta\)</span>. In machine learning, this duality is essential: finite-dimensional vectors often represent data points or feature vectors, while functions are used to model predictions, transformations, or the behavior of learning algorithms. Although the infinite-dimensional nature of function spaces might seem more complex, by choosing an appropriate basis (such as Fourier or wavelet bases) one can often work with finite-dimensional approximations of these function spaces. This common structure allows us to use similar mathematical tools—like inner products, norms, and projections—to analyze both data and models, thereby bridging the gap between concrete numerical computations and abstract function estimation.</p>
+<hr class="docutils" />
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Create a figure with two subplots: one for a finite-dimensional vector space and one for function space.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1">### Left Subplot: Finite-Dimensional Vector Space Example</span>
+<span class="c1"># Example: Visualizing vectors in R².</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="c1"># Define a few example vectors in R^2.</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                    <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># Plot each vector as an arrow originating from the origin.</span>
+<span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">:</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="c1"># Setup plot aesthetics.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Finite-Dimensional Vector Space (R²)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X₁&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;X₂&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1">### Right Subplot: Function Space Example</span>
+<span class="c1"># In a function space, functions can be represented as &quot;vectors&quot; via their coefficients in a chosen basis.</span>
+<span class="c1"># For illustration, approximate a function in L²[0, 2π] using a simple basis of sinusoids.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="c1"># Define a target function as a linear combination of basis functions.</span>
+<span class="n">f_target</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># Basis functions (for illustrative purposes).</span>
+<span class="n">phi1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">phi2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">phi3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># The approximated function using specific coefficients corresponds to a point (vector) of coefficients in the finite-dimensional approximation.</span>
+<span class="n">f_approx</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">phi1</span> <span class="o">+</span> <span class="mf">0.0</span> <span class="o">*</span> <span class="n">phi2</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">phi3</span>
+
+<span class="c1"># Plot the target function and the basis functions.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f_target</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Target Function&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">phi1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Basis: sin(x)&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">phi2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Basis: cos(x)&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">phi3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Basis: cos(2x)&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="c1"># Plot the approximated function as the result of the linear combination.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f_approx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Approximated Function&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Setup plot aesthetics.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Function Space Representation&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Illustration: Vectors vs. Functions in Their Respective Vector Spaces&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/227793fb2c79101d13b826ff75c90e3e8638e8f78dee16dcee24fa040b46ddb7.png" src="../_images/227793fb2c79101d13b826ff75c90e3e8638e8f78dee16dcee24fa040b46ddb7.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Left Plot (Finite-Dimensional Vector Space):</strong><br />
+The left subplot displays several arrows representing vectors in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>. Each vector is an element of a finite-dimensional space (with just two components), and the operations (addition, scalar multiplication) on these vectors are straightforward and visualizable.</p></li>
+<li><p><strong>Right Plot (Function Space):</strong><br />
+The right subplot illustrates a function <span class="math notranslate nohighlight">\(f(x)\)</span> as a curve over the interval <span class="math notranslate nohighlight">\([0, 2\pi]\)</span>. Although function spaces are inherently infinite-dimensional, we approximate them by representing functions in a finite basis (here, using sinusoids). The target function is expressed as a linear combination of basis functions, and the approximated function (in red) is determined by specific coefficients. This demonstrates how functions can be treated as vectors in a finite-dimensional subspace of an infinite-dimensional function space.</p></li>
+</ul>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="polynomial_vector_space.html">Polynomials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subspaces.html">Subspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metric_spaces.html">Metric spaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metric_spaces.html#metric-spaces-in-machine-learning">Metric Spaces in Machine Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="normed_spaces.html">Normed spaces</a></li>
 </ul>
 </div>
 </section>
@@ -451,12 +549,12 @@ Generally speaking, these are defined in such a way as to capture one or more im
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../chapter_ml_basics/intro.html"
+       href="../chapter_ml_basics/representation_learning.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview of Machine Learning Concepts</p>
+        <p class="prev-next-title">Representation Learning</p>
       </div>
     </a>
     <a class="right-next"
