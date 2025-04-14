@@ -452,10 +452,42 @@ Where:
 - **Affine Subspace:**  
   A hyperplane is a linear manifold but not a subspace unless it passes exactly through the origin. Generally, this hyperplane does **not contain the zero vector**, and hence it violates condition (i) of the subspace definition. However, it is an affine subspace of $\mathbb{R}^n$, as it can be expressed as:
 
+
+Given $\mathbf{w} \in \mathbb{R}^n$ (with $\mathbf{w} \neq \mathbf{0}$) and a scalar $b$, a particular solution $\mathbf{x}_0$ of the equation
+
 $$
-\mathbf{w}^\top \mathbf{x} + b = 0 \implies \mathbf{x} = -\frac{b}{\mathbf{w}^\top}\mathbf{w} + U
+\mathbf{w}^\top \mathbf{x} + b = 0
 $$
-where $U$ is the subspace of all vectors orthogonal to $\mathbf{w}$.
+must satisfy $\mathbf{w}^\top \mathbf{x}_0 = -b$. A standard way to obtain such an $\mathbf{x}_0$ is to set:
+
+$$
+\mathbf{x}_0 = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w}.
+$$
+Notice that $\|\mathbf{w}\|^2 = \mathbf{w}^\top \mathbf{w}$ is a scalar (and not $\mathbf{w}^\top$ by itself), which makes the fraction well defined. Indeed, 
+
+$$
+\mathbf{w}^\top \mathbf{x}_0 = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w}^\top \mathbf{w} = -b,
+$$
+as required.
+
+Every $\mathbf{x}$ satisfying the hyperplane equation can be written as
+
+$$
+\mathbf{x} = \mathbf{x}_0 + \mathbf{u},
+$$
+where $\mathbf{u}$ is any vector in the subspace
+
+$$
+U = \{ \mathbf{u} \in \mathbb{R}^n \mid \mathbf{w}^\top \mathbf{u} = 0 \}.
+$$
+In other words, $U$ is the $(n-1)$-dimensional subspace orthogonal to $\mathbf{w}$. This shows that the hyperplane is an affine subspace—that is, it is a translation of the linear subspace $U$ by the vector $\mathbf{x}_0$.
+
+The hyperplane can be written as:
+
+$$
+\mathbf{w}^\top \mathbf{x} + b = 0 \quad \Longleftrightarrow \quad \mathbf{x} = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w} + \mathbf{u}, \quad \text{with } \mathbf{u} \in \{ \mathbf{v} \in \mathbb{R}^n : \mathbf{w}^\top \mathbf{v} = 0 \}.
+$$
+This expression decomposes any point on the hyperplane into a particular solution plus a component that lies in the $(n-1)$-dimensional subspace $U$.
 
 ## Subspaces of the Space of Functions
 
