@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -896,11 +896,39 @@ A plane that passes through the origin is a subspace of <span class="math notran
 <li><p><strong>Affine Subspace:</strong><br />
 A hyperplane is a linear manifold but not a subspace unless it passes exactly through the origin. Generally, this hyperplane does <strong>not contain the zero vector</strong>, and hence it violates condition (i) of the subspace definition. However, it is an affine subspace of <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, as it can be expressed as:</p></li>
 </ul>
+<p>Given <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^n\)</span> (with <span class="math notranslate nohighlight">\(\mathbf{w} \neq \mathbf{0}\)</span>) and a scalar <span class="math notranslate nohighlight">\(b\)</span>, a particular solution <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span> of the equation</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{w}^\top \mathbf{x} + b = 0 \implies \mathbf{x} = -\frac{b}{\mathbf{w}^\top}\mathbf{w} + U
+\mathbf{w}^\top \mathbf{x} + b = 0
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(U\)</span> is the subspace of all vectors orthogonal to <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>.</p>
+<p>must satisfy <span class="math notranslate nohighlight">\(\mathbf{w}^\top \mathbf{x}_0 = -b\)</span>. A standard way to obtain such an <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span> is to set:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_0 = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w}.
+\]</div>
+<p>Notice that <span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2 = \mathbf{w}^\top \mathbf{w}\)</span> is a scalar (and not <span class="math notranslate nohighlight">\(\mathbf{w}^\top\)</span> by itself), which makes the fraction well defined. Indeed,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}^\top \mathbf{x}_0 = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w}^\top \mathbf{w} = -b,
+\]</div>
+<p>as required.</p>
+<p>Every <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> satisfying the hyperplane equation can be written as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} = \mathbf{x}_0 + \mathbf{u},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> is any vector in the subspace</p>
+<div class="math notranslate nohighlight">
+\[
+U = \{ \mathbf{u} \in \mathbb{R}^n \mid \mathbf{w}^\top \mathbf{u} = 0 \}.
+\]</div>
+<p>In other words, <span class="math notranslate nohighlight">\(U\)</span> is the <span class="math notranslate nohighlight">\((n-1)\)</span>-dimensional subspace orthogonal to <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>. This shows that the hyperplane is an affine subspace—that is, it is a translation of the linear subspace <span class="math notranslate nohighlight">\(U\)</span> by the vector <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>.</p>
+<p>The hyperplane can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}^\top \mathbf{x} + b = 0 \quad \Longleftrightarrow \quad \mathbf{x} = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w} + \mathbf{u}, \quad \text{with } \mathbf{u} \in \{ \mathbf{v} \in \mathbb{R}^n : \mathbf{w}^\top \mathbf{v} = 0 \}.
+\]</div>
+<p>This expression decomposes any point on the hyperplane into a particular solution plus a component that lies in the <span class="math notranslate nohighlight">\((n-1)\)</span>-dimensional subspace <span class="math notranslate nohighlight">\(U\)</span>.</p>
 </section>
 </section>
 <section id="subspaces-of-the-space-of-functions">
