@@ -144,10 +144,10 @@ Let's visualize how different norms affect the decision boundary of a nearest ce
 :tags: [hide-input]
 import numpy as np
 import matplotlib.pyplot as plt
-
+np.random.seed(42)
 # Generate simple 2D synthetic data
-class1 = np.random.randn(20, 2) + np.array([2, 2])
-class2 = np.random.randn(20, 2) + np.array([-2, -2])
+class1 = np.random.randn(20, 2) + np.array([1, 2])
+class2 = np.random.randn(20, 2) + np.array([-1, -2])
 X = np.vstack((class1, class2))
 y = np.array([0]*20 + [1]*20)
 
