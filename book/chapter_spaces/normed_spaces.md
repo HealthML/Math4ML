@@ -50,8 +50,8 @@ $$\begin{aligned}
 
 Here's a visualization of the **unit norm balls** in $\mathbb{R}^2$ for the most common norms:
 
-- $\ell_p$ norms for different values of $p$ \( p = 1, 2, 3, \infty \)
-- A **counterexample** for \( p = 0.5 \), shown as a dashed line, labeled clearly as “not a norm”
+- $\ell_p$ norms for different values of $p$ $ p = 1, 2, 3, \infty $
+- A **counterexample** for $ p = 0.5 $, shown as a dashed line, labeled clearly as “not a norm”
 
 These “balls” show the set of all points $\mathbf{x} \in \mathbb{R}^2$ such that $\|\mathbf{x}\| = 1$ under each norm.
 
@@ -108,9 +108,9 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 ```
-- The **solid curves** for \( p = 1, 2, 3, \infty \) all enclose **convex shapes**—valid norm balls.
-- The **dashed gray curve** for \( p = 0.5 \) appears **star-shaped and non-convex**, violating the triangle inequality and thus **not forming a norm**.
-- It’s a powerful visual cue for why the condition \( p \geq 1 \) is essential for valid norms.
+- The **solid curves** for $ p = 1, 2, 3, \infty $ all enclose **convex shapes**—valid norm balls.
+- The **dashed gray curve** for $ p = 0.5 $ appears **star-shaped and non-convex**, violating the triangle inequality and thus **not forming a norm**.
+- It’s a powerful visual cue for why the condition $ p \geq 1 $ is essential for valid norms.
 
 
 Note that the 1- and 2-norms are special cases of the
@@ -136,9 +136,81 @@ infinite-dimensional vector spaces such as function spaces, though.
 
 Normed spaces generalize the idea of **length** and thus naturally appear whenever machine learning algorithms quantify vector magnitude or enforce regularization.
 
-### Examples:
+### Nearest Centroid Classifier under different norms
 
-1. **Regularization (Ridge and Lasso)**  
+Let's visualize how different norms affect the decision boundary of a nearest centroid classifier.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate simple 2D synthetic data
+class1 = np.random.randn(20, 2) + np.array([2, 2])
+class2 = np.random.randn(20, 2) + np.array([-2, -2])
+X = np.vstack((class1, class2))
+y = np.array([0]*20 + [1]*20)
+
+# Compute centroids
+centroids = np.array([X[y==0].mean(axis=0), X[y==1].mean(axis=0)])
+
+# Define metrics
+def lp_distance(x, c, p):
+    if p == np.inf:
+        return np.max(np.abs(x - c), axis=-1)
+    else:
+        return np.sum(np.abs(x - c) ** p, axis=-1) ** (1/p)
+
+# Grid for plotting decision boundaries
+grid_x, grid_y = np.meshgrid(np.linspace(-6, 6, 400), np.linspace(-6, 6, 400))
+grid = np.stack((grid_x.ravel(), grid_y.ravel()), axis=1)
+
+# Plot boundaries for each norm
+norms = [1, 2, np.inf]
+titles = [r"$\ell_1$ (Manhattan)", r"$\ell_2$ (Euclidean)", r"$\ell_\infty$ (Max norm)"]
+
+fig, axs = plt.subplots(1, 3, figsize=(18, 5))
+
+for ax, p, title in zip(axs, norms, titles):
+    # Compute distances to each centroid
+    d0 = lp_distance(grid, centroids[0], p)
+    d1 = lp_distance(grid, centroids[1], p)
+    
+    # Predict by choosing the closer centroid
+    pred = np.where(d0 < d1, 0, 1)
+    pred = pred.reshape(grid_x.shape)
+    
+    # Plot decision boundary
+    ax.contourf(grid_x, grid_y, pred, levels=1, alpha=0.3, colors=["red", "blue"])
+    
+    # Plot data points and centroids
+    ax.scatter(class1[:, 0], class1[:, 1], color="red", label="Class 0")
+    ax.scatter(class2[:, 0], class2[:, 1], color="blue", label="Class 1")
+    ax.scatter(*centroids[0], color="darkred", s=100, marker="x")
+    ax.scatter(*centroids[1], color="darkblue", s=100, marker="x")
+
+    
+    ax.set_title(f"Nearest Centroid Classifier\nwith {title} Distance")
+    ax.set_xlim(-6, 6)
+    ax.set_ylim(-6, 6)
+    ax.set_aspect("equal")
+    ax.grid(True, linestyle=":")
+    ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+
+### Further Examples in Machine Learning
+In machine learning, norms and metrics are not just theoretical constructs; they play a crucial role in various algorithms and applications. Here are some examples:
+
+1. **Distance Metrics in Classification and Clustering**
+    - **k-Nearest Neighbors (k-NN):** The k-NN algorithm uses distance metrics (like L1 or L2 norms) to find the nearest neighbors of a point in feature space. The choice of metric can significantly affect the performance of the classifier.
+    - **Clustering Algorithms:** Algorithms like k-means clustering use distance metrics to assign points to clusters based on their proximity to cluster centroids.
+
+
+2. **Regularization (Ridge and Lasso)**  
 Regularization methods in machine learning, such as **ridge regression** (L2 regularization) and **lasso regression** (L1 regularization), explicitly use norms on parameter vectors:
 
 - **L2 Regularization (Ridge):**
@@ -153,19 +225,10 @@ $$\text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w
 
 (penalizes the sum of absolute parameter values, promoting sparsity in the solution.)
 
-2. **Measuring Errors and Convergence (Gradient Descent)**  
+3. **Measuring Errors and Convergence (Gradient Descent)**  
 When running optimization algorithms such as **gradient descent**, one commonly uses norms to measure how far parameter updates move between iterations:
      
 $$\|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2$$
 
 The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.
 
----
-### Summary of ML Examples:
-
-| Concept           | ML Examples                                             |
-|-------------------|---------------------------------------------------------|
-| Metric Space      | k-NN classifier, Clustering (k-means, DBSCAN), Text similarity (Levenshtein) |
-| Normed Space      | L1/L2 regularization (ridge, lasso), Gradient descent convergence |
-
-These examples highlight the practical and foundational role of metrics and norms in machine learning, illustrating how abstract mathematical concepts directly influence algorithm design and performance.
