@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -416,7 +416,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metric spaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-spaces-in-machine-learning">Metric Spaces in Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-edit-distance-levenshtein-distance"><strong>Example: Edit Distance (Levenshtein Distance)</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -453,22 +453,253 @@ metric <span class="math notranslate nohighlight">\(d(x, y) = |x-y|\)</span>.</p
 </section>
 <section id="metric-spaces-in-machine-learning">
 <h1>Metric Spaces in Machine Learning<a class="headerlink" href="#metric-spaces-in-machine-learning" title="Link to this heading">#</a></h1>
-<p>Metric spaces provide a generalized framework for measuring <strong>distances</strong> or similarities between data points. Many machine learning methods rely heavily on choosing appropriate metrics.</p>
-<section id="examples">
-<h2>Examples:<a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Nearest Neighbor Classifiers (k-NN)</strong><br />
-In k-NN, classification depends entirely on distances between points. While typically the Euclidean distance (metric) is used:</p></li>
-</ol>
-<div class="math notranslate nohighlight">
-\[d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2,\]</div>
-<p>other metrics such as the Manhattan (1-norm) or Minkowski (p-norm) can also be employed.</p>
-<ol class="arabic simple" start="2">
-<li><p><strong>Clustering Algorithms (k-means, DBSCAN)</strong><br />
-Clustering methods rely fundamentally on the notion of a “distance” or metric. For example, <strong>DBSCAN</strong> clusters points that lie within a certain “distance” radius (metric-defined neighborhoods).</p></li>
-<li><p><strong>String or Text Similarity (non-vector metrics)</strong><br />
-Metrics can also be defined on non-numeric data. For example, the <strong>Levenshtein distance</strong> (edit distance) is widely used to measure similarity between strings, DNA sequences, or words in natural language processing (NLP). The Levenshtein distance counts how many single-character edits (insertions, deletions, substitutions) are needed to transform one string into another.</p></li>
-</ol>
+<p>Metric spaces provide a generalized framework for measuring <strong>distances</strong> or similarities between data points. Many machine learning methods rely heavily on choosing appropriate metrics.
+This choice can significantly affect the performance of algorithms, especially in tasks like clustering, classification, and nearest neighbor searches.</p>
+<section id="example-edit-distance-levenshtein-distance">
+<h2><strong>Example: Edit Distance (Levenshtein Distance)</strong><a class="headerlink" href="#example-edit-distance-levenshtein-distance" title="Link to this heading">#</a></h2>
+<p>A common metric in machine learning—especially in natural language processing (NLP)—is the <strong>edit distance</strong>, which measures the minimum number of insertions, deletions, and substitutions required to transform one string into another.</p>
+<p>Formally, for two strings <span class="math notranslate nohighlight">\(x, y \in \Sigma^*\)</span> (the set of all finite strings over some alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>), the <strong>edit distance</strong> <span class="math notranslate nohighlight">\(d_{\text{edit}}(x, y)\)</span> is defined as the minimum number of single-character operations (insert, delete, substitute) needed to transform <span class="math notranslate nohighlight">\(x\)</span> into <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<ul class="simple">
+<li><p><strong>Metric properties:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(d_{\text{edit}}(x, y) \geq 0\)</span>, and <span class="math notranslate nohighlight">\(= 0\)</span> iff <span class="math notranslate nohighlight">\(x = y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(d_{\text{edit}}(x, y) = d_{\text{edit}}(y, x)\)</span></p></li>
+<li><p>Satisfies the triangle inequality</p></li>
+</ul>
+</li>
+<li><p><strong>Elements are no Vector Space:</strong><br />
+Strings are not elements of a vector space: there’s no well-defined vector addition or scalar multiplication. Still, the edit distance is a valid metric and is widely used in applications like spell checking, DNA sequence alignment, and fuzzy string matching.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">edit_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">len_s1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>     <span class="c1"># deletion</span>
+                           <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>     <span class="c1"># insertion</span>
+                           <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cost</span><span class="p">)</span> <span class="c1"># substitution</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">len_s1</span><span class="p">][</span><span class="n">len_s2</span><span class="p">]</span>
+
+<span class="c1"># Example usage</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edit distance between &#39;kitten&#39; and &#39;sitting&#39;:&quot;</span><span class="p">,</span> <span class="n">edit_distance</span><span class="p">(</span><span class="s2">&quot;kitten&quot;</span><span class="p">,</span> <span class="s2">&quot;sitting&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Edit distance between &#39;kitten&#39; and &#39;sitting&#39;: 3
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Nearest Neighbor Classifiers (k-NN)</strong><br />
+In k-NN, classification depends entirely on distances between points. While typically the Euclidean distance (metric) <span class="math notranslate nohighlight">\(d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2,\)</span> is used, other metrics can be applied. For example, in text classification, the edit distance is often more appropriate than Euclidean distance. The k-NN algorithm classifies a query point based on the labels of its k nearest neighbors in the training set, using a distance metric to determine “closeness.” The edit distance is particularly useful for string data, where it quantifies how many single-character edits are needed to transform one string into another.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">knn_classify</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">      </span><span class="sd">&quot;&quot;&quot;Classify a query string using k-NN based on edit distance.&quot;&quot;&quot;</span>
+      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_data</span><span class="p">):</span>
+          <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+      <span class="n">k_nearest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span><span class="n">k</span><span class="p">]</span>
+      <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">k_nearest</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of k-NN classification using edit distance</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="c1"># --- Edit distance function ---</span>
+<span class="k">def</span> <span class="nf">edit_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">len_s1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>      <span class="c1"># deletion</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>      <span class="c1"># insertion</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cost</span>  <span class="c1"># substitution</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">len_s1</span><span class="p">][</span><span class="n">len_s2</span><span class="p">]</span>
+
+<span class="c1"># --- Training data ---</span>
+<span class="n">train_strings</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;pear&quot;</span><span class="p">,</span> <span class="s2">&quot;peach&quot;</span><span class="p">,</span>     <span class="c1"># fruits</span>
+    <span class="s2">&quot;tiger&quot;</span><span class="p">,</span> <span class="s2">&quot;lion&quot;</span><span class="p">,</span> <span class="s2">&quot;zebra&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span>      <span class="c1"># animals</span>
+<span class="p">]</span>
+<span class="n">train_labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;fruit&quot;</span><span class="p">,</span> <span class="s2">&quot;fruit&quot;</span><span class="p">,</span> <span class="s2">&quot;fruit&quot;</span><span class="p">,</span> <span class="s2">&quot;fruit&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;animal&quot;</span><span class="p">,</span> <span class="s2">&quot;animal&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># --- Query strings to classify ---</span>
+<span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;appl&quot;</span><span class="p">,</span> <span class="s2">&quot;pears&quot;</span><span class="p">,</span> <span class="s2">&quot;tigre&quot;</span><span class="p">,</span> <span class="s2">&quot;monke&quot;</span><span class="p">,</span> <span class="s2">&quot;peeko&quot;</span><span class="p">,</span> <span class="s2">&quot;leon&quot;</span><span class="p">,</span> <span class="s2">&quot;panana&quot;</span><span class="p">]</span>
+
+<span class="c1"># --- Perform classification ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;k-NN classification using edit distance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">query</span> <span class="ow">in</span> <span class="n">queries</span><span class="p">:</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">knn_classify</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">train_strings</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&#39; → predicted label: </span><span class="si">{</span><span class="n">prediction</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>k-NN classification using edit distance:
+
+&#39;appl&#39; → predicted label: fruit
+&#39;pears&#39; → predicted label: fruit
+&#39;tigre&#39; → predicted label: fruit
+&#39;monke&#39; → predicted label: animal
+&#39;peeko&#39; → predicted label: fruit
+&#39;leon&#39; → predicted label: fruit
+&#39;panana&#39; → predicted label: fruit
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Density-Based Spatial Clustering of Applications with Noise (DBSCAN)</strong><br />
+Clustering methods rely fundamentally on the notion of a “distance” or metric. For example, <strong>DBSCAN</strong> clusters points that lie within a certain “distance” radius (metric-defined neighborhoods).</p>
+<p>DBSCAN is a density-based clustering algorithm that groups together points that are closely packed together, marking as outliers points that lie alone in low-density regions. It requires two parameters:</p>
+<ul class="simple">
+<li><p><strong>Epsilon (eps)</strong>: The maximum distance between two points for them to be considered as in the same neighborhood.</p></li>
+<li><p><strong>MinPts</strong>: The minimum number of points required to form a dense region.</p></li>
+</ul>
+<p>DBSCAN groups data points based on the idea of density connectivity. It defines clusters as areas of high point density separated by regions of low density. The algorithm uses two parameters: <strong>ε (epsilon)</strong>, which defines the radius of a neighborhood around a point, and <strong>minPts</strong>, the minimum number of points required to form a dense region. A point is a <strong>core point</strong> if there are at least <em>minPts</em> points (including itself) within its ε-neighborhood. A <strong>border point</strong> lies within ε of a core point but has fewer than <em>minPts</em> neighbors itself. Points that are neither core nor border are considered <strong>noise</strong> or <strong>outliers</strong>. DBSCAN starts by picking an unvisited point and checking if it is a core point; if so, it forms a new cluster by recursively visiting all density-connected points. This approach allows DBSCAN to discover clusters of arbitrary shape and to handle noise effectively, all without requiring the number of clusters to be specified in advance.</p>
+<p>Let’s look at an example where we use edit distance as a metric to cluster strings the strings  “apple”, “appl”, “appel”, “banana”, “bananna”, “peach”, “peaco”, “zebra”, “zebro”, “zeebar”, “lion” using DBSCAN. The edit distance is used to determine the similarity between strings, and we will cluster them based on a specified epsilon (eps) and minimum points (min_pts).</p>
+<p>The output of the algorithm with <code class="docutils literal notranslate"><span class="pre">eps=2</span></code> and <code class="docutils literal notranslate"><span class="pre">min_pts=2</span></code> will show how the strings are grouped into clusters based on their edit distances. Strings that are similar (i.e., have a small edit distance) will be clustered together, while those that are more distant will be marked as noise or belong to different clusters.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="c1"># --- Edit distance function ---</span>
+<span class="k">def</span> <span class="nf">edit_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">len_s1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_s2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cost</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">len_s1</span><span class="p">][</span><span class="n">len_s2</span><span class="p">]</span>
+
+<span class="c1"># --- DBSCAN-like clustering with edit distance ---</span>
+<span class="k">def</span> <span class="nf">dbscan_strings</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_pts</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>  <span class="c1"># -1 means noise</span>
+    <span class="n">cluster_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">region_query</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">strings</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">strings</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">eps</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">expand_cluster</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">neighbors</span><span class="p">):</span>
+        <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># previously marked as noise</span>
+                <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+            <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
+            <span class="n">new_neighbors</span> <span class="o">=</span> <span class="n">region_query</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_neighbors</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min_pts</span><span class="p">:</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_neighbors</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">region_query</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_pts</span><span class="p">:</span>
+            <span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># noise</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">expand_cluster</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">neighbors</span><span class="p">)</span>
+            <span class="n">cluster_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">labels</span>
+
+<span class="c1"># --- Example strings ---</span>
+<span class="n">strings</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;appl&quot;</span><span class="p">,</span> <span class="s2">&quot;appel&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;bananna&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;peach&quot;</span><span class="p">,</span> <span class="s2">&quot;peaco&quot;</span><span class="p">,</span> <span class="s2">&quot;zebra&quot;</span><span class="p">,</span> <span class="s2">&quot;zebro&quot;</span><span class="p">,</span> <span class="s2">&quot;zeebar&quot;</span><span class="p">,</span> <span class="s2">&quot;lion&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># --- Run clustering ---</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">dbscan_strings</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_pts</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># --- Show results ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DBSCAN-style clustering with edit distance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">string</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="n">clusters</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">cid</span><span class="p">,</span> <span class="n">members</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">cname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Cluster </span><span class="si">{</span><span class="n">cid</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">cid</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Noise&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cname</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">members</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DBSCAN-style clustering with edit distance:
+
+Noise: [&#39;zeebar&#39;, &#39;lion&#39;]
+Cluster 0: [&#39;apple&#39;, &#39;appl&#39;, &#39;appel&#39;]
+Cluster 1: [&#39;banana&#39;, &#39;bananna&#39;]
+Cluster 2: [&#39;peach&#39;, &#39;peaco&#39;]
+Cluster 3: [&#39;zebra&#39;, &#39;zebro&#39;]
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -538,7 +769,7 @@ Metrics can also be defined on non-numeric data. For example, the <strong>Levens
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metric spaces</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-spaces-in-machine-learning">Metric Spaces in Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-edit-distance-levenshtein-distance"><strong>Example: Edit Distance (Levenshtein Distance)</strong></a></li>
 </ul>
 </li>
 </ul>

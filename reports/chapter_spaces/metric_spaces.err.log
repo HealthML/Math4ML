@@ -1,0 +1,94 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Example of k-NN classification using edit distance
+import numpy as np
+from collections import Counter
+
+# --- Edit distance function ---
+def edit_distance(s1, s2):
+    len_s1, len_s2 = len(s1), len(s2)
+    dp = np.zeros((len_s1 + 1, len_s2 + 1), dtype=int)
+
+    for i in range(len_s1 + 1):
+        dp[i][0] = i
+    for j in range(len_s2 + 1):
+        dp[0][j] = j
+
+    for i in range(1, len_s1 + 1):
+        for j in range(1, len_s2 + 1):
+            cost = 0 if s1[i - 1] == s2[j - 1] else 1
+            dp[i][j] = min(
+                dp[i - 1][j] + 1,      # deletion
+                dp[i][j - 1] + 1,      # insertion
+                dp[i - 1][j - 1] + cost  # substitution
+            )
+    return dp[len_s1][len_s2]
+
+# --- k-NN classifier ---
+def knn_classify(query, train_data, train_labels, k=3):
+      """Classify a query string using k-NN based on edit distance."""
+      distances = np.zeros(len(train_data))
+      for i, sample in enumerate(train_data):
+          distances[i] = edit_distance(query, sample)
+      k_nearest = np.argsort(distances)[:k]
+      labels = train_labels[k_nearest]
+      return Counter(labels).most_common(1)[0][0]
+
+# --- Training data ---
+train_strings = [
+    "apple", "banana", "pear", "peach",     # fruits
+    "tiger", "lion", "zebra", "monkey"      # animals
+]
+train_labels = [
+    "fruit", "fruit", "fruit", "fruit",
+    "animal", "animal", "animal", "animal"
+]
+
+# --- Query strings to classify ---
+queries = ["appl", "pears", "tigre", "monke", "peeko", "leon", "panana"]
+
+# --- Perform classification ---
+print("k-NN classification using edit distance:\n")
+for query in queries:
+    prediction = knn_classify(query, train_strings, train_labels, k=3)
+    print(f"'{query}' → predicted label: {prediction}")
+------------------
+
+----- stdout -----
+k-NN classification using edit distance:
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[2], line 51[0m
+[1;32m     49[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mk-NN classification using edit distance:[39m[38;5;130;01m\n[39;00m[38;5;124m"[39m)
+[1;32m     50[0m [38;5;28;01mfor[39;00m query [38;5;129;01min[39;00m queries:
+[0;32m---> 51[0m     prediction [38;5;241m=[39m knn_classify(query, train_strings, train_labels, k[38;5;241m=[39m[38;5;241m3[39m)
+[1;32m     52[0m     [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124m'[39m[38;5;132;01m{[39;00mquery[38;5;132;01m}[39;00m[38;5;124m'[39m[38;5;124m → predicted label: [39m[38;5;132;01m{[39;00mprediction[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+Cell [0;32mIn[2], line 32[0m, in [0;36mknn_classify[0;34m(query, train_data, train_labels, k)[0m
+[1;32m     30[0m     distances[i] [38;5;241m=[39m edit_distance(query, sample)
+[1;32m     31[0m k_nearest [38;5;241m=[39m np[38;5;241m.[39margsort(distances)[:k]
+[0;32m---> 32[0m labels [38;5;241m=[39m train_labels[k_nearest]
+[1;32m     33[0m [38;5;28;01mreturn[39;00m Counter(labels)[38;5;241m.[39mmost_common([38;5;241m1[39m)[[38;5;241m0[39m][[38;5;241m0[39m]
+
+[0;31mTypeError[0m: only integer scalar arrays can be converted to a scalar index
+
