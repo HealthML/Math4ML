@@ -33,6 +33,7 @@ parts:
         - file: chapter_spaces/normed_spaces
 #    - file: example_uci_breast_cancer/nearest_centroid_norms
         - file: chapter_spaces/inner_product_spaces
+        - file: chapter_spaces/representation_theorem
         - file: chapter_spaces/transposition
 # end of week 2
 #  - file: chapter_calculus/overview_calculus

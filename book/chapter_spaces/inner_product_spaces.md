@@ -10,7 +10,9 @@ kernelspec:
   language: python
   name: python3
 ---
-## Inner product spaces
+# Inner product spaces
+
+Inner product spaces allow us to generalize ideas of angles, lengths, and orthogonality beyond traditional Euclidean geometry. They are foundational in machine learning algorithms involving geometric intuition, similarity measurement, and projection methods.
 
 An **inner product** on a real vector space $V$ is a function
 $\langle \cdot, \cdot \rangle : V \times V \to \mathbb{R}$ satisfying
@@ -23,8 +25,9 @@ $\langle \cdot, \cdot \rangle : V \times V \to \mathbb{R}$ satisfying
 (iii) $\langle \mathbf{x}, \mathbf{y} \rangle = \langle \mathbf{y}, \mathbf{x} \rangle$
 
 for all $\mathbf{x}, \mathbf{y}, \mathbf{z} \in V$ and all
-$\alpha,\beta \in \mathbb{R}$. A vector space endowed with an inner
-product is called an **inner product space**.
+$\alpha,\beta \in \mathbb{R}$.
+
+A vector space endowed with an inner product is called an **inner product space**.
 
 Note that any inner product on $V$ induces a norm on $V$:
 
@@ -62,6 +65,7 @@ This is the familiar Euclidean length of a vector in $\mathbb{R}^n$.
 
 The inner product on $\mathbb{R}^n$ induces the following
 **angle** between two vectors $\mathbf{x}$ and $\mathbf{y}$:
+
 $$\theta = \arccos\left(\frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{x}\| \|\mathbf{y}\|}\right)$$
 This angle is well-defined as long as $\mathbf{x}$ and $\mathbf{y}$ are
 not both the zero vector. The angle is $0$ if $\mathbf{x}$ and
@@ -69,9 +73,86 @@ $\mathbf{y}$ are parallel (i.e. $\mathbf{x} = t\mathbf{y}$ for some
 $t \in \mathbb{R}$), and $\pi/2$ if they are orthogonal. The cosine of the
 angle is given by the **cosine similarity** between $\mathbf{x}$ and
 $\mathbf{y}$:
+
 $$\cos(\theta) = \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{x}\| \|\mathbf{y}\|}$$
 This is a common measure of similarity between two vectors, and is
 often used in machine learning applications.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Arc
+
+# Define two non-zero vectors in R^2.
+x = np.array([3, 1])
+y = np.array([1, 2])
+
+# Compute inner products and norms.
+dot_xy = np.dot(x, y)
+norm_x = np.linalg.norm(x)
+norm_y = np.linalg.norm(y)
+
+# Compute cosine similarity and angle theta (in radians).
+cos_theta = dot_xy / (norm_x * norm_y)
+theta = np.arccos(cos_theta)  # angle between x and y, in radians
+theta_deg = np.degrees(theta)
+
+# Compute the polar angles of vectors x and y (in degrees)
+angle_x = np.degrees(np.arctan2(x[1], x[0]))
+angle_y = np.degrees(np.arctan2(y[1], y[0]))
+
+# Ensure the arc goes in the correct direction:
+# If angle_y is less than angle_x, we add 360 to angle_y.
+if angle_y < angle_x:
+    angle_y += 360
+
+# Choose a radius for the arc (e.g. half the minimum norm)
+arc_radius = min(norm_x, norm_y) / 2
+
+# Create the arc patch from angle_x to angle_y.
+arc = Arc((0, 0), 2*arc_radius, 2*arc_radius, angle=0,
+          theta1=angle_x, theta2=angle_y, color='green', lw=2)
+
+# Set up the plot.
+plt.figure(figsize=(8, 8))
+ax = plt.gca()
+
+# Plot vector x and vector y, both originating at (0, 0).
+origin = np.array([0, 0])
+ax.quiver(*origin, *x, angles='xy', scale_units='xy', scale=1, color='blue', label=r"$\mathbf{x}$")
+ax.quiver(*origin, *y, angles='xy', scale_units='xy', scale=1, color='red', label=r"$\mathbf{y}$")
+ax.text(x[0]*1.05, x[1]*1.05, r"$\mathbf{x}$", color='blue', fontsize=12)
+ax.text(y[0]*1.05, y[1]*1.05, r"$\mathbf{y}$", color='red', fontsize=12)
+
+# Add the arc representing the angle between x and y.
+ax.add_patch(arc)
+
+# Compute the midpoint of the arc (in degrees and then convert to radians)
+arc_mid_angle = (angle_x + angle_y) / 2.0
+arc_mid_rad = np.radians(arc_mid_angle)
+arc_text_x = arc_radius * np.cos(arc_mid_rad)
+arc_text_y = arc_radius * np.sin(arc_mid_rad)
+
+# Annotate the arc with the angle value (in radians).
+ax.text(arc_text_x, arc_text_y, 
+        f"$\\theta\\approx {theta:.2f}\\,\\text{{rad}}\\,({theta_deg:.1f}^\\circ)$", 
+        color='green', fontsize=12, ha='center', va='center')
+
+# Add axis labels, title, grid, and legend.
+plt.xlabel("$x_1$")
+plt.ylabel("$x_2$")
+plt.title("Angle between Vectors via Dot Product (Cosine Similarity)")
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.xlim(-0.2, max(x[0], y[0]) + 0.3)
+plt.ylim(-0.2, max(x[1], y[1]) + 0.3)
+plt.legend(loc='upper right')
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid(True, linestyle=':')
+plt.tight_layout()
+plt.show()
+```
 
 ### Pythagorean Theorem
 
@@ -94,11 +175,6 @@ $$\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathb
 as claimed. ◻
 :::
 
-Below is a Python script that creates a visual demonstration of the Pythagorean theorem in an inner product space. In this example, we choose two perpendicular vectors $\mathbf{x}$ and $\mathbf{y}$ (for instance, $\mathbf{x}=(3, 0)$ and $\mathbf{y}=(0, 4)$) and plot these vectors along with their sum $\mathbf{x}+\mathbf{y}$. The script then annotates the computed norms and verifies that
-
-$$
-\|\mathbf{x}+\mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2.
-$$
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -139,8 +215,8 @@ plt.text(sum_xy[0]/2+0.2, sum_xy[1]/2+0.2, f"{norm_sum:.1f}", color='red', fonts
 plt.xlabel("$x_1$")
 plt.ylabel("$x_2$")
 plt.title("Pythagorean Theorem in an Inner Product Space")
-plt.xlim(-1, 7)
-plt.ylim(-1, 7)
+plt.xlim(-1, 4.3)
+plt.ylim(-1, 4.3)
 plt.grid(True, linestyle=':')
 plt.legend()
 
@@ -152,25 +228,8 @@ plt.tight_layout()
 plt.show()
 ```
 
----
-
-### Explanation:
-
-- **Vector Definitions:**  
-  We define $\mathbf{x} = (3, 0)$ and $\mathbf{y} = (0, 4)$, which are perpendicular, and compute their sum $\mathbf{x} + \mathbf{y} = (3, 4)$.
-
-- **Norm Calculations:**  
-  The Euclidean norms are computed using `np.linalg.norm`, yielding $\|\mathbf{x}\| = 3$, $\|\mathbf{y}\| = 4$, and $\|\mathbf{x}+\mathbf{y}\| = 5$. The Pythagorean theorem is numerically verified since $5^2 = 3^2 + 4^2$.
-
-- **Visualization:**  
-  - The **blue arrow** represents $\mathbf{x}$.  
-  - The **green arrow** represents $\mathbf{y}$.  
-  - The **red arrow** represents the resultant vector $\mathbf{x}+\mathbf{y}$.  
-  A dashed line indicates the right angle between $\mathbf{x}$ and $\mathbf{y}$.
-
-- **Annotations:**  
-  Norm values are annotated near the middle of each vector, and the computed squared norm values are printed to the console.
-
+In this example, we choose two perpendicular vectors $\mathbf{x}$ and $\mathbf{y}$ (for instance, $\mathbf{x}=(3, 0)$ and $\mathbf{y}=(0, 4)$) and plot these vectors along with their sum $\mathbf{x}+\mathbf{y}$. 
+The plot visually demonstrates the Pythagorean theorem, where the lengths of the sides of the right triangle formed by $\mathbf{x}$ and $\mathbf{y}$ correspond to their norms. The dashed line indicates the right angle between the two vectors.
 
 ### Cauchy-Schwarz inequality
 The Cauchy-Schwarz inequality is a fundamental result in linear algebra and functional analysis. It states that the absolute value of the inner product of two vectors is less than or equal to the product of their norms.
@@ -186,7 +245,7 @@ with equality if and only if $\mathbf{x}$ and $\mathbf{y}$ are linearly dependen
 
 For a proof see the Appendix of the book.
 
-Below is a Python script that provides a visual explanation of the Cauchy–Schwarz inequality by relating the dot product to the cosine of the angle between vectors and illustrating its geometric implications for a linear classifier’s decision boundary. In this visualization, we fix a vector $\mathbf{x}$ and draw several vectors $\mathbf{y}$ on a circle (so that $\|\mathbf{y}\|$ is fixed). For each such $\mathbf{y}$, we annotate the computed dot product (which equals $\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$). In a separate subplot, we also plot the function $f(\theta)=\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$ versus $\theta$ to show that the dot product is maximized when $\mathbf{y}$ is aligned with $\mathbf{x}$ and minimized when it is opposite.
+We attempt a visual explanation of the Cauchy–Schwarz inequality by relating the dot product to the cosine of the angle between vectors and illustrating its geometric implications for a linear classifier’s decision boundary. In this visualization, we fix a vector $\mathbf{x}$ and draw several vectors $\mathbf{y}$ on a circle (so that $\|\mathbf{y}\|$ is fixed). For each such $\mathbf{y}$, we annotate the computed dot product (which equals $\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$). In a separate subplot, we also plot the function $f(\theta)=\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$ versus $\theta$ to show that the dot product is maximized when $\mathbf{y}$ is aligned with $\mathbf{x}$ and minimized when it is opposite.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -214,9 +273,9 @@ plt.quiver(0, 0, x[0], x[1], angles='xy', scale_units='xy', scale=1, color='blue
 plt.text(x[0]*1.05, x[1]*1.05, r"$\mathbf{x}$", color='blue', fontsize=12)
 
 # Define several angles for y (in radians).
-angles_deg = [0, 45, 90, 135, 180]
+angles_deg = [0, 45, 90, 135, 180, 206, 270]
 thetas = np.deg2rad(angles_deg)
-colors = ['red', 'orange', 'green', 'purple', 'brown']
+colors = ['red', 'orange', 'green', 'purple', 'brown', 'cyan', 'magenta']
 
 # Plot a circle for reference (all y with fixed norm).
 theta_circle = np.linspace(0, 2*np.pi, 300)
@@ -262,122 +321,7 @@ plt.show()
 - **Subplot 2 (Function Plot)**:  
   This subplot shows the function $f(\theta) = \|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$ as a function of the angle $\theta$. The maximum and minimum possible dot products occur when $\theta=0$ or $\theta=\pi$, corresponding to perfect alignment and opposite direction, respectively. This visualization reinforces the concept that the dot product is essentially $\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta$.
 
-
-## Inner Product Spaces in Machine Learning
-
-Inner product spaces allow us to generalize ideas of angles, lengths, and orthogonality beyond traditional Euclidean geometry. They are foundational in machine learning algorithms involving geometric intuition, similarity measurement, and projection methods.
-
-### Examples of Inner Products in ML:
-
-#### 1. **Linear Classifiers (Dot product similarity)**
-
-Many linear classifiers (like perceptrons, logistic regression, and linear SVMs) rely directly on the standard inner product (dot product):
-
-- **Decision functions** for linear classifiers often take the form:
-  
-$$f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b = \langle \mathbf{w}, \mathbf{x} \rangle + b$$
-
-This explicitly uses the inner product to measure similarity between the feature vector $\mathbf{x}$ and the learned weight vector $\mathbf{w}$.
-
-Below is an added paragraph followed by a Python script that visually illustrates the relationship between dot product similarity and the geometry of the hyperplane in a linear classifier.
-
----
-
-**Additional Paragraph:**
-
-The dot product not only measures the similarity between two vectors but also has a natural geometric interpretation that directly relates to the decision boundary of linear classifiers. In a linear classifier, the decision function
-
-$$
-f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b
-$$
-
-can be viewed as measuring how much the input vector $\mathbf{x}$ aligns with the weight vector $\mathbf{w}$. Geometrically, $\mathbf{w}$ points in a direction of maximum increase of the function, so that the hyperplane defined by $\mathbf{w}^\top \mathbf{x} + b = 0$ is perpendicular to $\mathbf{w}$. The signed distance of any point from this hyperplane is proportional to the dot product $\langle \mathbf{w}, \mathbf{x} \rangle$ (after accounting for the bias $b$). Thus, a larger (more positive) dot product indicates that $\mathbf{x}$ lies further on one side of the hyperplane (and is therefore classified in one class), while a more negative dot product indicates placement on the opposite side. This elegant connection between inner products and geometry underpins many classification algorithms.
-
----
-
-**Python Visualization Script:**
-
-The script below creates a two-dimensional visualization. It plots:
-- A hyperplane defined by $ \mathbf{w}^\top \mathbf{x} + b = 0 $.
-- The weight vector $\mathbf{w}$.
-- A sample input vector $\mathbf{x}$ and its projection onto $\mathbf{w}$, which shows how the dot product measures the similarity.
-- Annotations demonstrating the geometric interpretation.
-
-```{code-cell} ipython3
-:tags: [hide-input]
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Define weight vector and bias for a linear classifier
-w = np.array([2, -1])
-b = 1.0
-
-# Define the decision boundary: w^T x + b = 0
-# For 2D: 2*x - y + 1 = 0 => y = 2*x + 1
-x_vals = np.linspace(-5, 5, 200)
-y_boundary = 2 * x_vals + 1
-
-# Choose a sample point x (for which we want to illustrate the projection)
-x_sample = np.array([3, 2])
-
-# Compute the projection of x_sample onto w
-# The projection is given by: proj_w(x) = (x.w/||w||^2)*w
-w_norm_sq = np.dot(w, w)
-projection_coef = np.dot(x_sample, w) / w_norm_sq
-x_proj = projection_coef * w
-
-# Set up the plot
-plt.figure(figsize=(8, 8))
-
-# Plot the decision boundary
-plt.plot(x_vals, y_boundary, 'k--', label=r"Decision boundary: $w^\top x + b = 0$")
-
-# Plot the weight vector originating from the origin
-origin = np.array([0, 0])
-plt.quiver(*origin, *w, color='blue', angles='xy', scale_units='xy', scale=1, width=0.005)
-plt.text(w[0]*1.1, w[1]*1.1, r"$w$", color='blue', fontsize=14)
-
-# Plot the sample point x_sample
-plt.scatter(x_sample[0], x_sample[1], color='red', s=100, label=r"Sample $\mathbf{x}$")
-plt.text(x_sample[0] + 0.2, x_sample[1] + 0.2, r"$\mathbf{x}$", color='red', fontsize=14)
-
-# Plot the projection of x_sample onto w
-plt.scatter(x_proj[0], x_proj[1], color='green', s=100, label=r"Projection $\mathrm{proj}_w(\mathbf{x})$")
-plt.plot([x_sample[0], x_proj[0]], [x_sample[1], x_proj[1]], 'r--', label=r"Residual")
-plt.quiver(*origin, *x_proj, color='green', angles='xy', scale_units='xy', scale=1, width=0.005)
-
-# Annotate the distance (dot product similarity)
-dot_val = np.dot(w, x_sample)
-plt.text((x_sample[0] + x_proj[0]) / 2, (x_sample[1] + x_proj[1]) / 2, 
-         f"{dot_val:.2f}", color='purple', fontsize=12)
-
-# Set plot limits and labels
-plt.xlim(-5, 5)
-plt.ylim(-5, 5)
-plt.xlabel(r"$x_1$")
-plt.ylabel(r"$x_2$")
-plt.title("Dot Product Similarity and Hyperplane Geometry")
-plt.legend(loc='upper left')
-plt.grid(True, linestyle=':')
-plt.gca().set_aspect('equal', adjustable='box')
-plt.tight_layout()
-plt.show()
-```
-
----
-
-**Explanation of the Script:**
-
-- The **decision boundary** is plotted as a dashed line, representing $ w^\top x + b = 0 $.
-- The **blue arrow** represents the weight vector $ w $, indicating the direction in which the classifier’s decision function increases.
-- The **red point** is a sample input vector $ \mathbf{x} $, and its **red dashed line** shows the error between $ \mathbf{x} $ and its projection onto $ w $.
-- The **green point** is the projection of $ \mathbf{x} $ onto $ w $ (i.e., $ \mathrm{proj}_w(\mathbf{x}) $), and the length of this projection is closely related to the dot product $ \langle \mathbf{w}, \mathbf{x} \rangle $.
-- An annotation displays the numerical value of the dot product, reinforcing how the inner product measures the similarity between $ \mathbf{x} $ and $ \mathbf{w} $ relative to the hyperplane.
-
-
----
-
-#### 2. **Kernels as Generalized Inner Products**
+## **Kernels as Generalized Inner Products**
 
 The notion of inner product spaces provides a powerful generalization called **kernels**, leading to the idea of **kernel methods** in machine learning. Kernels allow us to implicitly map data into high-dimensional spaces where classification or regression tasks become simpler.
 
@@ -391,68 +335,121 @@ where:
 
 Common kernels include:
 
-- **Polynomial kernel**: $k(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^\top \mathbf{y} + c)^d$
-- **Gaussian (RBF) kernel**: $k(\mathbf{x}, \mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2)$
-
----
-
-### Inner Product Space Example with Nearest Centroid Classifier:
-
-The nearest centroid classifier assigns points to the nearest centroid based on distance. We've used Euclidean distance so far, which implicitly relies on the standard inner product. But by generalizing this inner product through kernels, we can obtain interesting classifiers that measure similarity in richer ways.
-
-**Kernelized Nearest Centroid Classifier**:
-
-Instead of explicitly computing the centroid in the original space, we can implicitly compute distances in a high-dimensional space using kernels.
-
-Given data points $\mathbf{x}_i$, the centroid $\mathbf{c}_k$ for class $k$ in the mapped space is given by:
-
-$$\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i)$$
-
-Then the distance to the centroid becomes:
-
-$$\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 
-= \langle \phi(\mathbf{x}) - \mathbf{c}_k, \phi(\mathbf{x}) - \mathbf{c}_k \rangle
-= k(\mathbf{x},\mathbf{x}) - \frac{2}{N_k}\sum_{i:y_i=k}k(\mathbf{x}, \mathbf{x}_i) 
-+ \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i, \mathbf{x}_j)$$
-
-Thus, a kernelized nearest centroid classifier can classify points using arbitrary inner product spaces defined by kernels, allowing the classifier to handle complex, nonlinear patterns in the data.
-
-Consider a training set $\{(\mathbf{x}_i, y_i)\}_{i=1}^N$ with class labels $y_i \in \{1, \ldots, K\}$, and let $\phi: \mathbb{R}^n \to \mathcal{H}$ be a feature mapping into an (often high-dimensional) Hilbert space. In a standard nearest centroid classifier, the centroid for class $k$ is computed as
-
-$$
-\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i),
-$$
-
-where $N_k$ is the number of training examples in class $k$. When classifying a new point $\mathbf{x}$, one typically assigns it to the class with the closest centroid in $\mathcal{H}$, measured by the squared distance
-
-$$
-\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2.
-$$
-
-Expanding this distance using the properties of an inner product yields
-
-$$
-\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 = \langle\phi(\mathbf{x}),\phi(\mathbf{x})\rangle - 2\langle\phi(\mathbf{x}),\mathbf{c}_k\rangle + \langle \mathbf{c}_k, \mathbf{c}_k\rangle.
-$$
-
-By the kernel trick, we define a kernel function $k(\mathbf{x},\mathbf{x}') = \langle\phi(\mathbf{x}),\phi(\mathbf{x}')\rangle$, which allows us to express all inner products in terms of $k$. In particular,
-
-- $\langle\phi(\mathbf{x}),\phi(\mathbf{x})\rangle = k(\mathbf{x},\mathbf{x})$,
-- $\langle\phi(\mathbf{x}),\mathbf{c}_k\rangle = \frac{1}{N_k}\sum_{i:y_i=k} k(\mathbf{x},\mathbf{x}_i)$, and
-- $\langle \mathbf{c}_k, \mathbf{c}_k \rangle = \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i,\mathbf{x}_j)$.
-
-Thus, the squared distance between $\phi(\mathbf{x})$ and the centroid $\mathbf{c}_k$ can be written entirely in terms of the kernel as
-
-$$
-\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 = k(\mathbf{x},\mathbf{x}) - \frac{2}{N_k}\sum_{i:y_i=k} k(\mathbf{x},\mathbf{x}_i) + \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i,\mathbf{x}_j).
-$$
-
-Using this kernelized distance, the classifier assigns $\mathbf{x}$ to the class $k$ for which $\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2$ is minimal. In this way, the kernelized nearest centroid classifier operates solely via inner products—thus allowing the algorithm to implicitly work in high-dimensional feature spaces without ever computing the mapping $\phi$ explicitly.
+- The **linear kernel** $k_{\mathrm{linear}}(\mathbf{x},\mathbf{y}) = \mathbf{x}^{\!\top}\mathbf{y}$,
+- The **polynomial kernel** $k_{\mathrm{poly}}(\mathbf{x},\mathbf{y}) = (\mathbf{x}^{\!\top}\mathbf{y} + c)^d$, and  
+- The **Gaussian (RBF) kernel** $k_{\mathrm{RBF}}(\mathbf{x},\mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2)$.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
 import numpy as np
 import matplotlib.pyplot as plt
+
+def linear_kernel(X):
+    """
+    Compute the linear (dot product) kernel matrix.
+    For a data matrix X (shape: [n_samples, n_features]), the linear kernel is:
+      k_linear(x, y) = x^T y.
+    """
+    return X @ X.T
+
+def polynomial_kernel(X, c=1.0, d=2):
+    """
+    Compute the polynomial kernel matrix.
+    
+    k_poly(x,y) = (x^T y + c)^d.
+    """
+    K_lin = X @ X.T
+    return (K_lin + c) ** d
+
+def rbf_kernel(X, gamma=0.5):
+    """
+    Compute the Gaussian (RBF) kernel matrix.
+    
+    k_RBF(x,y) = exp(-gamma ||x - y||^2).
+    """
+    # Compute squared Euclidean norms for each data point.
+    sq_norms = np.sum(X**2, axis=1)
+    # Compute the squared distance matrix using broadcasting:
+    D = sq_norms.reshape(-1, 1) - 2 * X @ X.T + sq_norms.reshape(1, -1)
+    return np.exp(-gamma * D)
+
+# Generate a synthetic dataset in R^n (here, n=2) with m data points.
+np.random.seed(42)
+m, n = 20, 2  # 20 data points in 2D
+X = np.random.randn(m, n)
+
+# Compute kernel matrices.
+K_linear = linear_kernel(X)
+K_poly = polynomial_kernel(X, c=1.0, d=2)
+K_rbf = rbf_kernel(X, gamma=0.5)
+
+# Create subplots for the three kernels.
+fig, axs = plt.subplots(1, 3, figsize=(18, 6))
+
+# Plot the linear (dot product) kernel matrix.
+im0 = axs[0].imshow(K_linear, cmap='viridis', aspect='equal')
+axs[0].set_title("Linear Kernel\n$x^Tx$")
+axs[0].set_xlabel("Data Point Index")
+axs[0].set_ylabel("Data Point Index")
+plt.colorbar(im0, ax=axs[0], fraction=0.046, pad=0.04)
+
+# Plot the polynomial kernel matrix.
+im1 = axs[1].imshow(K_poly, cmap='viridis', aspect='equal')
+axs[1].set_title(r"Polynomial Kernel: $(x^Tx + 1)^2$")
+axs[1].set_xlabel("Data Point Index")
+axs[1].set_ylabel("Data Point Index")
+plt.colorbar(im1, ax=axs[1], fraction=0.046, pad=0.04)
+
+# Plot the Gaussian (RBF) kernel matrix.
+im2 = axs[2].imshow(K_rbf, cmap='viridis', aspect='equal')
+axs[2].set_title(r"RBF Kernel: $\exp(-0.5\|x-y\|^2)$")
+axs[2].set_xlabel("Data Point Index")
+axs[2].set_ylabel("Data Point Index")
+plt.colorbar(im2, ax=axs[2], fraction=0.046, pad=0.04)
+
+plt.suptitle("Comparison of Kernel Computations using Transposition", fontsize=16)
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+```
+
+---
+
+**Kernelized Nearest Centroid Classifier**:
+
+We have already learned that we can obtain a non-linear version of a linear classifier such as the nearest centroid classifier by using non-linear basis functions $\phi(\cdot)$ to map the data into a higher-dimensional space. 
+
+$$
+\phi(\mathbf{x}) = \begin{bmatrix}
+\phi_1(\mathbf{x}) \\ \phi_2(\mathbf{x}) \\ \vdots \\ \phi_d(\mathbf{x})
+\end{bmatrix}
+$$
+where $\phi_i(\cdot)$ are real-valued basis functions.
+
+The nearest centroid classifier assigns a new point $\mathbf{x}$ to the class $k$ whose centroid $\mathbf{c}_k$ is closest to $\phi(\mathbf{x})$.
+The centroid $\mathbf{c}_k$ is computed as the mean of the training points in class $k$ after applying the mapping $\phi$:
+
+$$\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i)$$
+where $N_k$ is the number of training examples in class $k$.
+
+Instead of explicitly computing the centroid in the original space, we can implicitly compute distances in a high-dimensional space using inner products and their implied distance metric only.
+
+The distance between a point $\phi(\mathbf{x})$ and the centroid $\mathbf{c}_k$ can be expressed in terms of the inner products involving $\phi(\mathbf{x})$ and $\mathbf{c}_k$:
+
+$$
+\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 = \langle \phi(\mathbf{x}) - \mathbf{c}_k, \phi(\mathbf{x}) - \mathbf{c}_k \rangle =\langle \phi(\mathbf{x}), \phi(\mathbf{x}) \rangle - 2\langle \phi(\mathbf{x}), \mathbf{c}_k\rangle + \langle \mathbf{c}_k, \mathbf{c}_k\rangle
+$$
+
+Using the defitintion of the kernel function $k(\mathbf{x},\mathbf{y})=\langle\phi(\mathbf{x}, \phi(\mathbf{y}))$ and the fact that $\mathbf{c}_k$ is the average of all the training data points in class $k$, we can express this distance only based on kernels between $\mathbf{x}$ and the training points in class $k$:
+
+$$\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 
+= k(\mathbf{x},\mathbf{x}) - \frac{2}{N_k}\sum_{i:y_i=k}k(\mathbf{x}, \mathbf{x}_i) 
++ \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i, \mathbf{x}_j)$$
+
+Using this kernelized distance, the classifier assigns $\mathbf{x}$ to the class $k$ for which $\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2$ is minimal. In this way, the kernelized nearest centroid classifier operates solely via inner products—thus allowing the algorithm to implicitly work in high-dimensional feature spaces without ever computing the mapping $\phi$ explicitly. This is particularly useful when the mapping is computationally expensive or infeasible to compute directly due to its high (or even infinite) dimensionality.
+Thus, a kernelized nearest centroid classifier can classify points using arbitrary inner product spaces defined by kernels, allowing the classifier to handle complex, nonlinear patterns in the data.
+
+```{code-cell} ipython3
+import numpy as np
 
 class KernelNearestCentroid:
     def __init__(self, kernel=None):
@@ -558,7 +555,11 @@ class KernelNearestCentroid:
             pred = min(distances, key=distances.get)
             preds.append(pred)
         return np.array(preds)
+```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+import matplotlib.pyplot as plt
 # -------------------------------
 # Demonstration on Synthetic Data
 # -------------------------------
@@ -595,164 +596,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 ```
-
 ---
-
-## Representer Theorem for Linear Classifiers
-
-In many machine learning problems, especially those involving regularized risk minimization, the **representer theorem** guarantees that the solution to the optimization problem can be written as a finite linear combination of the training samples. For linear classifiers, consider the following regularized formulation:
-
-$$
-\min_{\mathbf{w}, b} \; \sum_{i=1}^n L(y_i, \mathbf{w}^\top \mathbf{x}_i + b) + \lambda\, \|\mathbf{w}\|^2,
-$$
-
-where:
-- $\{(\mathbf{x}_i, y_i)\}_{i=1}^n$ are the training examples with $\mathbf{x}_i \in \mathbb{R}^d$ and corresponding labels $y_i$,
-- $L$ is a loss function (such as the hinge loss for support vector machines or the logistic loss for logistic regression),
-- $\lambda > 0$ is a regularization parameter,
-- $\|\mathbf{w}\|^2$ represents the squared Euclidean norm, which penalizes the complexity of the classifier.
-
-The representer theorem asserts that there exists a solution $(\mathbf{w}^*, b^*)$ where the optimal weight vector $\mathbf{w}^*$ lies in the span of the training data. That is, one can express
-
-$$
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i,
-$$
-
-for some coefficients $\alpha_1, \alpha_2, \dots, \alpha_n \in \mathbb{R}$. Consequently, the decision function becomes
-
-$$
-f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^* 
-= \left(\sum_{i=1}^n \alpha_i \mathbf{x}_i^\top\right) \mathbf{x} + b^*
-= \sum_{i=1}^n \alpha_i\, \langle \mathbf{x}_i, \mathbf{x} \rangle + b^*.
-$$
-
-This representation has profound implications:
-
-- **Finite Representation:** Even if the underlying hypothesis space (e.g., an RKHS in the kernelized setting) is infinite-dimensional, regularization forces the solution to lie in the finite-dimensional span of the training examples.
-- **Computational Efficiency:** The optimization problem is effectively reduced to finding the finite set of coefficients $\alpha_i$ (and $b$), which can be computed efficiently using kernel methods or convex optimization techniques.
-- **Interpretability:** In linear classifiers, this representation reveals that the learned decision boundary is entirely determined by the training data. In the case of support vector machines, for instance, only a subset of the training points (the support vectors) will have nonzero coefficients $\alpha_i$, directly indicating which examples are critical for classification.
-
-Thus, for linear classifiers with decision boundaries of the form $\mathbf{w}^\top \mathbf{x} + b$, the representer theorem not only ensures that the problem has a solution in the span of the data but also provides practical and theoretical benefits by reducing the complexity of the learning task.
-
----
-
-## Representer Theorem for Linear Regression
-
-In linear regression, particularly in its regularized form (such as ridge regression), the learning problem can be formulated as
-
-$$
-\min_{\mathbf{w}, b} \; \sum_{i=1}^n \left(y_i - \mathbf{w}^\top \mathbf{x}_i - b\right)^2 + \lambda\, \|\mathbf{w}\|^2,
-$$
-
-where:
-- $\{(\mathbf{x}_i, y_i)\}_{i=1}^n$ are the training examples, with $\mathbf{x}_i \in \mathbb{R}^d$ and $y_i \in \mathbb{R}$,
-- $\lambda > 0$ is a regularization parameter,
-- $\|\mathbf{w}\|^2$ is the squared Euclidean norm used to prevent overfitting by penalizing large weights.
-
-The representer theorem tells us that despite the possibly infinite-dimensional nature of the hypothesis space in other settings, in regularized linear regression the optimal weight vector $\mathbf{w}^*$ can always be expressed as a linear combination of the training input vectors. That is, there exist coefficients $\alpha_1, \alpha_2, \dots, \alpha_n \in \mathbb{R}$ such that
-
-$$
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
-$$
-
-Using this representation, the predicted output for a new input $\mathbf{x}$ becomes
-
-$$
-f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^* 
-= \left(\sum_{i=1}^n \alpha_i \mathbf{x}_i^\top\right) \mathbf{x} + b^*
-= \sum_{i=1}^n \alpha_i\, \langle \mathbf{x}_i, \mathbf{x} \rangle + b^*.
-$$
-
-This formulation has several important implications:
-
-- **Finite Representation:** Even though there might be an infinite number of directions in the function space, the regularized problem constrains the solution to lie within the finite-dimensional span of the training examples.
-- **Computational Efficiency:** The solution is characterized by the finite set of coefficients $\alpha_i$ (along with the bias $b^*$). In practice, this makes methods such as kernel ridge regression computationally tractable because the solution can be expressed in terms of kernel evaluations between training data points.
-- **Interpretability:** The representation clearly shows that the learned regression function is entirely determined by the training data. For example, in ridge regression, the contribution of each training example is moderated by its corresponding coefficient $\alpha_i$.
-
-Thus, for linear regression with regularization, the representer theorem guarantees that the optimal solution is in the span of the training inputs and can be written entirely in terms of inner products between these inputs, providing both theoretical insight and practical advantages in computation and model interpretation.
-
---- 
-## Representer Theorem for Linear Classifiers and Linear Regression
-
-Below is a standard proof that establishes the representer theorem for linear classifiers and linear regression, i.e. that there exists an optimal solution $(\mathbf{w}^*, b^*)$ with
-
-$$
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
-$$
-
----
-
-### Proof:
-
-Assume that we are solving a regularized risk minimization problem over $\mathbf{w} \in \mathbb{R}^d$ and $b \in \mathbb{R}$ of the form
-
-$$
-\min_{\mathbf{w}, b} \; \sum_{i=1}^n L\bigl(y_i, \mathbf{w}^\top \mathbf{x}_i + b\bigr) + \lambda\, \|\mathbf{w}\|^2,
-$$
-
-where $L$ is a loss function, and $\lambda>0$ is the regularization parameter. Let 
-$$
-V = \operatorname{span}\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n\}
-$$
-be the subspace spanned by the training data.
-
-For any vector $\mathbf{w} \in \mathbb{R}^d$, we can decompose it uniquely as
-
-$$
-\mathbf{w} = \mathbf{w}_0 + \mathbf{w}_1,
-$$
-
-where $\mathbf{w}_0 \in V$ and $\mathbf{w}_1 \in V^\perp$ (the orthogonal complement of $V$). Notice that by construction, for every training example $\mathbf{x}_i$ (which lies in $V$), we have
-
-$$
-\langle \mathbf{w}_1, \mathbf{x}_i \rangle = 0.
-$$
-
-Thus, the prediction for each training example is
-
-$$
-\mathbf{w}^\top \mathbf{x}_i + b = (\mathbf{w}_0 + \mathbf{w}_1)^\top \mathbf{x}_i + b = \mathbf{w}_0^\top \mathbf{x}_i + \mathbf{w}_1^\top \mathbf{x}_i + b = \mathbf{w}_0^\top \mathbf{x}_i + b.
-$$
-
-This shows that the component $\mathbf{w}_1$ (lying in $V^\perp$) does not affect the predictions on the training data.
-
-Now, consider the regularization term $\|\mathbf{w}\|^2$. Because $\mathbf{w}_0$ and $\mathbf{w}_1$ are orthogonal, we have
-
-$$
-\|\mathbf{w}\|^2 = \|\mathbf{w}_0\|^2 + \|\mathbf{w}_1\|^2.
-$$
-
-If $\mathbf{w}_1 \neq \mathbf{0}$, then $\|\mathbf{w}\|^2 > \|\mathbf{w}_0\|^2$ but the predictions remain the same. Since the objective includes the regularization term $\lambda\,\|\mathbf{w}\|^2$, any optimal solution can be improved (or at least not worsened) by setting $\mathbf{w}_1 = \mathbf{0}$. In other words, there is no benefit to having a component in $V^\perp$.
-
-Thus, we can always find an optimal weight vector $\mathbf{w}^*$ that lies entirely in $V$; that is,
-
-$$
-\mathbf{w}^* = \mathbf{w}_0 \quad \text{with} \quad \mathbf{w}^* \in V.
-$$
-
-Because $V$ is the span of $\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n\}$, there exist scalars $\alpha_1, \alpha_2, \dots, \alpha_n$ such that
-
-$$
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
-$$
-
-This completes the proof that the optimal solution can be expressed as a linear combination of the training data.
-
----
-
-### Explanation:
-
-- **Key Observation:** The loss term depends only on $\mathbf{w}^\top \mathbf{x}_i$. Since any component of $\mathbf{w}$ perpendicular to all training examples (i.e. in $V^\perp$) does not affect the loss, including it only increases the regularization penalty.
-- **Conclusion:** We can always set the $V^\perp$ component to zero without changing the predictions, thereby arriving at an optimal solution that lies in the span of the training data. Consequently, the optimal weight vector can be written as
-
-$$
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
-$$
-
-This representer theorem is central in kernel methods and many linear models because it reduces an infinite-dimensional search (if one considers a feature space mapping) to a finite-dimensional problem based solely on the training samples.
-
-
-
 
 ### Insights for Students:
 
