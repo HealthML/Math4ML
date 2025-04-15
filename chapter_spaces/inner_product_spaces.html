@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_spaces/inner_product_spaces.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Transposition" href="transposition.html" />
+    <link rel="prev" title="Normed spaces" href="normed_spaces.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -192,7 +192,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Polynomials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
@@ -200,8 +200,15 @@
 <li class="toctree-l2"><a class="reference internal" href="metric_spaces.html">Metric spaces</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="normed_spaces.html">Normed spaces</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Inner product spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transposition.html">Transposition</a></li>
+
 </ul>
 </details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a></li>
 </ul>
 
     </div>
@@ -414,23 +421,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Inner product spaces</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pythagorean-theorem">Pythagorean Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cauchy-schwarz-inequality">Cauchy-Schwarz inequality</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-spaces-in-machine-learning">Inner Product Spaces in Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-inner-products-in-ml">Examples of Inner Products in ML:</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-classifiers-dot-product-similarity">1. <strong>Linear Classifiers (Dot product similarity)</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-as-generalized-inner-products">2. <strong>Kernels as Generalized Inner Products</strong></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-space-example-with-nearest-centroid-classifier">Inner Product Space Example with Nearest Centroid Classifier:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-for-students">Insights for Students:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-as-generalized-inner-products"><strong>Kernels as Generalized Inner Products</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-for-students">Insights for Students:</a></li>
 </ul>
 </li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -441,8 +439,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="inner-product-spaces">
+  <section class="tex2jax_ignore mathjax_ignore" id="inner-product-spaces">
 <h1>Inner product spaces<a class="headerlink" href="#inner-product-spaces" title="Link to this heading">#</a></h1>
+<p>Inner product spaces allow us to generalize ideas of angles, lengths, and orthogonality beyond traditional Euclidean geometry. They are foundational in machine learning algorithms involving geometric intuition, similarity measurement, and projection methods.</p>
 <p>An <strong>inner product</strong> on a real vector space <span class="math notranslate nohighlight">\(V\)</span> is a function
 <span class="math notranslate nohighlight">\(\langle \cdot, \cdot \rangle : V \times V \to \mathbb{R}\)</span> satisfying</p>
 <p>(i) <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{x} \rangle \geq 0\)</span>, with equality if
@@ -450,15 +449,15 @@ and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}
 <p>(ii) <span class="math notranslate nohighlight">\(\langle \alpha\mathbf{x} + \beta\mathbf{y}, \mathbf{z} \rangle = \alpha\langle \mathbf{x}, \mathbf{z} \rangle + \beta\langle \mathbf{y}, \mathbf{z} \rangle\)</span></p>
 <p>(iii) <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = \langle \mathbf{y}, \mathbf{x} \rangle\)</span></p>
 <p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}, \mathbf{z} \in V\)</span> and all
-<span class="math notranslate nohighlight">\(\alpha,\beta \in \mathbb{R}\)</span>. A vector space endowed with an inner
-product is called an <strong>inner product space</strong>.</p>
+<span class="math notranslate nohighlight">\(\alpha,\beta \in \mathbb{R}\)</span>.</p>
+<p>A vector space endowed with an inner product is called an <strong>inner product space</strong>.</p>
 <p>Note that any inner product on <span class="math notranslate nohighlight">\(V\)</span> induces a norm on <span class="math notranslate nohighlight">\(V\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\|\mathbf{x}\| = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle}\]</div>
 <p>One can verify that the axioms for norms are satisfied under this definition
 and follow (almost) directly from the axioms for inner products.
 Therefore any inner product space is also a normed space (and hence also
-a metric space).[^4]</p>
+a metric space).</p>
 <p>Two vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are said to be <strong>orthogonal</strong>
 if <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>; we write
 <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span> for shorthand. Orthogonality generalizes
@@ -474,50 +473,306 @@ if it’s unfamiliar) arises because this inner product is a special case
 of matrix multiplication where we regard the resulting <span class="math notranslate nohighlight">\(1 \times 1\)</span>
 matrix as a scalar. The inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is also often
 written <span class="math notranslate nohighlight">\(\mathbf{x}\cdot\mathbf{y}\)</span> (hence the alternate name <strong>dot
-product</strong>). The reader can verify that the two-norm <span class="math notranslate nohighlight">\(\|\cdot\|_2\)</span> on
+product</strong>). The two-norm <span class="math notranslate nohighlight">\(\|\cdot\|_2\)</span> on
 <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is induced by this inner product.</p>
+<p>The inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> induces the <strong>length</strong> (or <strong>two-norm</strong>) on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\|\mathbf{x}\|_2 = \sqrt{\langle \mathbf{x}, \mathbf{x} \rangle} = \sqrt{\sum_{i=1}^n x_i^2}\]</div>
+<p>This is the familiar Euclidean length of a vector in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>.</p>
+<p>The inner product on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> induces the following
+<strong>angle</strong> between two vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\theta = \arccos\left(\frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{x}\| \|\mathbf{y}\|}\right)\]</div>
+<p>This angle is well-defined as long as <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are
+not both the zero vector. The angle is <span class="math notranslate nohighlight">\(0\)</span> if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are parallel (i.e. <span class="math notranslate nohighlight">\(\mathbf{x} = t\mathbf{y}\)</span> for some
+<span class="math notranslate nohighlight">\(t \in \mathbb{R}\)</span>), and <span class="math notranslate nohighlight">\(\pi/2\)</span> if they are orthogonal. The cosine of the
+angle is given by the <strong>cosine similarity</strong> between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\cos(\theta) = \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\|\mathbf{x}\| \|\mathbf{y}\|}\]</div>
+<p>This is a common measure of similarity between two vectors, and is
+often used in machine learning applications.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Arc</span>
+
+<span class="c1"># Define two non-zero vectors in R^2.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Compute inner products and norms.</span>
+<span class="n">dot_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">norm_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">norm_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Compute cosine similarity and angle theta (in radians).</span>
+<span class="n">cos_theta</span> <span class="o">=</span> <span class="n">dot_xy</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm_x</span> <span class="o">*</span> <span class="n">norm_y</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">)</span>  <span class="c1"># angle between x and y, in radians</span>
+<span class="n">theta_deg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="c1"># Compute the polar angles of vectors x and y (in degrees)</span>
+<span class="n">angle_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">angle_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="c1"># Ensure the arc goes in the correct direction:</span>
+<span class="c1"># If angle_y is less than angle_x, we add 360 to angle_y.</span>
+<span class="k">if</span> <span class="n">angle_y</span> <span class="o">&lt;</span> <span class="n">angle_x</span><span class="p">:</span>
+    <span class="n">angle_y</span> <span class="o">+=</span> <span class="mi">360</span>
+
+<span class="c1"># Choose a radius for the arc (e.g. half the minimum norm)</span>
+<span class="n">arc_radius</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">norm_x</span><span class="p">,</span> <span class="n">norm_y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="c1"># Create the arc patch from angle_x to angle_y.</span>
+<span class="n">arc</span> <span class="o">=</span> <span class="n">Arc</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="n">arc_radius</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">arc_radius</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+          <span class="n">theta1</span><span class="o">=</span><span class="n">angle_x</span><span class="p">,</span> <span class="n">theta2</span><span class="o">=</span><span class="n">angle_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Set up the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+<span class="c1"># Plot vector x and vector y, both originating at (0, 0).</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{y}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{y}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Add the arc representing the angle between x and y.</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">arc</span><span class="p">)</span>
+
+<span class="c1"># Compute the midpoint of the arc (in degrees and then convert to radians)</span>
+<span class="n">arc_mid_angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">angle_x</span> <span class="o">+</span> <span class="n">angle_y</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+<span class="n">arc_mid_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">arc_mid_angle</span><span class="p">)</span>
+<span class="n">arc_text_x</span> <span class="o">=</span> <span class="n">arc_radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">arc_mid_rad</span><span class="p">)</span>
+<span class="n">arc_text_y</span> <span class="o">=</span> <span class="n">arc_radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">arc_mid_rad</span><span class="p">)</span>
+
+<span class="c1"># Annotate the arc with the angle value (in radians).</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">arc_text_x</span><span class="p">,</span> <span class="n">arc_text_y</span><span class="p">,</span> 
+        <span class="sa">f</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">theta</span><span class="se">\\</span><span class="s2">approx </span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\\</span><span class="s2">,</span><span class="se">\\</span><span class="s2">text</span><span class="se">{{</span><span class="s2">rad</span><span class="se">}}\\</span><span class="s2">,(</span><span class="si">{</span><span class="n">theta_deg</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">^</span><span class="se">\\</span><span class="s2">circ)$&quot;</span><span class="p">,</span> 
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add axis labels, title, grid, and legend.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Angle between Vectors via Dot Product (Cosine Similarity)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/2a9efafd9c4a57ef59ebabd9fdca9bcc69daf46b58a20bfe5bc6259e70c32a1a.png" src="../_images/2a9efafd9c4a57ef59ebabd9fdca9bcc69daf46b58a20bfe5bc6259e70c32a1a.png" />
+</div>
+</div>
 <section id="pythagorean-theorem">
 <h2>Pythagorean Theorem<a class="headerlink" href="#pythagorean-theorem" title="Link to this heading">#</a></h2>
 <p>The well-known Pythagorean theorem generalizes naturally to arbitrary
 inner product spaces.</p>
-<p><em>Theorem.</em>
-If <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, then</p>
+<div class="proof theorem admonition" id="theorem-0">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span> (Pythagorean theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, then</p>
 <div class="math notranslate nohighlight">
 \[\|\mathbf{x}+\mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2.\]</div>
-<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, i.e.
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \perp \mathbf{y}\)</span>, i.e.
 <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle = 0\)</span>. Then</p>
 <div class="math notranslate nohighlight">
 \[\|\mathbf{x}+\mathbf{y}\|^2 = \langle \mathbf{x}+\mathbf{y}, \mathbf{x}+\mathbf{y} \rangle = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{y}, \mathbf{x} \rangle + \langle \mathbf{x}, \mathbf{y} \rangle + \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2\]</div>
 <p>as claimed. ◻</p>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define two perpendicular vectors x and y.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">sum_xy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1"># Compute the norms (Euclidean norm)</span>
+<span class="n">norm_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">norm_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">norm_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sum_xy</span><span class="p">)</span>
+
+<span class="c1"># Verify the Pythagorean theorem numerically</span>
+<span class="n">lhs</span> <span class="o">=</span> <span class="n">norm_sum</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">norm_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">norm_y</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Set up the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Plot vector x, y, and x+y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{y}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">sum_xy</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">+\mathbf</span><span class="si">{y}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+<span class="c1"># Mark the right angle at the origin</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Annotate the plot with norm values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">norm_x</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">norm_y</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">sum_xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">sum_xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mf">0.2</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">norm_sum</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pythagorean Theorem in an Inner Product Space&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Print the numerical check in the console</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;||x+y||^2 = </span><span class="si">{</span><span class="n">lhs</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;||x||^2 + ||y||^2 = </span><span class="si">{</span><span class="n">rhs</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>||x+y||^2 = 25.00
+||x||^2 + ||y||^2 = 25.00
+</pre></div>
+</div>
+<img alt="../_images/333951352a533fbae6d764a75a13239ec2850f6f69930dd59ab408a67c738d33.png" src="../_images/333951352a533fbae6d764a75a13239ec2850f6f69930dd59ab408a67c738d33.png" />
+</div>
+</div>
+<p>In this example, we choose two perpendicular vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> (for instance, <span class="math notranslate nohighlight">\(\mathbf{x}=(3, 0)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}=(0, 4)\)</span>) and plot these vectors along with their sum <span class="math notranslate nohighlight">\(\mathbf{x}+\mathbf{y}\)</span>.
+The plot visually demonstrates the Pythagorean theorem, where the lengths of the sides of the right triangle formed by <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> correspond to their norms. The dashed line indicates the right angle between the two vectors.</p>
 </section>
 <section id="cauchy-schwarz-inequality">
 <h2>Cauchy-Schwarz inequality<a class="headerlink" href="#cauchy-schwarz-inequality" title="Link to this heading">#</a></h2>
-<p>This inequality is sometimes useful in proving bounds:</p>
+<p>The Cauchy-Schwarz inequality is a fundamental result in linear algebra and functional analysis. It states that the absolute value of the inner product of two vectors is less than or equal to the product of their norms.
+This inequality is a powerful tool in various fields, including machine learning, statistics, and optimization.</p>
+<div class="proof theorem admonition" id="theorem-1">
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span> (Cauchy–Schwarz Inequality)</p>
+<section class="theorem-content" id="proof-content">
+<p>For all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span>,</p>
 <div class="math notranslate nohighlight">
-\[|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|\]</div>
-<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span>. Equality holds exactly when
-<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are scalar multiples of each other (or
-equivalently, when they are linearly dependent).</p>
+\[
+|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|,
+\]</div>
+<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are linearly dependent.</p>
 </section>
+</div><p>For a proof see the Appendix of the book.</p>
+<p>We attempt a visual explanation of the Cauchy–Schwarz inequality by relating the dot product to the cosine of the angle between vectors and illustrating its geometric implications for a linear classifier’s decision boundary. In this visualization, we fix a vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and draw several vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> on a circle (so that <span class="math notranslate nohighlight">\(\|\mathbf{y}\|\)</span> is fixed). For each such <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, we annotate the computed dot product (which equals <span class="math notranslate nohighlight">\(\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta\)</span>). In a separate subplot, we also plot the function <span class="math notranslate nohighlight">\(f(\theta)=\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta\)</span> versus <span class="math notranslate nohighlight">\(\theta\)</span> to show that the dot product is maximized when <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is aligned with <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and minimized when it is opposite.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define a fixed vector x.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">norm_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Define a fixed norm for y.</span>
+<span class="n">norm_y</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="c1"># Create a figure with two subplots.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Subplot 1: Visualizing x and several y vectors.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot vector x.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1.05</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Define several angles for y (in radians).</span>
+<span class="n">angles_deg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">206</span><span class="p">,</span> <span class="mi">270</span><span class="p">]</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angles_deg</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">]</span>
+
+<span class="c1"># Plot a circle for reference (all y with fixed norm).</span>
+<span class="n">theta_circle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">circle_x</span> <span class="o">=</span> <span class="n">norm_y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_circle</span><span class="p">)</span>
+<span class="n">circle_y</span> <span class="o">=</span> <span class="n">norm_y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_circle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">circle_x</span><span class="p">,</span> <span class="n">circle_y</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Circle (fixed norm)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot vectors y at the specified angles and annotate their dot product.</span>
+<span class="k">for</span> <span class="n">theta</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">deg</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">angles_deg</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">norm_y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c1"># Place the annotation near the end of y.</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1.1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">0.8</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">deg</span><span class="si">}</span><span class="s2">°&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dot Product and Cosine Geometry&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+<span class="c1"># Subplot 2: Plot the dot product as a function of the angle between x and y.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">theta_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">dp_vals</span> <span class="o">=</span> <span class="n">norm_x</span> <span class="o">*</span> <span class="n">norm_y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_vals</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_vals</span><span class="p">,</span> <span class="n">dp_vals</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\|\mathbf</span><span class="si">{x}</span><span class="s2">\|\|\mathbf</span><span class="si">{y}</span><span class="s2">\|\cos\theta$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;magenta&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">norm_x</span> <span class="o">*</span> <span class="n">norm_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Max&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="n">norm_x</span> <span class="o">*</span> <span class="n">norm_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Min&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$ (radians)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Dot product&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dot Product vs. Angle&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/80603e999d8003a7c9a54c9c6176d00d7491850e75a1da02f93ef8e985440180.png" src="../_images/80603e999d8003a7c9a54c9c6176d00d7491850e75a1da02f93ef8e985440180.png" />
+</div>
+</div>
 </section>
-<section id="inner-product-spaces-in-machine-learning">
-<h1>Inner Product Spaces in Machine Learning<a class="headerlink" href="#inner-product-spaces-in-machine-learning" title="Link to this heading">#</a></h1>
-<p>Inner product spaces allow us to generalize ideas of angles, lengths, and orthogonality beyond traditional Euclidean geometry. They are foundational in machine learning algorithms involving geometric intuition, similarity measurement, and projection methods.</p>
-<section id="examples-of-inner-products-in-ml">
-<h2>Examples of Inner Products in ML:<a class="headerlink" href="#examples-of-inner-products-in-ml" title="Link to this heading">#</a></h2>
-<section id="linear-classifiers-dot-product-similarity">
-<h3>1. <strong>Linear Classifiers (Dot product similarity)</strong><a class="headerlink" href="#linear-classifiers-dot-product-similarity" title="Link to this heading">#</a></h3>
-<p>Many linear classifiers (like perceptrons, logistic regression, and linear SVMs) rely directly on the standard inner product (dot product):</p>
+<section id="explanation">
+<h2>Explanation<a class="headerlink" href="#explanation" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Decision functions</strong> for linear classifiers often take the form:</p></li>
+<li><p><strong>Subplot 1 (Geometry in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>)</strong>:<br />
+The blue arrow represents the fixed vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. The red, orange, green, purple, and brown arrows are various vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> on the circle of radius <span class="math notranslate nohighlight">\(2\)</span> (i.e. with fixed norm <span class="math notranslate nohighlight">\(\|\mathbf{y}\| = 2\)</span>) at angles <span class="math notranslate nohighlight">\(0^\circ\)</span>, <span class="math notranslate nohighlight">\(45^\circ\)</span>, <span class="math notranslate nohighlight">\(90^\circ\)</span>, <span class="math notranslate nohighlight">\(135^\circ\)</span>, and <span class="math notranslate nohighlight">\(180^\circ\)</span>, respectively. For each <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, the dot product <span class="math notranslate nohighlight">\(\langle \mathbf{x}, \mathbf{y} \rangle\)</span> is calculated and annotated. This illustrates that the dot product depends on the cosine of the angle between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p></li>
+<li><p><strong>Subplot 2 (Function Plot)</strong>:<br />
+This subplot shows the function <span class="math notranslate nohighlight">\(f(\theta) = \|\mathbf{x}\|\|\mathbf{y}\|\cos\theta\)</span> as a function of the angle <span class="math notranslate nohighlight">\(\theta\)</span>. The maximum and minimum possible dot products occur when <span class="math notranslate nohighlight">\(\theta=0\)</span> or <span class="math notranslate nohighlight">\(\theta=\pi\)</span>, corresponding to perfect alignment and opposite direction, respectively. This visualization reinforces the concept that the dot product is essentially <span class="math notranslate nohighlight">\(\|\mathbf{x}\|\|\mathbf{y}\|\cos\theta\)</span>.</p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b = \langle \mathbf{w}, \mathbf{x} \rangle + b\]</div>
-<p>This explicitly uses the inner product to measure similarity between the feature vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and the learned weight vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>.</p>
 </section>
-<hr class="docutils" />
 <section id="kernels-as-generalized-inner-products">
-<h3>2. <strong>Kernels as Generalized Inner Products</strong><a class="headerlink" href="#kernels-as-generalized-inner-products" title="Link to this heading">#</a></h3>
+<h2><strong>Kernels as Generalized Inner Products</strong><a class="headerlink" href="#kernels-as-generalized-inner-products" title="Link to this heading">#</a></h2>
 <p>The notion of inner product spaces provides a powerful generalization called <strong>kernels</strong>, leading to the idea of <strong>kernel methods</strong> in machine learning. Kernels allow us to implicitly map data into high-dimensional spaces where classification or regression tasks become simpler.</p>
 <p>A kernel function <span class="math notranslate nohighlight">\(k(\mathbf{x}, \mathbf{y})\)</span> is defined as:</p>
 <div class="math notranslate nohighlight">
@@ -529,37 +784,295 @@ equivalently, when they are linearly dependent).</p>
 </ul>
 <p>Common kernels include:</p>
 <ul class="simple">
-<li><p><strong>Polynomial kernel</strong>: <span class="math notranslate nohighlight">\(k(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^\top \mathbf{y} + c)^d\)</span></p></li>
-<li><p><strong>Gaussian (RBF) kernel</strong>: <span class="math notranslate nohighlight">\(k(\mathbf{x}, \mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2)\)</span></p></li>
+<li><p>The <strong>linear kernel</strong> <span class="math notranslate nohighlight">\(k_{\mathrm{linear}}(\mathbf{x},\mathbf{y}) = \mathbf{x}^{\!\top}\mathbf{y}\)</span>,</p></li>
+<li><p>The <strong>polynomial kernel</strong> <span class="math notranslate nohighlight">\(k_{\mathrm{poly}}(\mathbf{x},\mathbf{y}) = (\mathbf{x}^{\!\top}\mathbf{y} + c)^d\)</span>, and</p></li>
+<li><p>The <strong>Gaussian (RBF) kernel</strong> <span class="math notranslate nohighlight">\(k_{\mathrm{RBF}}(\mathbf{x},\mathbf{y}) = \exp(-\gamma\|\mathbf{x}-\mathbf{y}\|^2)\)</span>.</p></li>
 </ul>
-</section>
-</section>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">linear_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the linear (dot product) kernel matrix.</span>
+<span class="sd">    For a data matrix X (shape: [n_samples, n_features]), the linear kernel is:</span>
+<span class="sd">      k_linear(x, y) = x^T y.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+
+<span class="k">def</span> <span class="nf">polynomial_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the polynomial kernel matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    k_poly(x,y) = (x^T y + c)^d.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">K_lin</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">K_lin</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="n">d</span>
+
+<span class="k">def</span> <span class="nf">rbf_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the Gaussian (RBF) kernel matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    k_RBF(x,y) = exp(-gamma ||x - y||^2).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Compute squared Euclidean norms for each data point.</span>
+    <span class="n">sq_norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Compute the squared distance matrix using broadcasting:</span>
+    <span class="n">D</span> <span class="o">=</span> <span class="n">sq_norms</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">sq_norms</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">D</span><span class="p">)</span>
+
+<span class="c1"># Generate a synthetic dataset in R^n (here, n=2) with m data points.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">2</span>  <span class="c1"># 20 data points in 2D</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Compute kernel matrices.</span>
+<span class="n">K_linear</span> <span class="o">=</span> <span class="n">linear_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">K_poly</span> <span class="o">=</span> <span class="n">polynomial_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">K_rbf</span> <span class="o">=</span> <span class="n">rbf_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Create subplots for the three kernels.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot the linear (dot product) kernel matrix.</span>
+<span class="n">im0</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">K_linear</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Linear Kernel</span><span class="se">\n</span><span class="s2">$x^Tx$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+
+<span class="c1"># Plot the polynomial kernel matrix.</span>
+<span class="n">im1</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">K_poly</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Polynomial Kernel: $(x^Tx + 1)^2$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+
+<span class="c1"># Plot the Gaussian (RBF) kernel matrix.</span>
+<span class="n">im2</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">K_rbf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;RBF Kernel: $\exp(-0.5\|x-y\|^2)$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Data Point Index&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.046</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Comparison of Kernel Computations using Transposition&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/1b0625f93f690ca61dfb78492a09e1331951a96c424055f1a68bd990a5c17366.png" src="../_images/1b0625f93f690ca61dfb78492a09e1331951a96c424055f1a68bd990a5c17366.png" />
+</div>
+</div>
 <hr class="docutils" />
-<section id="inner-product-space-example-with-nearest-centroid-classifier">
-<h2>Inner Product Space Example with Nearest Centroid Classifier:<a class="headerlink" href="#inner-product-space-example-with-nearest-centroid-classifier" title="Link to this heading">#</a></h2>
-<p>The nearest centroid classifier assigns points to the nearest centroid based on distance. We’ve used Euclidean distance so far, which implicitly relies on the standard inner product. But by generalizing this inner product through kernels, we can obtain interesting classifiers that measure similarity in richer ways.</p>
 <p><strong>Kernelized Nearest Centroid Classifier</strong>:</p>
-<p>Instead of explicitly computing the centroid in the original space, we can implicitly compute distances in a high-dimensional space using kernels.</p>
-<p>Given data points <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>, the centroid <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> for class <span class="math notranslate nohighlight">\(k\)</span> in the mapped space is given by:</p>
+<p>We have already learned that we can obtain a non-linear version of a linear classifier such as the nearest centroid classifier by using non-linear basis functions <span class="math notranslate nohighlight">\(\phi(\cdot)\)</span> to map the data into a higher-dimensional space.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\phi(\mathbf{x}) = \begin{bmatrix}
+\phi_1(\mathbf{x}) \\ \phi_2(\mathbf{x}) \\ \vdots \\ \phi_d(\mathbf{x})
+\end{bmatrix}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi_i(\cdot)\)</span> are real-valued basis functions.</p>
+<p>The nearest centroid classifier assigns a new point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the class <span class="math notranslate nohighlight">\(k\)</span> whose centroid <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> is closest to <span class="math notranslate nohighlight">\(\phi(\mathbf{x})\)</span>.
+The centroid <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> is computed as the mean of the training points in class <span class="math notranslate nohighlight">\(k\)</span> after applying the mapping <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{c}_k = \frac{1}{N_k}\sum_{i:y_i=k}\phi(\mathbf{x}_i)\]</div>
-<p>Then the distance to the centroid becomes:</p>
+<p>where <span class="math notranslate nohighlight">\(N_k\)</span> is the number of training examples in class <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Instead of explicitly computing the centroid in the original space, we can implicitly compute distances in a high-dimensional space using inner products and their implied distance metric only.</p>
+<p>The distance between a point <span class="math notranslate nohighlight">\(\phi(\mathbf{x})\)</span> and the centroid <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> can be expressed in terms of the inner products involving <span class="math notranslate nohighlight">\(\phi(\mathbf{x})\)</span> and <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 = \langle \phi(\mathbf{x}) - \mathbf{c}_k, \phi(\mathbf{x}) - \mathbf{c}_k \rangle =\langle \phi(\mathbf{x}), \phi(\mathbf{x}) \rangle - 2\langle \phi(\mathbf{x}), \mathbf{c}_k\rangle + \langle \mathbf{c}_k, \mathbf{c}_k\rangle
+\]</div>
+<p>Using the defitintion of the kernel function <span class="math notranslate nohighlight">\(k(\mathbf{x},\mathbf{y})=\langle\phi(\mathbf{x}, \phi(\mathbf{y}))\)</span> and the fact that <span class="math notranslate nohighlight">\(\mathbf{c}_k\)</span> is the average of all the training data points in class <span class="math notranslate nohighlight">\(k\)</span>, we can express this distance only based on kernels between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and the training points in class <span class="math notranslate nohighlight">\(k\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2 
-= \langle \phi(\mathbf{x}) - \mathbf{c}_k, \phi(\mathbf{x}) - \mathbf{c}_k \rangle
 = k(\mathbf{x},\mathbf{x}) - \frac{2}{N_k}\sum_{i:y_i=k}k(\mathbf{x}, \mathbf{x}_i) 
 + \frac{1}{N_k^2}\sum_{i,j:y_i,y_j=k} k(\mathbf{x}_i, \mathbf{x}_j)\]</div>
-<p>Thus, a kernelized nearest centroid classifier can classify points using arbitrary inner product spaces defined by kernels, allowing the classifier to handle complex, nonlinear patterns in the data.</p>
-</section>
+<p>Using this kernelized distance, the classifier assigns <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the class <span class="math notranslate nohighlight">\(k\)</span> for which <span class="math notranslate nohighlight">\(\|\phi(\mathbf{x}) - \mathbf{c}_k\|^2\)</span> is minimal. In this way, the kernelized nearest centroid classifier operates solely via inner products—thus allowing the algorithm to implicitly work in high-dimensional feature spaces without ever computing the mapping <span class="math notranslate nohighlight">\(\phi\)</span> explicitly. This is particularly useful when the mapping is computationally expensive or infeasible to compute directly due to its high (or even infinite) dimensionality.
+Thus, a kernelized nearest centroid classifier can classify points using arbitrary inner product spaces defined by kernels, allowing the classifier to handle complex, nonlinear patterns in the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">KernelNearestCentroid</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Kernelized Nearest Centroid Classifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        kernel : function or None</span>
+<span class="sd">            A function that takes two vectors and returns a scalar,</span>
+<span class="sd">            representing the inner product in the feature space.</span>
+<span class="sd">            If None, a default RBF kernel with sigma=1.0 is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Default: RBF kernel with sigma=1.0 (gamma=1/(2*sigma^2)=0.5)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_indices_</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># mapping from class to indices in training set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">N_k_</span> <span class="o">=</span> <span class="p">{}</span>            <span class="c1"># number of training examples per class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K_train_</span> <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># kernel matrix for training data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K_centroid_sqr_</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># precomputed term: (1/N_k^2)*sum_{i,j in class k} k(x_i, x_j)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the kernelized nearest centroid classifier.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            Training data.</span>
+<span class="sd">        y : array-like, shape (n_samples,)</span>
+<span class="sd">            Class labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Precompute kernel matrix on training data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">K_train_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">k_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">K_train_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">k_val</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">K_train_</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">k_val</span>
+        
+        <span class="c1"># For each class, store indices and precompute centroid norm squared in feature space</span>
+        <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">:</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">==</span> <span class="bp">cls</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_indices_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span>
+            <span class="n">N_k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">N_k_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">N_k</span>
+            <span class="c1"># Compute the double-sum term for class centroid: (1/N_k^2)*sum_{i,j in class} k(x_i, x_j)</span>
+            <span class="n">K_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_train_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">indices</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">K_centroid_sqr_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">K_cls</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">N_k</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the squared distance in feature space from x to each class centroid.</span>
+<span class="sd">        The kernelized squared distance for class k is given by:</span>
+<span class="sd">        </span>
+<span class="sd">            d^2(x, c_k) = k(x, x) </span>
+<span class="sd">                          - (2/N_k)*sum_{i:y_i=k} k(x, x_i)</span>
+<span class="sd">                          + (1/N_k^2)*sum_{i,j:y_i,y_j=k} k(x_i,x_j)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        distances : dict</span>
+<span class="sd">            Dictionary mapping class label to the computed squared distance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">k_xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">:</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_indices_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
+            <span class="n">N_k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">N_k_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
+            <span class="c1"># Compute sum_{i in class} k(x, x_i)</span>
+            <span class="n">k_x_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+            <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="n">N_k</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">k_x_class</span><span class="p">)</span>
+            <span class="n">term3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_centroid_sqr_</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
+            <span class="n">distances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">k_xx</span> <span class="o">-</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span>
+        <span class="k">return</span> <span class="n">distances</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict the class labels for the given set of data.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        y_pred : ndarray, shape (n_samples,)</span>
+<span class="sd">            Predicted class labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">distances</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+            <span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># -------------------------------</span>
+<span class="c1"># Demonstration on Synthetic Data</span>
+<span class="c1"># -------------------------------</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Generate synthetic 2D data for two classes</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">X_class0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">X_class1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_class0</span><span class="p">,</span> <span class="n">X_class1</span><span class="p">))</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">20</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+    
+    <span class="c1"># Instantiate and fit the classifier with an RBF kernel</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">KernelNearestCentroid</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+    <span class="c1"># Create a grid for visualizing the decision boundary</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">300</span><span class="p">))</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="c1"># Plot decision regions and training data</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">0</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">0</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class 0&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="n">y_train</span><span class="o">==</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> 
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class 1&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Kernelized Nearest Centroid Classifier&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/216df0d1d9a289267f6550b4debbe55c32a86172129c59ea007f52e167f7d778.png" src="../_images/216df0d1d9a289267f6550b4debbe55c32a86172129c59ea007f52e167f7d778.png" />
+</div>
+</div>
 <hr class="docutils" />
 <section id="insights-for-students">
-<h2>Insights for Students:<a class="headerlink" href="#insights-for-students" title="Link to this heading">#</a></h2>
+<h3>Insights for Students:<a class="headerlink" href="#insights-for-students" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Inner products</strong> provide a flexible geometric tool for measuring angles and similarity.</p></li>
 <li><p><strong>Kernels</strong> use inner products implicitly to map data into spaces where classification is simplified.</p></li>
 <li><p>The kernelized nearest centroid classifier offers a straightforward way to appreciate how inner product spaces generalize standard linear classifiers, enhancing their expressive power in practical ML scenarios.</p></li>
 </ul>
 <p>This approach naturally motivates the importance of inner product spaces and kernels in machine learning.</p>
+</section>
 </section>
 </section>
 
@@ -593,6 +1106,24 @@ equivalently, when they are linearly dependent).</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="normed_spaces.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Normed spaces</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="transposition.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Transposition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -609,23 +1140,14 @@ equivalently, when they are linearly dependent).</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Inner product spaces</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pythagorean-theorem">Pythagorean Theorem</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cauchy-schwarz-inequality">Cauchy-Schwarz inequality</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-spaces-in-machine-learning">Inner Product Spaces in Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-inner-products-in-ml">Examples of Inner Products in ML:</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-classifiers-dot-product-similarity">1. <strong>Linear Classifiers (Dot product similarity)</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-as-generalized-inner-products">2. <strong>Kernels as Generalized Inner Products</strong></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product-space-example-with-nearest-centroid-classifier">Inner Product Space Example with Nearest Centroid Classifier:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-for-students">Insights for Students:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernels-as-generalized-inner-products"><strong>Kernels as Generalized Inner Products</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#insights-for-students">Insights for Students:</a></li>
 </ul>
 </li>
 </ul>
-
   </nav></div>
 
 </div></div>

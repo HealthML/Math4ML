@@ -58,10 +58,13 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/proofs';</script>
     <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/proofs.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Transposition" href="../chapter_spaces/transposition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -123,8 +126,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -198,8 +199,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric spaces</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner product spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+
 </ul>
 </details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Detailed Proofs</a></li>
 </ul>
 
     </div>
@@ -417,6 +425,87 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="detailed-proofs">
 <h1>Detailed Proofs<a class="headerlink" href="#detailed-proofs" title="Link to this heading">#</a></h1>
 <p>Here we list more detailed proofs of theorems and lemmas that are not included in the main text.</p>
+<div class="proof theorem admonition" id="theorem-0">
+<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Cauchy–Schwarz Inequality)</p>
+<section class="theorem-content" id="proof-content">
+<p>For all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|,
+\]</div>
+<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are linearly dependent.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Consider any scalar <span class="math notranslate nohighlight">\(t \in \mathbb{R}\)</span>. By the properties of inner products, the norm squared of the vector <span class="math notranslate nohighlight">\(\mathbf{x} - t\mathbf{y}\)</span> is non-negative:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\mathbf{x} - t\mathbf{y}\|^2 = \langle \mathbf{x} - t\mathbf{y}, \mathbf{x} - t\mathbf{y} \rangle \ge 0.
+\]</div>
+<p>Expanding the inner product using linearity gives:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\mathbf{x} - t\mathbf{y}\|^2 = \langle \mathbf{x}, \mathbf{x} \rangle - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2 \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2.
+\]</div>
+<p>This expression is a quadratic function in <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2.\]</div>
+<p>Since <span class="math notranslate nohighlight">\(f(t) \ge 0\)</span> for all <span class="math notranslate nohighlight">\(t \in \mathbb{R}\)</span>, the quadratic must have a non-positive discriminant. The discriminant is:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta = (-2 \langle \mathbf{x}, \mathbf{y} \rangle)^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 = 4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2.
+\]</div>
+<p>Thus, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 \le 0.
+\]</div>
+<p>Dividing both sides by 4 yields:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{x}, \mathbf{y} \rangle^2 \le \|\mathbf{x}\|^2 \|\mathbf{y}\|^2.
+\]</div>
+<p>Taking the square root of both sides (and noting that both norms are nonnegative) gives the desired inequality:</p>
+<div class="math notranslate nohighlight">
+\[
+|\langle \mathbf{x}, \mathbf{y} \rangle| \le \|\mathbf{x}\| \cdot \|\mathbf{y}\|.
+\]</div>
+<p>Equality holds if and only if the discriminant <span class="math notranslate nohighlight">\(\Delta = 0\)</span>, which happens exactly when there exists a scalar <span class="math notranslate nohighlight">\(t\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x} = t\,\mathbf{y}\)</span>, i.e., when <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are linearly dependent.<br />
+◻</p>
+</div>
+<p>The <strong>discriminant</strong> is a term that comes from the study of quadratic equations. When you have a quadratic equation in the form</p>
+<div class="math notranslate nohighlight">
+\[
+at^2 + bt + c = 0,
+\]</div>
+<p>the discriminant is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta = b^2 - 4ac.
+\]</div>
+<p>The value of the discriminant tells you important information about the solutions (or roots) of the quadratic equation:</p>
+<ul class="simple">
+<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta &gt; 0\)</span>:</strong> There are two distinct real roots.</p></li>
+<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta = 0\)</span>:</strong> There is exactly one real root (a repeated or double root).</p></li>
+<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta &lt; 0\)</span>:</strong> There are no real roots; instead, the roots are complex conjugates.</p></li>
+</ul>
+<p>In the context of the Cauchy–Schwarz inequality proof, we examined the quadratic function</p>
+<div class="math notranslate nohighlight">
+\[
+f(t) = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2,
+\]</div>
+<p>which represents the squared norm <span class="math notranslate nohighlight">\(\|\mathbf{x} - t\mathbf{y}\|^2\)</span> and is nonnegative for all real <span class="math notranslate nohighlight">\(t\)</span>. For this quadratic function to be nonnegative for all <span class="math notranslate nohighlight">\(t\)</span>, its discriminant must be non-positive (i.e., <span class="math notranslate nohighlight">\(\Delta \leq 0\)</span>); otherwise, the quadratic would cross the horizontal axis, implying negative values for some <span class="math notranslate nohighlight">\(t\)</span>. In our derivation, after computing the discriminant</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta = 4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2,
+\]</div>
+<p>requiring <span class="math notranslate nohighlight">\(\Delta \le 0\)</span> gives us the inequality</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{x}, \mathbf{y} \rangle^2 \leq \|\mathbf{x}\|^2 \|\mathbf{y}\|^2,
+\]</div>
+<p>which is exactly the Cauchy–Schwarz inequality after taking square roots.</p>
+<p>Thus, the discriminant in this context helps us conclude that the quadratic cannot have two distinct real roots (which would indicate a region where the function dips below zero) and thus must satisfy the inequality.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -449,6 +538,15 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="../chapter_spaces/transposition.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Transposition</p>
+      </div>
+    </a>
 </div>
                 </footer>
               

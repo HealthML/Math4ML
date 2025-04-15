@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 ## Transposition
 
 If $\mathbf{A} \in \mathbb{R}^{m \times n}$, its **transpose**
@@ -19,134 +31,6 @@ verified from the definition:
 (iv) $(\mathbf{A}\mathbf{B})^{\!\top\!} = \mathbf{B}^{\!\top\!} \mathbf{A}^{\!\top\!}$
 
 
-
-### Example: Linear Regression and Gradient Computation with Transposition
-
-**Linear regression** is one of the simplest and most commonly used machine learning algorithms. It attempts to fit a linear model to data by minimizing a squared loss. Let's recall briefly how the linear regression loss is defined:
-
-Given:
-- Training data matrix $\mathbf{X} \in \mathbb{R}^{m \times n}$, where each of the $m$ rows is a sample with $n$ features.
-- Target vector $\mathbf{y} \in \mathbb{R}^{m \times 1}$.
-- Parameter vector $\mathbf{w} \in \mathbb{R}^{n \times 1}$.
-
-The **prediction** is given by:
-
-$$\hat{\mathbf{y}} = \mathbf{X}\mathbf{w}$$
-
-The squared error loss (mean squared error, MSE) is:
-
-$$L(\mathbf{w}) = \|\mathbf{y} - \mathbf{X}\mathbf{w}\|_2^2
-= (\mathbf{y}-\mathbf{X}\mathbf{w})^{\!\top\!}(\mathbf{y}-\mathbf{X}\mathbf{w})$$
-
-### Computing the gradient explicitly using transposition:
-
-To optimize this loss with gradient descent, we need the gradient of \(L(\mathbf{w})\):
-
-First, expand using matrix multiplication and transposition rules:
-
-$$\begin{aligned}
-L(\mathbf{w}) 
-&= (\mathbf{y}-\mathbf{X}\mathbf{w})^{\!\top\!}(\mathbf{y}-\mathbf{X}\mathbf{w})\\[8pt]
-&= (\mathbf{y}^{\!\top\!} - \mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!})(\mathbf{y}-\mathbf{X}\mathbf{w})\\[8pt]
-&= \mathbf{y}^{\!\top\!}\mathbf{y} - \mathbf{y}^{\!\top\!}\mathbf{X}\mathbf{w} - \mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{y} + \mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{X}\mathbf{w}
-\end{aligned}$$
-
-Since the middle terms are scalars and transposes of each other, they can be combined to give:
-
-$$L(\mathbf{w}) = \mathbf{y}^{\!\top\!}\mathbf{y} - 2\mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{y} + \mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{X}\mathbf{w}$$
-
-### Taking the gradient w.r.t. $\mathbf{w}$:
-
-Using known rules of differentiation and transposition (including symmetry and linearity):
-
-- Gradient of $-2\mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{y}$ w.r.t. $\mathbf{w}$ is $-2\mathbf{X}^{\!\top\!}\mathbf{y}$
-- Gradient of $\mathbf{w}^{\!\top\!}\mathbf{X}^{\!\top\!}\mathbf{X}\mathbf{w}$ is $2\mathbf{X}^{\!\top\!}\mathbf{X}\mathbf{w}$
-
-Thus, the final gradient is:
-
-$$\nabla_{\mathbf{w}} L(\mathbf{w}) = -2\mathbf{X}^{\!\top\!}\mathbf{y} + 2\mathbf{X}^{\!\top\!}\mathbf{X}\mathbf{w}
-= 2\mathbf{X}^{\!\top\!}(\mathbf{X}\mathbf{w}-\mathbf{y})$$
-
-### Importance for students:
-
-- Clearly illustrates the algebraic rules of **transposition** in action (particularly the rule $(\mathbf{AB})^{\!\top\!} = \mathbf{B}^{\!\top\!}\mathbf{A}^{\!\top\!}$).
-- Reinforces the concept that transposition is fundamental to writing concise and clear mathematical expressions in ML.
-- Directly relevant to optimization and training of ML models, connecting abstract math directly to implementation.
-
----
-
-### Quick Reference to Transposition rules used:
-
-| Property                                          | Usage in this example |
-|---------------------------------------------------|-----------------------|
-| $(\mathbf{A}\mathbf{B})^{\!\top\!} = \mathbf{B}^{\!\top\!}\mathbf{A}^{\!\top\!}$ | Gradient derivation |
-| $(\mathbf{A}^{\!\top\!})^{\!\top\!} = \mathbf{A}$ | Simplifying expressions |
-| Linearity of transpose                            | Simplifying terms      |
-
----
-## ML Example: Covariance Matrix in Data Preprocessing (Using Transposition)
-
-In machine learning, the **covariance matrix** is crucial to understand the relationship between different features of your data. Let's see clearly how matrix transposition simplifies the expression for the covariance matrix.
-
-### Covariance matrix definition:
-
-Suppose you have a data matrix:
-
-$$\mathbf{X} = 
-\begin{bmatrix}
-x_{11} & x_{12} & \dots & x_{1n}\\[5pt]
-x_{21} & x_{22} & \dots & x_{2n}\\[5pt]
-\vdots & \vdots & \ddots & \vdots\\[5pt]
-x_{m1} & x_{m2} & \dots & x_{mn}
-\end{bmatrix} \in \mathbb{R}^{m \times n}$$
-
-Here, each row represents an observation (data sample), and each column is a feature.
-
-First, let's center our data by subtracting the mean from each feature (column):
-
-$$\bar{\mathbf{X}} = \mathbf{X} - \mathbf{1}\boldsymbol{\mu}^{\!\top\!},$$
-
-where:
-
-- $\boldsymbol{\mu}$ is the column vector of feature means:
-
-$$\boldsymbol{\mu} = \frac{1}{m}\mathbf{X}^{\!\top\!}\mathbf{1}, \quad\text{and}\quad \mathbf{1} \in \mathbb{R}^{m\times 1} \text{ (vector of ones)}$$
-
-### Covariance matrix using transposition:
-
-The covariance matrix $\mathbf{\Sigma}$ is defined as:
-
-$$\mathbf{\Sigma} = \frac{1}{m-1}\bar{\mathbf{X}}^{\!\top\!}\bar{\mathbf{X}}$$
-
-Note here the critical role of **matrix transposition**:
-
-- $\bar{\mathbf{X}}$ has shape $(m \times n)$
-- $\bar{\mathbf{X}}^{\!\top\!}$ has shape $(n \times m)$
-
-Thus, the product $\bar{\mathbf{X}}^{\!\top\!}\bar{\mathbf{X}}$ results in a square $(n\times n)$ covariance matrix.
-
-### Intuition for students:
-
-- **Why transpose matters here:**  
-  Transposition allows us to compute all possible pairwise feature interactions succinctly. The resulting covariance matrix measures how strongly each feature varies with every other feature.
-
-- **Algebraic simplification using transpose:**  
-  Note how cleanly matrix transposition expresses the covariance formula, without explicitly writing sums or loops. Each element of the covariance matrix is simply given by:
-
-$$(\mathbf{\Sigma})_{ij} = \frac{1}{m-1}\sum_{k=1}^{m}\bar{x}_{ki}\bar{x}_{kj}$$
-
-This is exactly captured by the concise matrix form:
-
-$$\mathbf{\Sigma} = \frac{1}{m-1}\bar{\mathbf{X}}^{\!\top\!}\bar{\mathbf{X}}$$
-
-### Transposition rules explicitly used:
-
-| Property | Usage |
-|----------|-------|
-| $(\mathbf{A}^{\!\top\!})^{\!\top\!} = \mathbf{A}$ | When manipulating dimensions |
-| $(\mathbf{A}\mathbf{B})^{\!\top\!} = \mathbf{B}^{\!\top\!}\mathbf{A}^{\!\top\!}$ | Expressing covariance concisely |
-
----
 ## ML Example: Efficient Kernel Computation Using Transposition Rules
 
 Kernel methods in machine learning often require efficiently computing similarity between data points. Let's see clearly how **transposition** helps simplify the calculation of kernels, specifically the **Polynomial kernel** and the **RBF (Gaussian) kernel**.
@@ -161,9 +45,9 @@ Recall the polynomial kernel of degree $d$:
 
 $$k_{\text{poly}}(\mathbf{x}, \mathbf{y}) = (\mathbf{x}^{\!\top\!}\mathbf{y} + c)^d$$
 
-We can compute the entire polynomial kernel matrix \(\mathbf{K}\) between all pairs of data points efficiently using matrix transposition:
+We can compute the entire polynomial kernel matrix $\mathbf{K}$ between all pairs of data points efficiently using matrix transposition:
 
-- Define \(\mathbf{K}_{\text{poly}}\) as:
+- Define $\mathbf{K}_{\text{poly}}$ as:
 
 $$\mathbf{K}_{\text{poly}} = (\mathbf{X}\mathbf{X}^{\!\top\!} + c)^{\circ d}$$
 
@@ -232,3 +116,109 @@ $$\mathbf{K}_{\text{RBF}} = \exp(-\gamma \mathbf{D})$$
 | $(\mathbf{A}\mathbf{B})^{\!\top\!} = \mathbf{B}^{\!\top\!}\mathbf{A}^{\!\top\!}$ | Simplifying inner product expressions |
 | $(\mathbf{A}^{\!\top\!})^{\!\top\!} = \mathbf{A}$ | Simplifying algebraic expressions clearly |
 
+Below is a complete Python script that demonstrates how to compute kernel matrices efficiently using transposition rules. In this example, we work with a synthetic data matrix $\mathbf{X} \in \mathbb{R}^{m \times n}$ and show:
+
+1. How to compute the **polynomial kernel** matrix by using $\mathbf{X}\mathbf{X}^{\top}$ (which yields all pairwise dot products) and then applying an element‐wise power.
+2. How to compute the **Gaussian (RBF) kernel** matrix by using transposition to first compute the squared Euclidean distances between all pairs.
+
+The script then visualizes both kernel matrices using heatmaps.
+
+---
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# --------------------------
+# Generate synthetic data
+# --------------------------
+# Let m be the number of data points and n be the number of features.
+m, n = 10, 5
+np.random.seed(42)
+X = np.random.randn(m, n)  # Data matrix: each row is a data point in R^n
+
+# --------------------------
+# Example 1: Polynomial Kernel
+# --------------------------
+# The polynomial kernel of degree d with constant c is defined as:
+#   k_poly(x,y) = (x^T y + c)^d
+# We compute the entire kernel matrix for X using:
+#   K_poly = (X X^T + c) ^{circ d}
+c = 1.0     # Constant term
+d = 3       # Degree of the polynomial
+
+# Compute X X^T using matrix multiplication (using the transposition property)
+XXT = X @ X.T  # XXT is an m x m matrix with (i,j)-th entry = <x_i, x_j>
+# Add constant c to each element and perform element-wise exponentiation to the power d
+K_poly = (XXT + c) ** d
+
+# --------------------------
+# Example 2: Gaussian (RBF) Kernel
+# --------------------------
+# The Gaussian (RBF) kernel is defined as:
+#   k_RBF(x,y) = exp(-γ || x - y||^2 )
+# and we can use transposition to compute the squared Euclidean distances efficiently.
+gamma = 0.5  # Parameter for the RBF kernel
+
+# Step 1: Compute the squared norms for all data points using the diagonal of XXT.
+squared_norms = np.diag(XXT)  # shape: (m,)
+
+# Step 2: Compute the squared Euclidean distance matrix D using broadcasting.
+# Each element D[i,j] is:
+#   ||x_i - x_j||^2 = <x_i, x_i> - 2<x_i, x_j> + <x_j, x_j>
+D = squared_norms.reshape(-1, 1) - 2 * XXT + squared_norms.reshape(1, -1)
+
+# Step 3: Compute the RBF kernel matrix.
+K_RBF = np.exp(-gamma * D)
+
+# --------------------------
+# Visualization of the Kernel Matrices
+# --------------------------
+
+fig, axs = plt.subplots(1, 2, figsize=(14, 6))
+
+# Polynomial Kernel Heatmap
+im0 = axs[0].imshow(K_poly, cmap='viridis', aspect='equal')
+axs[0].set_title(f"Polynomial Kernel (degree {d}, c={c})")
+axs[0].set_xlabel("Data Point Index")
+axs[0].set_ylabel("Data Point Index")
+plt.colorbar(im0, ax=axs[0], fraction=0.046, pad=0.04)
+
+# RBF Kernel Heatmap
+im1 = axs[1].imshow(K_RBF, cmap='viridis', aspect='equal')
+axs[1].set_title(f"Gaussian (RBF) Kernel (gamma={gamma})")
+axs[1].set_xlabel("Data Point Index")
+axs[1].set_ylabel("Data Point Index")
+plt.colorbar(im1, ax=axs[1], fraction=0.046, pad=0.04)
+
+plt.suptitle("Efficient Kernel Computations Using Transposition Rules", fontsize=16)
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+```
+
+---
+
+### Explanation
+
+1. **Polynomial Kernel Computation:**  
+   - We compute the matrix $ \mathbf{X}\mathbf{X}^{\top} $ to obtain all pairwise dot products.
+   - Adding a constant $c$ and then taking an element-wise power $d$ yields the polynomial kernel matrix:
+     $$
+     \mathbf{K}_{\text{poly}} = (\mathbf{X}\mathbf{X}^{\top} + c)^{\circ d}.
+     $$
+   - Transposition is essential in $\mathbf{X}\mathbf{X}^{\top}$ since it converts the $n$-dimensional row vectors into column vectors to perform the dot products.
+
+2. **Gaussian (RBF) Kernel Computation:**  
+   - The vector of squared norms is extracted from the diagonal of $\mathbf{X}\mathbf{X}^{\top}$.
+   - The squared distance matrix is computed using the formula:
+     $$
+     D_{ij} = \|\mathbf{x}_i - \mathbf{x}_j\|^2 = \mathbf{x}_i^\top \mathbf{x}_i - 2 \mathbf{x}_i^\top \mathbf{x}_j + \mathbf{x}_j^\top \mathbf{x}_j.
+     $$
+   - Finally, the RBF kernel matrix is obtained by applying the exponential function with parameter $\gamma$.
+
+3. **Visualization:**  
+   - Two subplots display the kernel matrices as heatmaps, clearly demonstrating the efficiency of using transposition rules for kernel computation.
+   - The colorbars help to interpret the relative similarities between data points as computed by the kernels.
+
+This script ties together linear algebra (via transposition) and practical kernel methods in machine learning, highlighting how fundamental operations can lead to efficient and elegant implementations.
