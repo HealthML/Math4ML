@@ -202,33 +202,129 @@ plt.show()
 ```
 
 
-### Further Examples in Machine Learning
-In machine learning, norms and metrics are not just theoretical constructs; they play a crucial role in various algorithms and applications. Here are some examples:
+## **Regularization**  
 
-1. **Distance Metrics in Classification and Clustering**
-    - **k-Nearest Neighbors (k-NN):** The k-NN algorithm uses distance metrics (like L1 or L2 norms) to find the nearest neighbors of a point in feature space. The choice of metric can significantly affect the performance of the classifier.
-    - **Clustering Algorithms:** Algorithms like k-means clustering use distance metrics to assign points to clusters based on their proximity to cluster centroids.
+Regularization methods in machine learning, such as L2 regularization and L1 regularization, explicitly use norms on parameter vectors $\mathbf{w}$ of models to control overfitting.
+Regularization adds a penalty term to the loss function, which is often based on the norm of the weights:
+- **General Form:**
 
+$$\text{Loss}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \Omega(\mathbf{w})$$
 
-2. **Regularization (Ridge and Lasso)**  
-Regularization methods in machine learning, such as **ridge regression** (L2 regularization) and **lasso regression** (L1 regularization), explicitly use norms on parameter vectors:
+where $\Omega(\mathbf{w})$ is a regularization term that penalizes large weights.
 
-- **L2 Regularization (Ridge):**
+By controlling the norm of the weight vector, regularization methods strike a balance between fitting the training data well to achieve a small error and maintaining a level of simplicity that promotes good generalization performance by achieving a small regularizer $\Omega$. The interplay between the choice of norm for $\Omega$ and the error term is central to many machine learning applications.
 
-$$\text{Loss}_{ridge}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2$$
+- **L2 Regularization:**
+
+$$\text{Loss}_{ridge}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2$$
 
 (penalizes the squared Euclidean norm, encouraging small parameter values.)
 
 - **L1 Regularization (Lasso):**
      
-$$\text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1$$
+$$\text{Loss}_{lasso}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1$$
 
 (penalizes the sum of absolute parameter values, promoting sparsity in the solution.)
 
-3. **Measuring Errors and Convergence (Gradient Descent)**  
-When running optimization algorithms such as **gradient descent**, one commonly uses norms to measure how far parameter updates move between iterations:
-     
-$$\|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2$$
+### Regularization in Linear Classification
 
-The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.
+In linear classification, regularization controls the complexity of the decision boundary by adding a penalty term to the loss function that is proportional to a norm of the weight vector $\mathbf{w}$. For example, L₂ regularization (ridge) penalizes $\|\mathbf{w}\|_2^2$, which encourages the classifier to have smaller weights and hence a smoother decision boundary. In contrast, L₁ regularization (lasso) penalizes $\|\mathbf{w}\|_1$, promoting sparsity by driving some weight components to zero. This often results in more interpretable models that rely only on the most important features. The decision function
 
+$$
+f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b
+$$
+
+geometrically defines a hyperplane with normal vector $\mathbf{w}$. The regularization norm affects the magnitude (and, for L₁, the sparsity) of $\mathbf{w}$, which in turn affects how the hyperplane is placed and how robustly it separates classes.
+
+The geometry of the decision boundary is intimately related to the norm of $\mathbf{w}$: for example, the distance of a point from the hyperplane is proportional to the projection of $\mathbf{x}$ onto $\mathbf{w}$. To enforce simplicity (and avoid overfitting), regularization methods add a penalty based on the norm of $\mathbf{w}$ to the loss function. Two common regularization strategies in linear classification are:
+
+- **L₂ Regularization (Ridge):**  
+  The regularization term is $\lambda \|\mathbf{w}\|_2^2$, which penalizes large weights by applying a quadratic penalty. This encourages the classifier to have a small, smoothly distributed weight vector. The resulting decision boundary tends to be smooth and robust to noise.
+
+- **L₁ Regularization (Lasso):**  
+  The regularization term is $\lambda \|\mathbf{w}\|_1$, which penalizes the sum of the absolute values of the weights. This penalty not only discourages large weights but also promotes sparsity, effectively performing feature selection. The decision boundaries from L₁-regularized classifiers often rely on a smaller subset of features, which can lead to more interpretable models.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+
+# Seed for reproducibility.
+np.random.seed(42)
+
+# Generate synthetic data for two classes in 2D.
+# Class 0 centered at (2, 0.2), Class 1 centered at (-2, -0.2)
+n_samples = 20
+X_class0 = np.random.randn(n_samples, 2)*1.5 + np.array([2, 0.2])
+X_class1 = np.random.randn(n_samples, 2)*1.5 + np.array([-2, -0.2])
+X = np.vstack((X_class0, X_class1))
+y = np.array([0] * n_samples + [1] * n_samples)
+
+# Fit logistic regression with L2 regularization.
+clf_l2 = LogisticRegression(penalty='l2', C=1.0, solver='lbfgs')
+clf_l2.fit(X, y)
+w_l2 = clf_l2.coef_[0]
+b_l2 = clf_l2.intercept_[0]
+norm_w_l2 = np.linalg.norm(w_l2)  # L2-norm of the weight vector
+
+# Fit logistic regression with L1 regularization.
+clf_l1 = LogisticRegression(penalty='l1', C=1.0, solver='liblinear')
+clf_l1.fit(X, y)
+w_l1 = clf_l1.coef_[0]
+b_l1 = clf_l1.intercept_[0]
+norm_w_l1 = np.sum(np.abs(w_l1))  # L1-norm of the weight vector
+
+# Create a meshgrid for plotting decision boundaries.
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+xx, yy = np.meshgrid(np.linspace(x_min, x_max, 400),
+                     np.linspace(y_min, y_max, 400))
+grid = np.c_[xx.ravel(), yy.ravel()]
+
+# Compute probability predictions for each classifier on the grid.
+Z_l2 = clf_l2.predict_proba(grid)[:, 1].reshape(xx.shape)
+Z_l1 = clf_l1.predict_proba(grid)[:, 1].reshape(xx.shape)
+
+# Initialize figure with two subplots.
+fig, axs = plt.subplots(1, 2, figsize=(14, 6))
+
+# Subplot for L2 regularization.
+axs[0].contourf(xx, yy, Z_l2, levels=np.linspace(0, 1, 20), cmap="RdBu", alpha=0.6)
+axs[0].contour(xx, yy, Z_l2, levels=[0.5], colors="k")
+scatter0 = axs[0].scatter(X[:, 0], X[:, 1], c=y, cmap="RdBu", edgecolor='k')
+label_l2 = f"w = [{w_l2[0]:.2f}, {w_l2[1]:.2f}] (||w||₂ = {norm_w_l2:.2f})"
+origin_l2 = np.mean(X, axis=0)
+axs[0].quiver(origin_l2[0], origin_l2[1], w_l2[0], w_l2[1],
+              color='k', scale=5, width=0.005, label=label_l2)
+axs[0].set_title("L2 Regularization")
+axs[0].set_xlim(x_min, x_max)
+axs[0].set_ylim(y_min, y_max)
+axs[0].set_xlabel("$x_1$")
+axs[0].set_ylabel("$x_2$")
+axs[0].grid(True, linestyle=":")
+axs[0].legend(loc='upper right')
+
+# Subplot for L1 regularization.
+axs[1].contourf(xx, yy, Z_l1, levels=np.linspace(0, 1, 20), cmap="RdBu", alpha=0.6)
+axs[1].contour(xx, yy, Z_l1, levels=[0.5], colors="k")
+scatter1 = axs[1].scatter(X[:, 0], X[:, 1], c=y, cmap="RdBu", edgecolor='k')
+label_l1 = f"w = [{w_l1[0]:.2f}, {w_l1[1]:.2f}] (||w||₁ = {norm_w_l1:.2f})"
+origin_l1 = np.mean(X, axis=0)
+axs[1].quiver(origin_l1[0], origin_l1[1], w_l1[0], w_l1[1],
+              color='k', scale=5, width=0.005, label=label_l1)
+axs[1].set_title("L1 Regularization")
+axs[1].set_xlim(x_min, x_max)
+axs[1].set_ylim(y_min, y_max)
+axs[1].set_xlabel("$x_1$")
+axs[1].set_ylabel("$x_2$")
+axs[1].grid(True, linestyle=":")
+axs[1].legend(loc='upper right')
+
+plt.suptitle("Logistic Regression Decision Boundaries\nComparing L2 and L1 Regularization Effects", fontsize=16)
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+```
+In this visualization, logistic regression is used with two regularization methods: L2 and L1. The weight vector $\mathbf{w}$ of the classifier is normal to the decision boundary. Its magnitude significantly influences the decision boundary’s placement:
+**L2 Regularization (Ridge)** penalizes the squared Euclidean norm $\|\mathbf{w}\|_2^2$, leading to a dense, smoothly distributed weight vector. The decision boundary is angled according to the balanced contributions of both features.
+**L1 Regularization (Lasso)**  penalizes the sum of absolute values, $\|\mathbf{w}\|_1$, which promotes sparsity by driving some components of $\mathbf{w}$ toward zero. In our example, this results in a vertical decision boundary because all the weight is concentrated on the first feature while the second weight is driven to 0.

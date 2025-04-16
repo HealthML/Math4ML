@@ -203,6 +203,7 @@
 <li class="toctree-l2"><a class="reference internal" href="inner_product_spaces.html">Inner product spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transposition.html">Transposition</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="representer_theorem.html">Representer Theorem for Linear Classifiers</a></li>
 </ul>
 </details></li>
 </ul>
@@ -423,7 +424,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normed-spaces-in-machine-learning">Normed Spaces in Machine Learning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nearest-centroid-classifier-under-different-norms">Nearest Centroid Classifier under different norms</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-examples-in-machine-learning">Further Examples in Machine Learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization"><strong>Regularization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-in-linear-classification">Regularization in Linear Classification</a></li>
 </ul>
 </li>
 </ul>
@@ -633,38 +637,141 @@ infinite-dimensional vector spaces such as function spaces, though.</p>
 </div>
 </div>
 </section>
-<section id="further-examples-in-machine-learning">
-<h3>Further Examples in Machine Learning<a class="headerlink" href="#further-examples-in-machine-learning" title="Link to this heading">#</a></h3>
-<p>In machine learning, norms and metrics are not just theoretical constructs; they play a crucial role in various algorithms and applications. Here are some examples:</p>
-<ol class="arabic simple">
-<li><p><strong>Distance Metrics in Classification and Clustering</strong></p>
+</section>
+<section id="regularization">
+<h2><strong>Regularization</strong><a class="headerlink" href="#regularization" title="Link to this heading">#</a></h2>
+<p>Regularization methods in machine learning, such as L2 regularization and L1 regularization, explicitly use norms on parameter vectors <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> of models to control overfitting.
+Regularization adds a penalty term to the loss function, which is often based on the norm of the weights:</p>
 <ul class="simple">
-<li><p><strong>k-Nearest Neighbors (k-NN):</strong> The k-NN algorithm uses distance metrics (like L1 or L2 norms) to find the nearest neighbors of a point in feature space. The choice of metric can significantly affect the performance of the classifier.</p></li>
-<li><p><strong>Clustering Algorithms:</strong> Algorithms like k-means clustering use distance metrics to assign points to clusters based on their proximity to cluster centroids.</p></li>
-</ul>
-</li>
-<li><p><strong>Regularization (Ridge and Lasso)</strong><br />
-Regularization methods in machine learning, such as <strong>ridge regression</strong> (L2 regularization) and <strong>lasso regression</strong> (L1 regularization), explicitly use norms on parameter vectors:</p></li>
-</ol>
-<ul class="simple">
-<li><p><strong>L2 Regularization (Ridge):</strong></p></li>
+<li><p><strong>General Form:</strong></p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\text{Loss}_{ridge}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2\]</div>
+\[\text{Loss}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \Omega(\mathbf{w})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Omega(\mathbf{w})\)</span> is a regularization term that penalizes large weights.</p>
+<p>By controlling the norm of the weight vector, regularization methods strike a balance between fitting the training data well to achieve a small error and maintaining a level of simplicity that promotes good generalization performance by achieving a small regularizer <span class="math notranslate nohighlight">\(\Omega\)</span>. The interplay between the choice of norm for <span class="math notranslate nohighlight">\(\Omega\)</span> and the error term is central to many machine learning applications.</p>
+<ul class="simple">
+<li><p><strong>L2 Regularization:</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{Loss}_{ridge}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \|\mathbf{w}\|_2^2\]</div>
 <p>(penalizes the squared Euclidean norm, encouraging small parameter values.)</p>
 <ul class="simple">
 <li><p><strong>L1 Regularization (Lasso):</strong></p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\text{Loss}_{lasso}(\mathbf{w}) = \text{MSE}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1\]</div>
+\[\text{Loss}_{lasso}(\mathbf{w}) = \text{error}(\mathbf{w}) + \lambda \|\mathbf{w}\|_1\]</div>
 <p>(penalizes the sum of absolute parameter values, promoting sparsity in the solution.)</p>
-<ol class="arabic simple" start="3">
-<li><p><strong>Measuring Errors and Convergence (Gradient Descent)</strong><br />
-When running optimization algorithms such as <strong>gradient descent</strong>, one commonly uses norms to measure how far parameter updates move between iterations:</p></li>
-</ol>
+<section id="regularization-in-linear-classification">
+<h3>Regularization in Linear Classification<a class="headerlink" href="#regularization-in-linear-classification" title="Link to this heading">#</a></h3>
+<p>In linear classification, regularization controls the complexity of the decision boundary by adding a penalty term to the loss function that is proportional to a norm of the weight vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>. For example, L₂ regularization (ridge) penalizes <span class="math notranslate nohighlight">\(\|\mathbf{w}\|_2^2\)</span>, which encourages the classifier to have smaller weights and hence a smoother decision boundary. In contrast, L₁ regularization (lasso) penalizes <span class="math notranslate nohighlight">\(\|\mathbf{w}\|_1\)</span>, promoting sparsity by driving some weight components to zero. This often results in more interpretable models that rely only on the most important features. The decision function</p>
 <div class="math notranslate nohighlight">
-\[\|\mathbf{w}_{t+1} - \mathbf{w}_{t}\|_2 \quad \text{or} \quad \|\nabla f(\mathbf{w}_t)\|_2\]</div>
-<p>The algorithm stops when the magnitude (norm) of parameter updates or gradients becomes sufficiently small.</p>
+\[
+f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x} + b
+\]</div>
+<p>geometrically defines a hyperplane with normal vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>. The regularization norm affects the magnitude (and, for L₁, the sparsity) of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, which in turn affects how the hyperplane is placed and how robustly it separates classes.</p>
+<p>The geometry of the decision boundary is intimately related to the norm of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>: for example, the distance of a point from the hyperplane is proportional to the projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>. To enforce simplicity (and avoid overfitting), regularization methods add a penalty based on the norm of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> to the loss function. Two common regularization strategies in linear classification are:</p>
+<ul class="simple">
+<li><p><strong>L₂ Regularization (Ridge):</strong><br />
+The regularization term is <span class="math notranslate nohighlight">\(\lambda \|\mathbf{w}\|_2^2\)</span>, which penalizes large weights by applying a quadratic penalty. This encourages the classifier to have a small, smoothly distributed weight vector. The resulting decision boundary tends to be smooth and robust to noise.</p></li>
+<li><p><strong>L₁ Regularization (Lasso):</strong><br />
+The regularization term is <span class="math notranslate nohighlight">\(\lambda \|\mathbf{w}\|_1\)</span>, which penalizes the sum of the absolute values of the weights. This penalty not only discourages large weights but also promotes sparsity, effectively performing feature selection. The decision boundaries from L₁-regularized classifiers often rely on a smaller subset of features, which can lead to more interpretable models.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="c1"># Seed for reproducibility.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Generate synthetic data for two classes in 2D.</span>
+<span class="c1"># Class 0 centered at (2, 0.2), Class 1 centered at (-2, -0.2)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">X_class0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">1.5</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+<span class="n">X_class1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">1.5</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">])</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">X_class0</span><span class="p">,</span> <span class="n">X_class1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">)</span>
+
+<span class="c1"># Fit logistic regression with L2 regularization.</span>
+<span class="n">clf_l2</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">)</span>
+<span class="n">clf_l2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">w_l2</span> <span class="o">=</span> <span class="n">clf_l2</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b_l2</span> <span class="o">=</span> <span class="n">clf_l2</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">norm_w_l2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">w_l2</span><span class="p">)</span>  <span class="c1"># L2-norm of the weight vector</span>
+
+<span class="c1"># Fit logistic regression with L1 regularization.</span>
+<span class="n">clf_l1</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+<span class="n">clf_l1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">w_l1</span> <span class="o">=</span> <span class="n">clf_l1</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b_l1</span> <span class="o">=</span> <span class="n">clf_l1</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">norm_w_l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">w_l1</span><span class="p">))</span>  <span class="c1"># L1-norm of the weight vector</span>
+
+<span class="c1"># Create a meshgrid for plotting decision boundaries.</span>
+<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+
+<span class="c1"># Compute probability predictions for each classifier on the grid.</span>
+<span class="n">Z_l2</span> <span class="o">=</span> <span class="n">clf_l2</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">grid</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Z_l1</span> <span class="o">=</span> <span class="n">clf_l1</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">grid</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Initialize figure with two subplots.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Subplot for L2 regularization.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z_l2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z_l2</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">scatter0</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">label_l2</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;w = [</span><span class="si">{</span><span class="n">w_l2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">w_l2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] (||w||₂ = </span><span class="si">{</span><span class="n">norm_w_l2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="n">origin_l2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">origin_l2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin_l2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">w_l2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">w_l2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_l2</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;L2 Regularization&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+
+<span class="c1"># Subplot for L1 regularization.</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z_l1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z_l1</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<span class="n">scatter1</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">label_l1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;w = [</span><span class="si">{</span><span class="n">w_l1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">w_l1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] (||w||₁ = </span><span class="si">{</span><span class="n">norm_w_l1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="n">origin_l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">origin_l1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin_l1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">w_l1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">w_l1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_l1</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;L1 Regularization&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Logistic Regression Decision Boundaries</span><span class="se">\n</span><span class="s2">Comparing L2 and L1 Regularization Effects&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/c17ca493149ba8602613da94bc04caf6b13fe961c200238be8edc762db9f0573.png" src="../_images/c17ca493149ba8602613da94bc04caf6b13fe961c200238be8edc762db9f0573.png" />
+</div>
+</div>
+<p>In this visualization, logistic regression is used with two regularization methods: L2 and L1. The weight vector <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> of the classifier is normal to the decision boundary. Its magnitude significantly influences the decision boundary’s placement:
+<strong>L2 Regularization (Ridge)</strong> penalizes the squared Euclidean norm <span class="math notranslate nohighlight">\(\|\mathbf{w}\|_2^2\)</span>, leading to a dense, smoothly distributed weight vector. The decision boundary is angled according to the balanced contributions of both features.
+<strong>L1 Regularization (Lasso)</strong>  penalizes the sum of absolute values, <span class="math notranslate nohighlight">\(\|\mathbf{w}\|_1\)</span>, which promotes sparsity by driving some components of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> toward zero. In our example, this results in a vertical decision boundary because all the weight is concentrated on the first feature while the second weight is driven to 0.</p>
 </section>
 </section>
 </section>
@@ -735,7 +842,10 @@ When running optimization algorithms such as <strong>gradient descent</strong>, 
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normed-spaces-in-machine-learning">Normed Spaces in Machine Learning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nearest-centroid-classifier-under-different-norms">Nearest Centroid Classifier under different norms</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-examples-in-machine-learning">Further Examples in Machine Learning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization"><strong>Regularization</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization-in-linear-classification">Regularization in Linear Classification</a></li>
 </ul>
 </li>
 </ul>
