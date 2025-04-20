@@ -1,4 +1,4 @@
-## The Hessian
+# The Hessian
 
 The **Hessian** matrix of $f : \mathbb{R}^d \to \mathbb{R}$ is a matrix
 of second-order partial derivatives: 
