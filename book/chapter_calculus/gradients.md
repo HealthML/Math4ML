@@ -10,7 +10,10 @@ kernelspec:
   language: python
   name: python3
 ---
-# The Derivative (1D)
+# Gradients and the Gradient Descent Algorithm
+In this section, we will discuss the concept of gradients and their use in the Steepest Descent optimization algorithm, which is essential in machine learning. Let's review the basics of derivatives and then move on to partial derivatives and gradients. 
+
+## Derivatives
 
 Let $f:\mathbb{R}\to\mathbb{R}$ be a 1D real-valued function.
 
@@ -90,35 +93,6 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-## Basic Differentiation Rules
-
-1. **Constant rule**  
-   $\displaystyle D(C)=0$.  
-2. **Power rule**  
-   $\displaystyle D(x^n)=n\,x^{n-1}$, $n\in\mathbb{R}$.  
-3. **Exponential**  
-   $\displaystyle D(e^x)=e^x$.  
-4. **Logarithm**  
-   $\displaystyle D(\ln x)=\tfrac1x$.  
-
-## Sum, Product, Quotient, Constant Multiple
-
-Let $f$ and $g$ be differentiable, $C$ a constant:
-
-- **Constant multiple**  
-  $\displaystyle D\bigl[C\,f(x)\bigr] = C\,f'(x)$.
-- **Sum rule**  
-  $\displaystyle D\bigl[f(x)+g(x)\bigr] = f'(x)+g'(x)$.
-- **Product rule**  
-  $\displaystyle D\bigl[f(x)\,g(x)\bigr] = f(x)\,g'(x) + g(x)\,f'(x)$.
-- **Quotient rule**  
-
-  $$
-    D\!\Bigl[\tfrac{f(x)}{g(x)}\Bigr]
-    = \frac{g(x)\,f'(x)\;-\;f(x)\,g'(x)}{[g(x)]^2}.
-  $$
-
 ## Partial Derivatives
 
 For $y=f(x_1,\dots,x_n)$, the **partial derivative** wrt $x_i$ is
@@ -131,7 +105,8 @@ $$
 $$
 This is the derivative of $f$ with respect to $x_i$, treating all other variables as constants.
 
-# Gradients
+
+## Gradients
 
 Gradients generalize derivatives to scalar functions of several variables.
 
@@ -142,17 +117,96 @@ $$\nabla f = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
 [\nabla f]_i = \frac{\partial f}{\partial x_i}$$
 
-Gradients have the following very important property:
+To visualize the gradient, we plot the function $f(x,y)=\sin(x)+\cos(y)$ together with its gradient vector and the corresponding partial derivatives with respect to $x$ and $y$ at a point $(x_0,y_0)=(1.0,0.5)$.
 
-:::{prf:theorem} Gradient descent
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1) Define the bivariate function and its partial derivatives
+def f(x, y):
+    return np.sin(x) + np.cos(y)
+
+def fx(x, y):
+    return np.cos(x)
+
+def fy(x, y):
+    return -np.sin(y)
+
+# 2) Pick the point at which to visualize the gradient
+x0, y0 = 1.0, 0.5
+f0  = f(x0, y0)
+fx0 = fx(x0, y0)
+fy0 = fy(x0, y0)
+
+# 3) Build a grid around (x0, y0) for the contour plot
+X, Y = np.meshgrid(
+    np.linspace(x0-2, x0+2, 200),
+    np.linspace(y0-2, y0+2, 200)
+)
+Z = f(X, Y)
+
+# 4) Build 1D cross-sections at fixed y=y0 (varying x)
+x_vals      = np.linspace(x0-2, x0+2, 400)
+f_x_section = f(x_vals, y0)
+tangent_x   = f0 + fx0 * (x_vals - x0)
+
+# 5) Build 1D cross-sections at fixed x=x0 (varying y)
+y_vals      = np.linspace(y0-2, y0+2, 400)
+f_y_section = f(x0, y_vals)
+tangent_y   = f0 + fy0 * (y_vals - y0)
+
+# 6) Create the figure with three subplots
+fig, axs = plt.subplots(1, 3, figsize=(18, 5))
+
+# 6a) Contour plot of f(x,y)
+cs = axs[0].contourf(X, Y, Z, levels=30, cmap='viridis')
+axs[0].scatter(x0, y0, color='red', s=80, label='Point $(x_0,y_0)$')
+# Plot the gradient vector at (x0, y0)
+axs[0].quiver(x0, y0, fx0, fy0,
+              color='white', scale=5, width=0.005, label=r'$\nabla f(x_0,y_0)$')
+axs[0].set_title('Contour of $f(x,y)$ + Gradient')
+axs[0].set_xlabel('$x$')
+axs[0].set_ylabel('$y$')
+axs[0].legend(loc='upper right')
+plt.colorbar(cs, ax=axs[0], fraction=0.046, pad=0.04)
+
+# 6b) Partial w.r.t x (slice at y=y0)
+axs[1].plot(x_vals, f_x_section, label=r'$f(x,y_0)$', color='blue')
+axs[1].plot(x_vals, tangent_x,   '--', label=r'Tangent: $f_0 + f_x(x_0,y_0)\,(x-x_0)$', color='red')
+axs[1].scatter([x0], [f0], color='black', zorder=5)
+axs[1].set_title('Partial Derivative w.r.t. $x$')
+axs[1].set_xlabel('$x$')
+axs[1].set_ylabel(r'$f(x,y_0)$')
+axs[1].legend()
+axs[1].grid(True, linestyle=':')
+
+# 6c) Partial w.r.t y (slice at x=x0)
+axs[2].plot(y_vals, f_y_section, label=r'$f(x_0,y)$', color='green')
+axs[2].plot(y_vals, tangent_y,   '--', label=r'Tangent: $f_0 + f_y(x_0,y_0)\,(y-y_0)$', color='magenta')
+axs[2].scatter([y0], [f0], color='black', zorder=5)
+axs[2].set_title('Partial Derivative w.r.t. $y$')
+axs[2].set_xlabel('$y$')
+axs[2].set_ylabel(r'$f(x_0,y)$')
+axs[2].legend()
+axs[2].grid(True, linestyle=':')
+
+# 7) Super-title and layout adjustment
+plt.suptitle('Contour, Gradient, and Partial Derivatives at $(x_0,y_0)$', fontsize=16)
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.show()
+```
+
+We see in this plot that the gradient $\nabla f(\mathbf{x})$ points in the direction of **steepest ascent** from $\mathbf{x}$. Similarly, the negative gradient $-\nabla f(\mathbf{x})$ points in the direction of **steepest descent** from $\mathbf{x}$.
+
+:::{prf:theorem} Steepest descent direction
 :label: thm-gradient-descent
 :nonumber:
-$\nabla f(\mathbf{x})$ points in the direction of **steepest ascent** from $\mathbf{x}$. 
-Similarly, $-\nabla f(\mathbf{x})$ points in the direction of **steepest descent** from $\mathbf{x}$. 
+$-\nabla f(\mathbf{x})$ points in the direction of **steepest descent** from $\mathbf{x}$. 
 :::
 
-
-:::{prf:proof} using the directional derivative and Cauchy–Schwarz
+:::{prf:proof} using the directional derivative and Cauchy–Schwarz:
 
 Let $f:\mathbb{R}^n\to\mathbb{R}$ be differentiable at a point $\mathbf{x}$, and let $\nabla f(\mathbf{x})$ denote its gradient there.  For any unit vector $\mathbf{u}\in\mathbb{R}^n$ ($\|\mathbf{u}\|=1$), the **directional derivative** of $f$ at $\mathbf{x}$ in the direction $\mathbf{u}$ is
 
@@ -192,7 +246,23 @@ which is the smallest possible directional derivative over all unit directions. 
 
 We will use this fact frequently when iteratively minimizing a function via **gradient descent**.
 
-In the following example we show gradient descent for the function $f(x,y)=(x-1)^2+2(y-2)^2+\frac{1}{2}\sin(3x)\sin(3y)$, which has a unique global minimum near $(1,2)$ but small ripples that cause gradient descent to get stuck in local minima.
+## Basic Gradient Descent
+Gradient descent is an optimization algorithm used to minimize a function by iteratively moving in the direction of the steepest descent, as indicated by the negative gradient.
+
+The basic idea is to start at any initial point $\mathbf{x}_0$ and to iteratively update the current point $\mathbf{x}_t$ in the following way:
+
+$$
+  \mathbf{x}_{t+1} = \mathbf{x}_t - \eta_t \nabla f(\mathbf{x}_t),
+$$
+where $\eta_t$ is the learning rate at iteration $t$. The learning rate controls the step size of each update.
+
+For now, we can think of the learning rate as a small positive constant $\eta_t = \eta$ that we simply fix for all iterations.
+However, note that the choice of learning rate is crucial: too small a value can lead to slow convergence, while too large a value can cause divergence or oscillation around the minimum. Thus, we will discuss learning rate tuning in more detail later.
+
+We also don't yet have a good way to determine when to stop iterating. For now, we can simply iterate a fixed number of times, or until the change in the function value is small enough.
+We will discuss more sophisticated stopping criteria later, when we have a better understanding of the properties of minima.
+
+In the following example we show application of the gradient descent algorithm to the function $f(x,y)=(x-1)^2+2(y-2)^2+\frac{1}{2}\sin(3x)\sin(3y)$, which has a unique global minimum near $(1,2)$. However, we see that small ripples in the function can cause gradient descent to get stuck in local minima.
 
 ```{code-cell} ipython3
 :tags: [hide-input]

@@ -80,10 +80,15 @@ $$
 where $L$ is a loss function, and $\lambda>0$ is the regularization parameter. Let 
 $$
 V = \operatorname{span}\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n\}
+\quad\text{and}\quad
+V^\perp = \{\mathbf{u}\in\mathbb{R}^d : \mathbf{u}^\top \mathbf{v}=0\ \forall\,\mathbf{v}\in V\}.
 $$
-be the subspace spanned by the training data.
+be the subspace spanned by the training data and its orthogonal complement, respectively.
+The loss term $L(y_i, \mathbf{w}^\top \mathbf{x}_i + b)$ depends only on the inner product $\mathbf{w}^\top \mathbf{x}_i$ and the bias $b$. 
+The regularization term $\|\mathbf{w}\|^2$ penalizes the overall norm of $\mathbf{w}$.
+The key observation is that the loss term does not depend on the component of $\mathbf{w}$ that lies in $V^\perp$.
 
-For any vector $\mathbf{w} \in \mathbb{R}^d$, we can decompose it uniquely as
+Thus, we can decompose $\mathbf{w}\in \mathbb{R}^d$ into two orthogonal components:
 
 $$
 \mathbf{w} = \mathbf{w}_0 + \mathbf{w}_1,
@@ -109,12 +114,6 @@ $$
 \|\mathbf{w}\|^2 = \mathbf{w}^\top\mathbf{w} = (\mathbf{w}_0 + \mathbf{w}_1)^\top(\mathbf{w}_0 + \mathbf{w}_1) = \mathbf{w}_0^\top\mathbf{w}_0 + \mathbf{w}_1^\top\mathbf{w}_1 + 2\mathbf{w}_0^\top\mathbf{w}_1
 $$
 
-### TODO:
-
-$$
-\mathbf{w}_0^\top\mathbf{w}_1 = 0
-$$
-
 Because $\mathbf{w}_0$ and $\mathbf{w}_1$ are orthogonal, $\mathbf{w}_0^\top\mathbf{w}_1=0$ and we have
 
 $$
@@ -122,7 +121,8 @@ $$
 $$
 
 If $\mathbf{w}_1 \neq \mathbf{0}$, then $\|\mathbf{w}\|^2 > \|\mathbf{w}_0\|^2$ but the predictions remain the same.
-Since the objective includes the regularization term $\lambda\,\|\mathbf{w}\|^2$, any solution can be improved (or at least not worsened) by setting $\mathbf{w}_1 = \mathbf{0}$. In other words, there is no benefit to having a component in $V^\perp$.
+Since the objective includes the regularization term $\lambda\,\|\mathbf{w}\|^2$, any solution can be improved by setting $\mathbf{w}_1 = \mathbf{0}$.
+In other words, there is no benefit to having a component in $V^\perp$.
 
 Thus, we can always find an optimal weight vector $\mathbf{w}^*$ that lies entirely in $V$; that is,
 
@@ -153,4 +153,61 @@ This representer theorem is central in kernel methods and many linear models bec
 
 ## Application in Kernel Methods
 
-### TODO
+The Representer Theorem is the foundation for **kernel methods**, since it shows that—even when our hypothesis space is a high‑ or infinite‑dimensional Reproducing Kernel Hilbert Space (RKHS)—the solution can be expressed in terms of the finite training set.
+
+1. **Feature maps and kernels**  
+   We begin by choosing a feature mapping  
+
+   $$
+     \phi: \mathcal{X}\to\mathcal{H},
+   $$
+   into an (often infinite‑dimensional) inner‐product space $\mathcal{H}$.  A kernel function  
+   
+   $$
+     k(\mathbf{x},\mathbf{x}') 
+     = \langle \phi(\mathbf{x}),\,\phi(\mathbf{x}')\rangle_{\mathcal{H}}
+   $$
+   allows us to compute inner products in $\mathcal{H}$ without ever constructing $\phi(\mathbf{x})$ explicitly.
+
+2. **Kernelized predictive form**  
+   By the Representer Theorem, the optimal weight vector in $\mathcal{H}$ satisfies
+   
+   $$
+     \mathbf{w}^* \;=\;\sum_{i=1}^n \alpha_i\,\phi(\mathbf{x}_i).
+   $$
+   Hence the learned decision (or regression) function takes the form
+   
+   $$
+     f(\mathbf{x})
+     = \mathbf{w}^{*\top}\phi(\mathbf{x}) + b
+     = \sum_{i=1}^n \alpha_i\,k(\mathbf{x}_i,\mathbf{x}) \;+\; b.
+   $$
+   All dependence on the (possibly infinite) feature space is captured through the $n\times n$ **kernel Gram matrix**$$K$$ with entries $K_{ij}=k(\mathbf{x}_i,\mathbf{x}_j)$.
+
+3. **Training via kernels**  
+   - **Kernel ridge regression**  
+     Minimizes  
+     $\tfrac1n\|K\boldsymbol\alpha + b\mathbf{1} - \mathbf{y}\|^2 + \lambda\,\boldsymbol\alpha^\top K\,\boldsymbol\alpha$.  
+     One can solve for $\boldsymbol\alpha$ in closed form:  
+   
+     $$
+       [K + \lambda n\,I]\,\boldsymbol\alpha = \mathbf{y} - b\,\mathbf{1}.
+     $$
+   - **Support Vector Machines**  
+     Solves the convex dual  
+     $\max_{\boldsymbol\alpha}\;\sum_i\alpha_i - \tfrac12\sum_{ij}\alpha_i\alpha_j y_i y_j\,K_{ij}$  
+     subject to $\sum_i\alpha_i y_i=0$, $0\le\alpha_i\le C$.  
+   - **Kernel Logistic Regression, Gaussian Processes, Kernel PCA, …**  
+     All follow the same pattern: inference and training reduce to operations on the Gram matrix.
+
+4. **Practical consequences**  
+   - **Computational complexity:**  
+     Training requires $\mathcal{O}(n^3)$ in general (e.g.\ inverting $K$), and each new prediction costs $\mathcal{O}(n)$.  
+   - **Expressivity:**  
+     Kernels let us fit very flexible decision boundaries (polynomial, radial basis, string kernels, etc.) without ever leaving our linear‐model framework.  
+   - **Regularization:**  
+     The $\lambda\|\mathbf{w}\|^2_{\mathcal{H}}$ penalty translates into a smoothness control on the function $f$, balancing data fit vs.\ model complexity.
+
+---
+
+By leveraging the Representer Theorem, kernel methods transform a potentially intractable infinite‑dimensional problem into a finite one over the training set, enabling powerful, nonparametric learning with rigorous regularization.
