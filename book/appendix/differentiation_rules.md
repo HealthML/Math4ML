@@ -8,42 +8,50 @@ Let $f$ and $g$ be differentiable, $C$ a constant:
     D(C) = 0
   $$
 - **Power**: $n$ is a real number.
+  
   $$
     D(x^n) = n\,x^{n-1}
   $$
 - **Exponential**: $e$ is the base of the natural logarithm.
+  
   $$
     D(e^x) = e^x
   $$
 - **Logarithm**: $x>0$.
+  
   $$
     D(\ln x) = \frac{1}{x}
   $$
 - **Trigonometric**: $x$ is a variable.
+  
   $$
     D(\sin x) = \cos x,\quad
     D(\cos x) = -\sin x,\quad
     D(\tan x) = \sec^2 x
   $$
 - **Inverse trigonometric**: $x>0$.
+  
   $$
-    D(\arcsin x) = \frac{1}{\sqrt{1-x^2}},\quad
-    D(\arccos x) = -\frac{1}{\sqrt{1-x^2}},\quad
-    D(\arctan x) = \frac{1}{1+x^2}
+    D(\operatorname{arcsin} x) = \frac{1}{\sqrt{1-x^2}},\quad
+    D(\operatorname{arccos} x) = -\frac{1}{\sqrt{1-x^2}},\quad
+    D(\operatorname{arctan} x) = \frac{1}{1+x^2}
   $$
 - **Hyperbolic**: $x$ is a variable.
+
   $$
     D(\sinh x) = \cosh x,\quad
     D(\cosh x) = \sinh x,\quad
-    D(\tanh x) = \sech^2 x
+    D(\tanh x) = \operatorname{sech}^2 x
   $$
 - **Inverse hyperbolic**: $x>0$.
+
   $$
-    D(\arcsinh x) = \frac{1}{\sqrt{1+x^2}},\quad
-    D(\arccosh x) = \frac{1}{\sqrt{x^2-1}},\quad
-    D(\arctanh x) = \frac{1}{1-x^2}
+    D(\operatorname{arcsinh} x) = \frac{1}{\sqrt{1+x^2}},\quad
+    D(\operatorname{arccosh} x) = \frac{1}{\sqrt{x^2-1}},\quad
+    D(\operatorname{arctanh} x) = \frac{1}{1-x^2}
   $$
 - **Absolute value**: $x$ is a variable.
+
   $$
     D(|x|) = \begin{cases}
       1 & \text{if } x>0 \\
@@ -51,6 +59,7 @@ Let $f$ and $g$ be differentiable, $C$ a constant:
     \end{cases}
   $$
 - **Step function**: $x$ is a variable.
+
   $$
     D(\text{sgn}(x)) = \begin{cases}
       1 & \text{if } x>0 \\
@@ -58,6 +67,7 @@ Let $f$ and $g$ be differentiable, $C$ a constant:
     \end{cases}
   $$
 - **Heaviside step function**: $x$ is a variable.
+
   $$
     D(H(x)) = \delta(x) = \begin{cases}
       0 & \text{if } x\neq0 \\
@@ -66,6 +76,7 @@ Let $f$ and $g$ be differentiable, $C$ a constant:
   $$
   where $\delta(x)$ is the Dirac delta function.
 - **Dirac delta function**: $x$ is a variable.
+
   $$
     D(\delta(x)) = \delta'(x) = \begin{cases}
       0 & \text{if } x\neq0 \\
