@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Representer Theorem for Linear Classifiers &#8212; Mathematics for Machine Learning</title>
+    <title>Representer Theorem for Linear Functions &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_spaces/representer_theorem';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_spaces/representer_theorem.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/representer_theorem';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/representer_theorem.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
-    <link rel="prev" title="Transposition" href="transposition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -192,24 +192,29 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="vector_spaces.html">Vector spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polynomial_vector_space.html">Polynomials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
-<li class="toctree-l2"><a class="reference internal" href="subspaces.html">Subspaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metric_spaces.html">Metric spaces</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric spaces</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="normed_spaces.html">Normed spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="inner_product_spaces.html">Inner product spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transposition.html">Transposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner product spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
 
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Representer Theorem for Linear Classifiers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
 </ul>
 
     </div>
@@ -281,7 +286,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_spaces/representer_theorem.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/representer_theorem.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -298,7 +303,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_spaces/representer_theorem.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/representer_theorem.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -328,7 +333,7 @@
       
       
       
-      <li><a href="../_sources/chapter_spaces/representer_theorem.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/representer_theorem.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -412,7 +417,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Representer Theorem for Linear Classifiers</h1>
+    <h1>Representer Theorem for Linear Functions</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -422,12 +427,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representer-theorem-for-linear-regression">Representer Theorem for Linear Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representer-theorem-for-linear-classifiers-and-linear-regression">Representer Theorem for Linear Classifiers and Linear Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proof">Proof:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-in-kernel-methods">Application in Kernel Methods</a></li>
 </ul>
             </nav>
         </div>
@@ -439,17 +443,17 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="representer-theorem-for-linear-classifiers">
-<h1>Representer Theorem for Linear Classifiers<a class="headerlink" href="#representer-theorem-for-linear-classifiers" title="Link to this heading">#</a></h1>
-<p>In many machine learning problems, especially those involving regularized risk minimization, the <strong>representer theorem</strong> guarantees that the solution to the optimization problem can be written as a finite linear combination of the training samples. For linear classifiers, consider the following regularized formulation:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="representer-theorem-for-linear-functions">
+<h1>Representer Theorem for Linear Functions<a class="headerlink" href="#representer-theorem-for-linear-functions" title="Link to this heading">#</a></h1>
+<p>In many machine learning problems, especially those involving <span class="math notranslate nohighlight">\(l2\)</span>-regularized risk minimization over linear functions, the <strong>representer theorem</strong> guarantees that the solution to the optimization problem can be written as a finite linear combination of the training samples. Consider the following regularized formulation:</p>
 <div class="math notranslate nohighlight">
 \[
-\min_{\mathbf{w}, b} \; \sum_{i=1}^n L(y_i, \mathbf{w}^\top \mathbf{x}_i + b) + \lambda\, \|\mathbf{w}\|^2,
+\operatorname{argmin}_{\mathbf{w}, b} \; \sum_{i=1}^n L(y_i, \mathbf{w}^\top \mathbf{x}_i + b) + \lambda\, \|\mathbf{w}\|^2,
 \]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\{(\mathbf{x}_i, y_i)\}_{i=1}^n\)</span> are the training examples with <span class="math notranslate nohighlight">\(\mathbf{x}_i \in \mathbb{R}^d\)</span> and corresponding labels <span class="math notranslate nohighlight">\(y_i\)</span>,</p></li>
-<li><p><span class="math notranslate nohighlight">\(L\)</span> is a loss function (such as the hinge loss for support vector machines or the logistic loss for logistic regression),</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> is a loss function (such as the logistic loss for logistic regression, or the squared loss for linear regression),</p></li>
 <li><p><span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span> is a regularization parameter,</p></li>
 <li><p><span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2\)</span> represents the squared Euclidean norm, which penalizes the complexity of the classifier.</p></li>
 </ul>
@@ -458,13 +462,15 @@ document.write(`
 \[
 \mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i,
 \]</div>
-<p>for some coefficients <span class="math notranslate nohighlight">\(\alpha_1, \alpha_2, \dots, \alpha_n \in \mathbb{R}\)</span>. Consequently, the decision function becomes</p>
+<p>for some coefficients <span class="math notranslate nohighlight">\(\alpha_1, \alpha_2, \dots, \alpha_n \in \mathbb{R}\)</span>. Consequently, the decision function for a new example <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> becomes</p>
 <div class="math notranslate nohighlight">
 \[
-f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^* 
+f(\mathbf{x}^*) = \mathbf{w}^{*\top} \mathbf{x} + b^* 
 = \left(\sum_{i=1}^n \alpha_i \mathbf{x}_i^\top\right) \mathbf{x} + b^*
-= \sum_{i=1}^n \alpha_i\, \langle \mathbf{x}_i, \mathbf{x} \rangle + b^*.
+= \sum_{i=1}^n \alpha_i\, \langle \mathbf{x}_i, \mathbf{x}^* \rangle + b^*.
 \]</div>
+<p>This representation shows that the decision function is a linear combination of the inner products between the training examples and the new input <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, plus a bias term <span class="math notranslate nohighlight">\(b^*\)</span>.
+This is particularly useful in kernelized settings, where the inner products can be computed using a kernel function <span class="math notranslate nohighlight">\(k(\mathbf{x}_i, \mathbf{x}^*)\)</span> that implicitly maps the data into a higher-dimensional feature space without explicitly computing the mapping.</p>
 <p>This representation has profound implications:</p>
 <ul class="simple">
 <li><p><strong>Finite Representation:</strong> Even if the underlying hypothesis space (e.g., an RKHS in the kernelized setting) is infinite-dimensional, regularization forces the solution to lie in the finite-dimensional span of the training examples.</p></li>
@@ -472,52 +478,27 @@ f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^*
 <li><p><strong>Interpretability:</strong> In linear classifiers, this representation reveals that the learned decision boundary is entirely determined by the training data. In the case of support vector machines, for instance, only a subset of the training points (the support vectors) will have nonzero coefficients <span class="math notranslate nohighlight">\(\alpha_i\)</span>, directly indicating which examples are critical for classification.</p></li>
 </ul>
 <p>Thus, for linear classifiers with decision boundaries of the form <span class="math notranslate nohighlight">\(\mathbf{w}^\top \mathbf{x} + b\)</span>, the representer theorem not only ensures that the problem has a solution in the span of the data but also provides practical and theoretical benefits by reducing the complexity of the learning task.</p>
-<hr class="docutils" />
-<section id="representer-theorem-for-linear-regression">
-<h2>Representer Theorem for Linear Regression<a class="headerlink" href="#representer-theorem-for-linear-regression" title="Link to this heading">#</a></h2>
-<p>In linear regression, particularly in its regularized form (such as ridge regression), the learning problem can be formulated as</p>
-<div class="math notranslate nohighlight">
-\[
-\min_{\mathbf{w}, b} \; \sum_{i=1}^n \left(y_i - \mathbf{w}^\top \mathbf{x}_i - b\right)^2 + \lambda\, \|\mathbf{w}\|^2,
-\]</div>
-<p>where:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\{(\mathbf{x}_i, y_i)\}_{i=1}^n\)</span> are the training examples, with <span class="math notranslate nohighlight">\(\mathbf{x}_i \in \mathbb{R}^d\)</span> and <span class="math notranslate nohighlight">\(y_i \in \mathbb{R}\)</span>,</p></li>
-<li><p><span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span> is a regularization parameter,</p></li>
-<li><p><span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2\)</span> is the squared Euclidean norm used to prevent overfitting by penalizing large weights.</p></li>
-</ul>
-<p>The representer theorem tells us that despite the possibly infinite-dimensional nature of the hypothesis space in other settings, in regularized linear regression the optimal weight vector <span class="math notranslate nohighlight">\(\mathbf{w}^*\)</span> can always be expressed as a linear combination of the training input vectors. That is, there exist coefficients <span class="math notranslate nohighlight">\(\alpha_1, \alpha_2, \dots, \alpha_n \in \mathbb{R}\)</span> such that</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
-\]</div>
-<p>Using this representation, the predicted output for a new input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> becomes</p>
-<div class="math notranslate nohighlight">
-\[
-f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^* 
-= \left(\sum_{i=1}^n \alpha_i \mathbf{x}_i^\top\right) \mathbf{x} + b^*
-= \sum_{i=1}^n \alpha_i\, \langle \mathbf{x}_i, \mathbf{x} \rangle + b^*.
-\]</div>
-<p>This formulation has several important implications:</p>
-<ul class="simple">
-<li><p><strong>Finite Representation:</strong> Even though there might be an infinite number of directions in the function space, the regularized problem constrains the solution to lie within the finite-dimensional span of the training examples.</p></li>
-<li><p><strong>Computational Efficiency:</strong> The solution is characterized by the finite set of coefficients <span class="math notranslate nohighlight">\(\alpha_i\)</span> (along with the bias <span class="math notranslate nohighlight">\(b^*\)</span>). In practice, this makes methods such as kernel ridge regression computationally tractable because the solution can be expressed in terms of kernel evaluations between training data points.</p></li>
-<li><p><strong>Interpretability:</strong> The representation clearly shows that the learned regression function is entirely determined by the training data. For example, in ridge regression, the contribution of each training example is moderated by its corresponding coefficient <span class="math notranslate nohighlight">\(\alpha_i\)</span>.</p></li>
-</ul>
-<p>Thus, for linear regression with regularization, the representer theorem guarantees that the optimal solution is in the span of the training inputs and can be written entirely in terms of inner products between these inputs, providing both theoretical insight and practical advantages in computation and model interpretation.</p>
-</section>
+<p>Similarly, for linear regression with regularization, the representer theorem guarantees that the optimal solution is in the span of the training inputs and can be written entirely in terms of inner products between these inputs, providing both theoretical insight and practical advantages in computation and model interpretation.</p>
 <hr class="docutils" />
 <section id="representer-theorem-for-linear-classifiers-and-linear-regression">
 <h2>Representer Theorem for Linear Classifiers and Linear Regression<a class="headerlink" href="#representer-theorem-for-linear-classifiers-and-linear-regression" title="Link to this heading">#</a></h2>
-<p>Below is a standard proof that establishes the representer theorem for linear classifiers and linear regression, i.e. that there exists an optimal solution <span class="math notranslate nohighlight">\((\mathbf{w}^*, b^*)\)</span> with</p>
+<div class="proof theorem admonition" id="thm-representer">
+<p class="admonition-title"><span>Theorem </span> (Representer Theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\{(\mathbf{x}_i, y_i)\}_{i=1}^n\)</span> be a set of training examples in <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> and let <span class="math notranslate nohighlight">\(L\)</span> be a loss function. Consider the following optimization problem:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
+\min_{\mathbf{w}, b} \; \sum_{i=1}^n L(y_i, \mathbf{w}^\top \mathbf{x}_i + b) + \lambda\, \|\mathbf{w}\|^2,
 \]</div>
-<hr class="docutils" />
-<section id="proof">
-<h3>Proof:<a class="headerlink" href="#proof" title="Link to this heading">#</a></h3>
-<p>Assume that we are solving a regularized risk minimization problem over <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d\)</span> and <span class="math notranslate nohighlight">\(b \in \mathbb{R}\)</span> of the form</p>
+<p>where <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span> is a regularization parameter. Then, there exists an optimal solution <span class="math notranslate nohighlight">\((\mathbf{w}^*, b^*)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i,
+\]</div>
+<p>for some coefficients <span class="math notranslate nohighlight">\(\alpha_i \in \mathbb{R}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> are the training examples.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Assume that we are solving a regularized risk minimization problem over <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d\)</span> and <span class="math notranslate nohighlight">\(b \in \mathbb{R}\)</span> of the form</p>
 <div class="math notranslate nohighlight">
 \[
 \min_{\mathbf{w}, b} \; \sum_{i=1}^n L\bigl(y_i, \mathbf{w}^\top \mathbf{x}_i + b\bigr) + \lambda\, \|\mathbf{w}\|^2,
@@ -525,9 +506,14 @@ f(\mathbf{x}) = \mathbf{w}^{*\top} \mathbf{x} + b^*
 <p>where <span class="math notranslate nohighlight">\(L\)</span> is a loss function, and <span class="math notranslate nohighlight">\(\lambda&gt;0\)</span> is the regularization parameter. Let
 $<span class="math notranslate nohighlight">\(
 V = \operatorname{span}\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n\}
-\)</span>$
-be the subspace spanned by the training data.</p>
-<p>For any vector <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d\)</span>, we can decompose it uniquely as</p>
+\quad\text{and}\quad
+V^\perp = \{\mathbf{u}\in\mathbb{R}^d : \mathbf{u}^\top \mathbf{v}=0\ \forall\,\mathbf{v}\in V\}.
+\)</span><span class="math notranslate nohighlight">\(
+be the subspace spanned by the training data and its orthogonal complement, respectively.
+The loss term \)</span>L(y_i, \mathbf{w}^\top \mathbf{x}_i + b)<span class="math notranslate nohighlight">\( depends only on the inner product \)</span>\mathbf{w}^\top \mathbf{x}_i<span class="math notranslate nohighlight">\( and the bias \)</span>b<span class="math notranslate nohighlight">\(. 
+The regularization term \)</span>|\mathbf{w}|^2<span class="math notranslate nohighlight">\( penalizes the overall norm of \)</span>\mathbf{w}<span class="math notranslate nohighlight">\(.
+The key observation is that the loss term does not depend on the component of \)</span>\mathbf{w}<span class="math notranslate nohighlight">\( that lies in \)</span>V^\perp$.</p>
+<p>Thus, we can decompose <span class="math notranslate nohighlight">\(\mathbf{w}\in \mathbb{R}^d\)</span> into two orthogonal components:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{w} = \mathbf{w}_0 + \mathbf{w}_1,
@@ -535,7 +521,7 @@ be the subspace spanned by the training data.</p>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{w}_0 \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{w}_1 \in V^\perp\)</span> (the orthogonal complement of <span class="math notranslate nohighlight">\(V\)</span>). Notice that by construction, for every training example <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> (which lies in <span class="math notranslate nohighlight">\(V\)</span>), we have</p>
 <div class="math notranslate nohighlight">
 \[
-\langle \mathbf{w}_1, \mathbf{x}_i \rangle = 0.
+\mathbf{w}_1^\top\mathbf{x}_i = 0.
 \]</div>
 <p>Thus, the prediction for each training example is</p>
 <div class="math notranslate nohighlight">
@@ -543,12 +529,19 @@ be the subspace spanned by the training data.</p>
 \mathbf{w}^\top \mathbf{x}_i + b = (\mathbf{w}_0 + \mathbf{w}_1)^\top \mathbf{x}_i + b = \mathbf{w}_0^\top \mathbf{x}_i + \mathbf{w}_1^\top \mathbf{x}_i + b = \mathbf{w}_0^\top \mathbf{x}_i + b.
 \]</div>
 <p>This shows that the component <span class="math notranslate nohighlight">\(\mathbf{w}_1\)</span> (lying in <span class="math notranslate nohighlight">\(V^\perp\)</span>) does not affect the predictions on the training data.</p>
-<p>Now, consider the regularization term <span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2\)</span>. Because <span class="math notranslate nohighlight">\(\mathbf{w}_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf{w}_1\)</span> are orthogonal, we have</p>
+<p>Now, consider the regularization term <span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\|\mathbf{w}\|^2 = \mathbf{w}^\top\mathbf{w} = (\mathbf{w}_0 + \mathbf{w}_1)^\top(\mathbf{w}_0 + \mathbf{w}_1) = \mathbf{w}_0^\top\mathbf{w}_0 + \mathbf{w}_1^\top\mathbf{w}_1 + 2\mathbf{w}_0^\top\mathbf{w}_1
+\]</div>
+<p>Because <span class="math notranslate nohighlight">\(\mathbf{w}_0\)</span> and <span class="math notranslate nohighlight">\(\mathbf{w}_1\)</span> are orthogonal, <span class="math notranslate nohighlight">\(\mathbf{w}_0^\top\mathbf{w}_1=0\)</span> and we have</p>
 <div class="math notranslate nohighlight">
 \[
 \|\mathbf{w}\|^2 = \|\mathbf{w}_0\|^2 + \|\mathbf{w}_1\|^2.
 \]</div>
-<p>If <span class="math notranslate nohighlight">\(\mathbf{w}_1 \neq \mathbf{0}\)</span>, then <span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2 &gt; \|\mathbf{w}_0\|^2\)</span> but the predictions remain the same. Since the objective includes the regularization term <span class="math notranslate nohighlight">\(\lambda\,\|\mathbf{w}\|^2\)</span>, any optimal solution can be improved (or at least not worsened) by setting <span class="math notranslate nohighlight">\(\mathbf{w}_1 = \mathbf{0}\)</span>. In other words, there is no benefit to having a component in <span class="math notranslate nohighlight">\(V^\perp\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{w}_1 \neq \mathbf{0}\)</span>, then <span class="math notranslate nohighlight">\(\|\mathbf{w}\|^2 &gt; \|\mathbf{w}_0\|^2\)</span> but the predictions remain the same.
+Since the objective includes the regularization term <span class="math notranslate nohighlight">\(\lambda\,\|\mathbf{w}\|^2\)</span>, any solution can be improved by setting <span class="math notranslate nohighlight">\(\mathbf{w}_1 = \mathbf{0}\)</span>.
+In other words, there is no benefit to having a component in <span class="math notranslate nohighlight">\(V^\perp\)</span>.</p>
 <p>Thus, we can always find an optimal weight vector <span class="math notranslate nohighlight">\(\mathbf{w}^*\)</span> that lies entirely in <span class="math notranslate nohighlight">\(V\)</span>; that is,</p>
 <div class="math notranslate nohighlight">
 \[
@@ -560,13 +553,13 @@ be the subspace spanned by the training data.</p>
 \mathbf{w}^* = \sum_{i=1}^n \alpha_i \mathbf{x}_i.
 \]</div>
 <p>This completes the proof that the optimal solution can be expressed as a linear combination of the training data.</p>
-</section>
+</div>
 <hr class="docutils" />
 <section id="explanation">
 <h3>Explanation:<a class="headerlink" href="#explanation" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Key Observation:</strong> The loss term depends only on <span class="math notranslate nohighlight">\(\mathbf{w}^\top \mathbf{x}_i\)</span>. Since any component of <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> perpendicular to all training examples (i.e. in <span class="math notranslate nohighlight">\(V^\perp\)</span>) does not affect the loss, including it only increases the regularization penalty.</p></li>
-<li><p><strong>Conclusion:</strong> We can always set the <span class="math notranslate nohighlight">\(V^\perp\)</span> component to zero without changing the predictions, thereby arriving at an optimal solution that lies in the span of the training data. Consequently, the optimal weight vector can be written as</p></li>
+<li><p><strong>Conclusion:</strong> We can always set the <span class="math notranslate nohighlight">\(V^\perp\)</span> component to zero without changing the predictions on the training data, thereby arriving at an optimal solution that lies in the span of the training data. Consequently, the optimal weight vector can be written as</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
@@ -574,6 +567,72 @@ be the subspace spanned by the training data.</p>
 \]</div>
 <p>This representer theorem is central in kernel methods and many linear models because it reduces an infinite-dimensional search (if one considers a feature space mapping) to a finite-dimensional problem based solely on the training samples.</p>
 </section>
+</section>
+<section id="application-in-kernel-methods">
+<h2>Application in Kernel Methods<a class="headerlink" href="#application-in-kernel-methods" title="Link to this heading">#</a></h2>
+<p>The Representer Theorem is the foundation for <strong>kernel methods</strong>, since it shows that—even when our hypothesis space is a high‑ or infinite‑dimensional Reproducing Kernel Hilbert Space (RKHS)—the solution can be expressed in terms of the finite training set.</p>
+<ol class="arabic">
+<li><p><strong>Feature maps and kernels</strong><br />
+We begin by choosing a feature mapping</p>
+<div class="math notranslate nohighlight">
+\[
+     \phi: \mathcal{X}\to\mathcal{H},
+   \]</div>
+<p>into an (often infinite‑dimensional) inner‐product space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.  A kernel function</p>
+<div class="math notranslate nohighlight">
+\[
+     k(\mathbf{x},\mathbf{x}') 
+     = \langle \phi(\mathbf{x}),\,\phi(\mathbf{x}')\rangle_{\mathcal{H}}
+   \]</div>
+<p>allows us to compute inner products in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> without ever constructing <span class="math notranslate nohighlight">\(\phi(\mathbf{x})\)</span> explicitly.</p>
+</li>
+<li><p><strong>Kernelized predictive form</strong><br />
+By the Representer Theorem, the optimal weight vector in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[
+     \mathbf{w}^* \;=\;\sum_{i=1}^n \alpha_i\,\phi(\mathbf{x}_i).
+   \]</div>
+<p>Hence the learned decision (or regression) function takes the form</p>
+<div class="math notranslate nohighlight">
+\[
+     f(\mathbf{x})
+     = \mathbf{w}^{*\top}\phi(\mathbf{x}) + b
+     = \sum_{i=1}^n \alpha_i\,k(\mathbf{x}_i,\mathbf{x}) \;+\; b.
+   \]</div>
+<p>All dependence on the (possibly infinite) feature space is captured through the <span class="math notranslate nohighlight">\(n\times n\)</span> <strong>kernel Gram matrix</strong>$<span class="math notranslate nohighlight">\(K\)</span><span class="math notranslate nohighlight">\( with entries \)</span>K_{ij}=k(\mathbf{x}_i,\mathbf{x}_j)$.</p>
+</li>
+<li><p><strong>Training via kernels</strong></p>
+<ul>
+<li><p><strong>Kernel ridge regression</strong><br />
+Minimizes<br />
+<span class="math notranslate nohighlight">\(\tfrac1n\|K\boldsymbol\alpha + b\mathbf{1} - \mathbf{y}\|^2 + \lambda\,\boldsymbol\alpha^\top K\,\boldsymbol\alpha\)</span>.<br />
+One can solve for <span class="math notranslate nohighlight">\(\boldsymbol\alpha\)</span> in closed form:</p>
+<div class="math notranslate nohighlight">
+\[
+       [K + \lambda n\,I]\,\boldsymbol\alpha = \mathbf{y} - b\,\mathbf{1}.
+     \]</div>
+</li>
+<li><p><strong>Support Vector Machines</strong><br />
+Solves the convex dual<br />
+<span class="math notranslate nohighlight">\(\max_{\boldsymbol\alpha}\;\sum_i\alpha_i - \tfrac12\sum_{ij}\alpha_i\alpha_j y_i y_j\,K_{ij}\)</span><br />
+subject to <span class="math notranslate nohighlight">\(\sum_i\alpha_i y_i=0\)</span>, <span class="math notranslate nohighlight">\(0\le\alpha_i\le C\)</span>.</p></li>
+<li><p><strong>Kernel Logistic Regression, Gaussian Processes, Kernel PCA, …</strong><br />
+All follow the same pattern: inference and training reduce to operations on the Gram matrix.</p></li>
+</ul>
+</li>
+<li><p><strong>Practical consequences</strong></p>
+<ul class="simple">
+<li><p><strong>Computational complexity:</strong><br />
+Training requires <span class="math notranslate nohighlight">\(\mathcal{O}(n^3)\)</span> in general (e.g.\ inverting <span class="math notranslate nohighlight">\(K\)</span>), and each new prediction costs <span class="math notranslate nohighlight">\(\mathcal{O}(n)\)</span>.</p></li>
+<li><p><strong>Expressivity:</strong><br />
+Kernels let us fit very flexible decision boundaries (polynomial, radial basis, string kernels, etc.) without ever leaving our linear‐model framework.</p></li>
+<li><p><strong>Regularization:</strong><br />
+The <span class="math notranslate nohighlight">\(\lambda\|\mathbf{w}\|^2_{\mathcal{H}}\)</span> penalty translates into a smoothness control on the function <span class="math notranslate nohighlight">\(f\)</span>, balancing data fit vs.\ model complexity.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>By leveraging the Representer Theorem, kernel methods transform a potentially intractable infinite‑dimensional problem into a finite one over the training set, enabling powerful, nonparametric learning with rigorous regularization.</p>
 </section>
 </section>
 
@@ -590,7 +649,7 @@ be the subspace spanned by the training data.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapter_spaces"
+            path: "./chapter_calculus"
         },
         predefinedOutput: true
     }
@@ -607,24 +666,6 @@ be the subspace spanned by the training data.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="transposition.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Transposition</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../appendix/proofs.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Detailed Proofs</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -641,12 +682,11 @@ be the subspace spanned by the training data.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representer-theorem-for-linear-regression">Representer Theorem for Linear Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representer-theorem-for-linear-classifiers-and-linear-regression">Representer Theorem for Linear Classifiers and Linear Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proof">Proof:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-in-kernel-methods">Application in Kernel Methods</a></li>
 </ul>
   </nav></div>
 

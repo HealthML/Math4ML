@@ -207,13 +207,18 @@
 <li class="toctree-l2"><a class="reference internal" href="chapter_spaces/inner_product_spaces.html">Inner product spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_spaces/transposition.html">Transposition</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="chapter_spaces/representer_theorem.html">Representer Theorem for Linear Classifiers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_calculus/overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_calculus/gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="appendix/proofs.html">Detailed Proofs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/differentiation_rules.html">Differentiation Rules</a></li>
 </ul>
 
     </div>
@@ -369,10 +374,17 @@ document.write(`
    <div class="modindex-jumpbox">
    <a href="#cap-theorem-0"><strong>theorem-0</strong></a> | 
    <a href="#cap-theorem-1"><strong>theorem-1</strong></a> | 
+   <a href="#cap-thm-Jacobian"><strong>thm-Jacobian</strong></a> | 
    <a href="#cap-thm-feature-map-vector-space"><strong>thm-feature-map-vector-space</strong></a> | 
+   <a href="#cap-thm-first-order-condition"><strong>thm-first-order-condition</strong></a> | 
+   <a href="#cap-thm-gradient-descent"><strong>thm-gradient-descent</strong></a> | 
+   <a href="#cap-thm-mean-value-theorem"><strong>thm-mean-value-theorem</strong></a> | 
    <a href="#cap-thm-nullspace-subspace"><strong>thm-nullspace-subspace</strong></a> | 
    <a href="#cap-thm-polynomial-vector-space"><strong>thm-polynomial-vector-space</strong></a> | 
-   <a href="#cap-thm-rank-nullity"><strong>thm-rank-nullity</strong></a>
+   <a href="#cap-thm-rank-nullity"><strong>thm-rank-nullity</strong></a> | 
+   <a href="#cap-thm-representer"><strong>thm-representer</strong></a> | 
+   <a href="#cap-thm-taylor-theorem-numopt"><strong>thm-taylor-theorem-numopt</strong></a> | 
+   <a href="#cap-thm-taylor-theorem-numopt2"><strong>thm-taylor-theorem-numopt2</strong></a>
    </div>
 
    <table class="indextable modindextable">
@@ -393,12 +405,44 @@ document.write(`
        <a href="chapter_spaces/inner_product_spaces.html#theorem-1"><code class="xref">theorem-1</code></a> <em>(chapter_spaces/inner_product_spaces)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-Jacobian"><td></td><td>
+       <strong>thm-Jacobian</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_taylor/mean_value_theorem.html#thm-Jacobian"><code class="xref">thm-Jacobian</code></a> <em>(chapter_taylor/mean_value_theorem)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-thm-feature-map-vector-space"><td></td><td>
        <strong>thm-feature-map-vector-space</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
        <a href="chapter_spaces/basis_functions_vector_space.html#thm-feature-map-vector-space"><code class="xref">thm-feature-map-vector-space</code></a> <em>(chapter_spaces/basis_functions_vector_space)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-first-order-condition"><td></td><td>
+       <strong>thm-first-order-condition</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_taylor/minima_first_order_condition.html#thm-first-order-condition"><code class="xref">thm-first-order-condition</code></a> <em>(chapter_taylor/minima_first_order_condition)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-gradient-descent"><td></td><td>
+       <strong>thm-gradient-descent</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/gradients.html#thm-gradient-descent"><code class="xref">thm-gradient-descent</code></a> <em>(chapter_calculus/gradients)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-mean-value-theorem"><td></td><td>
+       <strong>thm-mean-value-theorem</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_taylor/mean_value_theorem.html#thm-mean-value-theorem"><code class="xref">thm-mean-value-theorem</code></a> <em>(chapter_taylor/mean_value_theorem)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-thm-nullspace-subspace"><td></td><td>
@@ -423,6 +467,30 @@ document.write(`
        <td></td>
        <td>
        <a href="chapter_spaces/subspaces.html#thm-rank-nullity"><code class="xref">thm-rank-nullity</code></a> <em>(chapter_spaces/subspaces)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-representer"><td></td><td>
+       <strong>thm-representer</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/representer_theorem.html#thm-representer"><code class="xref">thm-representer</code></a> <em>(chapter_calculus/representer_theorem)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-taylor-theorem-numopt"><td></td><td>
+       <strong>thm-taylor-theorem-numopt</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_taylor/optima.html#thm-taylor-theorem-numopt"><code class="xref">thm-taylor-theorem-numopt</code></a> <em>(chapter_taylor/optima)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-taylor-theorem-numopt2"><td></td><td>
+       <strong>thm-taylor-theorem-numopt2</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_taylor/taylor_theorem.html#thm-taylor-theorem-numopt2"><code class="xref">thm-taylor-theorem-numopt2</code></a> <em>(chapter_taylor/taylor_theorem)</em></td><td>
        <em>theorem</em></td></tr>
    </table>
 
