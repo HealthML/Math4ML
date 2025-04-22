@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/chain_rule.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Hessian" href="hessian.html" />
+    <link rel="prev" title="The Jacobian" href="jacobian.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -205,9 +205,12 @@
 
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jacobian.html">The Jacobian</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">The chain rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hessian.html">The Hessian</a></li>
 </ul>
 </details></li>
 </ul>
@@ -429,7 +432,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="the-chain-rule">
+  <section class="tex2jax_ignore mathjax_ignore" id="the-chain-rule">
 <h1>The chain rule<a class="headerlink" href="#the-chain-rule" title="Link to this heading">#</a></h1>
 <p>Most functions that we wish to optimize are not completely arbitrary
 functions, but rather are composed of simpler functions which we know
@@ -440,23 +443,29 @@ functions that make it up.</p>
 <div class="math notranslate nohighlight">
 \[(f \circ g)'(x) = f'(g(x))g'(x)\]</div>
 <p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
-composition. There is a natural generalization of this rule to
-multivariate functions.</p>
-<p><em>Proposition.</em>
-Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
-<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
-<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and</p>
+composition.</p>
+<p>There is a natural generalization of this rule to multivariate functions.</p>
+<div class="proof theorem admonition" id="chain-rule">
+<p class="admonition-title"><span>Theorem </span> (Multivariate Chain Rule)</p>
+<section class="theorem-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
+<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>.</p>
+<p>Then <span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\]</div>
-<p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
+</section>
+</div><p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
 <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
-<p>corollary
-Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
+<div class="proof corollary admonition" id="chain-rule-scalar">
+<p class="admonition-title"><span>Corollary </span> (Chain Rule for Scalar-Valued Functions)</p>
+<section class="corollary-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
 <span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
 <span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and</p>
 <div class="math notranslate nohighlight">
 \[\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\]</div>
 </section>
+</div></section>
 
     <script type="text/x-thebe-config">
     {
@@ -488,6 +497,24 @@ Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathb
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="jacobian.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Jacobian</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hessian.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Hessian</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

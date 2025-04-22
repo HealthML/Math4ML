@@ -1,7 +1,7 @@
-## The Jacobian
+# The Jacobian
 
 The **Jacobian** of $f : \mathbb{R}^n \to \mathbb{R}^m$ is a matrix of
-first-order partial derivatives: 
+first-order partial derivatives of functions $f$ with multiple outputs: 
 
 $$\mathbf{J}_f = \begin{bmatrix}
     \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
@@ -10,8 +10,7 @@ $$\mathbf{J}_f = \begin{bmatrix}
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
 [\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}$$
 
-Note the special case $m = 1$,
-where $\nabla f = \mathbf{J}_f^{\!\top\!}$.
+Note the special case $m = 1$, where $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
