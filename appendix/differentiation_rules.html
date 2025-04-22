@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -439,72 +439,94 @@ Let <span class="math notranslate nohighlight">\(f\)</span> and <span class="mat
     D(C) = 0
   \]</div>
 </li>
-<li><p><strong>Power</strong>: <span class="math notranslate nohighlight">\(n\)</span> is a real number.
-$<span class="math notranslate nohighlight">\(
-  D(x^n) = n\,x^{n-1}
-\)</span>$</p></li>
-<li><p><strong>Exponential</strong>: <span class="math notranslate nohighlight">\(e\)</span> is the base of the natural logarithm.
-$<span class="math notranslate nohighlight">\(
-  D(e^x) = e^x
-\)</span>$</p></li>
-<li><p><strong>Logarithm</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.
-$<span class="math notranslate nohighlight">\(
-  D(\ln x) = \frac{1}{x}
-\)</span>$</p></li>
-<li><p><strong>Trigonometric</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(\sin x) = \cos x,\quad
-  D(\cos x) = -\sin x,\quad
-  D(\tan x) = \sec^2 x
-\)</span>$</p></li>
-<li><p><strong>Inverse trigonometric</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.
-$<span class="math notranslate nohighlight">\(
-  D(\arcsin x) = \frac{1}{\sqrt{1-x^2}},\quad
-  D(\arccos x) = -\frac{1}{\sqrt{1-x^2}},\quad
-  D(\arctan x) = \frac{1}{1+x^2}
-\)</span>$</p></li>
-<li><p><strong>Hyperbolic</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(\sinh x) = \cosh x,\quad
-  D(\cosh x) = \sinh x,\quad
-  D(\tanh x) = \sech^2 x
-\)</span>$</p></li>
-<li><p><strong>Inverse hyperbolic</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.
-$<span class="math notranslate nohighlight">\(
-  D(\arcsinh x) = \frac{1}{\sqrt{1+x^2}},\quad
-  D(\arccosh x) = \frac{1}{\sqrt{x^2-1}},\quad
-  D(\arctanh x) = \frac{1}{1-x^2}
-\)</span>$</p></li>
-<li><p><strong>Absolute value</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(|x|) = \begin{cases}
-    1 &amp; \text{if } x&gt;0 \\
-    -1 &amp; \text{if } x&lt;0
-  \end{cases}
-\)</span>$</p></li>
-<li><p><strong>Step function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(\text{sgn}(x)) = \begin{cases}
-    1 &amp; \text{if } x&gt;0 \\
-    -1 &amp; \text{if } x&lt;0
-  \end{cases}
-\)</span>$</p></li>
-<li><p><strong>Heaviside step function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(H(x)) = \delta(x) = \begin{cases}
-    0 &amp; \text{if } x\neq0 \\
-    \infty &amp; \text{if } x=0
-  \end{cases}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\delta(x)$ is the Dirac delta function.</p></li>
-<li><p><strong>Dirac delta function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.
-$<span class="math notranslate nohighlight">\(
-  D(\delta(x)) = \delta'(x) = \begin{cases}
-    0 &amp; \text{if } x\neq0 \\
-    \infty &amp; \text{if } x=0
-  \end{cases}
-\)</span><span class="math notranslate nohighlight">\(
-  where \)</span>\delta’(x)$ is the derivative of the Dirac delta function.</p></li>
+<li><p><strong>Power</strong>: <span class="math notranslate nohighlight">\(n\)</span> is a real number.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(x^n) = n\,x^{n-1}
+  \]</div>
+</li>
+<li><p><strong>Exponential</strong>: <span class="math notranslate nohighlight">\(e\)</span> is the base of the natural logarithm.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(e^x) = e^x
+  \]</div>
+</li>
+<li><p><strong>Logarithm</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(\ln x) = \frac{1}{x}
+  \]</div>
+</li>
+<li><p><strong>Trigonometric</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(\sin x) = \cos x,\quad
+    D(\cos x) = -\sin x,\quad
+    D(\tan x) = \sec^2 x
+  \]</div>
+</li>
+<li><p><strong>Inverse trigonometric</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(\operatorname{arcsin} x) = \frac{1}{\sqrt{1-x^2}},\quad
+    D(\operatorname{arccos} x) = -\frac{1}{\sqrt{1-x^2}},\quad
+    D(\operatorname{arctan} x) = \frac{1}{1+x^2}
+  \]</div>
+</li>
+<li><p><strong>Hyperbolic</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(\sinh x) = \cosh x,\quad
+    D(\cosh x) = \sinh x,\quad
+    D(\tanh x) = \operatorname{sech}^2 x
+  \]</div>
+</li>
+<li><p><strong>Inverse hyperbolic</strong>: <span class="math notranslate nohighlight">\(x&gt;0\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+    D(\operatorname{arcsinh} x) = \frac{1}{\sqrt{1+x^2}},\quad
+    D(\operatorname{arccosh} x) = \frac{1}{\sqrt{x^2-1}},\quad
+    D(\operatorname{arctanh} x) = \frac{1}{1-x^2}
+  \]</div>
+</li>
+<li><p><strong>Absolute value</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    D(|x|) = \begin{cases}
+      1 &amp; \text{if } x&gt;0 \\
+      -1 &amp; \text{if } x&lt;0
+    \end{cases}
+  \end{split}\]</div>
+</li>
+<li><p><strong>Step function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    D(\text{sgn}(x)) = \begin{cases}
+      1 &amp; \text{if } x&gt;0 \\
+      -1 &amp; \text{if } x&lt;0
+    \end{cases}
+  \end{split}\]</div>
+</li>
+<li><p><strong>Heaviside step function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    D(H(x)) = \delta(x) = \begin{cases}
+      0 &amp; \text{if } x\neq0 \\
+      \infty &amp; \text{if } x=0
+    \end{cases}
+  \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta(x)\)</span> is the Dirac delta function.</p>
+</li>
+<li><p><strong>Dirac delta function</strong>: <span class="math notranslate nohighlight">\(x\)</span> is a variable.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    D(\delta(x)) = \delta'(x) = \begin{cases}
+      0 &amp; \text{if } x\neq0 \\
+      \infty &amp; \text{if } x=0
+    \end{cases}
+  \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta'(x)\)</span> is the derivative of the Dirac delta function.</p>
+</li>
 <li><p><strong>Constant multiple</strong><br />
 <span class="math notranslate nohighlight">\(\displaystyle D\bigl[C\,f(x)\bigr] = C\,f'(x)\)</span>.</p></li>
 <li><p><strong>Sum rule</strong><br />
