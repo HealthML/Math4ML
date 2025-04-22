@@ -99,6 +99,8 @@ parts:
     chapters:
       - file: appendix/proofs
         title: Detailed Proofs
+      - file: appendix/differentiation_rules
+        title: Differentiation Rules
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces
