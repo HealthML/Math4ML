@@ -13,8 +13,9 @@ kernelspec:
 # Gradients
 
 The single most important concept from calculus in the context of
-machine learning is the **gradient**. Gradients generalize derivatives
-to scalar functions of several variables. The gradient of
+machine learning is the **gradient**.
+
+Gradients generalize derivatives to scalar functions of several variables. The gradient of
 $f : \mathbb{R}^d \to \mathbb{R}$, denoted $\nabla f$, is given by
 
 $$\nabla f = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\partial f}{\partial x_n}\end{bmatrix}
@@ -23,113 +24,86 @@ $$\nabla f = \begin{bmatrix}\frac{\partial f}{\partial x_1} \\ \vdots \\ \frac{\
 
 Gradients have the following very
 important property: $\nabla f(\mathbf{x})$ points in the direction of
-**steepest ascent** from $\mathbf{x}$. Similarly,
-$-\nabla f(\mathbf{x})$ points in the direction of **steepest descent**
-from $\mathbf{x}$. We will use this fact frequently when iteratively
-minimizing a function via **gradient descent**.
+**steepest ascent** from $\mathbf{x}$. 
+Similarly, $-\nabla f(\mathbf{x})$ points in the direction of **steepest descent** from $\mathbf{x}$. 
+We will use this fact frequently when iteratively minimizing a function via **gradient descent**.
 
-## The Jacobian
-
-The **Jacobian** of $f : \mathbb{R}^n \to \mathbb{R}^m$ is a matrix of
-first-order partial derivatives: 
-
-$$\mathbf{J}_f = \begin{bmatrix}
-    \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
-    \vdots & \ddots & \vdots \\
-    \frac{\partial f_m}{\partial x_1} & \dots & \frac{\partial f_m}{\partial x_n}\end{bmatrix}
-\hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
-[\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}$$
-
-Note the special case $m = 1$,
-where $\nabla f = \mathbf{J}_f^{\!\top\!}$.
+In the following example we show gradient descent for the function $f(x,y)=(x-1)^2+2(y-2)^2+\frac{1}{2}\sin(3x)\sin(3y)$, which has a unique global minimum near $(1,2)$ but small ripples that cause gradient descent to get stuck in local minima.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Define a vector-valued function f: R2 -> R2
+# Define the objective function and its gradient
 def f(x, y):
-    # Example nonlinear function
-    return np.array([x**2 - y, y**2 + x])
+    # A slightly non-convex function: tilted quadratic + sinusoidal ripples
+    return (x - 1)**2 + 2*(y - 2)**2 + 0.5 * np.sin(3*x) * np.sin(3*y)
 
-# Define the Jacobian of f
-def jacobian(x, y):
-    # df1/dx = 2x, df1/dy = -1
-    # df2/dx = 1,  df2/dy = 2y
-    return np.array([[2*x, -1],
-                     [1,   2*y]])
+def grad_f(x, y):
+    # Partial derivatives
+    dfdx = 2*(x - 1) + 1.5 * np.cos(3*x) * np.sin(3*y)
+    dfdy = 4*(y - 2) + 1.5 * np.sin(3*x) * np.cos(3*y)
+    return np.array([dfdx, dfdy])
 
-# Set up grid for visualization
-x_vals = np.linspace(-2, 2, 25)
-y_vals = np.linspace(-2, 2, 25)
+# Grid setup
+x_vals = np.linspace(-1, 3, 200)
+y_vals = np.linspace(-1, 5, 200)
 X, Y = np.meshgrid(x_vals, y_vals)
+Z = f(X, Y)
 
-# Compute Jacobian norm (Frobenius) at each grid point
-J_norm = np.zeros_like(X)
-for i in range(X.shape[0]):
-    for j in range(X.shape[1]):
-        J = jacobian(X[i,j], Y[i,j])
-        J_norm[i,j] = np.linalg.norm(J, ord='fro')
+# Plot contours
+plt.figure(figsize=(8, 6))
+contours = plt.contour(X, Y, Z, levels=30, cmap='viridis')
+plt.clabel(contours, inline=True, fontsize=8)
 
-# Plot 1: Heatmap of Jacobian norm
-plt.figure(figsize=(14, 6))
-plt.subplot(1, 2, 1)
-plt.contourf(X, Y, J_norm, levels=20, cmap='plasma')
-plt.colorbar(label='||J_f(x,y)||_F')
-plt.title('Jacobian Norm of $f(x,y)$')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.grid(True, linestyle=':')
+# Plot gradient descent vector field (negative gradient)
+skip = 15
+GX, GY = grad_f(X, Y)
+plt.quiver(X[::skip, ::skip], Y[::skip, ::skip],
+           -GX[::skip, ::skip], -GY[::skip, ::skip],
+           color='gray', alpha=0.6, headwidth=3)
 
-# Plot 2: Local linear approximation at selected points
-points = [(-1, -1), (0, 0), (1, 1)]
-scale = 0.5  # scaling for visualization
-plt.subplot(1, 2, 2)
-plt.title('Local Linear Approximation via Jacobian')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.grid(True, linestyle=':')
+# Simulate gradient descent from several starting points
+starts = [(-0.5, 4), (3, -0.5), (2.5, 4.5)]
+lr = 0.05
+num_steps = 50
 
-# Plot original basis vectors at each point and their images under J
-for (x0, y0) in points:
-    J = jacobian(x0, y0)
-    # Basis vectors
-    e1 = np.array([1, 0])
-    e2 = np.array([0, 1])
-    # Mapped vectors
-    Je1 = J @ e1
-    Je2 = J @ e2
-    # Plot the point
-    plt.scatter(x0, y0, color='black')
-    # Plot original basis arrows
-    plt.quiver(x0, y0, e1[0]*scale, e1[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='blue', width=0.003)
-    plt.quiver(x0, y0, e2[0]*scale, e2[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='green', width=0.003)
-    # Plot transformed basis arrows
-    plt.quiver(x0, y0, Je1[0]*scale, Je1[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='red', width=0.003)
-    plt.quiver(x0, y0, Je2[0]*scale, Je2[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='orange', width=0.003)
-    # Annotate
-    plt.text(x0+0.1, y0+0.1, f"({x0},{y0})")
-    
-plt.legend(['point','e1','e2','J*e1','J*e2'], loc='upper left')
-plt.xlim(-2.5, 2.5)
-plt.ylim(-2.5, 2.5)
-plt.gca().set_aspect('equal', adjustable='box')
+for x0, y0 in starts:
+    path = np.zeros((num_steps+1, 2))
+    path[0] = np.array([x0, y0])
+    for i in range(num_steps):
+        grad = grad_f(path[i, 0], path[i, 1])
+        path[i+1] = path[i] - lr * grad
+    plt.plot(path[:, 0], path[:, 1], marker='o', markersize=3,
+             label=f"start=({x0:.1f},{y0:.1f})")
+
+# Final touches
+plt.title("Contour of $f(x,y)$ with Gradient Descent Paths")
+plt.xlabel("$x$")
+plt.ylabel("$y$")
+plt.legend(loc='upper right')
+plt.grid(True)
 plt.tight_layout()
 plt.show()
 ```
+The above figure shows:
 
-1. **Plots a heatmap** of the Frobenius norm of the Jacobian $\mathbf{J}_f(x,y)$ for 
-   $$
-     f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
-   $$
-   revealing regions where the mapping changes most rapidly.
+- **Contours of**  
 
-2. **Displays the local linear approximation** at three sample points $(-1,-1)$, $(0,0)$, and $(1,1)$. At each point:
-   - The **blue and green arrows** are the standard basis vectors $\mathbf{e}_1$ and $\mathbf{e}_2$.
-   - The **red and orange arrows** are their images under the Jacobian, $\mathbf{J}_f \mathbf{e}_1$ and $\mathbf{J}_f \mathbf{e}_2$.
-   - These illustrate how the Jacobian linearly approximates the action of $f$ in a neighborhood: small steps in input space are mapped to (approximately) linear steps in output space.
+  $$
+    f(x,y) = (x - 1)^2 + 2(y - 2)^2 + \tfrac12\sin(3x)\sin(3y),
+  $$
+  which has a unique global minimum near $(1,2)$ but small ripples that create nonconvexity.
+
+- **Gray arrows**, indicating the negative gradient direction at each point.
+- **Colored paths**, showing gradient‑descent trajectories started from three different initial points. You can see how each path “flows” downhill along the contours, eventually converging to the basin of the global minimum.
+
+---
+
+**Why this helps build intuition:**
+
+1. **Contours** are level sets of the cost function. Regions where contours are close together indicate steep slopes, while widely spaced contours are flat.
+2. **Gradient arrows** point in the direction of greatest decrease. Following them leads you toward a local minimum.
+3. **Paths from different starts** illustrate how gradient descent navigates toward minima and how nonconvex ripples can slow it down or trap it in local basins.
+4. Adjusting the **learning rate** or **initialization** changes these trajectories dramatically—showing why step‑size tuning and good initialization matter in practice.

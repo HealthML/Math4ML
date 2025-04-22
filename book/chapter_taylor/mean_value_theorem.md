@@ -1,19 +1,14 @@
 ## Mean value theorem
 
-<!-- % The function $f$ attains the slope of the secant between $a$ and $b$ as the derivative at the point $\mathbf{x}i\in(a,b)$. -->
-<!-- % [[File:Mittelwertsatz6.svg|thumb|It is also possible that there are multiple tangents parallel to the secant.]] -->
 :::{prf:theorem} Mean value theorem
+:label: thm-mean-value-theorem
+:nonumber:
 Let $f:[a,b]\to\mathbb{R}$ be a continuous function on the closed interval $[a,b]$, and differentiable on the open interval $(a,b)$, where $a\neq b$.
 
 Then there exists some $c \in (a,b)$ such that
 
 $$f'(c)=\frac{f(b)-f(a)}{b-a}.$$
 :::
-
-<!-- # \includegraphics[width=1\textwidth]{img/Mittelwertsatz3.png} -->
-
-<!-- # \includegraphics[width=1\textwidth]{img/Mittelwertsatz6.png} -->
-
 
 
 ### Mean value theorem in several variables
@@ -63,7 +58,9 @@ $\int_0^1 f'(x+th)\,dt$.
 
 This last version can be generalized to vector valued functions:
 
-:::{prf:lemma}
+:::{prf:theorem} Jacobian Lemma
+:label: thm-Jacobian
+:nonumber:
 Let $\mathbf{f}:\mathbb{R}^n \rightarrow '\mathbb{R}^m$ continuously differentiable, and $x,h\in\mathbb{R}^n$ be vectors.
 
 Then we have:
@@ -72,34 +69,6 @@ $$\mathbf{f}(\mathbf{x}+\mathbf{h})-f(\mathbf{x}) = \left (\int_0^1 \nabla \math
 
 where $\nabla \mathbf{f}$ denotes the \term{Jacobian matrix} and the integral of a matrix is to be understood componentwise.
 :::
-<!-- % '''Proof.''' Let ''f''<sub>1</sub>, ..., ''f<sub>m</sub>'' denote the components of ''f'' and define: -->
-
-<!-- % :<math>\begin{cases} g_i : [0,1] \to \mathbf{R} \\ g_i(t) = f_i (x +th) \end{cases} </math> -->
-
-<!-- % Then we have -->
-
-<!-- % \begin{align}
-% & f_i(x+h)-f_i(x) = g_i(1)-g_i(0) =\int_0^1 g_i'(t)\,dt \\
-% = {} & \int_0^1 \left (\sum_{j=1}^n \frac{\partial f_i}{\partial x_j} (x+th)h_j\right)\,dt = \sum_{j=1}^n \left (\int_0^1 \frac{\partial f_i}{\partial x_j}(x+th)\,dt\right)h_j.
-% \end{align}
- -->
-<!-- % The claim follows since ''Df'' is the matrix consisting of the components <math>\tfrac{\partial f_i}{\partial x_j}.</math> -->
-
-<!-- % :'''Lemma 2.''' Let ''v'' : [''a'', ''b''] → '''R'''<sup>''m''</sup> be a continuous function defined on the interval [''a'', ''b''] ⊂ '''R'''. Then we have -->
-<!-- % ::<math>\left \|\int_a^b v(t)\,dt\right\|\leqslant \int_a^b \|v(t)\|\,dt.</math> -->
-
-<!-- % '''Proof.''' Let ''u'' in '''R'''<sup>''m''</sup> denote the value of the integral
-% :<math>u:=\int_a^b v(t)\,dt.</math>
-% Now we have (using the [[Cauchy–Schwarz inequality]]):
-% :<math>\|u\|^2 = \langle u,u \rangle =\left \langle \int_a^b v(t) \, dt, u \right\rangle = \int_a^b \langle v(t),u \rangle \,dt \leqslant \int_a^b \| v(t) \|\cdot \|u \|\,dt = \|u\| \int_a^b \|v(t)\|\,dt</math>
-% Now cancelling the norm of ''u'' from both ends gives us the desired inequality.
- -->
-<!-- % :'''Mean Value Inequality.''' If the norm of ''Df''(''x'' + ''th'') is bounded by some constant ''M'' for ''t'' in [0, 1], then -->
-<!-- % ::<math>\|f(x+h)-f(x)\| \leqslant M\|h\|.</math> -->
-
-<!-- % '''Proof.''' From Lemma 1 and 2  it follows that -->
-<!-- % :<math>\|f(x+h)-f(x)\|=\left \|\int_0^1 (Df(x+th)\cdot h)\,dt\right\|  \leqslant \int_0^1 \|Df(x+th)\| \cdot \|h\|\, dt \leqslant M\| h\|.</math> -->
-
 
 If $f$ is twice continuously differentiable, then
 

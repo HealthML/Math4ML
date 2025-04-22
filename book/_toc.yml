@@ -35,19 +35,21 @@ parts:
         - file: chapter_spaces/inner_product_spaces
         - file: chapter_spaces/transposition
         # end of week 2
-        - file: chapter_spaces/representer_theorem
       - file: chapter_calculus/overview_calculus
         sections:
         - file: chapter_calculus/extrema
         - file: chapter_calculus/gradients
-        - file: chapter_calculus/hessian
-        - file: chapter_calculus/chain_rule
-        - file: chapter_calculus/orthogonal_projections
-#      - file: chapter_taylor/overview_taylor
-#        sections:
 #        - file: chapter_taylor/mean_value_theorem
 #        - file: chapter_taylor/taylor_theorem
+#        - file: chapter_taylor/minima_first_order_condition
+#        - file: chapter_taylor/minima_second_order_condition
 #        - file: chapter_taylor/optima
+#        - file: chapter_calculus/chain_rule
+#        - file: chapter_spaces/representer_theorem
+#        - file: chapter_calculus/orthogonal_projections
+#        - file: chapter_calculus/hessian
+#      - file: chapter_taylor/overview_taylor
+#        sections:
 #  - file: chapter_convexity/overview_convexity
 #    sections:
 #    - file: chapter_convexity/convexity

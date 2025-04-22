@@ -10,10 +10,12 @@ kernelspec:
   language: python
   name: python3
 ---
-# Multivariate Calculus
+# Multivariate Calculus in Machine Learning
 
 Before we dive into the formal definitions of extrema and unconstrained optimization, let’s see how this all ties back to machine learning. 
-In machine learning we often have a **loss function** $\ell(y,\,\hat{y})$ that measures the discrepancy between a true label $y$ and a predicted label $\hat{y}$. 
+
+In machine learning we often have a **loss function** $\ell(y,\,\hat{y})$ that measures the discrepancy between a true label $y$ and a predicted label $\hat{y}$ that is the output of a parameteriyed function $\hat{y}=f(\mathbf{x};\,\boldsymbol{\theta})$, where $\mathbf{x}$ is the input feature vector.  The loss function is typically a function of both the true label $y$ and the predicted label $\hat{y}$, and it can take different forms depending on the type of problem we are solving.
+
 For example, in regression, we might use the squared error loss
 
 $$
@@ -22,31 +24,34 @@ and in classification, we might use the logistic loss
 
 $$
 \ell(y,\,\hat{y})=-y\log(\hat{y})-(1-y)\log(1-\hat{y}).$$
-In both cases, $\ell$ is a function of the predicted label $\hat{y}$, which is itself a function of the model parameters $w$ and the input data $x$.  For example, in linear regression, we have $\hat{y}=w x$, where $w$ is the weight vector and $x$ is the input feature vector.  Thus, we can write the loss as a function of the model parameters:
+In both cases, $\ell$ is a function of the predicted label $\hat{y}$, which is itself a function of the model parameters $\boldsymbol{\theta}$ and the input data $\mathbf{x}$.
+Thus, we can write the loss as a function of the model parameters:
 
 $$
-\ell(y,\,w x)=(y-w x)^2$$
+\ell(y,\,\mathbf{x};\,\boldsymbol{\theta})=(y-f(\mathbf{x};\,\boldsymbol{\theta}))^2$$
 or
 
 $$
-\ell(y,\,w x)=-y\log(w x)-(1-y)\log(1-w x).$$
-In this context, $w$ is a vector of parameters (weights) that we want to optimize.  The goal of supervised learning is to find the optimal parameters $w^*$ that minimize the expected loss over the data distribution.  This is often referred to as **risk minimization**.
+\ell(y,\,\mathbf{x};\,\boldsymbol{\theta})=-y\log(f(\mathbf{x};\,\boldsymbol{\theta}))-(1-y)\log(1-f(\mathbf{x};\,\boldsymbol{\theta})).$$
+In this context, $\boldsymbol{\theta}$ is a vector of parameters (weights) that we want to optimize.  The goal of supervised learning is to find the optimal parameters $\boldsymbol{\theta}^*$ that minimize the expected loss over the data distribution.  This is often referred to as **risk minimization**.
 
 Our ultimate goal is to minimize the **true risk**  
 
 $$
-R(w)=\mathbb{E}_{(x,y)\sim P}\bigl[\ell(y,\,w x)\bigr],
+R(\boldsymbol{\theta})=\mathbb{E}_{(\mathbf{x},y)\sim P}\bigl[\ell(y,\,\mathbf{x};\,\boldsymbol{\theta})\bigr],
 $$  
-which depends on the unknown data‐generating distribution $P$. Since $P$ is not accessible, we instead minimize the **empirical risk** based on a finite sample of data points $\{(x_i,y_i)\}_{i=1}^n$ drawn from $P$:
+which depends on the unknown data‐generating distribution $P$. Since $P$ is not accessible, we instead minimize the **empirical risk** based on a finite sample of data points $\{(\mathbf{x}_i,y_i)\}_{i=1}^n$ drawn from $P$:
 
 $$
 R_{\mathrm{emp}}(w)
-=\frac1n\sum_{i=1}^n\ell(y_i,\,w x_i).
+=\frac1n\sum_{i=1}^n\ell(y_i,\,\mathbf{x}_i;\,\boldsymbol{\theta}).
 $$  
-This is the essence of **empirical risk minimization** (ERM), a fundamental principle in machine learning.  The idea is to find the parameters $w^*$ that minimize the empirical risk, which serves as an approximation of the true risk.
-$R_{\mathrm{emp}}(\mathbf{w})$ is a function $\mathbb{R}^d\to\mathbb{R}$ of the $d$ parameters, and finding the best model amounts to finding the **global minimum** of $R_{\mathrm{emp}}(\mathbf{w})$ (or a good local minimum, in non‑convex settings).
+This is the essence of **empirical risk minimization** (ERM), a fundamental principle in machine learning.  The idea is to find the parameters $\boldsymbol{\theta}^*$ that minimize the empirical risk, which serves as an approximation of the true risk.
+$R_{\mathrm{emp}}(\boldsymbol{\theta})$ is a function $\mathbb{R}^d\to\mathbb{R}$ of the $d$ parameters, and finding the best model amounts to finding the **global minimum** of $R_{\mathrm{emp}}(\boldsymbol{\theta})$ (or a good local minimum, in non‑convex settings).
 
-To illustrate this, we show the empirical risk $R_{\mathrm{emp}}(\mathbf{w})$ and the true risk $R(\mathbf{w})$ for a simple linear regression problem: 
+Minimization of the empirical risk is a common approach in machine learning, and it is often done using optimization algorithms such as gradient descent. The idea is to iteratively update the parameters $\boldsymbol{\theta}$ in the direction of the negative gradient of the empirical risk until convergence.
+
+To illustrate this, we show gradient descent applied to the empirical risk $R_{\mathrm{emp}}(\mathbf{w})$ and the corresponding unkown true risk $R(\mathbf{w})$ for a simple linear regression problem for each step of the gradient descent algorithm: 
 ```{code-cell} ipython3
 :tags: [hide-input]
 import numpy as np
@@ -69,7 +74,9 @@ noise_std = 1.5
 # Generate synthetic data for linear regression (1D feature)
 np.random.seed(0)
 n = 20
-X = np.random.uniform(-1, 1, n)
+left_bound = -1 # lower bound of uniform distribution on X
+right_bound = 1 # upper bound of uniform distribution on X
+X = np.random.uniform(left_bound, right_bound, n)
 y = slope * X # noise-free y
 y += np.random.randn(n) * noise_std  # add iid noise
 # + amplitude*np.sin(phase_shift + frequency*X)
@@ -88,7 +95,7 @@ R_emp_vals = np.array([R_emp(w) for w in w_vals])
 # True risk (expected risk) for this synthetic model
 # E_x[(slope*x - w x)^2] + Var(noise) = (w - slope)^2 * E[x^2] + sigma^2
 sigma2 = noise_std**2
-E_x2 = 1/3  # for X ~ Uniform(-1,1)
+E_x2 = (left_bound - right_bound)**2 / 12   # variance of uniform distribution
 R_true_vals = (w_vals - slope)**2 * E_x2 + sigma2
 
 # Gradient descent on empirical risk
@@ -134,13 +141,10 @@ The plot above shows how $R_{\mathrm{emp}}(w)$ (solid orange) approximates the u
 2. **Overfitting vs. generalization:** A model that perfectly minimizes $R_{\mathrm{emp}}$ (especially with limited data) can overfit, achieving low training error but higher true risk on new data.  
 3. **Statistical guarantees:** Under standard assumptions (e.g. i.i.d.\ sampling, sufficient data), $R_{\mathrm{emp}}$ converges uniformly to $R$ as $n\to\infty$, and minimizers of the empirical risk converge to minimizers of the true risk.  
 
-
-Observe that maximizing a function $f$ (such as a log-likelihood function) is equivalent to minimizing $-f$,so optimization problems are typically phrased in terms of minimization without loss of generality.
+Observe that maximizing a function $g$ (such as a log-likelihood function of a probabilistic model) is equivalent to minimizing $-g$,so optimization problems are typically phrased in terms of minimization without loss of generality.
 This convention (which we follow here) eliminates the need to discuss minimization and maximization separately.
 
-Thus, in machine learning, the entire machinery of multivariate calculus, gradients, Jacobians, Hessians, and descent algorithms is in service of **empirical risk minimization**: we view training as an optimization problem over a high‑dimensional parameter space, seeking the parameter vector $\mathbf{w}^*$ that minimizes our **cost function** (also called an **objective function**).
-The cost function may have multiple local minima, saddle points, and flat regions.
-Understanding the geometry of these landscapes is crucial for effective optimization.
+Thus, in machine learning, the entire machinery of multivariate calculus, gradients, Jacobians, Hessians, and descent algorithms is in service of **empirical risk minimization**: we view training as an optimization problem over a high‑dimensional parameter space, seeking the parameter vector $\boldsymbol{\theta}^*$ that minimizes our **cost function** (also called an **objective function**).
 With this motivation in mind, we now recall the basic definitions of extrema, local versus global minima, gradients and Hessians.
 
 ```{tableofcontents}
