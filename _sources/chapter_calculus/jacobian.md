@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # The Jacobian
 
 The **Jacobian** of $f : \mathbb{R}^n \to \mathbb{R}^m$ is a matrix of
