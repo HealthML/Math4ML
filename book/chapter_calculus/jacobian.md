@@ -93,6 +93,7 @@ plt.show()
 ```
 
 1. **Plots a heatmap** of the Frobenius norm of the Jacobian $\mathbf{J}_f(x,y)$ for 
+   
    $$
      f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
    $$
