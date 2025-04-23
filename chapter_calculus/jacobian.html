@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -444,12 +444,14 @@ first-order partial derivatives of functions <span class="math notranslate nohig
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
 [\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}\end{split}\]</div>
 <p>Note the special case <span class="math notranslate nohighlight">\(m = 1\)</span>, where <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
-<ol class="arabic simple">
-<li><p><strong>Plots a heatmap</strong> of the Frobenius norm of the Jacobian <span class="math notranslate nohighlight">\(\mathbf{J}_f(x,y)\)</span> for
-$<span class="math notranslate nohighlight">\(
-  f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
-\)</span>$
-revealing regions where the mapping changes most rapidly.</p></li>
+<ol class="arabic">
+<li><p><strong>Plots a heatmap</strong> of the Frobenius norm of the Jacobian <span class="math notranslate nohighlight">\(\mathbf{J}_f(x,y)\)</span> for</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+     f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
+   \end{split}\]</div>
+<p>revealing regions where the mapping changes most rapidly.</p>
+</li>
 <li><p><strong>Displays the local linear approximation</strong> at three sample points <span class="math notranslate nohighlight">\((-1,-1)\)</span>, <span class="math notranslate nohighlight">\((0,0)\)</span>, and <span class="math notranslate nohighlight">\((1,1)\)</span>. At each point:</p>
 <ul class="simple">
 <li><p>The <strong>blue and green arrows</strong> are the standard basis vectors <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span>.</p></li>
