@@ -271,10 +271,11 @@ ax = plt.title("Year : %i        N : %i" % (YEAR, N_train))
 
 ## Chain rule and the back-propagation algorithm
 
-Note that the model that we have derived represents a fully-connected neural network with a single hidden layer and the tanh activation function.
-In the neural network world, the transformed data $\boldsymbol\Phi(\mathbf{X}; \mathbf{W}_\phi)$ would correspond to the nodes on the hidden layer of the neural network and the parameter matrix $\mathbf{W}_\phi$ would correspond to the weights of the first hidden layer.
+Note that the model that we have derived represents a fully-connected neural network with a single hidden layer and the tanh activation function, or if we also count the output layer, this would be a 2-layer neural network.
+In the neural network world, the transformed data $\boldsymbol\Phi(\mathbf{X}; \mathbf{W}_\phi)$ would correspond to the nodes on the hidden layer of the neural network and the parameter matrix $\mathbf{W}_\phi$ would correspond to the weights of the hidden layer.
 
 We have used the chain rule to compute the the gradient of $L$ with respect to $\mathbf{W}_\phi$.
 It turns out that neural networks use the back-propagation algorithm to compute such grtadients. The back-propagation is fundamentally based on the chain rule. However, it represents a  more efficient implementation than the one that we have used here, as it would organize all copmutations into a forward pass that computes all the network layers up to the loss functions, while caching all the intermediate computations, and a backward pass, where it traces the network back towards the input and re-using all cached terms. Our implementation does not make use of caching and thus would be slower than the back-propagation algorithm.
 
-If you would like to learn more about the back-propagation algorithm, check out the excellent [Dive into Deep Learning](https://d2l.ai) online book.
+Now, from a deep learning perspective, our 2-layer neural network would still be considered fairly shallow.
+If you would like to learn more about the back-propagation algorithm and how to build and train massively deep neural network architectures, check out the excellent [Dive into Deep Learning](https://d2l.ai) online book.
