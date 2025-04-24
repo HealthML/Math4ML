@@ -174,8 +174,6 @@ W = np.array([a, b])
 tanh_basis = TanhBasis(W)
 
 x_train = data_train.days.values[:N_train][:,np.newaxis] * 1.0
-print (x_train.shape)
-print (W.shape)
 X_train = tanh_basis.transform(x_train)
 y_train = data_train.TMAX.values[:N_train]
 
