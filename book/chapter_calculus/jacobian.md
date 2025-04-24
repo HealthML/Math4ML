@@ -85,9 +85,9 @@ def dphi_tanh_da(x, a, b):
 def dphi_tanh_db(x, a, b):
     return 1 - np.tanh(a*x + b)**2
 
-def phi_tanh(x, a_values, b_values, add_bias=False):
+def phi_tanh_vector(x, a_values, b_values, add_bias=False):
     phi = np.array([
-        phi_tanh(x, a_values[i], b_values[i])
+        phi_tanh_scalar(x, a_values[i], b_values[i])
         for i in range(len(a_values))
     ])
     # Add bias term if required
@@ -115,13 +115,13 @@ def jacobian_phi_tanh(x, a_values, b_values, add_bias=False):
 # 1) Variation w.r.t. slope a at x0
 x0 = 150.0
 a_vals = np.linspace(0.0, 1, 400)
-Phi_a  = np.stack([phi_tanh(x0, a_vals, b[i]) for i in range(3)], axis=1)
-DPa    = np.stack([dphi_tanh_da(x0, a_vals, b[i]) for i in range(3)], axis=1)
+Phi_a  = np.stack([phi_tanh(x0, a_vals, b[i:i+1]) for i in range(3)], axis=1)
+DPa    = np.stack([dphi_tanh_da(x0, a_vals, b[i:i+1]) for i in range(3)], axis=1)
 
 # 2) Variation w.r.t. bias b at x0
 b_vals = np.linspace(-60, 0, 400)
-Phi_b  = np.stack([phi_tanh(x0, a[i], b_vals) for i in range(3)], axis=1)
-DPb    = np.stack([dphi_tanh_db(x0, a[i], b_vals) for i in range(3)], axis=1)
+Phi_b  = np.stack([phi_tanh(x0, a[i:i+1], b_vals) for i in range(3)], axis=1)
+DPb    = np.stack([dphi_tanh_db(x0, a[i:i+1], b_vals) for i in range(3)], axis=1)
 
 # Plot
 fig, axs = plt.subplots(4, 1, figsize=(8, 12))
@@ -166,14 +166,8 @@ class TanhBasis:
         """Compute the product of the input data and the weights."""
         if len(x.shape) == 1:
             x = x[:, np.newaxis]
-        return x @ self.W[:,:-1] + self.W[:,-1]
+        return x @ self.W[:-1] + self.W[-1]
 
-    def dXW(self, x):
-        """Compute the derivative of the product of the input data and the weights."""
-        if len(x.shape) == 1:
-            x = x[:, np.newaxis]
-        return np.hstack((x, np.ones((x.shape[0], 1))))
-        
     def transform(self, x):
         """Compute the tanh basis functions."""
         return np.tanh(self.XW(x))
@@ -181,6 +175,12 @@ class TanhBasis:
     def jacobian(self, x):
         """Compute the Jacobian of the tanh basis functions."""
         return self.dXW(x) * (1 - np.tanh(self.XW(x))**2)
+
+    def dXW(self, x):
+        """Compute the derivative of the product of the input data and the weights."""
+        if len(x.shape) == 1:
+            x = x[:, np.newaxis]
+        return np.hstack((x, np.ones((x.shape[0], 1))))
 ```
 
 Before we can use the `TanhBasis` class with Jacobian to optimize over the hyperparameters in our ridge regression, we need to understand, how the Jacobian is used in the optimization process. The missing ingredient is the **chain rule** that we will discuss next.

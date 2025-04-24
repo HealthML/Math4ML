@@ -63,41 +63,43 @@ Let's have a look in how the basis functions affect the loss function.
 Let $f$ be the loss function, which is a function of the weights $\mathbf{w}$ and the hyperparameters $\mathbf{W}_\phi$ be the matrix of hyperparameters of the tanh basis functions. The loss function is given by:
 
 $$
-f(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\sum_{i=1}^n (\mathbf{y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w}\|^2_2 + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
-\mathbf{y} - \boldsymbol{\phi}(\mathbf{X})\mathbf{w}\|^2_2 + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+L(\mathbf{w}, \mathbf{W}_\phi) = L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n l_i\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2 = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
 $$
-where $\mathbf{X}$ is the design matrix, $\mathbf{y}$ is the response vector, $\mathbf{w}$ is the weight vector, and $\lambda$ is the regularization parameter.
 
-Let $J_\phi$ be the Jacobian of the tanh basis functions with respect to the hyperparameters $a_i$ and $b_i$ at a fixed input value $x_0$, as we have derived in the last section.
+When combining all $n$ transformed input data points $\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}$ into the transformed design matrix $\mathsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}$, and all the labels into the vector $\mathbf{y}\in\mathbb{R}^n$, we get
 
-```{code-cell} ipython3
-:tags: [hide-input]
-import numpy as np
+$$
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+$$
 
-class TanhBasis:
-    def __init__(self, W):
-        self.W = W
+Let $\mathbf{J}_\phi$ be the Jacobian of the tanh basis functions with respect to the hyperparameters $\mathbf{W}_\phi$ at a fixed input value $x_0$, as we have derived in the last section.
 
-    def XW(self, x):
-        """Compute the product of the input data and the weights."""
-        if len(x.shape) == 1:
-            x = x[:, np.newaxis]
-        return x @ self.W[:,:-1] + self.W[:,-1]
+As the loss is scalar, we can apply the Chain Rule for Scalar-Valued Functions.
 
-    def dXW(self, x):
-        """Compute the derivative of the product of the input data and the weights."""
-        if len(x.shape) == 1:
-            x = x[:, np.newaxis]
-        return np.hstack((x, np.ones((x.shape[0], 1))))
-        
-    def phi(self, x):
-        """Compute the tanh basis functions."""
-        return np.tanh(self.XW(x))
+$$\nabla_{\mathbf{W}_\phi} (L \circ \Phi)(\mathbf{W}_\phi) = \mathbf{J}_\Phi(\mathbf{W}_\phi)^{\!\top\!} \nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$$
 
-    def jacobian(self, x):
-        """Compute the Jacobian of the tanh basis functions."""
-        return self.dXW(x) * (1 - np.tanh(self.XW(x))**2)
-```
+The missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$. Note that if we change $\mathbf{W}_\phi$ we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.
+
+Let's start by computing the gradient of the squared error $l_i$ for the $i$-th data point only:
+
+$$
+\nabla_{\boldsymbol{\phi}} l_i = \nabla_{\boldsymbol{\phi}} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})
+$$
+
+This gradient is a vector of length $d$. It follows that the gradient for the loss $L$ over the whole training data set, it will be a vector of length $dn$, i.e. the concatenation of the $n$ gradient vectors of all the $l_i$. We can simplify this by writing this gradient as the $n$-by-$d$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
+
+$$
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
+\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_i)^\top \end{pmatrix}_{i=1}^n
+$$
+
+Alternatively, we could have used matrix derivatives to directly derive $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$ as
+
+$$
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
+$$
+
+Let's integrate this term into our ridge regression implementation:
 
 ```{code-cell} ipython3
 import numpy as np
@@ -117,23 +119,38 @@ class BasisFunctionRidgeRegressionGD:
         # Loss function (MSE + Ridge penalty)
         return self.mse(X, y) + self.ridge * np.sum(self.w ** 2)
 
-    def gradient(self, X, y):
+    def gradient_w(self, X, y):
         # Gradient of the loss
+        return -self.basis_function.transform(X).T @ (y - self.pred(X)) / len(y) + self.ridge * self.w
+
+    def gradient_basis_function(self, X, y):
+        # Gradient of the loss
+        return -self.w[np.newaxis,:] * (y - self.pred(X))[:,np.newaxis] / len(y)
+
+    def gradient_basis_function_W(self, X, y):
+        grad_bf = self.gradient_basis_function(X,y)
         jacobian_phi = self.basis_function.jacobian(X)
-        phi = self.basis_function.transform(X)
-        return -X.T @ (y - self.pred(X)) / len(y) + self.ridge * self.w
+        # print (grad_bf.shape) # 100 3
+        # print (jacobian_phi.shape) # 100 2 3
+        res = grad_bf[:,np.newaxis,:] * jacobian_phi
+        # print (res.shape[0])
+        return res.sum(0)
 
     def fit(self, X, y):
         # Initialize weights
-        self.w = np.zeros(X.shape[1])
+        Phi = self.basis_function.transform(X)
+        self.w = np.zeros(Phi.shape[1])
         
         # Gradient descent loop
         for _ in range(self.num_iterations):   
-            self.w -= self.learning_rate * self.gradient(X, y)
+            self.w -= self.learning_rate * self.gradient_w(X, y)
+            self.basis_function.W -= self.learning_rate*0.01 * self.gradient_basis_function_W(X,y)
 
     def pred(self, X):
         return self.basis_function.transform(X) @ self.w
 ```
+
+Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -141,6 +158,34 @@ class BasisFunctionRidgeRegressionGD:
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+class TanhBasis:
+    def __init__(self, W):
+        self.W = W
+
+    def XW(self, x):
+        """Compute the product of the input data and the weights."""
+        if len(x.shape) == 1:
+            x = x[:, np.newaxis]
+        return x @ self.W[:-1] + self.W[-1]
+
+    def dXW(self, x):
+        """Compute the derivative of the product of the input data and the weights."""
+        if len(x.shape) == 1:
+            x = x[:, np.newaxis]
+        return np.hstack((x, np.ones((x.shape[0], 1))))
+        
+    def transform(self, x):
+        """Compute the tanh basis functions."""
+        return np.tanh(self.XW(x))
+
+    def jacobian(self, x):
+        """Compute the Jacobian of the tanh basis functions."""
+        dxw = self.dXW(x)[:,:,np.newaxis]
+        jac = (1 - np.tanh(self.XW(x))**2)[:,np.newaxis,:]
+        return dxw * jac
+
+
 YEAR = 1900
 def load_weather_data(year = None):
     """
@@ -182,50 +227,54 @@ data_test = df.iloc[idx_test]
 
 N_train = 100
 
-def tanh_basis(x, a, b, add_bias=True):
-    """
-    tanh basis function
-    x : input data
-    a : slope of the tanh basis functions
-    b : bias of the tanh basis functions
-    add_bias : add a bias term to the output
-    """
-    phi = np.tanh(a[np.newaxis,:] * x + b[np.newaxis,:])
-    if add_bias:
-        phi = np.concatenate((phi, np.ones((phi.shape[0], 1))), axis=1)
-    return phi
-
 a = np.array([.1, .2, .3])
 b = np.array([-10.0,-50.0,-100.0])
+W = np.array([a, b])
+
+tanh_basis = TanhBasis(W)
 
 ridge = 0.1     # strength of the L2 penalty in ridge regression
 
 x_train = data_train.days.values[:N_train][:,np.newaxis] * 1.0
-X_train = tanh_basis(x_train, a, b)
+# X_train = tanh_basis(x_train, a, b)
 y_train = data_train.TMAX.values[:N_train]
 
-reg = RidgeRegressionGD(ridge=ridge, learning_rate=0.01, num_iterations=1000)
-reg.fit(X_train, y_train)
+# print(tanh_basis.W)
+
+reg = BasisFunctionRidgeRegressionGD(basis_function=tanh_basis,ridge=ridge, learning_rate=0.01, num_iterations=10000)
+reg.fit(x_train, y_train)
+
+# print(tanh_basis.W)
 
 x_days = np.arange(366)[:,np.newaxis]
-X_days = tanh_basis(x_days, a, b)
-y_days_pred = reg.pred(X_days)
+# X_days = tanh_basis(x_days, a, b)
+y_days_pred = reg.pred(x_days)
 
 x_test = data_test.days.values[:,np.newaxis] * 1.0
-X_test = tanh_basis(x_test, a, b)
+# X_test = tanh_basis(x_test, a, b)
 y_test = data_test.TMAX.values
-y_test_pred = reg.pred(X_test)
-print("training MSE : %.4f" % reg.mse(X_train, y_train))
-print("test MSE     : %.4f" % reg.mse(X_test, y_test))
+y_test_pred = reg.pred(x_test)
+print("training MSE : %.4f" % reg.mse(x_train, y_train))
+print("test MSE     : %.4f" % reg.mse(x_test, y_test))
 
 
 fig = plt.figure()
 ax = plt.plot(x_train,y_train,'.')
 ax = plt.plot(x_test,y_test,'.')
-ax = plt.legend(["train MSE = %.2f" % reg.mse(X_train, y_train),"test MSE = %.2f" % reg.mse(X_test, y_test)])
+ax = plt.legend(["train MSE = %.2f" % reg.mse(x_train, y_train),"test MSE = %.2f" % reg.mse(x_test, y_test)])
 ax = plt.plot(x_days,y_days_pred)
 ax = plt.ylim([-27,39])
 ax = plt.xlabel("day of the year")
 ax = plt.ylabel("Maximum Temperature - degree C")
 ax = plt.title("Year : %i        N : %i" % (YEAR, N_train))
 ```
+
+## Chain rule and the back-propagation algorithm
+
+Note that the model that we have derived represents a fully-connected neural network with a single hidden layer and the tanh activation function.
+In the neural network world, the transformed data $\boldsymbol\Phi(\mathbf{X}; \mathbf{W}_\phi)$ would correspond to the nodes on the hidden layer of the neural network and the parameter matrix $\mathbf{W}_\phi$ would correspond to the weights of the first hidden layer.
+
+We have used the chain rule to compute the the gradient of $L$ with respect to $\mathbf{W}_\phi$.
+It turns out that neural networks use the back-propagation algorithm to compute such grtadients. The back-propagation is fundamentally based on the chain rule. However, it represents a  more efficient implementation than the one that we have used here, as it would organize all copmutations into a forward pass that computes all the network layers up to the loss functions, while caching all the intermediate computations, and a backward pass, where it traces the network back towards the input and re-using all cached terms. Our implementation does not make use of caching and thus would be slower than the back-propagation algorithm.
+
+If you would like to learn more about the back-propagation algorithm, check out the excellent [Dive into Deep Learning](https://d2l.ai) online book.
