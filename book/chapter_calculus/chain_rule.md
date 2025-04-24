@@ -56,7 +56,7 @@ $$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(
 Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
 We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.
 
-So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\phi: \operatorname{dom}{x} \rightarrow \mathbb \mathbb{R}^d$.
+So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\phi: \operatorname{dom}{x} \rightarrow \mathbb{R}^d$.
 
 Let's have a look in how the basis functions affect the loss function.
 
@@ -66,7 +66,7 @@ $$
 L(\mathbf{w}, \mathbf{W}_\phi) = L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n l_i\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2 = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
 $$
 
-When combining all $n$ transformed input data points $\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}$ into the transformed design matrix $\mathsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}$, and all the labels into the vector $\mathbf{y}\in\mathbb{R}^n$, we get
+When combining all $n$ transformed input data points $\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}$ into the transformed design matrix $\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}$, and all the labels into the vector $\mathbf{y}\in\mathbb{R}^n$, we get
 
 $$
 L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
