@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="The chain rule" href="chain_rule.html" />
-    <link rel="prev" title="Gradients and the Gradient Descent Algorithm" href="gradients.html" />
+    <link rel="prev" title="Gradient Descent in Ridge Regression" href="gradient_descent_ridge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -208,6 +208,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient_descent_ridge.html">Gradient Descent in Ridge Regression</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">The Jacobian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chain_rule.html">The chain rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hessian.html">The Hessian</a></li>
@@ -407,7 +408,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -423,6 +426,15 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tanh-basis-and-their-jacobians"><strong>Tanh Basis and Their Jacobians</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-jacobian-of-tanh-basis-functions"><strong>Visualizing the Jacobian of Tanh Basis Functions</strong></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -434,8 +446,14 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-jacobian">
 <h1>The Jacobian<a class="headerlink" href="#the-jacobian" title="Link to this heading">#</a></h1>
-<p>The <strong>Jacobian</strong> of <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}^m\)</span> is a matrix of
-first-order partial derivatives of functions <span class="math notranslate nohighlight">\(f\)</span> with multiple outputs:</p>
+<p>In machine learning, most of the time we’re optimizing a scalar “loss,” but internally the models we train are often vector-valued mappings.</p>
+<p>Wherever you see a function with multiple outputs, like</p>
+<div class="math notranslate nohighlight">
+\[
+  f: \mathbb{R}^n \;\longrightarrow\; \mathbb{R}^m
+\]</div>
+<p>you’ll want its <strong>Jacobian</strong>.</p>
+<p>The Jacobian is the matrix of first-order partial derivatives of each output of <span class="math notranslate nohighlight">\(f\)</span> with respect to each of the input dimensions. It generalizes the gradient of a scalar-valued function to vector-valued functions.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{J}_f = \begin{bmatrix}
     \frac{\partial f_1}{\partial x_1} &amp; \dots &amp; \frac{\partial f_1}{\partial x_n} \\
@@ -444,6 +462,36 @@ first-order partial derivatives of functions <span class="math notranslate nohig
 \hspace{0.5cm}\text{i.e.}\hspace{0.5cm}
 [\mathbf{J}_f]_{ij} = \frac{\partial f_i}{\partial x_j}\end{split}\]</div>
 <p>Note the special case <span class="math notranslate nohighlight">\(m = 1\)</span>, where <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
+<section id="tanh-basis-and-their-jacobians">
+<h2><strong>Tanh Basis and Their Jacobians</strong><a class="headerlink" href="#tanh-basis-and-their-jacobians" title="Link to this heading">#</a></h2>
+<p>We have seen vector-valued functions in the context of <strong>basis functions</strong> such as the tanh basis functions that we used in the prediction of temperature as a function of the day in the year.</p>
+<div class="math notranslate nohighlight">
+\[
+\phi_i(x; a_i, b_i) = \tanh(a_i x + b_i)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> are the slope and bias hyperparameters, respectively.</p>
+<p>While in principle, each tanh function has three input dimensions: the input <span class="math notranslate nohighlight">\(x\)</span>, the slope <span class="math notranslate nohighlight">\(a_i\)</span>, and the bias <span class="math notranslate nohighlight">\(b_i\)</span>, in practice, we are often interested in the Jacobian with respect to the hyperparameters <span class="math notranslate nohighlight">\(a_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> at a fixed input <span class="math notranslate nohighlight">\(x_0\)</span>.
+In this case, the Jacobian is a matrix of partial derivatives with respect to the hyperparameters <span class="math notranslate nohighlight">\(a_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> at a fixed input value <span class="math notranslate nohighlight">\(x_0\)</span>.</p>
+<p>The Jacobian with respect to the slope <span class="math notranslate nohighlight">\(a_i\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \phi_i(x_0)}{\partial a_i} = x_0 (1 - \tanh^2(a_i x_0 + b_i))\]</div>
+<p>And the Jacobian with respect to the bias <span class="math notranslate nohighlight">\(b_i\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \phi_i(x_0)}{\partial b_i} = 1 - \tanh^2(a_i x_0 + b_i)
+\]</div>
+<p>This shows how the tanh function responds to changes in the slope and bias hyperparameters.</p>
+<p>By our convention, the Jacobian is a matrix of partial derivatives, where each row corresponds to a given output dimension and each column to a different input dimension. In our case the <span class="math notranslate nohighlight">\(i\)</span>-th row corresponds to the output of the <span class="math notranslate nohighlight">\(i\)</span>-th tanh basis function and each column corresponds to one of the different slope or bias hyperparameters.</p>
+</section>
+<section id="visualizing-the-jacobian-of-tanh-basis-functions">
+<h2><strong>Visualizing the Jacobian of Tanh Basis Functions</strong><a class="headerlink" href="#visualizing-the-jacobian-of-tanh-basis-functions" title="Link to this heading">#</a></h2>
+<p>In the following code, we visualize the tanh basis functions and their Jacobians with respect to the slope <span class="math notranslate nohighlight">\(a\)</span>, and bias <span class="math notranslate nohighlight">\(b\)</span>.
+We will plot the three tanh basis functions and their Jacobians with respect to the slope <span class="math notranslate nohighlight">\(a\)</span>, and bias <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<ol class="arabic simple">
+<li><p><strong>∂φ/∂a</strong> (Jacobian w.r.t. the slope hyperparameter <span class="math notranslate nohighlight">\(a\)</span>) at a fixed <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
+<li><p><strong>∂φ/∂b</strong> (Jacobian w.r.t. the bias hyperparameter <span class="math notranslate nohighlight">\(b\)</span>) at the same fixed <span class="math notranslate nohighlight">\(x_0\)</span></p></li>
+</ol>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -454,77 +502,79 @@ first-order partial derivatives of functions <span class="math notranslate nohig
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="c1"># Define a vector-valued function f: R2 -&gt; R2</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="c1"># Example nonlinear function</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">])</span>
+<span class="c1"># Basis parameters</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span><span class="o">-</span><span class="mf">50.0</span><span class="p">,</span><span class="o">-</span><span class="mf">100.0</span><span class="p">])</span>
 
-<span class="c1"># Define the Jacobian of f</span>
-<span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="c1"># df1/dx = 2x, df1/dy = -1</span>
-    <span class="c1"># df2/dx = 1,  df2/dy = 2y</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="p">]])</span>
+<span class="c1"># tanh basis and its derivatives</span>
+<span class="k">def</span> <span class="nf">phi_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
 
-<span class="c1"># Set up grid for visualization</span>
-<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dphi_tanh_da</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Compute Jacobian norm (Frobenius) at each grid point</span>
-<span class="n">J_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">J</span> <span class="o">=</span> <span class="n">jacobian</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
-        <span class="n">J_norm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">dphi_tanh_db</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
-<span class="c1"># Plot 1: Heatmap of Jacobian norm</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">J_norm</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;plasma&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;||J_f(x,y)||_F&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Jacobian Norm of $f(x,y)$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">phi_tanh_vector</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a_values</span><span class="p">,</span> <span class="n">b_values</span><span class="p">,</span> <span class="n">add_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="n">phi_tanh_scalar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a_values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_values</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="c1"># Add bias term if required</span>
+    <span class="k">if</span> <span class="n">add_bias</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">phi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">phi</span>
 
-<span class="c1"># Plot 2: Local linear approximation at selected points</span>
-<span class="n">points</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-<span class="n">scale</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># scaling for visualization</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Local Linear Approximation via Jacobian&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">jacobian_phi_tanh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a_values</span><span class="p">,</span> <span class="n">b_values</span><span class="p">,</span> <span class="n">add_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">jacobian_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="n">dphi_tanh_da</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a_values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_values</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="n">jacobian_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="n">dphi_tanh_db</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a_values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a_values</span><span class="p">))</span>
+    <span class="p">])</span>
+    <span class="n">jacobian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">jacobian_a</span><span class="p">,</span> <span class="n">jacobian_b</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+    <span class="c1"># Reshape to match the number of features</span>
+    <span class="n">jacobian</span> <span class="o">=</span> <span class="n">jacobian</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">a_values</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Add bias term if required</span>
+    <span class="k">if</span> <span class="n">add_bias</span><span class="p">:</span>
+        <span class="n">jacobian</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">jacobian</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">jacobian</span>
 
-<span class="c1"># Plot original basis vectors at each point and their images under J</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
-    <span class="n">J</span> <span class="o">=</span> <span class="n">jacobian</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span>
-    <span class="c1"># Basis vectors</span>
-    <span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="c1"># Mapped vectors</span>
-    <span class="n">Je1</span> <span class="o">=</span> <span class="n">J</span> <span class="o">@</span> <span class="n">e1</span>
-    <span class="n">Je2</span> <span class="o">=</span> <span class="n">J</span> <span class="o">@</span> <span class="n">e2</span>
-    <span class="c1"># Plot the point</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
-    <span class="c1"># Plot original basis arrows</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">e1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">e1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> 
-               <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">e2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">e2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> 
-               <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
-    <span class="c1"># Plot transformed basis arrows</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">Je1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">Je1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> 
-               <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">Je2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> <span class="n">Je2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale</span><span class="p">,</span> 
-               <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">)</span>
-    <span class="c1"># Annotate</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x0</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">y0</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
-    
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;point&#39;</span><span class="p">,</span><span class="s1">&#39;e1&#39;</span><span class="p">,</span><span class="s1">&#39;e2&#39;</span><span class="p">,</span><span class="s1">&#39;J*e1&#39;</span><span class="p">,</span><span class="s1">&#39;J*e2&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="c1"># 1) Variation w.r.t. slope a at x0</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">150.0</span>
+<span class="n">a_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">Phi_a</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">phi_tanh</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">a_vals</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">DPa</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">dphi_tanh_da</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">a_vals</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 2) Variation w.r.t. bias b at x0</span>
+<span class="n">b_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">Phi_b</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">phi_tanh</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">b_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">DPb</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">dphi_tanh_db</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">b_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># Slope hyperparameter derivative</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_vals</span><span class="p">,</span> <span class="n">Phi_a</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;φ</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">(a)=tanh(a·</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">+</span><span class="si">{</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a_vals</span><span class="p">,</span> <span class="n">DPa</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;∂φ</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">/∂a&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Variation w.r.t. slope a at x₀=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Variation w.r.t. slope a at x₀=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Bias hyperparameter derivative</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">b_vals</span><span class="p">,</span> <span class="n">Phi_b</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;φ</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">(b)=tanh(</span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">·</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">+b)&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">b_vals</span><span class="p">,</span> <span class="n">DPb</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;∂φ</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">/∂b&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Variation w.r.t. bias b at x₀=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Variation w.r.t. bias b at x₀=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> <span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -532,25 +582,46 @@ first-order partial derivatives of functions <span class="math notranslate nohig
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/a99b5f63a0f975fd0a7c50a40c1c6bfa2f681464016cbca436aeb64151ff8323.png" src="../_images/a99b5f63a0f975fd0a7c50a40c1c6bfa2f681464016cbca436aeb64151ff8323.png" />
+<img alt="../_images/5ce05e09527ad988583cf67571ba5eb44939f3bba42e660641b5f807da5fc731.png" src="../_images/5ce05e09527ad988583cf67571ba5eb44939f3bba42e660641b5f807da5fc731.png" />
 </div>
 </div>
-<ol class="arabic">
-<li><p><strong>Plots a heatmap</strong> of the Frobenius norm of the Jacobian <span class="math notranslate nohighlight">\(\mathbf{J}_f(x,y)\)</span> for</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-     f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
-   \end{split}\]</div>
-<p>revealing regions where the mapping changes most rapidly.</p>
-</li>
-<li><p><strong>Displays the local linear approximation</strong> at three sample points <span class="math notranslate nohighlight">\((-1,-1)\)</span>, <span class="math notranslate nohighlight">\((0,0)\)</span>, and <span class="math notranslate nohighlight">\((1,1)\)</span>. At each point:</p>
-<ul class="simple">
-<li><p>The <strong>blue and green arrows</strong> are the standard basis vectors <span class="math notranslate nohighlight">\(\mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{e}_2\)</span>.</p></li>
-<li><p>The <strong>red and orange arrows</strong> are their images under the Jacobian, <span class="math notranslate nohighlight">\(\mathbf{J}_f \mathbf{e}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{J}_f \mathbf{e}_2\)</span>.</p></li>
-<li><p>These illustrate how the Jacobian linearly approximates the action of <span class="math notranslate nohighlight">\(f\)</span> in a neighborhood: small steps in input space are mapped to (approximately) linear steps in output space.</p></li>
-</ul>
-</li>
-</ol>
+<p>We observe, that the slope and bias parameter of the <span class="math notranslate nohighlight">\(i\)</span>-th tanh basis function only have an effect on the <span class="math notranslate nohighlight">\(i\)</span>-th output dimension of the Jacobian for a given data point. This is a consequence of the fact that the tanh basis functions are independent of each other.</p>
+<p>It follows that for <span class="math notranslate nohighlight">\(n\)</span> data points, even though the Jacobian is a <span class="math notranslate nohighlight">\(3n\)</span>-by-<span class="math notranslate nohighlight">\(6\)</span> matrix, each row of the Jacobian has only <span class="math notranslate nohighlight">\(2n\)</span> non-zero entries, corresponding to the slope and bias hyperparameters of the <span class="math notranslate nohighlight">\(i\)</span>-th tanh basis function. Thus, we can think of the Jacobian as a <span class="math notranslate nohighlight">\(3n\)</span>-by-<span class="math notranslate nohighlight">\(2\)</span> matrix, where each row corresponds to the slope and bias hyperparameters of the <span class="math notranslate nohighlight">\(i\)</span>-th tanh basis function.</p>
+<p>This observation allows us to simplify the implementation, as we only need to keep track of the non-zero dimensions.
+We organize all the hyperparameters in a <span class="math notranslate nohighlight">\(2\)</span>-by-<span class="math notranslate nohighlight">\(3\)</span> matrix <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> and represent the non-zero part of the Jacobian as a <span class="math notranslate nohighlight">\(3\)</span>-by-<span class="math notranslate nohighlight">\(2\)</span> matrix per data point <span class="math notranslate nohighlight">\(x\)</span>, or a <span class="math notranslate nohighlight">\(n\)</span>-by-<span class="math notranslate nohighlight">\(3\)</span>-by-<span class="math notranslate nohighlight">\(2\)</span> tensor for the whole data set. Note that the full Jacobian can be obtained by zero-padding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">TanhBasis</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
+
+    <span class="k">def</span> <span class="nf">XW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the product of the input data and the weights.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the tanh basis functions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XW</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the Jacobian of the tanh basis functions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dXW</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XW</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dXW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the derivative of the product of the input data and the weights.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before we can use the <code class="docutils literal notranslate"><span class="pre">TanhBasis</span></code> class with Jacobian to optimize over the hyperparameters in our ridge regression, we need to understand, how the Jacobian is used in the optimization process. The missing ingredient is the <strong>chain rule</strong> that we will discuss next.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -584,12 +655,12 @@ first-order partial derivatives of functions <span class="math notranslate nohig
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="gradients.html"
+       href="gradient_descent_ridge.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gradients and the Gradient Descent Algorithm</p>
+        <p class="prev-next-title">Gradient Descent in Ridge Regression</p>
       </div>
     </a>
     <a class="right-next"
@@ -607,6 +678,22 @@ first-order partial derivatives of functions <span class="math notranslate nohig
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tanh-basis-and-their-jacobians"><strong>Tanh Basis and Their Jacobians</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-jacobian-of-tanh-basis-functions"><strong>Visualizing the Jacobian of Tanh Basis Functions</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

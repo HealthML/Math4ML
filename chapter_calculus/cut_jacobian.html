@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mean value theorem &#8212; Mathematics for Machine Learning</title>
+    <title>When do we “see” these vector‐valued functions? &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,8 +60,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_taylor/mean_value_theorem';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_taylor/mean_value_theorem.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/cut_jacobian';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/cut_jacobian.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -205,13 +205,13 @@
 
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent in Ridge Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">The Jacobian</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">The chain rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">The Hessian</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient_descent_ridge.html">Gradient Descent in Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jacobian.html">The Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chain_rule.html">The chain rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hessian.html">The Hessian</a></li>
 </ul>
 </details></li>
 </ul>
@@ -290,7 +290,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_taylor/mean_value_theorem.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/cut_jacobian.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_taylor/mean_value_theorem.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/cut_jacobian.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -337,7 +337,7 @@
       
       
       
-      <li><a href="../_sources/chapter_taylor/mean_value_theorem.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/cut_jacobian.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -408,9 +408,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -421,20 +419,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Mean value theorem</h1>
+    <h1>When do we “see” these vector‐valued functions?</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-value-theorem-in-several-variables">Mean value theorem in several variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-value-theorem-for-vector-valued-functions">Mean value theorem for vector-valued functions</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -444,64 +433,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="mean-value-theorem">
-<h1>Mean value theorem<a class="headerlink" href="#mean-value-theorem" title="Link to this heading">#</a></h1>
-<div class="proof theorem admonition" id="thm-mean-value-theorem">
-<p class="admonition-title"><span>Theorem </span> (Mean value theorem)</p>
-<section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(f:[a,b]\to\mathbb{R}\)</span> be a continuous function on the closed interval <span class="math notranslate nohighlight">\([a,b]\)</span>, and differentiable on the open interval <span class="math notranslate nohighlight">\((a,b)\)</span>, where <span class="math notranslate nohighlight">\(a\neq b\)</span>.</p>
-<p>Then there exists some <span class="math notranslate nohighlight">\(c \in (a,b)\)</span> such that</p>
-<div class="math notranslate nohighlight">
-\[f'(c)=\frac{f(b)-f(a)}{b-a}.\]</div>
-</section>
-</div><section id="mean-value-theorem-in-several-variables">
-<h2>Mean value theorem in several variables<a class="headerlink" href="#mean-value-theorem-in-several-variables" title="Link to this heading">#</a></h2>
-<p>Let <span class="math notranslate nohighlight">\(f:\mathbb{R}^n\to\mathbb{R}\)</span> be a differentiable function.</p>
-<p>Fix points <span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\)</span> , and define <span class="math notranslate nohighlight">\(g(t)=f\Big((1-t)\mathbf{x}+t\mathbf{y}\Big)\)</span>.</p>
-<p>Since <span class="math notranslate nohighlight">\(g\)</span> is a differentiable function in one variable, the mean value theorem gives:</p>
-<div class="math notranslate nohighlight">
-\[g(1)-g(0)=g'(c) \; \; \; \text{for some $c\in [0,1]$.}\]</div>
-<p>But since <span class="math notranslate nohighlight">\(g(1)=f(\mathbf{y})\)</span> and <span class="math notranslate nohighlight">\(g(0)=f(\mathbf{x})\)</span>, computing <span class="math notranslate nohighlight">\(g'(c)\)</span> explicitly we have:</p>
-<div class="math notranslate nohighlight">
-\[f(\mathbf{y})-f(\mathbf{x})=\nabla f\Big((1-c)\mathbf{x}+c\mathbf{y}\Big)^\top (\mathbf{y}-\mathbf{x})\]</div>
-<p>By the <strong>Cauchy–Schwarz inequality</strong>, the equation gives the estimate:</p>
-<div class="math notranslate nohighlight">
-\[\Bigg|f(\mathbf{y})-f(\mathbf{x})\Bigg|\le\Bigg|\nabla f\Big((1-c)\mathbf{x}+c\mathbf{y}\Big)\Bigg|\ \Big|\mathbf{y} - \mathbf{x}\Big|.\]</div>
-<p>In particular, when the partial derivatives of <span class="math notranslate nohighlight">\(f\)</span> are bounded, <span class="math notranslate nohighlight">\(f\)</span> is \term{Lipschitz continuous}.</p>
-<div class="math notranslate nohighlight">
-\[\Big|g(y)\Big|=\Bigg|g(y)-g(x)\Bigg|\le (0)\Big|y-x\Big|=0\]</div>
-</section>
-<section id="mean-value-theorem-for-vector-valued-functions">
-<h2>Mean value theorem for vector-valued functions<a class="headerlink" href="#mean-value-theorem-for-vector-valued-functions" title="Link to this heading">#</a></h2>
-<p>There is no exact analog of the mean value theorem for vector-valued functions.</p>
-<div class="math notranslate nohighlight">
-\[f_i(x+h) - f_i(x) = \nabla f_i (x + t_ih)^\top h\]</div>
-<p>Generally there will not be a \emph{single} <span class="math notranslate nohighlight">\(t\)</span> that fullfils this for all <span class="math notranslate nohighlight">\(i\)</span>.</p>
-<p>However a certain type of generalization of the mean value theorem to vector-valued functions is obtained as follows:</p>
-<p>Let <span class="math notranslate nohighlight">\(f\)</span> be a continuously differentiable real-valued function defined on an open interval <span class="math notranslate nohighlight">\(I\)</span>, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> as well as <span class="math notranslate nohighlight">\(\mathbf{x} + h\)</span> be points.</p>
-<p>The mean value theorem in one variable tells us that there exists some <span class="math notranslate nohighlight">\(t^*\)</span> between 0 and 1 such that</p>
-<div class="math notranslate nohighlight">
-\[f(x+h)-f(x) = f'(x+t^*h)\cdot h.\]</div>
-<p>On the other hand, we have, by the <strong>fundamental theorem of calculus</strong> followed by a change of variables,</p>
-<div class="math notranslate nohighlight">
-\[f(x+h)-f(x) = \int_x^{x+h} f'(u) \, du = \left (\int_0^1 f'(x+th)\,dt\right)\cdot h.\]</div>
-<p>Thus, the value <span class="math notranslate nohighlight">\(f'(x + t^*h)\)</span> at the particular point <span class="math notranslate nohighlight">\(t^*\)</span> has been replaced by the mean value
-<span class="math notranslate nohighlight">\(\int_0^1 f'(x+th)\,dt\)</span>.</p>
-<p>This last version can be generalized to vector valued functions:</p>
-<div class="proof theorem admonition" id="thm-Jacobian">
-<p class="admonition-title"><span>Theorem </span> (Jacobian Lemma)</p>
-<section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{f}:\mathbb{R}^n \rightarrow '\mathbb{R}^m\)</span> continuously differentiable, and <span class="math notranslate nohighlight">\(x,h\in\mathbb{R}^n\)</span> be vectors.</p>
-<p>Then we have:</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{f}(\mathbf{x}+\mathbf{h})-f(\mathbf{x}) = \left (\int_0^1 \nabla \mathbf{f}(\mathbf{x}+th)\,dt\right)^\top h,\]</div>
-<p>where <span class="math notranslate nohighlight">\(\nabla \mathbf{f}\)</span> denotes the \term{Jacobian matrix} and the integral of a matrix is to be understood componentwise.</p>
-</section>
-</div><p>If <span class="math notranslate nohighlight">\(f\)</span> is twice continuously differentiable, then</p>
-<div class="math notranslate nohighlight">
-\[f(\mathbf{x}_0 + \mathbf{h}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top\mathbf{h} + \frac{1}{2}\mathbf{h}^\top\nabla^2f(\mathbf{x}_0)\mathbf{h}\]</div>
-<p>is a parabolic approximation to <span class="math notranslate nohighlight">\(f\)</span> that has the same Gradient and Hessian as <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>.</p>
-</section>
+  <section id="when-do-we-see-these-vectorvalued-functions">
+<h1>When do we “see” these vector‐valued functions?<a class="headerlink" href="#when-do-we-see-these-vectorvalued-functions" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Every hidden layer</strong> in a deep net—its activations are vectors.</p></li>
+<li><p>The <strong>final output</strong> in multi‐class classification or multi‐task regression is a vector of length <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+<li><p><strong>Batched inputs</strong>: if you stack <span class="math notranslate nohighlight">\(B\)</span> examples into a matrix, your network is really computing<br />
+<span class="math notranslate nohighlight">\(\mathbb{R}^{B\times n}\to\mathbb{R}^{B\times m}\)</span>.  The Jacobian then becomes a block matrix or a tensor.</p></li>
+<li><p><strong>Spatial outputs</strong>: semantic segmentation or image-to-image models output an <span class="math notranslate nohighlight">\((H\times W\times C)\)</span> tensor, which you can flatten to a giant vector.</p></li>
+</ul>
+<p>In all these cases, the Jacobian tells you <em>how</em> small changes in the input propagate through the model to produce changes in the vector of outputs—fundamental both for training (via back-prop) and for understanding/modeling sensitivity or invertibility.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -517,7 +458,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapter_taylor"
+            path: "./chapter_calculus"
         },
         predefinedOutput: true
     }
@@ -540,22 +481,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-value-theorem-in-several-variables">Mean value theorem in several variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-value-theorem-for-vector-valued-functions">Mean value theorem for vector-valued functions</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
