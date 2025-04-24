@@ -12,8 +12,16 @@ kernelspec:
 ---
 # The Jacobian
 
-The **Jacobian** of $f : \mathbb{R}^n \to \mathbb{R}^m$ is a matrix of
-first-order partial derivatives of functions $f$ with multiple outputs: 
+In machine learning, most of the time we’re optimizing a scalar “loss,” but internally the models we train are often vector-valued mappings.
+
+Wherever you see a function with multiple outputs, like  
+
+$$
+  f: \mathbb{R}^n \;\longrightarrow\; \mathbb{R}^m
+$$
+you’ll want its **Jacobian**.
+
+The Jacobian is the matrix of first-order partial derivatives of each output of $f$ with respect to each of the input dimensions. It generalizes the gradient of a scalar-valued function to vector-valued functions.
 
 $$\mathbf{J}_f = \begin{bmatrix}
     \frac{\partial f_1}{\partial x_1} & \dots & \frac{\partial f_1}{\partial x_n} \\
@@ -24,94 +32,155 @@ $$\mathbf{J}_f = \begin{bmatrix}
 
 Note the special case $m = 1$, where $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 
+
+## **Tanh Basis and Their Jacobians**
+
+We have seen vector-valued functions in the context of **basis functions** such as the tanh basis functions that we used in the prediction of temperature as a function of the day in the year.
+
+
+$$
+\phi_i(x; a_i, b_i) = \tanh(a_i x + b_i)
+$$
+where $a_i$ and $b_i$ are the slope and bias hyperparameters, respectively.
+
+While in principle, each tanh function has three input dimensions: the input $x$, the slope $a_i$, and the bias $b_i$, in practice, we are often interested in the Jacobian with respect to the hyperparameters $a_i$ and $b_i$ at a fixed input $x_0$.
+In this case, the Jacobian is a matrix of partial derivatives with respect to the hyperparameters $a_i$ and $b_i$ at a fixed input value $x_0$.
+
+The Jacobian with respect to the slope $a_i$ is given by:
+
+$$
+\frac{\partial \phi_i(x_0)}{\partial a_i} = x_0 (1 - \tanh^2(a_i x_0 + b_i))$$
+And the Jacobian with respect to the bias $b_i$ is given by:
+
+$$
+\frac{\partial \phi_i(x_0)}{\partial b_i} = 1 - \tanh^2(a_i x_0 + b_i)
+$$
+This shows how the tanh function responds to changes in the slope and bias hyperparameters.
+
+By our convention, the Jacobian is a matrix of partial derivatives, where each row corresponds to a given output dimension and each column to a different input dimension. In our case the $i$-th row corresponds to the output of the $i$-th tanh basis function and each column corresponds to one of the different slope or bias hyperparameters.
+
+## **Visualizing the Jacobian of Tanh Basis Functions**
+In the following code, we visualize the tanh basis functions and their Jacobians with respect to the slope $a$, and bias $b$.
+We will plot the three tanh basis functions and their Jacobians with respect to the slope $a$, and bias $b$.
+
+1. **∂φ/∂a** (Jacobian w.r.t. the slope hyperparameter $a$) at a fixed $x_0$  
+2. **∂φ/∂b** (Jacobian w.r.t. the bias hyperparameter $b$) at the same fixed $x_0$  
+
 ```{code-cell} ipython3
 :tags: [hide-input]
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Define a vector-valued function f: R2 -> R2
-def f(x, y):
-    # Example nonlinear function
-    return np.array([x**2 - y, y**2 + x])
+# Basis parameters
+a = np.array([.1, .2, .3])
+b = np.array([-10.0,-50.0,-100.0])
 
-# Define the Jacobian of f
-def jacobian(x, y):
-    # df1/dx = 2x, df1/dy = -1
-    # df2/dx = 1,  df2/dy = 2y
-    return np.array([[2*x, -1],
-                     [1,   2*y]])
+# tanh basis and its derivatives
+def phi_tanh(x, a, b):
+    return np.tanh(a * x + b)
 
-# Set up grid for visualization
-x_vals = np.linspace(-2, 2, 25)
-y_vals = np.linspace(-2, 2, 25)
-X, Y = np.meshgrid(x_vals, y_vals)
+def dphi_tanh_da(x, a, b):
+    return x * (1 - np.tanh(a*x + b)**2)
 
-# Compute Jacobian norm (Frobenius) at each grid point
-J_norm = np.zeros_like(X)
-for i in range(X.shape[0]):
-    for j in range(X.shape[1]):
-        J = jacobian(X[i,j], Y[i,j])
-        J_norm[i,j] = np.linalg.norm(J, ord='fro')
+def dphi_tanh_db(x, a, b):
+    return 1 - np.tanh(a*x + b)**2
 
-# Plot 1: Heatmap of Jacobian norm
-plt.figure(figsize=(14, 6))
-plt.subplot(1, 2, 1)
-plt.contourf(X, Y, J_norm, levels=20, cmap='plasma')
-plt.colorbar(label='||J_f(x,y)||_F')
-plt.title('Jacobian Norm of $f(x,y)$')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.grid(True, linestyle=':')
+def phi_tanh(x, a_values, b_values, add_bias=False):
+    phi = np.array([
+        phi_tanh(x, a_values[i], b_values[i])
+        for i in range(len(a_values))
+    ])
+    # Add bias term if required
+    if add_bias:
+        phi = np.hstack((phi, np.ones_like(x)))
+    return phi
 
-# Plot 2: Local linear approximation at selected points
-points = [(-1, -1), (0, 0), (1, 1)]
-scale = 0.5  # scaling for visualization
-plt.subplot(1, 2, 2)
-plt.title('Local Linear Approximation via Jacobian')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.grid(True, linestyle=':')
+def jacobian_phi_tanh(x, a_values, b_values, add_bias=False):
+    jacobian_a = np.array([
+        dphi_tanh_da(x, a_values[i], b_values[i])
+        for i in range(len(a_values))
+    ])
+    jacobian_b = np.array([
+        dphi_tanh_db(x, a_values[i], b_values[i])
+        for i in range(len(a_values))
+    ])
+    jacobian = np.vstack((jacobian_a, jacobian_b)).T
+    # Reshape to match the number of features
+    jacobian = jacobian.reshape(len(x), len(a_values) * 2)
+    # Add bias term if required
+    if add_bias:
+        jacobian = np.hstack((jacobian, np.ones_like(x)))
+    return jacobian
 
-# Plot original basis vectors at each point and their images under J
-for (x0, y0) in points:
-    J = jacobian(x0, y0)
-    # Basis vectors
-    e1 = np.array([1, 0])
-    e2 = np.array([0, 1])
-    # Mapped vectors
-    Je1 = J @ e1
-    Je2 = J @ e2
-    # Plot the point
-    plt.scatter(x0, y0, color='black')
-    # Plot original basis arrows
-    plt.quiver(x0, y0, e1[0]*scale, e1[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='blue', width=0.003)
-    plt.quiver(x0, y0, e2[0]*scale, e2[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='green', width=0.003)
-    # Plot transformed basis arrows
-    plt.quiver(x0, y0, Je1[0]*scale, Je1[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='red', width=0.003)
-    plt.quiver(x0, y0, Je2[0]*scale, Je2[1]*scale, 
-               angles='xy', scale_units='xy', scale=1, color='orange', width=0.003)
-    # Annotate
-    plt.text(x0+0.1, y0+0.1, f"({x0},{y0})")
-    
-plt.legend(['point','e1','e2','J*e1','J*e2'], loc='upper left')
-plt.xlim(-2.5, 2.5)
-plt.ylim(-2.5, 2.5)
-plt.gca().set_aspect('equal', adjustable='box')
+# 1) Variation w.r.t. slope a at x0
+x0 = 150.0
+a_vals = np.linspace(0.0, 1, 400)
+Phi_a  = np.stack([phi_tanh(x0, a_vals, b[i]) for i in range(3)], axis=1)
+DPa    = np.stack([dphi_tanh_da(x0, a_vals, b[i]) for i in range(3)], axis=1)
+
+# 2) Variation w.r.t. bias b at x0
+b_vals = np.linspace(-60, 0, 400)
+Phi_b  = np.stack([phi_tanh(x0, a[i], b_vals) for i in range(3)], axis=1)
+DPb    = np.stack([dphi_tanh_db(x0, a[i], b_vals) for i in range(3)], axis=1)
+
+# Plot
+fig, axs = plt.subplots(4, 1, figsize=(8, 12))
+
+# Slope hyperparameter derivative
+for i in range(3):
+    axs[0].plot(a_vals, Phi_a[:, i], label=f'φ{i}(a)=tanh(a·{x0}+{b[i]})')
+    axs[1].plot(a_vals, DPa[:, i], '--', label=f'∂φ{i}/∂a')
+axs[0].set_title(f'Variation w.r.t. slope a at x₀={x0}')
+axs[1].set_title(f'Variation w.r.t. slope a at x₀={x0}')
+axs[0].legend(); axs[0].grid(True)
+axs[1].legend(); axs[1].grid(True)
+
+# Bias hyperparameter derivative
+for i in range(3):
+    axs[2].plot(b_vals, Phi_b[:, i], label=f'φ{i}(b)=tanh({a[i]}·{x0}+b)')
+    axs[3].plot(b_vals, DPb[:, i], '--', label=f'∂φ{i}/∂b')
+axs[2].set_title(f'Variation w.r.t. bias b at x₀={x0}')
+axs[2].legend(); axs[2].grid(True)
+axs[3].set_title(f'Variation w.r.t. bias b at x₀={x0}')
+axs[3].legend(); axs[3].grid(True)
+
 plt.tight_layout()
 plt.show()
 ```
 
-1. **Plots a heatmap** of the Frobenius norm of the Jacobian $\mathbf{J}_f(x,y)$ for 
-   
-   $$
-     f(x,y) = \begin{bmatrix} x^2 - y \\ y^2 + x \end{bmatrix},
-   $$
-   revealing regions where the mapping changes most rapidly.
+We observe, that the slope and bias parameter of the $i$-th tanh basis function only have an effect on the $i$-th output dimension of the Jacobian for a given data point. This is a consequence of the fact that the tanh basis functions are independent of each other.
 
-2. **Displays the local linear approximation** at three sample points $(-1,-1)$, $(0,0)$, and $(1,1)$. At each point:
-   - The **blue and green arrows** are the standard basis vectors $\mathbf{e}_1$ and $\mathbf{e}_2$.
-   - The **red and orange arrows** are their images under the Jacobian, $\mathbf{J}_f \mathbf{e}_1$ and $\mathbf{J}_f \mathbf{e}_2$.
-   - These illustrate how the Jacobian linearly approximates the action of $f$ in a neighborhood: small steps in input space are mapped to (approximately) linear steps in output space.
+It follows that for $n$ data points, even though the Jacobian is a $3n$-by-$6$ matrix, each row of the Jacobian has only $2n$ non-zero entries, corresponding to the slope and bias hyperparameters of the $i$-th tanh basis function. Thus, we can think of the Jacobian as a $3n$-by-$2$ matrix, where each row corresponds to the slope and bias hyperparameters of the $i$-th tanh basis function.
+
+This observation allows us to simplify the implementation, as we only need to keep track of the non-zero dimensions.
+We organize all the hyperparameters in a $2$-by-$3$ matrix $\mathbf{W}$ and represent the non-zero part of the Jacobian as a $3$-by-$2$ matrix per data point $x$, or a $n$-by-$3$-by-$2$ tensor for the whole data set. Note that the full Jacobian can be obtained by zero-padding.
+
+```{code-cell} ipython3
+import numpy as np
+
+class TanhBasis:
+    def __init__(self, W):
+        self.W = W
+
+    def XW(self, x):
+        """Compute the product of the input data and the weights."""
+        if len(x.shape) == 1:
+            x = x[:, np.newaxis]
+        return x @ self.W[:,:-1] + self.W[:,-1]
+
+    def dXW(self, x):
+        """Compute the derivative of the product of the input data and the weights."""
+        if len(x.shape) == 1:
+            x = x[:, np.newaxis]
+        return np.hstack((x, np.ones((x.shape[0], 1))))
+        
+    def transform(self, x):
+        """Compute the tanh basis functions."""
+        return np.tanh(self.XW(x))
+
+    def jacobian(self, x):
+        """Compute the Jacobian of the tanh basis functions."""
+        return self.dXW(x) * (1 - np.tanh(self.XW(x))**2)
+```
+
+Before we can use the `TanhBasis` class with Jacobian to optimize over the hyperparameters in our ridge regression, we need to understand, how the Jacobian is used in the optimization process. The missing ingredient is the **chain rule** that we will discuss next.

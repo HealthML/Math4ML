@@ -39,6 +39,7 @@ parts:
         sections:
         - file: chapter_calculus/extrema
         - file: chapter_calculus/gradients
+        - file: chapter_calculus/gradient_descent_ridge
         - file: chapter_calculus/jacobian
         - file: chapter_calculus/chain_rule
         - file: chapter_calculus/hessian
