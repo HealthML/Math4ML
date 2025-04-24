@@ -78,15 +78,15 @@ As the loss is scalar, we can apply the Chain Rule for Scalar-Valued Functions.
 
 $$\nabla_{\mathbf{W}_\phi} (L \circ \Phi)(\mathbf{W}_\phi) = \mathbf{J}_\Phi(\mathbf{W}_\phi)^{\!\top\!} \nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$$
 
-The missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$. Note that if we change $\mathbf{W}_\phi$ we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.
+We have derived $\mathbf{J}_\Phi(\mathbf{W}_\phi)$ in the last section. Thus, the missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$. Note that if we change $\mathbf{W}_\phi$ we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.
 
 Let's start by computing the gradient of the squared error $l_i$ for the $i$-th data point only:
 
 $$
-\nabla_{\boldsymbol{\phi}} l_i = \nabla_{\boldsymbol{\phi}} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})
+\nabla_{\boldsymbol{\phi}_i} l_i = \nabla_{\boldsymbol{\phi}_i} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})
 $$
 
-This gradient is a vector of length $d$. It follows that the gradient for the loss $L$ over the whole training data set, it will be a vector of length $dn$, i.e. the concatenation of the $n$ gradient vectors of all the $l_i$. We can simplify this by writing this gradient as the $n$-by-$d$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
+This gradient is a vector of length $d$. It follows that the gradient for the loss $L$ over the whole training data set, will be a vector of length $dn$, i.e. the concatenation of the $n$ gradient vectors of all the $l_i$. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the $n$-by-$d$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
 
 $$
 \nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
@@ -116,12 +116,12 @@ class BasisFunctionRidgeRegressionGD:
         return np.mean((y - self.pred(X)) ** 2)
     
     def loss(self, X, y):
-        # Loss function (MSE + Ridge penalty)
-        return self.mse(X, y) + self.ridge * np.sum(self.w ** 2)
+        # Loss function (1/2 MSE + 1/2 Ridge penalty)
+        return 0.5 * self.mse(X, y) + 0.5 * self.ridge * np.sum(self.w ** 2)
 
     def gradient_w(self, X, y):
         # Gradient of the loss
-        return -self.basis_function.transform(X).T @ (y - self.pred(X)) / len(y) + self.ridge * self.w
+        return -(self.basis_function.transform(X).T @ (y - self.pred(X))) / len(y) + self.ridge * self.w
 
     def gradient_basis_function(self, X, y):
         # Gradient of the loss
