@@ -56,7 +56,7 @@ $$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(
 Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
 We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.
 
-So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\phi: \operatorname{dom}{x} \rightarrow \mathbb{R}^d$.
+So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \rightarrow \mathbb{R}^K$.
 
 Let's have a look in how the basis functions affect the loss function.
 
