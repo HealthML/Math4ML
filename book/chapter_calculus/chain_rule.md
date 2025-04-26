@@ -102,21 +102,22 @@ The missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\ma
 Let's start by computing the gradient of the squared error $l_n$ for the $n$-th data point only:
 
 $$
-\nabla_{\boldsymbol{\phi}_n} l_n = \nabla_{\boldsymbol{\phi}_n} (y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})
+\nabla_{\boldsymbol{\phi}_n} l_n = \nabla_{\boldsymbol{\phi}_n} (y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}\cdot(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})
 $$
 
 This gradient is a vector of length $D+1$. It follows that the gradient for the loss $L$ over the whole training data set, will be a vector of length $(D+1)N$, i.e. the concatenation of the $N$ gradient vectors of all the $l_N$. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the $N$-by-$(D+1)$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
 
 $$
 \nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
-\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_n)^\top \end{pmatrix}_{n=1}^N
+\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_n)^\top \end{pmatrix}_{n=1}^N= \frac{-1}{n} \begin{pmatrix}\mathbf{w}\cdot(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})\end{pmatrix}_{n=1}^N
 $$
 
 Alternatively, we could have used matrix derivatives to directly derive $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$ as
 
 $$
-\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w} \xdot \left(\mathbf{y}-\boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w} \otimes \left(\mathbf{y}-\boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right),
 $$
+where $\otimes$ is the outer product between the two vectors.
 
 Let's integrate this term into our ridge regression implementation:
 
