@@ -453,7 +453,7 @@ for a composite function in terms of the derivatives of the simpler
 functions that make it up.</p>
 <p>The chain rule from single-variable calculus should be familiar:</p>
 <div class="math notranslate nohighlight">
-\[(f \circ g)'(x) = f'(g(x))g'(x)\]</div>
+\[\frac{\operatorname{d}(f \circ g)(x)}{\operatorname{d}x} = \frac{\operatorname{d}f(g(x))}{\operatorname{d}g(x)}\cdot\frac{\operatorname{d}g(x)}{\operatorname{d}x}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
 composition.</p>
 <p>There is a natural generalization of this rule to multivariate functions.</p>
@@ -481,58 +481,91 @@ composition.</p>
 <h2>Chain Rule for Basis Function Regression<a class="headerlink" href="#chain-rule-for-basis-function-regression" title="Link to this heading">#</a></h2>
 <p>Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
 We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.</p>
-<p>So, let’s derive the Jacobian of ridge regression with respect to the hyperparameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> of the basis functions <span class="math notranslate nohighlight">\(\phi: \operatorname{dom}{x} \rightarrow \mathbb{R}^d\)</span>.</p>
+<p>So, let’s derive the Jacobian of ridge regression with respect to the hyperparameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> of the basis functions <span class="math notranslate nohighlight">\(\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \rightarrow \mathbb{R}^K\)</span>.</p>
 <p>Let’s have a look in how the basis functions affect the loss function.</p>
 <p>Let <span class="math notranslate nohighlight">\(f\)</span> be the loss function, which is a function of the weights <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> and the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> be the matrix of hyperparameters of the tanh basis functions. The loss function is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-L(\mathbf{w}, \mathbf{W}_\phi) = L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n l_i\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2 = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2N}\left(\sum_{n=1}^n l_n\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2  + \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,p}\mathbf{W}^2_{n,p}, 
 \]</div>
-<p>When combining all <span class="math notranslate nohighlight">\(n\)</span> transformed input data points <span class="math notranslate nohighlight">\(\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}\)</span> into the transformed design matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}\)</span>, and all the labels into the vector <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span>, we get</p>
+<p>where each of the <span class="math notranslate nohighlight">\(l_n\)</span> is the squared error for the prediction of the <span class="math notranslate nohighlight">\(n\)</span>-th data point and where we have added a quadratic regularizer on the entries of <span class="math notranslate nohighlight">\(\mathbf{W}\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[
-L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2+ \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,k}\mathbf{W}^2_{n,k}
 \]</div>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{J}_\phi\)</span> be the Jacobian of the tanh basis functions with respect to the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> at a fixed input value <span class="math notranslate nohighlight">\(x_0\)</span>, as we have derived in the last section.</p>
+<p>When combining all <span class="math notranslate nohighlight">\(N\)</span> transformed input data points <span class="math notranslate nohighlight">\(\boldsymbol{\phi(\mathbf{x}_n;\mathbf{W}_\phi)}\)</span> into the transformed design matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{N,P}\)</span>, and all the labels into the vector <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^N\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2N}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2+ \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,k}\mathbf{W}^2_{n,k}
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{J}_\phi\)</span> be the Jacobian of the tanh basis functions with respect to the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span>, as we have derived in the last section.</p>
 <p>As the loss is scalar, we can apply the Chain Rule for Scalar-Valued Functions.</p>
 <div class="math notranslate nohighlight">
 \[\nabla_{\mathbf{W}_\phi} (L \circ \Phi)(\mathbf{W}_\phi) = \mathbf{J}_\Phi(\mathbf{W}_\phi)^{\!\top\!} \nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)\]</div>
-<p>We have derived <span class="math notranslate nohighlight">\(\mathbf{J}_\Phi(\mathbf{W}_\phi)\)</span> in the last section. Thus, the missing ingredient that we need to derive is <span class="math notranslate nohighlight">\(\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)\)</span>. Note that if we change <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.</p>
-<p>Let’s start by computing the gradient of the squared error <span class="math notranslate nohighlight">\(l_i\)</span> for the <span class="math notranslate nohighlight">\(i\)</span>-th data point only:</p>
+<p>Note that we have defined the non-zero part of <span class="math notranslate nohighlight">\(\mathbf{J}_\Phi(\mathbf{W}_\phi)\)</span> as a tensor of dimensionality <span class="math notranslate nohighlight">\(N\)</span>-by-<span class="math notranslate nohighlight">\(D+1\)</span>-by-<span class="math notranslate nohighlight">\(K\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+J[n,d,k] \;=\; \frac{\partial\,\phi_{n,k}}{\partial\,W_{d,k}}
+\;=\;
+\begin{cases}
+(1-\phi_{n,k}^2)\,X_{n,d}, &amp; d&lt;D\quad(\text{zero-based indexing}),\\
+(1-\phi_{n,k}^2), &amp; d=D\quad(\text{bias term}).
+\end{cases}
+\end{split}\]</div>
+<p>So in our implementation we will have to be careful in how we carry out the multiplication, as we do not have implemented the remaining zero-dimensions.</p>
+<p>The missing ingredient that we need to derive is <span class="math notranslate nohighlight">\(\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)\)</span>. If we change <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.</p>
+<p>Let’s start by computing the gradient of the squared error <span class="math notranslate nohighlight">\(l_n\)</span> for the <span class="math notranslate nohighlight">\(n\)</span>-th data point only:</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_{\boldsymbol{\phi}_i} l_i = \nabla_{\boldsymbol{\phi}_i} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})
+\nabla_{\boldsymbol{\phi}_n} l_n = \nabla_{\boldsymbol{\phi}_n} (y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}\cdot(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})
 \]</div>
-<p>This gradient is a vector of length <span class="math notranslate nohighlight">\(d\)</span>. It follows that the gradient for the loss <span class="math notranslate nohighlight">\(L\)</span> over the whole training data set, will be a vector of length <span class="math notranslate nohighlight">\(dn\)</span>, i.e. the concatenation of the <span class="math notranslate nohighlight">\(n\)</span> gradient vectors of all the <span class="math notranslate nohighlight">\(l_i\)</span>. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the <span class="math notranslate nohighlight">\(n\)</span>-by-<span class="math notranslate nohighlight">\(d\)</span> matrix <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)\)</span></p>
+<p>This gradient is a vector of length <span class="math notranslate nohighlight">\(D+1\)</span>. It follows that the gradient for the loss <span class="math notranslate nohighlight">\(L\)</span> over the whole training data set, will be a vector of length <span class="math notranslate nohighlight">\((D+1)N\)</span>, i.e. the concatenation of the <span class="math notranslate nohighlight">\(N\)</span> gradient vectors of all the <span class="math notranslate nohighlight">\(l_N\)</span>. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the <span class="math notranslate nohighlight">\(N\)</span>-by-<span class="math notranslate nohighlight">\((D+1)\)</span> matrix <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)\)</span></p>
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
-\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_i)^\top \end{pmatrix}_{i=1}^n
+\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_n)^\top \end{pmatrix}_{n=1}^N= \frac{-1}{n} \begin{pmatrix}\mathbf{w}\cdot(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})\end{pmatrix}_{n=1}^N
 \]</div>
 <p>Alternatively, we could have used matrix derivatives to directly derive <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)\)</span> as</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w} \otimes \left(\mathbf{y}-\boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right),
 \]</div>
+<p>where <span class="math notranslate nohighlight">\(\otimes\)</span> is the outer product between the two vectors.</p>
 <p>Let’s integrate this term into our ridge regression implementation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">class</span> <span class="nc">BasisFunctionRidgeRegressionGD</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basis_function</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basis_function</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ridge_basis</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span> <span class="o">=</span> <span class="n">basis_function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">=</span> <span class="n">ridge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span> <span class="o">=</span> <span class="n">ridge_basis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="c1"># Mean Squared Error</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="o">*</span><span class="n">residuals</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">d_loss_d_Phi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Phi</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># gradient of the mean squared error w.r.t. Phi</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">residuals</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">/</span> <span class="n">N</span>
     
     <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Loss function (1/2 MSE + 1/2 Ridge penalty)</span>
-        <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="o">*</span><span class="n">residuals</span><span class="p">)</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">mse</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ridge</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># add penalty on basis‐params:</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">L</span>
 
     <span class="k">def</span> <span class="nf">gradient_w</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="c1"># Gradient of the loss</span>
@@ -543,31 +576,61 @@ L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi
         <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">gradient_basis_function_W</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="n">grad_bf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-        <span class="n">jacobian_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="c1"># print (grad_bf.shape) # 100 3</span>
-        <span class="c1"># print (jacobian_phi.shape) # 100 2 3</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">grad_bf</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">jacobian_phi</span>
-        <span class="c1"># print (res.shape[0])</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">grad_loss_bf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>      <span class="c1"># shape (N,P)</span>
+        <span class="n">jacobian_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>     <span class="c1"># shape (N,D+1,P)</span>
+        <span class="c1"># chain‐rule: dL/dW_phi = sum_i grad_bf[i] • jacobian_phi[i]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">grad_loss_bf</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">jacobian_phi</span>          <span class="c1"># (N, D+1, P)</span>
+        <span class="n">gW</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                                    <span class="c1"># (D+1, P)</span>
+        <span class="c1"># optional L2 on W:</span>
+        <span class="n">gW</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span>
+        <span class="k">return</span> <span class="n">gW</span>
 
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Initialize weights</span>
         <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1"># self.w = np.random.randn(Phi.shape[1])*0.001</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        
-        <span class="c1"># Gradient descent loop</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>   
-            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_w</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="o">*</span><span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function_W</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="n">gW</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function_W</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">grad_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_w</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># update basis function W and w</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gW</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_w</span>
 
     <span class="k">def</span> <span class="nf">pred</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+
+    <span class="k">def</span> <span class="nf">numerical_grad_W</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numerically approximate dL/dW by central finite differences.</span>
+<span class="sd">        Returns an array of the same shape as self.basis_function.W.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span>
+        <span class="n">num_grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+        <span class="c1"># flatten indices</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;multi_index&#39;</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readwrite&#39;</span><span class="p">])</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
+            <span class="n">orig</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="c1"># f(W + eps)</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">+</span> <span class="n">eps</span>
+            <span class="n">loss_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># f(W - eps)</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">-</span> <span class="n">eps</span>
+            <span class="n">loss_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># central difference</span>
+            <span class="n">num_grad</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_plus</span> <span class="o">-</span> <span class="n">loss_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)</span>
+            <span class="c1"># restore</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span>
+            <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">num_grad</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem.</p>
+<p>Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem, to fit the three tanh basis functions to the temperature data.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -581,30 +644,56 @@ L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi
 
 <span class="k">class</span> <span class="nc">TanhBasis</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        W: array of shape (D+1, P), where</span>
+<span class="sd">        - W[:D, k] are the slopes a_dk for each input dimension d and unit k</span>
+<span class="sd">        - W[D, k] is the bias b_k for unit k.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">XW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the product of the input data and the weights.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">dXW</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the derivative of the product of the input data and the weights.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
-        
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the tanh basis functions.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XW</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the Jacobian of the tanh basis functions.&quot;&quot;&quot;</span>
-        <span class="n">dxw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dXW</span><span class="p">(</span><span class="n">x</span><span class="p">)[:,:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-        <span class="n">jac</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">XW</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span>
-        <span class="k">return</span> <span class="n">dxw</span> <span class="o">*</span> <span class="n">jac</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="n">dZ_dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span> <span class="c1"># shape (N,D+1)</span>
+        <span class="n">dPhi_dz</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">X</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># shape (N,P)</span>
+        <span class="k">return</span> <span class="n">dZ_dW</span><span class="p">[:,:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">dPhi_dz</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="c1"># shape (N,D+1,P)</span>
 
+    <span class="k">def</span> <span class="nf">numerical_jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numerically approximate the Jacobian of transform(X) wrt W.</span>
+<span class="sd">        Returns an array of shape (n, d+1, p).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">original_W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">num_J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">))</span>
+        <span class="c1"># iterate over each parameter j,k</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="c1"># perturb up</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">original_W</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">eps</span>
+                <span class="n">phi_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="c1"># perturb down</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">original_W</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-=</span> <span class="n">eps</span>
+                <span class="n">phi_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="c1"># central difference</span>
+                <span class="n">num_J</span><span class="p">[:,</span> <span class="n">d</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">phi_plus</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">phi_minus</span><span class="p">[:,</span> <span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span>
+        <span class="c1"># restore W</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">original_W</span>
+        <span class="k">return</span> <span class="n">num_J</span>
 
 <span class="n">YEAR</span> <span class="o">=</span> <span class="mi">1900</span>
 <span class="k">def</span> <span class="nf">load_weather_data</span><span class="p">(</span><span class="n">year</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -651,27 +740,23 @@ L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span><span class="o">-</span><span class="mf">50.0</span><span class="p">,</span><span class="o">-</span><span class="mf">100.0</span><span class="p">])</span>
 <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
 
+<span class="c1"># tanh_basis = TanhBasis(W)</span>
 <span class="n">tanh_basis</span> <span class="o">=</span> <span class="n">TanhBasis</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="mf">0.1</span>     <span class="c1"># strength of the L2 penalty in ridge regression</span>
+<span class="n">ridge_basis</span> <span class="o">=</span> <span class="mf">0.1</span>     <span class="c1"># strength of the L2 penalty on the parameters of the basis function</span>
 
 <span class="n">x_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">][:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
 <span class="c1"># X_train = tanh_basis(x_train, a, b)</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">]</span>
 
-<span class="c1"># print(tanh_basis.W)</span>
-
-<span class="n">reg</span> <span class="o">=</span> <span class="n">BasisFunctionRidgeRegressionGD</span><span class="p">(</span><span class="n">basis_function</span><span class="o">=</span><span class="n">tanh_basis</span><span class="p">,</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">BasisFunctionRidgeRegressionGD</span><span class="p">(</span><span class="n">basis_function</span><span class="o">=</span><span class="n">tanh_basis</span><span class="p">,</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">ridge_basis</span><span class="o">=</span><span class="n">ridge_basis</span><span class="p">)</span>
 <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c1"># print(tanh_basis.W)</span>
-
 <span class="n">x_days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">366</span><span class="p">)[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-<span class="c1"># X_days = tanh_basis(x_days, a, b)</span>
 <span class="n">y_days_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">x_days</span><span class="p">)</span>
 
 <span class="n">x_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
-<span class="c1"># X_test = tanh_basis(x_test, a, b)</span>
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;training MSE : </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
@@ -692,13 +777,15 @@ L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 24.4733
-test MSE     : 24.1777
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 20.0247
+test MSE     : 20.5147
 </pre></div>
 </div>
-<img alt="../_images/5bd6ddd1c6fe0a700a4bbc25a157efec24c6ff3df94da8bf0e982fc807d256fd.png" src="../_images/5bd6ddd1c6fe0a700a4bbc25a157efec24c6ff3df94da8bf0e982fc807d256fd.png" />
+<img alt="../_images/bd01b80d8cce8f5dd6a115aa13faaf77132b01d50b24829b1a17ad580d92df0b.png" src="../_images/bd01b80d8cce8f5dd6a115aa13faaf77132b01d50b24829b1a17ad580d92df0b.png" />
 </div>
 </div>
+<p>After fitting, we observe that the first sigmoid function has been stretched out to fit most of the first half year to model the increase in temperature up to summer and the second sigmoid basis function models the temperature decrease into the winter. The third basis function seems to overfit to some points at the end of the yet.
+Overall, both the train MSE and the test MSE have been drastically decreased compared to our hand-picked basis functions before.</p>
 </section>
 <section id="chain-rule-and-the-back-propagation-algorithm">
 <h2>Chain rule and the back-propagation algorithm<a class="headerlink" href="#chain-rule-and-the-back-propagation-algorithm" title="Link to this heading">#</a></h2>

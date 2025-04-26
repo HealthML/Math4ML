@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/jacobian';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/jacobian.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/jacobian_scalar_with_debug';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/jacobian_scalar_with_debug.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The chain rule" href="chain_rule.html" />
-    <link rel="prev" title="Gradient Descent in Ridge Regression" href="gradient_descent_ridge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -205,11 +205,11 @@
 
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradient_descent_ridge.html">Gradient Descent in Ridge Regression</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">The Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jacobian.html">The Jacobian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chain_rule.html">The chain rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hessian.html">The Hessian</a></li>
 </ul>
@@ -290,7 +290,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/jacobian.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/jacobian_scalar_with_debug.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/jacobian.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/jacobian_scalar_with_debug.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -337,7 +337,7 @@
       
       
       
-      <li><a href="../_sources/chapter_calculus/jacobian.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/jacobian_scalar_with_debug.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -431,6 +431,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Jacobian</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-and-their-jacobians">Basis Functions and their Jacobians</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian-of-tanh-basis-functions">Jacobian of tanh basis functions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivative-for-the-weights-a-kd">Partial derivative for the weights <span class="math notranslate nohighlight">\(a_{kd}\)</span></a></li>
@@ -443,6 +444,14 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivative-for-the-weights-b-k">Partial derivative for the weights <span class="math notranslate nohighlight">\(b_k\)</span></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-jacobian-of-tanh-basis-functions"><strong>Visualizing the Jacobian of Tanh Basis Functions</strong></a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-for-basis-function-regression">Chain Rule for Basis Function Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-and-the-back-propagation-algorithm">Chain rule and the back-propagation algorithm</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -809,6 +818,342 @@ We will plot the three tanh basis functions and their Jacobians with respect to 
 <p>Before we can use the <code class="docutils literal notranslate"><span class="pre">TanhBasis</span></code> class with Jacobian to optimize over the hyperparameters in our ridge regression, we need to understand, how the Jacobian is used in the optimization process. The missing ingredient is the <strong>chain rule</strong> that we will discuss next.</p>
 </section>
 </section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="the-chain-rule">
+<h1>The chain rule<a class="headerlink" href="#the-chain-rule" title="Link to this heading">#</a></h1>
+<p>Most functions that we wish to optimize are not completely arbitrary
+functions, but rather are composed of simpler functions which we know
+how to handle. The chain rule gives us a way to calculate derivatives
+for a composite function in terms of the derivatives of the simpler
+functions that make it up.</p>
+<p>The chain rule from single-variable calculus should be familiar:</p>
+<div class="math notranslate nohighlight">
+\[(f \circ g)'(x) = f'(g(x))g'(x)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
+composition.</p>
+<p>There is a natural generalization of this rule to multivariate functions.</p>
+<div class="proof theorem admonition" id="chain-rule">
+<p class="admonition-title"><span>Theorem </span> (Multivariate Chain Rule)</p>
+<section class="theorem-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}^k\)</span> and
+<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>.</p>
+<p>Then <span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}^k\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\]</div>
+</section>
+</div><p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
+<span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
+<div class="proof corollary admonition" id="chain-rule-scalar">
+<p class="admonition-title"><span>Corollary </span> (Chain Rule for Scalar-Valued Functions)</p>
+<section class="corollary-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f : \mathbb{R}^m \to \mathbb{R}\)</span> and
+<span class="math notranslate nohighlight">\(g : \mathbb{R}^n \to \mathbb{R}^m\)</span>. Then
+<span class="math notranslate nohighlight">\(f \circ g : \mathbb{R}^n \to \mathbb{R}\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\]</div>
+</section>
+</div><section id="chain-rule-for-basis-function-regression">
+<h2>Chain Rule for Basis Function Regression<a class="headerlink" href="#chain-rule-for-basis-function-regression" title="Link to this heading">#</a></h2>
+<p>Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
+We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.</p>
+<p>So, let’s derive the Jacobian of ridge regression with respect to the hyperparameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> of the basis functions <span class="math notranslate nohighlight">\(\phi: \operatorname{dom}{x} \rightarrow \mathbb{R}^d\)</span>.</p>
+<p>Let’s have a look in how the basis functions affect the loss function.</p>
+<p>Let <span class="math notranslate nohighlight">\(f\)</span> be the loss function, which is a function of the weights <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> and the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> be the matrix of hyperparameters of the tanh basis functions. The loss function is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\mathbf{w}, \mathbf{W}_\phi) = L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n l_i\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2 = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+\]</div>
+<p>When combining all <span class="math notranslate nohighlight">\(n\)</span> transformed input data points <span class="math notranslate nohighlight">\(\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}\)</span> into the transformed design matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}\)</span>, and all the labels into the vector <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{J}_\phi\)</span> be the Jacobian of the tanh basis functions with respect to the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> at a fixed input value <span class="math notranslate nohighlight">\(x_0\)</span>, as we have derived in the last section.</p>
+<p>As the loss is scalar, we can apply the Chain Rule for Scalar-Valued Functions.</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\mathbf{W}_\phi} (L \circ \Phi)(\mathbf{W}_\phi) = \mathbf{J}_\Phi(\mathbf{W}_\phi)^{\!\top\!} \nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)\]</div>
+<p>We have derived <span class="math notranslate nohighlight">\(\mathbf{J}_\Phi(\mathbf{W}_\phi)\)</span> in the last section. Thus, the missing ingredient that we need to derive is <span class="math notranslate nohighlight">\(\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)\)</span>. Note that if we change <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.</p>
+<p>Let’s start by computing the gradient of the squared error <span class="math notranslate nohighlight">\(l_i\)</span> for the <span class="math notranslate nohighlight">\(i\)</span>-th data point only:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\boldsymbol{\phi}_i} l_i = \nabla_{\boldsymbol{\phi}_i} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})
+\]</div>
+<p>This gradient is a vector of length <span class="math notranslate nohighlight">\(d\)</span>. It follows that the gradient for the loss <span class="math notranslate nohighlight">\(L\)</span> over the whole training data set, will be a vector of length <span class="math notranslate nohighlight">\(dn\)</span>, i.e. the concatenation of the <span class="math notranslate nohighlight">\(n\)</span> gradient vectors of all the <span class="math notranslate nohighlight">\(l_i\)</span>. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the <span class="math notranslate nohighlight">\(n\)</span>-by-<span class="math notranslate nohighlight">\(d\)</span> matrix <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
+\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_i)^\top \end{pmatrix}_{i=1}^n
+\]</div>
+<p>Alternatively, we could have used matrix derivatives to directly derive <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
+\]</div>
+<p>Let’s integrate this term into our ridge regression implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">BasisFunctionRidgeRegressionGD</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basis_function</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span> <span class="o">=</span> <span class="n">basis_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">=</span> <span class="n">ridge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># Mean Squared Error</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="o">*</span><span class="n">residuals</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">d_loss_d_Phi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Phi</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># gradient of the mean squared error w.r.t. Phi</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">residuals</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">/</span> <span class="n">N</span>
+    
+    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_Phi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="n">y</span><span class="p">)</span>
+        <span class="c1">#L = 0.5*self.mse(X,y) + 0.5*self.ridge*np.sum(self.w**2)</span>
+        <span class="c1"># add penalty on basis‐params:</span>
+        <span class="c1"># L += 0.5*self.ridge_basis*np.sum(self.basis_function.W**2)</span>
+        <span class="k">return</span> <span class="n">L</span>
+
+    <span class="k">def</span> <span class="nf">loss_Phi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Phi</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="o">*</span><span class="n">residuals</span><span class="p">)</span>
+        <span class="n">L</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">mse</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ridge</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># add penalty on basis‐params:</span>
+        <span class="n">L</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">L</span>
+
+    <span class="k">def</span> <span class="nf">gradient_w</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># Gradient of the loss</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+
+    <span class="k">def</span> <span class="nf">gradient_basis_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># Gradient of the loss</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gradient_basis_function_W</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">grad_loss_bf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>      <span class="c1"># shape (N,P)</span>
+        <span class="n">jacobian_phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>     <span class="c1"># shape (N,D+1,P)</span>
+        <span class="c1"># chain‐rule: dL/dW_phi = sum_i grad_bf[i] • jacobian_phi[i]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">grad_loss_bf</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">jacobian_phi</span>          <span class="c1"># (N, D+1, P)</span>
+        <span class="n">gW</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                                    <span class="c1"># (D+1, P)</span>
+        <span class="c1"># optional L2 on W:</span>
+        <span class="n">gW</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge_basis</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span>
+        <span class="k">return</span> <span class="n">gW</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1"># self.w = np.random.randn(Phi.shape[1])*0.001</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>
+            <span class="n">gW</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function_W</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">grad_w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_w</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># debug print every 100 iters</span>
+            <span class="k">if</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># it % 100 == </span>
+                <span class="n">ana</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient_basis_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_grad_Phi</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="n">diff</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ana</span><span class="o">-</span><span class="n">num</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter </span><span class="si">{</span><span class="n">it</span><span class="si">}</span><span class="s2">: max|ana−num| Phi= </span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">diff</span><span class="o">&gt;</span><span class="mf">1e-6</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">ana</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+
+                <span class="n">ana</span> <span class="o">=</span> <span class="n">gW</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerical_grad_W</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="n">diff</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ana</span><span class="o">-</span><span class="n">num</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;iter </span><span class="si">{</span><span class="n">it</span><span class="si">}</span><span class="s2">: max|ana−num| W  = </span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">diff</span><span class="o">&gt;</span><span class="mf">1e-6</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">ana</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+                    <span class="nb">print</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+            <span class="c1"># update basis function W and w</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">gW</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_w</span>
+
+    <span class="k">def</span> <span class="nf">numerical_grad_W</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numerically approximate dL/dW by central finite differences.</span>
+<span class="sd">        Returns an array of the same shape as self.basis_function.W.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">W</span>
+        <span class="n">num_grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+        <span class="c1"># flatten indices</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;multi_index&#39;</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readwrite&#39;</span><span class="p">])</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
+            <span class="n">orig</span> <span class="o">=</span> <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="c1"># f(W + eps)</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">+</span> <span class="n">eps</span>
+            <span class="n">loss_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># f(W - eps)</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">-</span> <span class="n">eps</span>
+            <span class="n">loss_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># central difference</span>
+            <span class="n">num_grad</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_plus</span> <span class="o">-</span> <span class="n">loss_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)</span>
+            <span class="c1"># restore</span>
+            <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span>
+            <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">num_grad</span>
+
+    <span class="k">def</span> <span class="nf">numerical_grad_Phi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Numerically approximate dL/dPhi by central finite differences.</span>
+<span class="sd">        Returns an array of the same shape as self.basis_function.transform(X)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">num_grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">Phi</span><span class="p">)</span>
+        <span class="c1"># flatten indices</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">Phi</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;multi_index&#39;</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;readwrite&#39;</span><span class="p">])</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
+            <span class="n">orig</span> <span class="o">=</span> <span class="n">Phi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="c1"># f(W + eps)</span>
+            <span class="n">Phi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">+</span> <span class="n">eps</span>
+            <span class="n">loss_plus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_Phi</span><span class="p">(</span><span class="n">Phi</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># f(W - eps)</span>
+            <span class="n">Phi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span> <span class="o">-</span> <span class="n">eps</span>
+            <span class="n">loss_minus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_Phi</span><span class="p">(</span><span class="n">Phi</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># central difference</span>
+            <span class="n">num_grad</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">loss_plus</span> <span class="o">-</span> <span class="n">loss_minus</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eps</span><span class="p">)</span>
+            <span class="c1"># restore</span>
+            <span class="n">Phi</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig</span>
+            <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">num_grad</span>
+
+    <span class="k">def</span> <span class="nf">pred</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_function</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">Phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">Phi</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">YEAR</span> <span class="o">=</span> <span class="mi">1900</span>
+<span class="k">def</span> <span class="nf">load_weather_data</span><span class="p">(</span><span class="n">year</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    load data from a weather station in Potsdam</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;station&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span> <span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;measurement&#39;</span><span class="p">,</span> <span class="s1">&#39;e1&#39;</span><span class="p">,</span><span class="s1">&#39;e2&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;e3&#39;</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../datasets/weatherstations/GM000003342.csv&#39;</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="n">names</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># 47876 rows, 8 columns</span>
+    <span class="c1"># convert the date column to datetime format</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># 47876 unique days</span>
+    <span class="n">types</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+    <span class="n">tmax</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TMAX&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Maximum temperature (tenths of degrees C), 47876</span>
+    <span class="n">tmin</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TMIN&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Minimum temperature (tenths of degrees C), 47876</span>
+    <span class="n">prcp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PRCP&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Precipitation (tenths of mm), 47876</span>
+    <span class="n">snwd</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;SNWD&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Snow depth (mm), different shape</span>
+    <span class="n">tavg</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TAVG&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># average temperature, different shape 1386</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tmax</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">tmin</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">prcp</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">])</span><span class="o">.</span><span class="n">T</span> 
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">/</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">tmin</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TMAX&#39;</span><span class="p">,</span> <span class="s1">&#39;TMIN&#39;</span><span class="p">,</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">])</span> <span class="c1"># compile data in a dataframe and convert temperatures to degrees C, precipitation to mm</span>
+
+    <span class="k">if</span> <span class="n">year</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-1-1&#39;</span><span class="p">):</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-12-31&#39;</span><span class="p">)]</span>
+    
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;days&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">days</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="c1"># Load weather data for the year 2000</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">load_weather_data</span><span class="p">(</span><span class="n">year</span> <span class="o">=</span> <span class="n">YEAR</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">idx_train</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+<span class="n">idx_test</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">100</span><span class="p">:]</span>
+
+<span class="n">data_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_train</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_test</span><span class="p">]</span>
+
+<span class="n">N_train</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">10.0</span><span class="p">,</span><span class="o">-</span><span class="mf">50.0</span><span class="p">,</span><span class="o">-</span><span class="mf">100.0</span><span class="p">])</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+
+<span class="c1"># tanh_basis = TanhBasis(W)</span>
+<span class="n">tanh_basis</span> <span class="o">=</span> <span class="n">TanhBasis</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+
+<span class="n">ridge</span> <span class="o">=</span> <span class="mf">0.1</span>     <span class="c1"># strength of the L2 penalty in ridge regression</span>
+
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">][:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
+<span class="c1"># X_train = tanh_basis(x_train, a, b)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">]</span>
+
+<span class="c1"># print(tanh_basis.W)</span>
+
+<span class="n">reg</span> <span class="o">=</span> <span class="n">BasisFunctionRidgeRegressionGD</span><span class="p">(</span><span class="n">basis_function</span><span class="o">=</span><span class="n">tanh_basis</span><span class="p">,</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># print(tanh_basis.W)</span>
+
+<span class="n">x_days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">366</span><span class="p">)[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="c1"># X_days = tanh_basis(x_days, a, b)</span>
+<span class="n">y_days_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">x_days</span><span class="p">)</span>
+
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
+<span class="c1"># X_test = tanh_basis(x_test, a, b)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;training MSE : </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test MSE     : </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;train MSE = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span><span class="s2">&quot;test MSE = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_days</span><span class="p">,</span><span class="n">y_days_pred</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">27</span><span class="p">,</span><span class="mi">39</span><span class="p">])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;day of the year&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Maximum Temperature - degree C&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Year : </span><span class="si">%i</span><span class="s2">        N : </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">N_train</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 20.0247
+test MSE     : 20.5147
+</pre></div>
+</div>
+<img alt="../_images/bd01b80d8cce8f5dd6a115aa13faaf77132b01d50b24829b1a17ad580d92df0b.png" src="../_images/bd01b80d8cce8f5dd6a115aa13faaf77132b01d50b24829b1a17ad580d92df0b.png" />
+</div>
+</div>
+</section>
+<section id="chain-rule-and-the-back-propagation-algorithm">
+<h2>Chain rule and the back-propagation algorithm<a class="headerlink" href="#chain-rule-and-the-back-propagation-algorithm" title="Link to this heading">#</a></h2>
+<p>Note that the model that we have derived represents a fully-connected neural network with a single hidden layer and the tanh activation function, or if we also count the output layer, this would be a 2-layer neural network.
+In the neural network world, the transformed data <span class="math notranslate nohighlight">\(\boldsymbol\Phi(\mathbf{X}; \mathbf{W}_\phi)\)</span> would correspond to the nodes on the hidden layer of the neural network and the parameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> would correspond to the weights of the hidden layer.</p>
+<p>We have used the chain rule to compute the the gradient of <span class="math notranslate nohighlight">\(L\)</span> with respect to <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span>.
+It turns out that neural networks use the back-propagation algorithm to compute such grtadients. The back-propagation is fundamentally based on the chain rule. However, it represents a  more efficient implementation than the one that we have used here, as it would organize all copmutations into a forward pass that computes all the network layers up to the loss functions, while caching all the intermediate computations, and a backward pass, where it traces the network back towards the input and re-using all cached terms. Our implementation does not make use of caching and thus would be slower than the back-propagation algorithm.</p>
+<p>Now, from a deep learning perspective, our 2-layer neural network would still be considered fairly shallow.
+If you would like to learn more about the back-propagation algorithm and how to build and train massively deep neural network architectures, check out the excellent <a class="reference external" href="https://d2l.ai">Dive into Deep Learning</a> online book.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -840,24 +1185,6 @@ We will plot the three tanh basis functions and their Jacobians with respect to 
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="gradient_descent_ridge.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gradient Descent in Ridge Regression</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="chain_rule.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The chain rule</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -874,6 +1201,7 @@ We will plot the three tanh basis functions and their Jacobians with respect to 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Jacobian</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-and-their-jacobians">Basis Functions and their Jacobians</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian-of-tanh-basis-functions">Jacobian of tanh basis functions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivative-for-the-weights-a-kd">Partial derivative for the weights <span class="math notranslate nohighlight">\(a_{kd}\)</span></a></li>
@@ -886,6 +1214,14 @@ We will plot the three tanh basis functions and their Jacobians with respect to 
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivative-for-the-weights-b-k">Partial derivative for the weights <span class="math notranslate nohighlight">\(b_k\)</span></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-jacobian-of-tanh-basis-functions"><strong>Visualizing the Jacobian of Tanh Basis Functions</strong></a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-for-basis-function-regression">Chain Rule for Basis Function Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chain-rule-and-the-back-propagation-algorithm">Chain rule and the back-propagation algorithm</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>

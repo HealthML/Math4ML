@@ -435,8 +435,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivatives">Partial Derivatives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradients">Gradients</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-gradient-descent">Basic Gradient Descent</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-in-ridge-regression">Gradient Descent in Ridge Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
 </ul>
             </nav>
         </div>
@@ -801,191 +799,6 @@ We will discuss more sophisticated stopping criteria later, when we have a bette
 <li><p>Adjusting the <strong>learning rate</strong> or <strong>initialization</strong> changes these trajectories dramatically—showing why step‑size tuning and good initialization matter in practice.</p></li>
 </ol>
 </section>
-<section id="gradient-descent-in-ridge-regression">
-<h2>Gradient Descent in Ridge Regression<a class="headerlink" href="#gradient-descent-in-ridge-regression" title="Link to this heading">#</a></h2>
-<p>In this section, we will apply the gradient descent algorithm to the problem of <strong>Ridge regression</strong>. Ridge regression is a linear regression technique that includes an L2 regularization term to prevent overfitting. The objective function for Ridge regression is given by:</p>
-<div class="math notranslate nohighlight">
-\[
-  f(\mathbf{w}) = \frac{1}{2}\|\mathbf{y} - \mathbf{X}\mathbf{w}\|^2_2 + \frac{\lambda}{2}\|\mathbf{w}\|^2_2,
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the design matrix, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the response vector, <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the weight vector, and <span class="math notranslate nohighlight">\(\lambda\)</span> is the regularization parameter.</p>
-<p>The gradient of the objective function with respect to <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is given by:</p>
-<div class="math notranslate nohighlight">
-\[
-  \nabla f(\mathbf{w}) = -\mathbf{X}^\top(\mathbf{y} - \mathbf{X}\mathbf{w}) + \lambda\mathbf{w}.
-\]</div>
-<p>We will implement the gradient descent algorithm to minimize this objective function and find the optimal weights <span class="math notranslate nohighlight">\(\mathbf{w}^*\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="k">class</span> <span class="nc">RidgeRegressionGD</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">=</span> <span class="n">ridge</span>
-
-    <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Mean Squared Error</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Loss function (MSE + Ridge penalty)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Gradient of the loss</span>
-        <span class="k">return</span> <span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
-
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Initialize weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        
-        <span class="c1"># Gradient descent loop</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>   
-            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">pred</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="example-usage">
-<h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">#</a></h2>
-<p>We will use the Ridge regression implementation to fit a model to the maximum temperature data from the year 1900. The data is available in the <code class="docutils literal notranslate"><span class="pre">data_train</span></code> and <code class="docutils literal notranslate"><span class="pre">data_test</span></code> variables, which contain the training and testing datasets, respectively. We will fit a model based on three tanh basis functions to the data and evaluate its performance using Mean Squared Error (MSE).</p>
-<p>The model is given by</p>
-<div class="math notranslate nohighlight">
-\[
-  \mathbf{y} \approx b + \sum_{i=1}^3 w_i \cdot \phi_i(x; a_i, b_i) 
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the temperature, <span class="math notranslate nohighlight">\(x\)</span> is the day of the year.</p>
-<p>The tanh basis functions are defined as</p>
-<div class="math notranslate nohighlight">
-\[
-  \phi_i(x; a_i, b_i) = \tanh(a_i x + b_i)
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(a_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> are the slope and bias hyperparameters, respectively.
-We will use the following values for the hyperparameters:</p>
-<div class="math notranslate nohighlight">
-\[
-  a_1 = a_2 = a_3 = 1.0 \quad \text{and} \quad  b_1 = -100.0, \quad b_2 = -200.0, \quad b_3 = -300.0
-\]</div>
-<p>So, we space three tanh basis functions with identical slope every 100 days apart.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">YEAR</span> <span class="o">=</span> <span class="mi">1900</span>
-<span class="k">def</span> <span class="nf">load_weather_data</span><span class="p">(</span><span class="n">year</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    load data from a weather station in Potsdam</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;station&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span> <span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;measurement&#39;</span><span class="p">,</span> <span class="s1">&#39;e1&#39;</span><span class="p">,</span><span class="s1">&#39;e2&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;e3&#39;</span><span class="p">]</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../datasets/weatherstations/GM000003342.csv&#39;</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="n">names</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># 47876 rows, 8 columns</span>
-    <span class="c1"># convert the date column to datetime format</span>
-    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># 47876 unique days</span>
-    <span class="n">types</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-
-    <span class="n">tmax</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TMAX&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Maximum temperature (tenths of degrees C), 47876</span>
-    <span class="n">tmin</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TMIN&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Minimum temperature (tenths of degrees C), 47876</span>
-    <span class="n">prcp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PRCP&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Precipitation (tenths of mm), 47876</span>
-    <span class="n">snwd</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;SNWD&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># Snow depth (mm), different shape</span>
-    <span class="n">tavg</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TAVG&#39;</span><span class="p">][[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;measurement&#39;</span><span class="p">]]</span> <span class="c1"># average temperature, different shape 1386</span>
-    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tmax</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">tmin</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">prcp</span><span class="o">.</span><span class="n">measurement</span><span class="o">.</span><span class="n">values</span><span class="p">])</span><span class="o">.</span><span class="n">T</span> 
-
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">/</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">tmin</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;TMAX&#39;</span><span class="p">,</span> <span class="s1">&#39;TMIN&#39;</span><span class="p">,</span> <span class="s1">&#39;PRCP&#39;</span><span class="p">])</span> <span class="c1"># compile data in a dataframe and convert temperatures to degrees C, precipitation to mm</span>
-
-    <span class="k">if</span> <span class="n">year</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-1-1&#39;</span><span class="p">):</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s1">-12-31&#39;</span><span class="p">)]</span>
-    
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;days&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">.</span><span class="n">days</span>
-    <span class="k">return</span> <span class="n">df</span>
-
-<span class="c1"># Load weather data for the year 2000</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">load_weather_data</span><span class="p">(</span><span class="n">year</span> <span class="o">=</span> <span class="n">YEAR</span><span class="p">)</span>
-
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="n">idx_train</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">]</span>
-<span class="n">idx_test</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="mi">100</span><span class="p">:]</span>
-
-<span class="n">data_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_train</span><span class="p">]</span>
-<span class="n">data_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_test</span><span class="p">]</span>
-
-<span class="n">N_train</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="k">def</span> <span class="nf">tanh_basis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">add_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    tanh basis function</span>
-<span class="sd">    x : input data</span>
-<span class="sd">    a : slope of the tanh basis functions</span>
-<span class="sd">    b : bias of the tanh basis functions</span>
-<span class="sd">    add_bias : add a bias term to the output</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:])</span>
-    <span class="k">if</span> <span class="n">add_bias</span><span class="p">:</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">phi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">phi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">phi</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># slope of the tanh basis functions</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">100.0</span><span class="p">,</span><span class="o">-</span><span class="mf">200.0</span><span class="p">,</span><span class="o">-</span><span class="mf">300.0</span><span class="p">])</span> <span class="c1"># bias of the tanh basis functions</span>
-
-<span class="n">ridge</span> <span class="o">=</span> <span class="mf">0.1</span>     <span class="c1"># strength of the L2 penalty in ridge regression</span>
-
-<span class="n">x_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">][:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">tanh_basis</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">]</span>
-
-<span class="n">reg</span> <span class="o">=</span> <span class="n">RidgeRegressionGD</span><span class="p">(</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-
-<span class="n">x_days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">366</span><span class="p">)[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-<span class="n">X_days</span> <span class="o">=</span> <span class="n">tanh_basis</span><span class="p">(</span><span class="n">x_days</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="n">y_days_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X_days</span><span class="p">)</span>
-
-<span class="n">x_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">days</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.0</span>
-<span class="n">X_test</span> <span class="o">=</span> <span class="n">tanh_basis</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span>
-<span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;training MSE : </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test MSE     : </span><span class="si">%.4f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-
-
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;train MSE = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span><span class="s2">&quot;test MSE = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reg</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)])</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_days</span><span class="p">,</span><span class="n">y_days_pred</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">27</span><span class="p">,</span><span class="mi">39</span><span class="p">])</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;day of the year&quot;</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Maximum Temperature - degree C&quot;</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Year : </span><span class="si">%i</span><span class="s2">        N : </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">YEAR</span><span class="p">,</span> <span class="n">N_train</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 26.9580
-test MSE     : 27.7077
-</pre></div>
-</div>
-<img alt="../_images/d5460df2a810986668c5011b47742779fc341f7f69ee18e280493dcc932efc4c.png" src="../_images/d5460df2a810986668c5011b47742779fc341f7f69ee18e280493dcc932efc4c.png" />
-</div>
-</div>
-<p>The plot shows that the model fits a model that places the three sigmoid basis functions every 100 days apart. Due to the constant slope, the tanh functions almost look like step functions.
-While the model fits the data relatively well, our choice of hyperparameters may not be optimal.</p>
-<p>In the following sections, we will discuss how we can use the gradient descent algorithm to optimize the hyperparameters. However, on order to do so, we will need to introduce the concepts of the <strong>Jacobian</strong> and the <strong>chain rule</strong>, that we will discuss in the following sections.</p>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1056,8 +869,6 @@ While the model fits the data relatively well, our choice of hyperparameters may
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivatives">Partial Derivatives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradients">Gradients</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-gradient-descent">Basic Gradient Descent</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-in-ridge-regression">Gradient Descent in Ridge Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
 </ul>
   </nav></div>
 
