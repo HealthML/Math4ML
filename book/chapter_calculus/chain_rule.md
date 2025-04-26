@@ -20,7 +20,7 @@ functions that make it up.
 
 The chain rule from single-variable calculus should be familiar:
 
-$$\operatorname{d}(f \circ g)(x) = df(g(x))dg(x)$$ 
+$$\frac{\operatorname{d}(f \circ g)(x)}{\operatorname{d}x} = \frac{\operatorname{d}f(g(x))}{\operatorname{d}g(x)}\cdot\frac{\operatorname{d}g(x)}{\operatorname{d}x}$$ 
 
 where $\circ$ denotes function
 composition.
