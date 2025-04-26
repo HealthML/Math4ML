@@ -105,19 +105,35 @@ Let's integrate this term into our ridge regression implementation:
 import numpy as np
 
 class BasisFunctionRidgeRegressionGD:
-    def __init__(self, basis_function, learning_rate=0.01, num_iterations=1000, ridge=0.1):
+    def __init__(self, basis_function, learning_rate=0.01, num_iterations=1000, ridge=0.1, ridge_basis=0.1):
         self.basis_function = basis_function
         self.learning_rate = learning_rate
         self.num_iterations = num_iterations
         self.ridge = ridge
+        self.ridge_basis = ridge_basis
+        self.w = None
 
     def mse(self, X, y):
         # Mean Squared Error
-        return np.mean((y - self.pred(X)) ** 2)
+        residuals = (y - self.pred(X))
+        return np.mean(residuals*residuals)
+
+    def d_loss_d_Phi(self, Phi, y):
+        # gradient of the mean squared error w.r.t. Phi
+        N = Phi.shape[0]
+        if self.w is None:
+            self.w = np.zeros(Phi.shape[1])
+        residuals = (y - Phi @ self.w)
+        return -residuals[:,np.newaxis] * self.w[np.newaxis,:] / N
     
     def loss(self, X, y):
-        # Loss function (1/2 MSE + 1/2 Ridge penalty)
-        return 0.5 * self.mse(X, y) + 0.5 * self.ridge * np.sum(self.w ** 2)
+        Phi = self.basis_function.transform(X)
+        residuals = (y - Phi @ self.w)
+        mse = np.mean(residuals*residuals)
+        L = 0.5*mse + 0.5*self.ridge*np.sum(self.w**2)
+        # add penalty on basis‐params:
+        L += 0.5*self.ridge_basis*np.sum(self.basis_function.W**2)
+        return L
 
     def gradient_w(self, X, y):
         # Gradient of the loss
@@ -128,29 +144,59 @@ class BasisFunctionRidgeRegressionGD:
         return -self.w[np.newaxis,:] * (y - self.pred(X))[:,np.newaxis] / len(y)
 
     def gradient_basis_function_W(self, X, y):
-        grad_bf = self.gradient_basis_function(X,y)
-        jacobian_phi = self.basis_function.jacobian(X)
-        # print (grad_bf.shape) # 100 3
-        # print (jacobian_phi.shape) # 100 2 3
-        res = grad_bf[:,np.newaxis,:] * jacobian_phi
-        # print (res.shape[0])
-        return res.sum(0)
+        grad_loss_bf = self.gradient_basis_function(X, y)      # shape (N,P)
+        jacobian_phi = self.basis_function.jacobian(X)     # shape (N,D+1,P)
+        # chain‐rule: dL/dW_phi = sum_i grad_bf[i] • jacobian_phi[i]
+        res = grad_loss_bf[:, None, :] * jacobian_phi          # (N, D+1, P)
+        gW = res.sum(0)                                    # (D+1, P)
+        # optional L2 on W:
+        gW += self.ridge_basis * self.basis_function.W
+        return gW
 
     def fit(self, X, y):
-        # Initialize weights
         Phi = self.basis_function.transform(X)
+        # self.w = np.random.randn(Phi.shape[1])*0.001
         self.w = np.zeros(Phi.shape[1])
-        
-        # Gradient descent loop
-        for _ in range(self.num_iterations):   
-            self.w -= self.learning_rate * self.gradient_w(X, y)
-            self.basis_function.W -= self.learning_rate*0.01 * self.gradient_basis_function_W(X,y)
+        for it in range(self.num_iterations):
+            gW = self.gradient_basis_function_W(X, y)
+            grad_w = self.gradient_w(X, y)
+            # update basis function W and w
+            self.basis_function.W -= self.learning_rate * gW
+            self.w -= self.learning_rate * grad_w
 
     def pred(self, X):
-        return self.basis_function.transform(X) @ self.w
+        Phi = self.basis_function.transform(X)
+        if self.w is None:
+            self.w = np.zeros(Phi.shape[1])
+        return Phi @ self.w
+
+    def numerical_grad_W(self, X, y, eps=1e-7):
+        """
+        Numerically approximate dL/dW by central finite differences.
+        Returns an array of the same shape as self.basis_function.W.
+        """
+        W = self.basis_function.W
+        num_grad = np.zeros_like(W)
+        # flatten indices
+        it = np.nditer(W, flags=['multi_index'], op_flags=['readwrite'])
+        while not it.finished:
+            idx = it.multi_index
+            orig = W[idx]
+            # f(W + eps)
+            W[idx] = orig + eps
+            loss_plus = self.loss(X, y)
+            # f(W - eps)
+            W[idx] = orig - eps
+            loss_minus = self.loss(X, y)
+            # central difference
+            num_grad[idx] = (loss_plus - loss_minus) / (2*eps)
+            # restore
+            W[idx] = orig
+            it.iternext()
+        return num_grad
 ```
 
-Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem.
+Now, we have all the pieces together, to apply our new linear regression implementation to the temperature prediction problem, to fit the three tanh basis functions to the temperature data.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -161,30 +207,56 @@ import matplotlib.pyplot as plt
 
 class TanhBasis:
     def __init__(self, W):
-        self.W = W
+        """
+        W: array of shape (D+1, P), where
+        - W[:D, k] are the slopes a_dk for each input dimension d and unit k
+        - W[D, k] is the bias b_k for unit k.
+        """
+        self.W = W.copy()
 
-    def XW(self, x):
+    def Z(self, X):
         """Compute the product of the input data and the weights."""
-        if len(x.shape) == 1:
-            x = x[:, np.newaxis]
-        return x @ self.W[:-1] + self.W[-1]
+        if len(X.shape) == 1:
+            X = X[:, np.newaxis]
+        return X @ self.W[:-1] + self.W[-1]
 
-    def dXW(self, x):
-        """Compute the derivative of the product of the input data and the weights."""
-        if len(x.shape) == 1:
-            x = x[:, np.newaxis]
-        return np.hstack((x, np.ones((x.shape[0], 1))))
-        
-    def transform(self, x):
+    def transform(self, X):
         """Compute the tanh basis functions."""
-        return np.tanh(self.XW(x))
+        return np.tanh(self.Z(X))
 
-    def jacobian(self, x):
+    def jacobian(self, X):
         """Compute the Jacobian of the tanh basis functions."""
-        dxw = self.dXW(x)[:,:,np.newaxis]
-        jac = (1 - np.tanh(self.XW(x))**2)[:,np.newaxis,:]
-        return dxw * jac
+        if len(X.shape) == 1:
+            X = X[:, np.newaxis]
+        dZ_dW = np.hstack((X, np.ones((X.shape[0], 1)))) # shape (N,D+1)
+        dPhi_dz = (1 - np.tanh(self.Z(X))**2)   # shape (N,P)
+        return dZ_dW[:,:,np.newaxis] * dPhi_dz[:,np.newaxis,:] # shape (N,D+1,P)
 
+    def numerical_jacobian(self, X, eps=1e-6):
+        """
+        Numerically approximate the Jacobian of transform(X) wrt W.
+        Returns an array of shape (n, d+1, p).
+        """
+        original_W = self.W.copy()
+        N, D = X.shape
+        K = self.W.shape[1]
+        num_J = np.zeros((N, D+1, K))
+        # iterate over each parameter j,k
+        for d in range(D+1):
+            for k in range(K):
+                # perturb up
+                self.W = original_W.copy()
+                self.W[d, k] += eps
+                phi_plus = self.transform(X)
+                # perturb down
+                self.W = original_W.copy()
+                self.W[d, k] -= eps
+                phi_minus = self.transform(X)
+                # central difference
+                num_J[:, d, k] = (phi_plus[:, k] - phi_minus[:, k]) / (2 * eps)
+        # restore W
+        self.W = original_W
+        return num_J
 
 YEAR = 1900
 def load_weather_data(year = None):
@@ -231,27 +303,23 @@ a = np.array([.1, .2, .3])
 b = np.array([-10.0,-50.0,-100.0])
 W = np.array([a, b])
 
+# tanh_basis = TanhBasis(W)
 tanh_basis = TanhBasis(W)
 
 ridge = 0.1     # strength of the L2 penalty in ridge regression
+ridge_basis = 0.1     # strength of the L2 penalty on the parameters of the basis function
 
 x_train = data_train.days.values[:N_train][:,np.newaxis] * 1.0
 # X_train = tanh_basis(x_train, a, b)
 y_train = data_train.TMAX.values[:N_train]
 
-# print(tanh_basis.W)
-
-reg = BasisFunctionRidgeRegressionGD(basis_function=tanh_basis,ridge=ridge, learning_rate=0.01, num_iterations=10000)
+reg = BasisFunctionRidgeRegressionGD(basis_function=tanh_basis,ridge=ridge, learning_rate=0.00001, num_iterations=1000000, ridge_basis=ridge_basis)
 reg.fit(x_train, y_train)
 
-# print(tanh_basis.W)
-
 x_days = np.arange(366)[:,np.newaxis]
-# X_days = tanh_basis(x_days, a, b)
 y_days_pred = reg.pred(x_days)
 
 x_test = data_test.days.values[:,np.newaxis] * 1.0
-# X_test = tanh_basis(x_test, a, b)
 y_test = data_test.TMAX.values
 y_test_pred = reg.pred(x_test)
 print("training MSE : %.4f" % reg.mse(x_train, y_train))
@@ -268,6 +336,8 @@ ax = plt.xlabel("day of the year")
 ax = plt.ylabel("Maximum Temperature - degree C")
 ax = plt.title("Year : %i        N : %i" % (YEAR, N_train))
 ```
+After fitting, we observe that the first sigmoid function has been stretched out to fit most of the first half year to model the increase in temperature up to summer and the second sigmoid basis function models the temperature decrease into the winter. The third basis function seems to overfit to some points at the end of the yet.
+Overall, both the train MSE and the test MSE have been drastically decreased compared to our hand-picked basis functions before.
 
 ## Chain rule and the back-propagation algorithm
 

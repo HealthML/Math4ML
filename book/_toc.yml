@@ -41,6 +41,7 @@ parts:
         - file: chapter_calculus/gradients
         - file: chapter_calculus/gradient_descent_ridge
         - file: chapter_calculus/jacobian
+#        - file: chapter_calculus/jacobian_scalar
         - file: chapter_calculus/chain_rule
         - file: chapter_calculus/hessian
 #        - file: chapter_taylor/mean_value_theorem
