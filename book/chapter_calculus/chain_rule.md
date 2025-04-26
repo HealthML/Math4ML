@@ -63,40 +63,59 @@ Let's have a look in how the basis functions affect the loss function.
 Let $f$ be the loss function, which is a function of the weights $\mathbf{w}$ and the hyperparameters $\mathbf{W}_\phi$ be the matrix of hyperparameters of the tanh basis functions. The loss function is given by:
 
 $$
-L(\mathbf{w}, \mathbf{W}_\phi) = L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n l_i\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2 = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2N}\left(\sum_{n=1}^n l_n\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2  + \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,p}\mathbf{W}^2_{n,p}, 
 $$
 
-When combining all $n$ transformed input data points $\boldsymbol{\phi(\mathbf{x}_i;\mathbf{W}_\phi)}$ into the transformed design matrix $\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{n,d}$, and all the labels into the vector $\mathbf{y}\in\mathbb{R}^n$, we get
+where each of the $l_n$ is the squared error for the prediction of the $n$-th data point and where we have added a quadratic regularizer on the entries of $\mathbf{W}$.
 
 $$
-L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2n}\left(\sum_{i=1}^n ({y}_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)\mathbf{w})^2\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2+ \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,k}\mathbf{W}^2_{n,k}
 $$
 
-Let $\mathbf{J}_\phi$ be the Jacobian of the tanh basis functions with respect to the hyperparameters $\mathbf{W}_\phi$ at a fixed input value $x_0$, as we have derived in the last section.
+When combining all $N$ transformed input data points $\boldsymbol{\phi(\mathbf{x}_n;\mathbf{W}_\phi)}$ into the transformed design matrix $\boldsymbol{\Phi}(\mathbf{W}_\phi) \in\mathbb{R}^{N,P}$, and all the labels into the vector $\mathbf{y}\in\mathbb{R}^N$, we get
+
+$$
+L(\mathbf{w}, \mathbf{W}_\phi) = \frac{1}{2N}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)^\top\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right) + \frac{\lambda}{2}\|\mathbf{w}\|^2_2+ \frac{\lambda_{\mathbf{W}}}{2}\sum_{n,k}\mathbf{W}^2_{n,k}
+$$
+
+Let $\mathbf{J}_\phi$ be the Jacobian of the tanh basis functions with respect to the hyperparameters $\mathbf{W}_\phi$, as we have derived in the last section.
 
 As the loss is scalar, we can apply the Chain Rule for Scalar-Valued Functions.
 
 $$\nabla_{\mathbf{W}_\phi} (L \circ \Phi)(\mathbf{W}_\phi) = \mathbf{J}_\Phi(\mathbf{W}_\phi)^{\!\top\!} \nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$$
 
-We have derived $\mathbf{J}_\Phi(\mathbf{W}_\phi)$ in the last section. Thus, the missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$. Note that if we change $\mathbf{W}_\phi$ we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.
-
-Let's start by computing the gradient of the squared error $l_i$ for the $i$-th data point only:
+Note that we have defined the non-zero part of $\mathbf{J}_\Phi(\mathbf{W}_\phi)$ as a tensor of dimensionality $N$-by-$D+1$-by-$K$.
 
 $$
-\nabla_{\boldsymbol{\phi}_i} l_i = \nabla_{\boldsymbol{\phi}_i} (y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_i - \boldsymbol{\phi}(\mathbf{x}_i; \mathbf{W}_\phi)^\top\mathbf{w})
+J[n,d,k] \;=\; \frac{\partial\,\phi_{n,k}}{\partial\,W_{d,k}}
+\;=\;
+\begin{cases}
+(1-\phi_{n,k}^2)\,X_{n,d}, & d<D\quad(\text{zero-based indexing}),\\
+(1-\phi_{n,k}^2), & d=D\quad(\text{bias term}).
+\end{cases}
 $$
 
-This gradient is a vector of length $d$. It follows that the gradient for the loss $L$ over the whole training data set, will be a vector of length $dn$, i.e. the concatenation of the $n$ gradient vectors of all the $l_i$. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the $n$-by-$d$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
+So in our implementation we will have to be careful in how we carry out the multiplication, as we do not have implemented the remaining zero-dimensions.
+
+The missing ingredient that we need to derive is $\nabla_{\mathbf{W}_\phi} L(\mathbf{w}, \mathbf{W}_\phi)$. If we change $\mathbf{W}_\phi$ we are changing the data representation that goes into the regression function. It follows that in contrast to the gradient that we used to optimize the ridge regression weights, we now have to take the gradient of the mean squared error with respect to the input data dimensions.
+
+Let's start by computing the gradient of the squared error $l_n$ for the $n$-th data point only:
+
+$$
+\nabla_{\boldsymbol{\phi}_n} l_n = \nabla_{\boldsymbol{\phi}_n} (y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})^2 = -2 \mathbf{w}(y_n - \boldsymbol{\phi}(\mathbf{x}_n; \mathbf{W}_\phi)^\top\mathbf{w})
+$$
+
+This gradient is a vector of length $D+1$. It follows that the gradient for the loss $L$ over the whole training data set, will be a vector of length $(D+1)N$, i.e. the concatenation of the $N$ gradient vectors of all the $l_N$. As for implementation purposes it is useful to keep track of the sample indices and the dimension indices, we write this gradient as the $N$-by-$(D+1)$ matrix $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$
 
 $$
 \nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = 
-\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_i)^\top \end{pmatrix}_{i=1}^n
+\frac{1}{2n} \begin{pmatrix} (\nabla_{\boldsymbol{\phi}} l_n)^\top \end{pmatrix}_{n=1}^N
 $$
 
 Alternatively, we could have used matrix derivatives to directly derive $\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi)$ as
 
 $$
-\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w}\left(\mathbf{y} - \boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
+\nabla_{\boldsymbol{\Phi}} L(\mathbf{w}, \mathbf{W}_\phi) = \frac{-1}{n}\mathbf{w} \xdot \left(\mathbf{y}-\boldsymbol{\Phi}(\mathbf{W}_\phi)\mathbf{w}\right)
 $$
 
 Let's integrate this term into our ridge regression implementation:
