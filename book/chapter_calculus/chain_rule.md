@@ -38,6 +38,42 @@ Then $f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ and
 $$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})$$
 :::
 
+
+:::{prf:proof} **Proof of the Multivariate Chain Rule.**  
+
+Write $g=(g_1,\dots,g_m)$ and $f=(f_1,\dots,f_k)$.
+Then the composite $(f\circ g)_i(x)=f_i\bigl(g(x)\bigr)$.
+ 
+Its partial derivative w.r.t. the $j$-th input coordinate $x_j$ is, by the single-variable chain rule on each coordinate,
+
+$$
+\frac{\partial (f\circ g)_i}{\partial x_j}(x)
+=\sum_{\ell=1}^m 
+\frac{\partial f_i}{\partial u_\ell}\bigl(g(x)\bigr)
+\;\cdot\;
+\frac{\partial g_\ell}{\partial x_j}(x).
+$$
+In matrix form this says
+
+$$
+\bigl[\mathbf J_{f\circ g}(x)\bigr]_{\,i j}
+=\sum_{\ell=1}^m 
+\bigl[\mathbf J_f\bigl(g(x)\bigr)\bigr]_{\,i\ell}
+\;\bigl[\mathbf J_g(x)\bigr]_{\ell j},
+$$
+which is exactly the $(i,j)$ entry of the product $\mathbf J_f(g(x))\,\mathbf J_g(x)$.  
+
+Hence
+
+$$
+\boxed{
+\mathbf J_{f\circ g}(x)
+= \mathbf J_f\bigl(g(x)\bigr)\,\mathbf J_g(x).
+}
+$$
+◻
+:::
+
 In the special case $k = 1$ we have the following corollary since
 $\nabla f = \mathbf{J}_f^{\!\top\!}$.
 
@@ -51,12 +87,37 @@ $f \circ g : \mathbb{R}^n \to \mathbb{R}$ and
 $$\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))$$
 :::
 
+:::{prf:proof} **Proof of the Scalar‐Valued Chain Rule.**  
+
+When $k=1$, $f\colon\mathbb{R}^m\to\mathbb{R}$ has Jacobian $\mathbf J_f(u)$ which is a $1\times m$ row vector, and its gradient is $\nabla f(u)=\mathbf J_f(u)^{\!\top}$.  Applying the matrix‐chain result:
+
+$$
+\mathbf J_{f\circ g}(x)
+= \mathbf J_f\bigl(g(x)\bigr)\,\mathbf J_g(x)
+\quad\Longrightarrow\quad
+\nabla(f\circ g)(x)
+=\bigl[\mathbf J_{f\circ g}(x)\bigr]^{\!\top}
+=\mathbf J_g(x)^{\!\top}\,
+\bigl[\mathbf J_f\bigl(g(x)\bigr)\bigr]^{\!\top}
+=\mathbf J_g(x)^{\!\top}\,\nabla f\bigl(g(x)\bigr).
+$$
+Thus
+
+$$
+\boxed{
+\nabla(f\circ g)(x)
+= \mathbf J_g(x)^{\!\top}\,\nabla f\bigl(g(x)\bigr).
+}
+$$
+◻
+:::
+
 ## Chain Rule for Basis Function Regression
 
 Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
 We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.
 
-So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \rightarrow \mathbb{R}^K$.
+So, let's derive the Jacobian of ridge regression with respect to the hyperparameter matrix $\mathbf{W}_\phi$ of the basis functions $\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \to \mathbb{R}^K$.
 
 Let's have a look in how the basis functions affect the loss function.
 
