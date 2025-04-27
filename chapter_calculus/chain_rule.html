@@ -466,7 +466,39 @@ composition.</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})\]</div>
 </section>
-</div><p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
+</div><div class="proof admonition" id="proof">
+<p>Proof. <strong>Proof of the Multivariate Chain Rule.</strong></p>
+<p>Write <span class="math notranslate nohighlight">\(g=(g_1,\dots,g_m)\)</span> and <span class="math notranslate nohighlight">\(f=(f_1,\dots,f_k)\)</span>.
+Then the composite <span class="math notranslate nohighlight">\((f\circ g)_i(x)=f_i\bigl(g(x)\bigr)\)</span>.</p>
+<p>Its partial derivative w.r.t. the <span class="math notranslate nohighlight">\(j\)</span>-th input coordinate <span class="math notranslate nohighlight">\(x_j\)</span> is, by the single-variable chain rule on each coordinate,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial (f\circ g)_i}{\partial x_j}(x)
+=\sum_{\ell=1}^m 
+\frac{\partial f_i}{\partial u_\ell}\bigl(g(x)\bigr)
+\;\cdot\;
+\frac{\partial g_\ell}{\partial x_j}(x).
+\]</div>
+<p>In matrix form this says</p>
+<div class="math notranslate nohighlight">
+\[
+\bigl[\mathbf J_{f\circ g}(x)\bigr]_{\,i j}
+=\sum_{\ell=1}^m 
+\bigl[\mathbf J_f\bigl(g(x)\bigr)\bigr]_{\,i\ell}
+\;\bigl[\mathbf J_g(x)\bigr]_{\ell j},
+\]</div>
+<p>which is exactly the <span class="math notranslate nohighlight">\((i,j)\)</span> entry of the product <span class="math notranslate nohighlight">\(\mathbf J_f(g(x))\,\mathbf J_g(x)\)</span>.</p>
+<p>Hence</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf J_{f\circ g}(x)
+= \mathbf J_f\bigl(g(x)\bigr)\,\mathbf J_g(x).
+}
+\]</div>
+<p>◻</p>
+</div>
+<p>In the special case <span class="math notranslate nohighlight">\(k = 1\)</span> we have the following corollary since
 <span class="math notranslate nohighlight">\(\nabla f = \mathbf{J}_f^{\!\top\!}\)</span>.</p>
 <div class="proof corollary admonition" id="chain-rule-scalar">
 <p class="admonition-title"><span>Corollary </span> (Chain Rule for Scalar-Valued Functions)</p>
@@ -477,11 +509,35 @@ composition.</p>
 <div class="math notranslate nohighlight">
 \[\nabla (f \circ g)(\mathbf{x}) = \mathbf{J}_g(\mathbf{x})^{\!\top\!} \nabla f(g(\mathbf{x}))\]</div>
 </section>
-</div><section id="chain-rule-for-basis-function-regression">
+</div><div class="proof admonition" id="proof">
+<p>Proof. <strong>Proof of the Scalar‐Valued Chain Rule.</strong></p>
+<p>When <span class="math notranslate nohighlight">\(k=1\)</span>, <span class="math notranslate nohighlight">\(f\colon\mathbb{R}^m\to\mathbb{R}\)</span> has Jacobian <span class="math notranslate nohighlight">\(\mathbf J_f(u)\)</span> which is a <span class="math notranslate nohighlight">\(1\times m\)</span> row vector, and its gradient is <span class="math notranslate nohighlight">\(\nabla f(u)=\mathbf J_f(u)^{\!\top}\)</span>.  Applying the matrix‐chain result:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf J_{f\circ g}(x)
+= \mathbf J_f\bigl(g(x)\bigr)\,\mathbf J_g(x)
+\quad\Longrightarrow\quad
+\nabla(f\circ g)(x)
+=\bigl[\mathbf J_{f\circ g}(x)\bigr]^{\!\top}
+=\mathbf J_g(x)^{\!\top}\,
+\bigl[\mathbf J_f\bigl(g(x)\bigr)\bigr]^{\!\top}
+=\mathbf J_g(x)^{\!\top}\,\nabla f\bigl(g(x)\bigr).
+\]</div>
+<p>Thus</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\nabla(f\circ g)(x)
+= \mathbf J_g(x)^{\!\top}\,\nabla f\bigl(g(x)\bigr).
+}
+\]</div>
+<p>◻</p>
+</div>
+<section id="chain-rule-for-basis-function-regression">
 <h2>Chain Rule for Basis Function Regression<a class="headerlink" href="#chain-rule-for-basis-function-regression" title="Link to this heading">#</a></h2>
 <p>Now we can apply the chain rule to optimize the hyperparameters of the tanh basis functions in the context of our temperature prediction example.
 We still have to modify our ridge regression code to use the tanh basis function class and enable optimization over the hyperparameters using the chain rule.</p>
-<p>So, let’s derive the Jacobian of ridge regression with respect to the hyperparameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> of the basis functions <span class="math notranslate nohighlight">\(\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \rightarrow \mathbb{R}^K\)</span>.</p>
+<p>So, let’s derive the Jacobian of ridge regression with respect to the hyperparameter matrix <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> of the basis functions <span class="math notranslate nohighlight">\(\mathbf{\phi}(\mathbf{x}): \mathbb{R}^D \to \mathbb{R}^K\)</span>.</p>
 <p>Let’s have a look in how the basis functions affect the loss function.</p>
 <p>Let <span class="math notranslate nohighlight">\(f\)</span> be the loss function, which is a function of the weights <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> and the hyperparameters <span class="math notranslate nohighlight">\(\mathbf{W}_\phi\)</span> be the matrix of hyperparameters of the tanh basis functions. The loss function is given by:</p>
 <div class="math notranslate nohighlight">
