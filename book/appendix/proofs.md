@@ -93,3 +93,52 @@ $$
 which is exactly the Cauchy–Schwarz inequality after taking square roots.
 
 Thus, the discriminant in this context helps us conclude that the quadratic cannot have two distinct real roots (which would indicate a region where the function dips below zero) and thus must satisfy the inequality.
+
+
+::: {prf:theorem} scalar-scalar chain rule
+Let $f: \mathbb{R} \to \mathbb{R}$ and $g: \mathbb{R} \to \mathbb{R}$ be differentiable functions. If $f$ is differentiable at $u_0 = g(x_0)$ and $g$ is differentiable at $x_0$, then the composition $( f \circ g)(x) = f\bigl(g(x)\bigr)$ is differentiable at $x_0$, and we have
+
+$$
+( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
+$$
+
+where $\circ$ denotes function composition.
+
+where $\circ$ denotes function composition.
+:::
+
+:::{prf:proof} **Scalar–Scalar Chain Rule.**  
+
+Let $g$ be differentiable at $x_0$ and $f$ be differentiable at $u_0=g(x_0)$.  Define $h(x)=f\bigl(g(x)\bigr)$.  We compute
+
+$$
+h'(x_0)
+=\lim_{\Delta x\to0}\frac{h(x_0+\Delta x)-h(x_0)}{\Delta x}
+=\lim_{\Delta x\to0}\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta x}.
+$$
+Since $g$ is differentiable at $x_0$, as $\Delta x\to0$ we have
+
+$$
+\Delta u \;=\; g(x_0+\Delta x)-g(x_0)
+\quad\longrightarrow\quad0,
+\quad\text{and}\quad
+\frac{\Delta u}{\Delta x}\;\longrightarrow\;g'(x_0).
+$$
+Likewise, since $f$ is differentiable at $u_0$,
+
+$$
+\frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}\;\longrightarrow\;f'(u_0).
+$$
+Therefore
+
+$$
+h'(x_0)
+=\lim_{\Delta x\to0}
+\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta u}
+\;\times\;
+\frac{\Delta u}{\Delta x}
+=f'\bigl(g(x_0)\bigr)\,\cdot\,g'(x_0).
+$$
+This completes the proof.
+◻
+:::
