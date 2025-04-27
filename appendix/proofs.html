@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -517,6 +517,52 @@ f(t) = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\math
 \]</div>
 <p>which is exactly the Cauchy–Schwarz inequality after taking square roots.</p>
 <p>Thus, the discriminant in this context helps us conclude that the quadratic cannot have two distinct real roots (which would indicate a region where the function dips below zero) and thus must satisfy the inequality.</p>
+<div class="proof theorem admonition" id="theorem-1">
+<p class="admonition-title"><span class="caption-number">Theorem 4 </span> (scalar-scalar chain rule)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R} \to \mathbb{R}\)</span> and <span class="math notranslate nohighlight">\(g: \mathbb{R} \to \mathbb{R}\)</span> be differentiable functions. If <span class="math notranslate nohighlight">\(f\)</span> is differentiable at <span class="math notranslate nohighlight">\(u_0 = g(x_0)\)</span> and <span class="math notranslate nohighlight">\(g\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, then the composition <span class="math notranslate nohighlight">\(( f \circ g)(x) = f\bigl(g(x)\bigr)\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, and we have</p>
+<div class="math notranslate nohighlight">
+\[
+( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function composition.</p>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function composition.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. <strong>Scalar–Scalar Chain Rule.</strong></p>
+<p>Let <span class="math notranslate nohighlight">\(g\)</span> be differentiable at <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(f\)</span> be differentiable at <span class="math notranslate nohighlight">\(u_0=g(x_0)\)</span>.  Define <span class="math notranslate nohighlight">\(h(x)=f\bigl(g(x)\bigr)\)</span>.  We compute</p>
+<div class="math notranslate nohighlight">
+\[
+h'(x_0)
+=\lim_{\Delta x\to0}\frac{h(x_0+\Delta x)-h(x_0)}{\Delta x}
+=\lim_{\Delta x\to0}\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta x}.
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(g\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, as <span class="math notranslate nohighlight">\(\Delta x\to0\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta u \;=\; g(x_0+\Delta x)-g(x_0)
+\quad\longrightarrow\quad0,
+\quad\text{and}\quad
+\frac{\Delta u}{\Delta x}\;\longrightarrow\;g'(x_0).
+\]</div>
+<p>Likewise, since <span class="math notranslate nohighlight">\(f\)</span> is differentiable at <span class="math notranslate nohighlight">\(u_0\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}\;\longrightarrow\;f'(u_0).
+\]</div>
+<p>Therefore</p>
+<div class="math notranslate nohighlight">
+\[
+h'(x_0)
+=\lim_{\Delta x\to0}
+\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta u}
+\;\times\;
+\frac{\Delta u}{\Delta x}
+=f'\bigl(g(x_0)\bigr)\,\cdot\,g'(x_0).
+\]</div>
+<p>This completes the proof.
+◻</p>
+</div>
 </section>
 
     <script type="text/x-thebe-config">

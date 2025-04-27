@@ -452,10 +452,13 @@ how to handle. The chain rule gives us a way to calculate derivatives
 for a composite function in terms of the derivatives of the simpler
 functions that make it up.</p>
 <p>The chain rule from single-variable calculus should be familiar:</p>
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R} \to \mathbb{R}\)</span> and <span class="math notranslate nohighlight">\(g: \mathbb{R} \to \mathbb{R}\)</span> be differentiable functions. If <span class="math notranslate nohighlight">\(f\)</span> is differentiable at <span class="math notranslate nohighlight">\(u_0 = g(x_0)\)</span> and <span class="math notranslate nohighlight">\(g\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, then the composition <span class="math notranslate nohighlight">\(( f \circ g)(x) = f\bigl(g(x)\bigr)\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, and we have</p>
 <div class="math notranslate nohighlight">
-\[\frac{\operatorname{d}(f \circ g)(x)}{\operatorname{d}x} = \frac{\operatorname{d}f(g(x))}{\operatorname{d}g(x)}\cdot\frac{\operatorname{d}g(x)}{\operatorname{d}x}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function
-composition.</p>
+\[
+( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function composition.
+A proof of the single-variable chain rule is in the Appendix.</p>
 <p>There is a natural generalization of this rule to multivariate functions.</p>
 <div class="proof theorem admonition" id="chain-rule">
 <p class="admonition-title"><span>Theorem </span> (Multivariate Chain Rule)</p>

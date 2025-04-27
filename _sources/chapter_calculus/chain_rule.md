@@ -20,10 +20,14 @@ functions that make it up.
 
 The chain rule from single-variable calculus should be familiar:
 
-$$\frac{\operatorname{d}(f \circ g)(x)}{\operatorname{d}x} = \frac{\operatorname{d}f(g(x))}{\operatorname{d}g(x)}\cdot\frac{\operatorname{d}g(x)}{\operatorname{d}x}$$ 
+Let $f: \mathbb{R} \to \mathbb{R}$ and $g: \mathbb{R} \to \mathbb{R}$ be differentiable functions. If $f$ is differentiable at $u_0 = g(x_0)$ and $g$ is differentiable at $x_0$, then the composition $( f \circ g)(x) = f\bigl(g(x)\bigr)$ is differentiable at $x_0$, and we have
 
-where $\circ$ denotes function
-composition.
+$$
+( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
+$$
+
+where $\circ$ denotes function composition.
+A proof of the single-variable chain rule is in the Appendix.
 
 There is a natural generalization of this rule to multivariate functions.
 
@@ -43,7 +47,7 @@ $$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\
 
 Write $g=(g_1,\dots,g_m)$ and $f=(f_1,\dots,f_k)$.
 Then the composite $(f\circ g)_i(x)=f_i\bigl(g(x)\bigr)$.
- 
+
 Its partial derivative w.r.t. the $j$-th input coordinate $x_j$ is, by the single-variable chain rule on each coordinate,
 
 $$
