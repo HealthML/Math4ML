@@ -40,11 +40,13 @@ parts:
         - file: chapter_calculus/extrema
         - file: chapter_calculus/gradients
         - file: chapter_calculus/gradient_descent_ridge
+        - file: chapter_calculus/matrix_calculus
         - file: chapter_calculus/jacobian
-#        - file: chapter_calculus/jacobian_scalar
         - file: chapter_calculus/chain_rule
-        - file: chapter_calculus/hessian
-#        - file: chapter_taylor/mean_value_theorem
+        # end of week 3
+#        - file: chapter_calculus/taylor_expansion
+#        - file: chapter_calculus/hessian
+#        - file: chapter_calculus/mean_value_theorem
 #        - file: chapter_taylor/taylor_theorem
 #        - file: chapter_taylor/minima_first_order_condition
 #        - file: chapter_taylor/minima_second_order_condition

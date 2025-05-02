@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-## Transposition
+# Transposition
 
 If $\mathbf{A} \in \mathbb{R}^{m \times n}$, its **transpose**
 $\mathbf{A}^{\!\top\!} \in \mathbb{R}^{n \times m}$ is given by
@@ -101,7 +101,7 @@ $$\mathbf{K}_{\text{RBF}} = \exp(-\gamma \mathbf{D})$$
 
 ---
 
-### Why this matters to students:
+### Why this matters:
 
 - Transposition rules provide a clean, computationally efficient way of expressing kernel computations.
 - Even without introducing complex concepts like covariance or gradients, students clearly see the utility of transposition in practical ML settings (e.g., kernel methods).

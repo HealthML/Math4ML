@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-## Metric spaces
+# Metric spaces
 
 Metrics generalize the notion of distance from Euclidean space (although
 metric spaces need not be vector spaces).
@@ -42,7 +42,7 @@ metric $d(x, y) = |x-y|$.
 Metric spaces provide a generalized framework for measuring **distances** or similarities between data points. Many machine learning methods rely heavily on choosing appropriate metrics.
 This choice can significantly affect the performance of algorithms, especially in tasks like clustering, classification, and nearest neighbor searches.
 
-#### **Example: Edit Distance (Levenshtein Distance)**
+### **Example: Edit Distance (Levenshtein Distance)**
 
 A common metric in machine learning—especially in natural language processing (NLP)—is the **edit distance**, which measures the minimum number of insertions, deletions, and substitutions required to transform one string into another.
 

@@ -1,1 +1,0 @@
-## Multivariate Taylor Expansion
