@@ -28,10 +28,8 @@ parts:
 # end of week 1
 # week 2
         - file: chapter_spaces/subspaces
-#        - file: chapter_spaces/linear_maps
         - file: chapter_spaces/metric_spaces
         - file: chapter_spaces/normed_spaces
-#    - file: example_uci_breast_cancer/nearest_centroid_norms
         - file: chapter_spaces/inner_product_spaces
         - file: chapter_spaces/transposition
         # end of week 2
@@ -46,7 +44,7 @@ parts:
         # end of week 3
 #        - file: chapter_calculus/taylor_expansion
 #        - file: chapter_calculus/hessian
-#        - file: chapter_calculus/mean_value_theorem
+        - file: chapter_calculus/mean_value_theorem
 #        - file: chapter_taylor/taylor_theorem
 #        - file: chapter_taylor/minima_first_order_condition
 #        - file: chapter_taylor/minima_second_order_condition
@@ -104,6 +102,23 @@ parts:
     chapters:
       - file: appendix/proofs
         title: Detailed Proofs
+        sections:
+          - file: appendix/Bolzano-Weierstrass_theorem
+            title: Bolzano-Weierstrass Theorem
+          - file: appendix/extreme_value_theorem
+            title: Extreme Value Theorem
+          - file: appendix/mean_value_theorem_proof
+            title: Mean Value Theorem
+          - file: appendix/Cauchy–Schwarz_inequality
+            title: Cauchy-Schwarz Inequality
+          - file: appendix/Rolles_theorem
+            title: Rolle's Theorem
+          - file: appendix/scalar-scalar_chain_rule
+            title: Chain Rule for Scalar-Scalar Functions
+          - file: appendix/first_fundamental_theorem_calculus
+            title: First Fundamental Theorem of Calculus
+          - file: appendix/second_fundamental_theorem_calculus
+            title: Second Fundamental Theorem of Calculus
       - file: appendix/differentiation_rules
         title: Differentiation Rules
 #        sections:
