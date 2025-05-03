@@ -46,7 +46,7 @@ parts:
 #        - file: chapter_calculus/hessian
         - file: chapter_calculus/mean_value_theorem
 #        - file: chapter_taylor/taylor_theorem
-#        - file: chapter_taylor/minima_first_order_condition
+        - file: chapter_calculus/minima_first_order_condition
 #        - file: chapter_taylor/minima_second_order_condition
 #        - file: chapter_taylor/optima
 #        - file: chapter_spaces/representer_theorem

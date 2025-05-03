@@ -95,15 +95,15 @@ plt.show()
 We observe that for the interval $[0.5,2.0]$, the secant line (orange dashed) and the tangent line (red dotted) at $x=c$ are parallel, as expected.
 For the interval $[-1.5,1.5]$, we see that the secant line is parallel to the tangent line at two different points $c_1$ and $c_2$. The existence of multiple different points with parallel tangent lines is consistent with the MVT, as the function $f$ can have inflection points  where the second derivative changes its sign within the interval, such as $x=0$ in our example.
 
-## Mean Value Theorem in Several Variables
+## Mean Value Theorem for real-valued Functions in Several Variables
 
-The Mean Value Theorem can be extended to functions of several variables.  
+The Mean Value Theorem can be extended to real-valued functions of several variables.
 
 :::{prf:corollary} Mean value theorem for several variables
 :label: thm-mean-value-theorem-multivariable
 :nonumber:
 
-If $f:\mathbf{R}^n\to\mathbf{R}$ be continuously differentiable, then for any two points $\mathbf{x},\mathbf{y}\in\mathbf{R}^n$, there exists a point $\mathbf{z}$ on the line segment connecting $\mathbf{x}$ and $\mathbf{y}$ such that
+If $f:\mathbf{R}^n\to\mathbf{R}$ be continuously differentiable, then for any two points $\mathbf{x},\mathbf{y}\in\mathbf{R}^n$, there exists a point $\mathbf{z}$ on the line segment $\mathbf{z}(t)=(1-t)\mathbf{x}+t\mathbf{y}$, $t\in[0,1]$, such that
 
 $$
 f(\mathbf{y})-f(\mathbf{x})=\nabla f(\mathbf{z})^\top (\mathbf{y}-\mathbf{x}).
@@ -111,7 +111,7 @@ $$
 
 :::
 
-Before we prove this theorem, we will first illustrate it with a simple example.
+Before we prove this corollary, we will first illustrate it with a simple example.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -181,7 +181,7 @@ ax1.legend()
 ax1.grid(True)
 
 # Right: g(t) vs t
-ax2.plot(t_vals, g_vals, label='$g(t)=f((1-t)\mathbf{x}+t\mathbf{y})$')
+ax2.plot(t_vals, g_vals, label=r'$g(t)=f((1-t)\mathbf{x}+t\mathbf{y})$')
 ax2.plot(t_vals, secant_line, '--', label='Secant line')
 ax2.plot(t_vals, tangent_line, ':', label='Tangent at $t=0.5$')
 ax2.scatter([0, 1, 0.5], [f_x, f_y, f2d(z[np.newaxis, :])[0]],
@@ -207,7 +207,7 @@ f(\mathbf{y})-f(\mathbf{x})
 $$
 to the gradient of $f$.
 
-To do so, we need to **Parameterize the line segment**.  
+To do so, we need to parameterize the line segment: 
    Define
 
    $$
@@ -216,7 +216,7 @@ To do so, we need to **Parameterize the line segment**.
    $$
    Then $\mathbf{z}(0)=\mathbf{x}$ and $\mathbf{z}(1)=\mathbf{y}$.
 
-Next, we **build a one‐variable function** on the line segment.  
+Next, we build a one‐variable function on the line segment.  
    Consider
    
    $$
@@ -224,7 +224,7 @@ Next, we **build a one‐variable function** on the line segment.
    $$
    Since $\mathbf{z}$ is affine and $f$ is differentiable, $g$ is differentiable on $[0,1]$.
 
-This definition allows us to **apply the 1D MVT to** $g$.  
+This definition allows us to apply the **1D MVT** to $g$.  
    By the single‐variable Mean Value Theorem, there exists some $c\in(0,1)$ such that
 
    $$
@@ -240,14 +240,18 @@ This definition allows us to **apply the 1D MVT to** $g$.
      g'(c).
    $$
 
-We can **compute** $g'(t)$ **by the chain rule**.
+We need to compute $g'(c)$.
+Remember that $g(t)=f\bigl(\mathbf{z}(t)\bigr)$, so we can apply the **chain rule**:
 
    $$
      g'(t)
      \;=\;
      \nabla f\bigl(\mathbf{z}(t)\bigr)^\top\,\mathbf{z}'(t).
    $$
-   And $\mathbf{z}'(t)=\dfrac{d}{dt}\bigl((1-t)\mathbf{x} + t\mathbf{y}\bigr)=\mathbf{y}-\mathbf{x}$. 
+   Here $\nabla f$ is the gradient of $f$ at $\mathbf{z}(t)$, and $\mathbf{z}'(t)$ is the vector of partial derivatives of $\mathbf{z}$ at $t$:
+
+   $$\mathbf{z}'(t)=\dfrac{\operatorname{d}}{\operatorname{d}t}\bigl((1-t)\mathbf{x} + t\mathbf{y}\bigr)=\mathbf{y}-\mathbf{x}.$$
+
    Hence
 
    $$
@@ -268,62 +272,166 @@ If we **combine the previous steps**, we have
      = \nabla f\bigl((1-c)\mathbf{x} + c\mathbf{y}\bigr)^\top(\mathbf{y}-\mathbf{x}).
    $$
 
+:::
+
 Finally, we can **derive a Lipschitz bound via the Cauchy–Schwarz inequality**.  
+
+:::{prf:corollary} Lipschitz continuity
+:label: thm-lipschitz-continuity
+:nonumber:
+If $f:\mathbf{R}^n\to\mathbf{R}$ is continuously differentiable, then for any two points $\mathbf{x},\mathbf{y}\in\mathbf{R}^n$, there exists a point $\mathbf{z}$ on the line segment $\mathbf{z}(t)=(1-t)\mathbf{x}+t\mathbf{y}$, $t\in[0,1]$, such that
 
    $$
      \bigl|f(\mathbf{y})-f(\mathbf{x})\bigr|
-     = \bigl|\nabla f(\mathbf{z}(c))^\top(\mathbf{y}-\mathbf{x})\bigr|
+     = \bigl|\nabla f(\mathbf{z})^\top(\mathbf{y}-\mathbf{x})\bigr|
      \;\le\;
-     \|\nabla f(\mathbf{z}(c))\|_2\;\|\mathbf{y}-\mathbf{x}\|_2.
+     \|\nabla f(\mathbf{z})\|_2\;\|\mathbf{y}-\mathbf{x}\|_2.
    $$
+
    If moreover $\|\nabla f(\mathbf{z})\|\le L$ everywhere along the segment, then
 
    $$
      \bigl|f(\mathbf{y})-f(\mathbf{x})\bigr|\le L\,\|\mathbf{y}-\mathbf{x}\|,
    $$
-   i.e. $f$ is *Lipschitz continuous* with constant $L$.
 :::
 
+In the latter case, we say that $f$ is **Lipschitz continuous** with constant $L$. In other words, the function $f$ does not change too rapidly.
+This is a very useful property, as it allows us to control the difference in function values based on the distance between points in the domain.
+This is particularly important in optimization, where we want to ensure that small changes in the input lead to small changes in the output, a property that is often desired for convergence of algorithms.
 
+:::{prf:proof} Lipschitz continuity
 
+Let $f:\mathbf{R}^n\to\mathbf{R}$ be continuously differentiable, and pick any two points $\mathbf{x},\mathbf{y}\in\mathbf{R}^n$.  
+We have already shown that there exists a point $\mathbf{z}(c)=(1-c)\mathbf{x}+c\mathbf{y}$ on the line segment between $\mathbf{x}$ and $\mathbf{y}$ such that
 
-### Mean value theorem for vector-valued functions
+   $$
+     f(\mathbf{y})-f(\mathbf{x})
+     = \nabla f\bigl((1-c)\mathbf{x} + c\mathbf{y}\bigr)^\top(\mathbf{y}-\mathbf{x}).
+   $$
 
-There is no exact analog of the mean value theorem for vector-valued functions.
+The first ressult follows from the **Cauchy–Schwarz inequality**:
 
-$$f_i(x+h) - f_i(x) = \nabla f_i (x + t_ih)^\top h$$
+   $$
+     \bigl|f(\mathbf{y})-f(\mathbf{x})\bigr|
+     = \bigl|\nabla f\bigl((1-c)\mathbf{x} + c\mathbf{y}\bigr)^\top(\mathbf{y}-\mathbf{x})\bigr|
+     \;\le\;
+     \|\nabla f\bigl((1-c)\mathbf{x} + c\mathbf{y}\bigr)\|_2\;\|\mathbf{y}-\mathbf{x}\|_2.
+   $$
 
-Generally there will not be a *single* $t$ that fullfils this for all $i$.
+If we assume that $\|\nabla f(\mathbf{z})\|\le L$ everywhere along the segment, then we can bound the right-hand side by $L\,\|\mathbf{y}-\mathbf{x}\|_2$ to get the second result:
 
-However, a certain type of generalization of the mean value theorem to vector-valued functions is obtained as follows:
+   $$
+     \bigl|f(\mathbf{y})-f(\mathbf{x})\bigr|
+     \;\le\;
+     L\,\|\mathbf{y}-\mathbf{x}\|_2.
+   $$
+   This shows that $f$ is Lipschitz continuous with constant $L$.
+:::
 
-Let $f$ be a continuously differentiable real-valued function defined on an open interval $I$, and let $\mathbf{x}$ as well as $\mathbf{x} + \mathbf{h}$ be points.
+## Mean Value Theorem for Vector-Valued Functions
 
-The mean value theorem in one variable tells us that there exists some $t^*$ between 0 and 1 such that
+The standard Mean Value Theorem (MVT) holds for real-valued functions $f:\mathbb{R} \to \mathbb{R}$.
+However, for vector-valued functions $\mathbf{f}:\mathbb{R}^n \to \mathbb{R}^m$, a direct analog generally **does not exist**.
+This is because applying the mean value theorem componentwise results in different intermediate points $t_i$ for each component, making it impossible, in general, to find a single point that satisfies the theorem for all components simultaneously.
 
-$$f(x+h)-f(x) = f'(x+t^*h)\cdot h.$$
+Instead, a useful generalized form involving integrals (the Jacobian Lemma) can be employed.
 
-On the other hand, we have, by the **fundamental theorem of calculus** followed by a change of variables,
+Let $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ be continuously differentiable, and let $\mathbf{x},\mathbf{h}\in\mathbb{R}^n$. Then, there exists an integral-based formula involving the Jacobian matrix $\mathbf{J}_{\mathbf{f}}$, defined as:
 
-$$f(x+h)-f(x) = \int_x^{x+h} f'(u) \, du = \left (\int_0^1 f'(x+th)\,dt\right)\cdot h.$$
+$$
+\mathbf{J}_{\mathbf{f}}(\mathbf{x}) = 
+\begin{pmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n}\\[6pt]
+\vdots & \ddots & \vdots \\[6pt]
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{pmatrix}.
+$$
 
-Thus, the value $f'(x + t^*h)$ at the particular point $t^*$ has been replaced by the mean value
-$\int_0^1 f'(x+th)\,dt$.
+The lemma is stated rigorously as follows:
 
-This last version can be generalized to vector valued functions:
-
-:::{prf:theorem} Jacobian Lemma
+:::{prf:theorem} Jacobian Lemma (Generalized Vector-Valued MVT)
 :label: thm-Jacobian
 :nonumber:
 
-Let $\mathbf{f}:\mathbb{R}^n \rightarrow '\mathbb{R}^m$ continuously differentiable, and $x,h\in\mathbb{R}^n$ be vectors.
+Let $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ be continuously differentiable, and let $\mathbf{x},\mathbf{h}\in\mathbb{R}^n$.
 
-Then we have:
+Then:
 
-$$\mathbf{f}(\mathbf{x}+\mathbf{h})-f(\mathbf{x}) = \left (\int_0^1 \nabla \mathbf{f}(\mathbf{x}+th)\,dt\right)^\top h,$$
+$$
+\mathbf{f}(\mathbf{x}+\mathbf{h}) - \mathbf{f}(\mathbf{x})
+= \left(\int_0^1 \mathbf{J}_{\mathbf{f}}(\mathbf{x}+t\mathbf{h})\,\mathrm{d}t\right)\mathbf{h},
+$$
 
-where $\nabla \mathbf{f}$ denotes the **Jacobian matrix** and the integral of a matrix is to be understood componentwise.
+where the integral of the Jacobian matrix is understood componentwise.
+
 :::
 
+Note that the comoponent-wise integral of Jacobian yields an $m\times n$ matrix. Thus, the right-hand side of the equation is a matrix-vector product, yielding a vector in $\mathbb{R}^m$.
 
+:::{prf:proof} Jacobian Lemma
 
+We will prove the Jacobian lemma using the **chain rule** and the **Second Fundamental Theorem of Calculus**.
+Let $\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m$ be continuously differentiable, and let $\mathbf{x},\mathbf{h}\in\mathbb{R}^n$.
+
+We will need two ingredients:
+
+**Ingredient 1: Define the auxiliary function.**
+
+We define the auxiliary function $\mathbf{g}(t)$ by:
+
+$$
+\mathbf{g}(t) = \mathbf{f}(\mathbf{x}+t\mathbf{h}),\quad t\in[0,1].
+$$
+
+Then $\mathbf{g}$ is differentiable and by the **chain rule**, we get the vector-valued derivative:
+
+$$
+\mathbf{g}'(t) = \mathbf{J}_{\mathbf{f}}(\mathbf{x}+t\mathbf{h})\,\mathbf{h}.
+$$
+
+**Ingredient 2: Apply the Fundamental Theorem of Calculus.**
+
+By the **Second Fundamental Theorem of Calculus** that states that the difference of a function over an interval $[a,b]$ can be expressed as the integral of its derivative over that interval, we have:
+
+$$
+\mathbf{g}(b) - \mathbf{g}(a) = \int_a^b \mathbf{g}'(t)\,\mathrm{d}t.
+$$
+
+**Putting it together:**
+
+Our goal is to express the difference $\mathbf{f}(\mathbf{x}+\mathbf{h}) - \mathbf{f}(\mathbf{x})$ in terms of the integral of the Jacobian matrix.
+
+We can do this by substituting the definition of $\mathbf{g}(t)$ in ingredient 1, the difference if $\mathbf{f}(\mathbf{x}+\mathbf{h})$ and $\mathbf{f}(\mathbf{x})$ can be expressed as the change in $\mathbf{g}$ over the interval $[0,1]$:
+
+$$
+\mathbf{f}(\mathbf{x}+\mathbf{h}) - \mathbf{f}(\mathbf{x}) = \mathbf{g}(1) - \mathbf{g}(0).
+$$
+
+Using ingriedient 2, we can express this difference in the values of $\mathbf{g}$ at points $0$ and $1$ as the integral of its derivative over the interval $[0,1]$:
+
+$$
+= \int_0^1 \mathbf{g}'(t)\,\mathrm{d}t.
+$$
+
+Plugging in the expression for $\mathbf{g}'(t)$ derived above gives us:
+
+$$
+= \int_0^1 \mathbf{J}_{\mathbf{f}}(\mathbf{x}+t\mathbf{h})\,\mathbf{h}\,\mathrm{d}t.
+$$
+
+Since $\mathbf{h}$ is constant, we factor it out to the right to obtain the desired result:
+
+$$
+= \left(\int_0^1 \mathbf{J}_{\mathbf{f}}(\mathbf{x}+t\mathbf{h})\,\mathrm{d}t\right)\mathbf{h}.
+$$
+
+This proves the Jacobian Lemma. ◻
+
+:::
+
+The Jacobian lemma is particularly useful in optimization and numerical analysis, as it allows us to approximate the change in a vector-valued function using the average of its Jacobian over the interval. This is especially important when dealing with high-dimensional spaces, where direct computation of the function's value can be expensive.
+
+## Summary
+In summary, the Mean Value Theorem and its generalizations, such as the Jacobian lemma, are essential tools in calculus and optimization. They provide a framework for understanding the behavior of functions and their derivatives.
+
+Next, we will use the Mean Value Theorem and the Jacobian lemma to analyze optimality conditions and convergence properties of the gradient descent algorithm.

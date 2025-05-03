@@ -1,12 +1,14 @@
-# second fundamental theorem of calculus
-
-We provide astandard proof of the second part of the Fundamental Theorem of Calculus II (FTC II):
+# Second Fundamental Theorem of Calculus
 
 :::{prf:theorem} Fundamental Theorem of Calculus II
 :label: thm-ftc-ii-appendix
 :nonumber:
 
-Let $f$ be continuous on $[a,b]$, and suppose $F$ is an antiderivative of $f$ there; that is, $F'(x)=f(x)$ for all $x\in[a,b]$.  Then
+Let $f$ be continuous on $[a,b]$, and suppose $F$ is an antiderivative of $f$ there;
+
+that is, $F'(x)=f(x)$ for all $x\in[a,b]$.
+
+Then
 
 $$
 \int_{a}^{b} f(x)\,\mathrm{d}x \;=\; F(b)\;-\;F(a).
@@ -14,8 +16,14 @@ $$
 
 :::
 
+We provide astandard proof of the second part of the Fundamental Theorem of Calculus II (FTC II):
+
+
 :::{prf:proof} **Fundamental Theorem of Calculus II.**
-Let $F$ be an antiderivative of $f$ on $[a,b]$.  We will show that
+
+Let $f$ be continuous on $[a,b]$, and suppose $F$ is an antiderivative of $f$ there; that is, $F'(x)=f(x)$ for all $x\in[a,b]$.
+
+We will show that
 
 $$
   \int_a^b f(x)\,\mathrm{d}x \;=\; F(b) - F(a).
@@ -41,7 +49,9 @@ To do this, we will use the following steps:
    converge (as the mesh $\max_i(x_i - x_{i-1})\to0$) to $\int_a^b f(x)\,\mathrm{d}x$.
 
 3. **Mean value on each subinterval.**  
-   On each $[x_{i-1},x_i]$, apply the ordinary mean value theorem to $F$: since $F$ is differentiable, there exists $c_i\in(x_{i-1},x_i)$ with
+   On each $[x_{i-1},x_i]$, apply the **mean value theorem** to $F$:
+   
+   since $F$ is differentiable, there exists $c_i\in(x_{i-1},x_i)$ with
    
    $$
      F(x_i)-F(x_{i-1}) \;=\; F'(c_i)\,\bigl(x_i - x_{i-1}\bigr)
@@ -68,7 +78,9 @@ To do this, we will use the following steps:
      \quad\text{and}\quad
      \sum_{i=1}^n f(\xi_i)\,(x_i - x_{i-1})
    $$
-   converge to the same limit, namely $\int_a^b f(x)\,\mathrm{d}x$.  But the first sum is exactly $F(b)-F(a)$ for every partition.
+   converge to the same limit.
+
+   The first sum is exactly $F(b)-F(a)$ for every partition and the second sum converges to $\int_a^b f(x)\,\mathrm{d}x$.
 
 6. **Conclude.**  
    Therefore
