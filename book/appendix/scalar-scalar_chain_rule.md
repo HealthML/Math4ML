@@ -1,4 +1,4 @@
-# scalar-scalar chain rule
+# The Chain Rule for Scalar-Scalar Functions
 
 ::: {prf:theorem} scalar-scalar chain rule
 :label: thm-scalar-scalar-chain-rule-appendix
@@ -9,8 +9,6 @@ Let $f: \mathbb{R} \to \mathbb{R}$ and $g: \mathbb{R} \to \mathbb{R}$ be differe
 $$
 ( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
 $$
-
-where $\circ$ denotes function composition.
 
 where $\circ$ denotes function composition.
 :::

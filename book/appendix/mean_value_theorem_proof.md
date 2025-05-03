@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # Mean value theorem
 
 The Mean Value Theorem (MVT) says that for any smooth curve connecting two points, there is at least one point in between where the instantaneous slope (the derivative) matches the average slope over the whole interval.
@@ -24,12 +36,17 @@ In other words, the tangent line at $x=c$ is exactly parallel to the secant line
    $$
      g(x) \;=\; f(x)\;-\;\Bigl(\underbrace{\tfrac{f(b)-f(a)}{b-a}}_{m}\Bigr)\,(x-a)\,.
    $$
-   By construction, $g$ is continuous on $[a,b]$ and differentiable on $(a,b)$, and
+   By construction, $g$ is continuous on $[a,b]$ and differentiable on $(a,b)$,
    
    $$
      g(a) = f(a) - m\,(a-a) = f(a), 
-     \quad
-     g(b) = f(b) - m\,(b-a) = f(a).
+   $$
+   and
+   
+   $$
+     g(b) = f(b) - m\,(b-a) = 
+     f(b) - \tfrac{f(b)-f(a)}{b-a}\,(b-a) = f(b) - f(b) + f(a)
+     =f(a).
    $$
    Hence $g(a)=g(b)$.
 

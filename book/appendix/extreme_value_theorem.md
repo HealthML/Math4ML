@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # Extreme Value Theorem
 The Extreme Value Theorem states that if a function is continuous on a closed interval, then it attains both a maximum and a minimum value on that interval. This theorem is crucial in optimization problems, as it guarantees the existence of optimal solutions within bounded domains.
 
@@ -13,6 +25,49 @@ $$
 
 :::
 
+The Extreme Value Theorem states that any continuous function defined on a closed, bounded interval must attain both a maximum and a minimum value at least once within that interval. This theorem leverages continuity and the compactness of the interval, ensuring no infinite "jumps" or "holes" exist in the graph.
+
+The following visualization demonstrates the EVT on a continuous function on a closed interval, explicitly marking the points at which the function achieves its maximum and minimum values.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define a continuous function
+def f(x):
+    return np.sin(x) + 0.2 * x
+
+# Define the closed interval [a, b]
+a, b = 0, 4 * np.pi
+x = np.linspace(a, b, 1000)
+y = f(x)
+
+# Find maximum and minimum points numerically
+x_max = x[np.argmax(y)]
+y_max = np.max(y)
+
+x_min = x[np.argmin(y)]
+y_min = np.min(y)
+
+# Plotting the function
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, label=r'$f(x)=\sin(x)+0.2x$', color='blue')
+plt.scatter([x_max, x_min], [y_max, y_min], color='red', zorder=5)
+plt.annotate('Maximum', (x_max, y_max), xytext=(x_max, y_max+0.5),
+             arrowprops=dict(arrowstyle='->', lw=1.5))
+plt.annotate('Minimum', (x_min, y_min), xytext=(x_min, y_min-0.5),
+             arrowprops=dict(arrowstyle='->', lw=1.5))
+
+plt.title('Visualization of Extreme Value Theorem')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+
+We see that within the interval $[a,b]$, the continuous function $f(x)$ attains both its absolute maximum and absolute minimum at distinct points. The red points highlight the exact locations of these extreme values, illustrating clearly the conclusion of the Extreme Value Theorem.
 
 :::{prf:proof} **Extreme Value Theorem.**
 
@@ -55,7 +110,7 @@ $$
 
 Since $f$ is bounded above, $M$ is finite.
 
-* To show $f$ attains the value $M$, assume for contradiction that it does not. Then, for all $x\in[a,b]$, we have $f(x)<M$. Define the function $g(x)=\frac{1}{M - f(x)}$. Clearly, $g$ is continuous on $[a,b]$ (because the denominator is never zero by our assumption).
+* To show $f$ attains the value $M$, assume for contradiction that it does not. Then, for all $x\in[a,b],$ we have $f(x)<M.$ Define the function $g(x)=\frac{1}{M - f(x)}$. Clearly, $g$ is continuous on $[a,b]$ (because the denominator is never zero by our assumption).
 
 * Since $[a,b]$ is compact and $g$ is continuous, $g$ must be bounded. However, as $f(x)$ approaches $M$, the denominator $M - f(x)$ approaches zero, making $g(x)$ grow without bound. Thus, there must exist a sequence $x_n$ in $[a,b]$ such that $f(x_n)\to M$.
 

@@ -103,18 +103,20 @@ parts:
       - file: appendix/proofs
         title: Detailed Proofs
         sections:
+          - file: appendix/Cauchy–Schwarz_inequality
+            title: Cauchy-Schwarz Inequality
           - file: appendix/Bolzano-Weierstrass_theorem
             title: Bolzano-Weierstrass Theorem
           - file: appendix/extreme_value_theorem
             title: Extreme Value Theorem
-          - file: appendix/mean_value_theorem_proof
-            title: Mean Value Theorem
-          - file: appendix/Cauchy–Schwarz_inequality
-            title: Cauchy-Schwarz Inequality
           - file: appendix/Rolles_theorem
             title: Rolle's Theorem
+          - file: appendix/mean_value_theorem_proof
+            title: Mean Value Theorem
           - file: appendix/scalar-scalar_chain_rule
             title: Chain Rule for Scalar-Scalar Functions
+          - file: appendix/squeeze_theorem
+            title: Squeeze Theorem
           - file: appendix/first_fundamental_theorem_calculus
             title: First Fundamental Theorem of Calculus
           - file: appendix/second_fundamental_theorem_calculus
