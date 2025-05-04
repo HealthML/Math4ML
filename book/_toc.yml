@@ -65,6 +65,8 @@ parts:
           title: Mean Value Theorem
         - file: chapter_calculus/minima_first_order_condition
           title: First Order Condition
+        - file: chapter_calculus/analytical_solution_ridge
+          title: Ridge Regression
         - file: chapter_calculus/line_search
           title: Line Search
         - file: chapter_calculus/hessian
