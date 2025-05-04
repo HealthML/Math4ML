@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>First-order condition for local minima &#8212; Mathematics for Machine Learning</title>
+    <title>The Hessian &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/minima_first_order_condition';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/minima_first_order_condition.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/hessian';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/hessian.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Line Search Methods in Optimization" href="line_search.html" />
-    <link rel="prev" title="Mean value theorem" href="mean_value_theorem.html" />
+    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
+    <link rel="prev" title="Line Search Methods in Optimization" href="line_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -211,9 +211,9 @@
 <li class="toctree-l2"><a class="reference internal" href="jacobian.html">Jacobian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chain_rule.html">Chain Rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mean_value_theorem.html">Mean Value Theorem</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="minima_first_order_condition.html">First Order Condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_search.html">Line Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hessian.html">Hessian</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Hessian</a></li>
 </ul>
 </details></li>
 </ul>
@@ -303,7 +303,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/minima_first_order_condition.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/hessian.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -320,7 +320,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/minima_first_order_condition.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/hessian.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -350,7 +350,7 @@
       
       
       
-      <li><a href="../_sources/chapter_calculus/minima_first_order_condition.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/hessian.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -434,7 +434,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>First-order condition for local minima</h1>
+    <h1>The Hessian</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -444,9 +444,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-local-minimum">✅ Example 1: A Local Minimum</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-a-saddle-point">❗ Example 2: A Saddle Point</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧠 Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-taylor-expansion">First-Order Taylor Expansion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion">Second-Order Taylor Expansion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
 </ul>
             </nav>
         </div>
@@ -458,83 +461,48 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="first-order-condition-for-local-minima">
-<h1>First-order condition for local minima<a class="headerlink" href="#first-order-condition-for-local-minima" title="Link to this heading">#</a></h1>
-<p>So far, we have used the gradient descent algorithm by taking a fixed number of small steps in the direction of the negative gradient.
-However, we have not yet established, when we can stop the algorithm.</p>
-<p>Remember from single variable calculus that the first-order condition for a local minimum is that the derivative vanishes at that point.</p>
-<p>The same is true in higher dimensions.
-The first-order condition for a local minimum of a function <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span> is that the gradient <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> vanishes at that point.</p>
-<div class="proof theorem admonition" id="thm-first-order-condition">
-<p class="admonition-title"><span>Theorem </span> (First-order condition)</p>
-<section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span> be a function that is continuously differentiable in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>.</p>
-<p>If <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, then
-<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>.</p>
-</section>
-</div><p>This means that the gradient must vanish at any local minimum.
-Note that this is a necessary condition for a local minimum, but not a sufficient one.
-In other words, if <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) \neq \mathbf{0}\)</span>, then <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> cannot be a local minimum.
-The converse is not true: there are points where the gradient vanishes which are not local minima.</p>
-<div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local minimum of <span class="math notranslate nohighlight">\(f\)</span>, and suppose towards a contradiction that <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) \neq \mathbf{0}\)</span>.</p>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{h} = -\nabla f(\mathbf{x}^*)\)</span>, noting that by the continuity of <span class="math notranslate nohighlight">\(\nabla f\)</span> we have</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="the-hessian">
+<h1>The Hessian<a class="headerlink" href="#the-hessian" title="Link to this heading">#</a></h1>
+<p>The <strong>Hessian</strong> matrix of a scalar-valued function <span class="math notranslate nohighlight">\( f : \mathbb{R}^d \to \mathbb{R} \)</span> is a square matrix
+of second-order partial derivatives:</p>
 <div class="math notranslate nohighlight">
-\[\lim_{t \to 0} -\nabla f(\mathbf{x}^* + t\mathbf{h}) = -\nabla f(\mathbf{x}^*) = \mathbf{h}\]</div>
-<p>Hence</p>
-<div class="math notranslate nohighlight">
-\[\lim_{t \to 0} \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) = \mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^*) = -\|\mathbf{h}\|_2^2 &lt; 0\]</div>
-<p>Thus there exists <span class="math notranslate nohighlight">\(T &gt; 0\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t\mathbf{h}) &lt; 0\)</span> for all <span class="math notranslate nohighlight">\(t \in [0,T]\)</span>.</p>
-<p>Let’s look at the line segment connecting <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}^* + t\mathbf{h}\)</span>.</p>
-<p>From the <strong>Mean Value Theorem in Several Variables</strong>, we have that for any <span class="math notranslate nohighlight">\(\mathbf{h} \in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(t \in (0,T]\)</span>, there exists a point on that line segment parametrized by <span class="math notranslate nohighlight">\(t' \in (0,t)\)</span> such that</p>
-<div class="math notranslate nohighlight">
-\[f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h})\]</div>
-<p>As we have chosen <span class="math notranslate nohighlight">\(T\)</span> small enough such that <span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; 0\)</span>, we have
-$<span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) &lt; f(\mathbf{x}^*)\)</span>$</p>
-<p>whence it follows that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a contradiction.</p>
-<p>Hence <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. ◻</p>
-</div>
-<p>The proof shows us why the vanishing gradient is necessary for an extremum:
-if <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\)</span> is nonzero, there always exists a sufficiently small step <span class="math notranslate nohighlight">\(\alpha &gt; 0\)</span> such that <span class="math notranslate nohighlight">\(f(\mathbf{x} - \alpha\nabla f(\mathbf{x}))) &lt; f(\mathbf{x})\)</span>.
-For this reason, <span class="math notranslate nohighlight">\(-\nabla f(\mathbf{x})\)</span> is called a <strong>descent direction</strong>.</p>
-<p>So the gradient descent algorithm will take a step in the direction of the negative gradient until it reaches a stationary point where the gradient is zero.
-However, a <strong>zero gradient does not guarantee a minimum</strong> — only that the point is <strong>stationary</strong>.</p>
+\[\begin{split}\nabla^2 f(\mathbf{x}) = \begin{bmatrix}
+    \frac{\partial^2 f}{\partial x_1^2} &amp; \dots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_d} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \frac{\partial^2 f}{\partial x_d \partial x_1} &amp; \dots &amp; \frac{\partial^2 f}{\partial x_d^2}
+\end{bmatrix}, \quad\text{i.e.,}\quad
+[\nabla^2 f]_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j} \end{split}\]</div>
+<p>If the second partial derivatives are continuous (as they often are in optimization), then by <strong>Clairaut’s theorem</strong>,
+the order of differentiation can be interchanged: <span class="math notranslate nohighlight">\( \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i} \)</span>,
+which implies that the Hessian matrix is symmetric.</p>
 <hr class="docutils" />
-<section id="example-1-a-local-minimum">
-<h2>✅ Example 1: A Local Minimum<a class="headerlink" href="#example-1-a-local-minimum" title="Link to this heading">#</a></h2>
-<p>Let’s use the function:</p>
+<section id="first-order-taylor-expansion">
+<h2>First-Order Taylor Expansion<a class="headerlink" href="#first-order-taylor-expansion" title="Link to this heading">#</a></h2>
+<p>Recall, that we can create a locally linear approximation to a function at a point <span class="math notranslate nohighlight">\(\mathbf{x}_0 \in \mathbb{R}^d \)</span> using the gradient at <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}_0)\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[
-f(x, y) = x^2 + y^2.
-\]</div>
-<ul>
-<li><p>Gradient:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-  \nabla f(x, y) = \begin{bmatrix} 2x \\ 2y \end{bmatrix}, \quad \Rightarrow \nabla f(0,0) = \begin{bmatrix} 0 \\ 0 \end{bmatrix}.
-  \end{split}\]</div>
-</li>
-<li><p>The origin <span class="math notranslate nohighlight">\((0, 0)\)</span> is a <strong>strict local minimum</strong>, since all directions lead upward: <span class="math notranslate nohighlight">\(f(x, y) &gt; f(0, 0) = 0\)</span> for any <span class="math notranslate nohighlight">\((x, y) \ne (0, 0)\)</span>.</p></li>
-</ul>
+\[ f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) . \]</div>
+<p>This affine approximation is also known as the <strong>first-order Taylor approximation</strong>.</p>
+<p>It agrees with the original function in value and gradient at the point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p>
 </section>
-<section id="example-2-a-saddle-point">
-<h2>❗ Example 2: A Saddle Point<a class="headerlink" href="#example-2-a-saddle-point" title="Link to this heading">#</a></h2>
-<p>The function</p>
+<section id="second-order-taylor-expansion">
+<h2>Second-Order Taylor Expansion<a class="headerlink" href="#second-order-taylor-expansion" title="Link to this heading">#</a></h2>
+<p>The Hessian appears naturally in the <strong>second-order Taylor approximation</strong> of a function around a point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \in \mathbb{R}^d \)</span>.
+For a sufficiently smooth function <span class="math notranslate nohighlight">\( f : \mathbb{R}^d \to \mathbb{R} \)</span>, we can approximate its values near <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span> as:</p>
 <div class="math notranslate nohighlight">
-\[
-f(x, y) = x^2 - y^2
-\]</div>
-<p>also has a gradient of zero at the origin <span class="math notranslate nohighlight">\((0, 0)\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\nabla f(0, 0) = \begin{bmatrix} 2x \\ -2y \end{bmatrix}_{(0, 0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}.
-\end{split}\]</div>
-<p>But it’s a <strong>saddle point</strong>:</p>
+\[ f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) + \frac{1}{2}(\mathbf{x} - \mathbf{x}_0)^\top \nabla^2 f(\mathbf{x}_0)(\mathbf{x} - \mathbf{x}_0). \]</div>
+<p>This is a <strong>local quadratic approximation</strong> to the function. It agrees with the original function in value, gradient, and Hessian at the point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p>
+<section id="interpretation">
+<h3>Interpretation:<a class="headerlink" href="#interpretation" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>It’s a <strong>minimum</strong> along the line <span class="math notranslate nohighlight">\(y = 0\)</span>: <span class="math notranslate nohighlight">\(f(x, 0) = x^2\)</span>.</p></li>
-<li><p>It’s a <strong>maximum</strong> along the line <span class="math notranslate nohighlight">\(x = 0\)</span>: <span class="math notranslate nohighlight">\(f(0, y) = -y^2\)</span>.</p></li>
+<li><p>The <strong>gradient</strong> term captures the linear behavior (slope) of the function near <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p></li>
+<li><p>The <strong>Hessian</strong> term captures the curvature — how the gradient changes in different directions.</p></li>
 </ul>
-<p>So the gradient vanishes, but the point is <strong>not a local extremum</strong>.</p>
+<hr class="docutils" />
+<p>We illustrate both the first-order and the second-order Taylor expansion using the following function.</p>
+<div class="math notranslate nohighlight">
+\[ f(x, y) = \log(1 + x^2 + y^2) \]</div>
+<p>We compute the first-order and second-order Taylor approximations at the point <span class="math notranslate nohighlight">\( (x_0, y_0) = (0.3, 0.3) \)</span>.</p>
+<p>The true function and the linear approximation match in value and gradient at the point <span class="math notranslate nohighlight">\( (x_0, y_0)\)</span> but differ elsewhere. Similarly, the quadratic approximation match in value, gradient, and Hessian at this point but differ elsewhere.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -546,42 +514,65 @@ f(x, y) = x^2 - y^2
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
-<span class="c1"># Define the functions</span>
-<span class="k">def</span> <span class="nf">f_min</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+<span class="c1"># Define the function and its gradient and Hessian</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span>
 
-<span class="k">def</span> <span class="nf">f_saddle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+<span class="c1"># Compute value, gradient, and Hessian at (x0, y0)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">x0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y0</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">f0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span>
+<span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">y0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">],</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
-<span class="c1"># Create grid</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">Z_min</span> <span class="o">=</span> <span class="n">f_min</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-<span class="n">Z_saddle</span> <span class="o">=</span> <span class="n">f_saddle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+<span class="c1"># Taylor expansion up to second order</span>
+<span class="k">def</span> <span class="nf">f_taylor_first_order</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x0</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y0</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">f0</span> <span class="o">+</span> <span class="p">(</span><span class="n">grad</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-<span class="c1"># Plotting</span>
+<span class="c1"># Taylor expansion up to second order</span>
+<span class="k">def</span> <span class="nf">f_taylor_second_order</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x0</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y0</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">f0</span> <span class="o">+</span> <span class="p">(</span><span class="n">grad</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">@</span> <span class="n">H</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Create grid for plotting</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x0</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y0</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+<span class="n">Z_true</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">Z_first</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Z_second</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">Z_first</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_taylor_first_order</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">Z_second</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_taylor_second_order</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Plot both Taylor approximations</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-
-<span class="c1"># Plot for minimum</span>
 <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_min</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Local Minimum: $f(x, y) = x^2 + y^2$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x, y)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Minimum at (0,0)&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="c1"># Plot for saddle</span>
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_saddle</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Saddle Point: $f(x, y) = x^2 - y^2$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x, y)&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Saddle at (0,0)&#39;</span><span class="p">)</span>
+
+<span class="n">true_surface1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_true</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">approx_surface1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_first</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;First-Order Taylor Approximation&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">true_surface2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_true</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">approx_surface2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_second</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Second-Order Taylor Approximation&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -590,29 +581,18 @@ f(x, y) = x^2 - y^2
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/33d0c1e659d901c1dd0972eda16907c6dee6e1687e158e313665ffd9cf228242.png" src="../_images/33d0c1e659d901c1dd0972eda16907c6dee6e1687e158e313665ffd9cf228242.png" />
+<img alt="../_images/6c37d82f628c849e04c42112f9185e882077595ab2146dc80433158ab00aacc6.png" src="../_images/6c37d82f628c849e04c42112f9185e882077595ab2146dc80433158ab00aacc6.png" />
 </div>
 </div>
-<p><strong>Left:</strong> <span class="math notranslate nohighlight">\(f(x, y) = x^2 + y^2\)</span> → Local <strong>minimum</strong></p>
-<ul class="simple">
-<li><p>The surface is a <strong>paraboloid</strong> opening upward.</p></li>
-<li><p>Every direction from the origin increases the function value.</p></li>
-<li><p>The gradient vanishes at the bottom: <span class="math notranslate nohighlight">\(\nabla f(0,0) = 0\)</span>.</p></li>
-<li><p>The Hessian is positive definite → confirms local <strong>minimum</strong>.</p></li>
-</ul>
-<p><strong>Right:</strong> <span class="math notranslate nohighlight">\(f(x, y) = x^2 - y^2\)</span> → <strong>Saddle point</strong></p>
-<ul class="simple">
-<li><p>A <strong>hyperbolic</strong> surface: increasing along <span class="math notranslate nohighlight">\(x\)</span>, decreasing along <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
-<li><p>Gradient vanishes at the origin, but there is <strong>no extremum</strong>.</p></li>
-<li><p>This is the classic counterexample where the gradient condition is met, but the point is <strong>not</strong> a minimum or maximum.</p></li>
-</ul>
+<p>This visualization shows how the first-order (left) and second-order (right) Taylor expansions approximate the original function locally around the point <span class="math notranslate nohighlight">\( (0.3,0.3) \)</span>, but deviates farther away. Both approximations are shown in blue to red and the original function in yellow to green colors.</p>
 </section>
-<section id="summary">
-<h2>🧠 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>If</strong> a point is a local minimum, the gradient <strong>must</strong> be zero.</p></li>
-<li><p>But a <strong>zero gradient alone is not enough</strong> — Over the next sections we will learn the <strong>second-order conditions</strong> based on the <strong>Hessian matrix</strong>, which tells us about the curvature of the function and will allow us to check if it’s a minimum, maximum, or saddle point.</p></li>
-</ul>
+</section>
+<section id="summary-and-outlook">
+<h2>Summary and Outlook<a class="headerlink" href="#summary-and-outlook" title="Link to this heading">#</a></h2>
+<p>An advantage of a local quadratic approximation is that we can find its minimum analytically.
+This idea lies at the heart of <strong>Newton’s method</strong>.
+The Hessian matrix also allows us also to better understand the properties of stationary points of a function and derive <strong>second-order conditions of minima</strong>.</p>
+<p>Before we will explore these two topics further, we first have to better understand the <strong>properties of matrices</strong> such as the Hessian. So let’s turn to the topic of <strong>matrix algebra</strong>.</p>
 </section>
 </section>
 
@@ -647,20 +627,20 @@ f(x, y) = x^2 - y^2
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mean_value_theorem.html"
+       href="line_search.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Mean value theorem</p>
+        <p class="prev-next-title">Line Search Methods in Optimization</p>
       </div>
     </a>
     <a class="right-next"
-       href="line_search.html"
+       href="../appendix/proofs.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Line Search Methods in Optimization</p>
+        <p class="prev-next-title">Detailed Proofs</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -680,9 +660,12 @@ f(x, y) = x^2 - y^2
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-local-minimum">✅ Example 1: A Local Minimum</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-a-saddle-point">❗ Example 2: A Saddle Point</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧠 Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-taylor-expansion">First-Order Taylor Expansion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion">Second-Order Taylor Expansion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
 </ul>
   </nav></div>
 
