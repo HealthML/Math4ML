@@ -236,5 +236,5 @@ ax = plt.xlabel("day of the year")
 ax = plt.ylabel("Maximum Temperature - degree C")
 ax = plt.title("Year : %i        N : %i" % (YEAR, N_train))
 ```
-We see that we obtain the identical solution to the version using gradient descent.
-However, in this version, it is not trivial to optimize over the basis function parameters.
+We see that we obtain the nearly identical solution to the version using gradient descent.
+However, in this version it would require some additional work to optimize over the basis function parameters.
