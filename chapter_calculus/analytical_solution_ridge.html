@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Gradient Descent in Ridge Regression &#8212; Mathematics for Machine Learning</title>
+    <title>Analytical Solution for Ridge Regression &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -60,12 +60,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/gradient_descent_ridge';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/gradient_descent_ridge.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/analytical_solution_ridge';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/analytical_solution_ridge.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Matrix calculus" href="matrix_calculus.html" />
-    <link rel="prev" title="Gradients and the Gradient Descent Algorithm" href="gradients.html" />
+    <link rel="next" title="Line Search Methods in Optimization" href="line_search.html" />
+    <link rel="prev" title="First-order condition for local minima" href="minima_first_order_condition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -206,13 +206,13 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_calculus.html">Calculus and Optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gradient_descent_ridge.html">Gradient Descent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="matrix_calculus.html">Matrix Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jacobian.html">Jacobian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chain_rule.html">Chain Rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mean_value_theorem.html">Mean Value Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="minima_first_order_condition.html">First Order Condition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="analytical_solution_ridge.html">Ridge Regression</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Ridge Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_search.html">Line Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hessian.html">Hessian</a></li>
 </ul>
@@ -304,7 +304,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/gradient_descent_ridge.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/analytical_solution_ridge.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -321,7 +321,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/gradient_descent_ridge.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/analytical_solution_ridge.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -351,7 +351,7 @@
       
       
       
-      <li><a href="../_sources/chapter_calculus/gradient_descent_ridge.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/analytical_solution_ridge.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -435,7 +435,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gradient Descent in Ridge Regression</h1>
+    <h1>Analytical Solution for Ridge Regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -457,28 +457,57 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="gradient-descent-in-ridge-regression">
-<h1>Gradient Descent in Ridge Regression<a class="headerlink" href="#gradient-descent-in-ridge-regression" title="Link to this heading">#</a></h1>
-<p>In this section, we will apply the gradient descent algorithm to the problem of <strong>Ridge regression</strong>. Ridge regression is a linear regression technique that includes an L2 regularization term to prevent overfitting. The objective function for Ridge regression is given by:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="analytical-solution-for-ridge-regression">
+<h1>Analytical Solution for Ridge Regression<a class="headerlink" href="#analytical-solution-for-ridge-regression" title="Link to this heading">#</a></h1>
+<p>So far, we have optimized ridge regression using the gradient descent algorithm.
+However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression.</p>
+<p>The objective function for Ridge regression is given by:</p>
 <div class="math notranslate nohighlight">
 \[
   f(\mathbf{w}) = \frac{1}{2}\|\mathbf{y} - \mathbf{X}\mathbf{w}\|^2_2 + \frac{\lambda}{2}\|\mathbf{w}\|^2_2,
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the design matrix, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is the response vector, <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is the weight vector, and <span class="math notranslate nohighlight">\(\lambda\)</span> is the regularization parameter.</p>
+<p>To derive the <strong>analytical solution</strong> for Ridge regression, we proceed by setting the gradient of the objective function to zero, since at the minimum, the gradient must vanish.</p>
 <p>The gradient of the objective function with respect to <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-  \nabla f(\mathbf{w}) = -\mathbf{X}^\top(\mathbf{y} - \mathbf{X}\mathbf{w}) + \lambda\mathbf{w}.
+\nabla f(\mathbf{w}) = -\mathbf{X}^\top(\mathbf{y} - \mathbf{X}\mathbf{w}) + \lambda\mathbf{w}.
 \]</div>
-<p>We will implement the gradient descent algorithm to minimize this objective function and find the optimal weights <span class="math notranslate nohighlight">\(\mathbf{w}^*\)</span>.</p>
+<p><strong>Step 1: Set the gradient to zero</strong></p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{0} = -\mathbf{X}^\top(\mathbf{y} - \mathbf{X}\mathbf{w}) + \lambda\mathbf{w}
+\]</div>
+<p><strong>Step 2: Expand the expression</strong></p>
+<div class="math notranslate nohighlight">
+\[
+0 = -\mathbf{X}^\top\mathbf{y} + \mathbf{X}^\top\mathbf{X}\mathbf{w} + \lambda\mathbf{w}
+\]</div>
+<p><strong>Step 3: Move <span class="math notranslate nohighlight">\(-\mathbf{X}^\top\mathbf{y}\)</span> to the other side</strong></p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{X}^\top\mathbf{X}\mathbf{w} + \lambda\mathbf{w} = \mathbf{X}^\top\mathbf{y}
+\]</div>
+<p><strong>Step 4: Factor out <span class="math notranslate nohighlight">\(\mathbf{w}\)</span></strong></p>
+<div class="math notranslate nohighlight">
+\[
+(\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})\mathbf{w} = \mathbf{X}^\top\mathbf{y}
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> is the identity matrix of the same dimension as <span class="math notranslate nohighlight">\(\mathbf{X}^\top\mathbf{X}\)</span>.</p>
+<p><strong>Step 5: Solve for <span class="math notranslate nohighlight">\(\mathbf{w}\)</span></strong></p>
+<p>Assuming <span class="math notranslate nohighlight">\((\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})\)</span> is invertible (which it is for <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{\mathbf{w} = (\mathbf{X}^\top\mathbf{X} + \lambda \mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}}
+\]</div>
+<p>This is the <strong>closed-form (analytical) solution</strong> for the Ridge regression weights.</p>
+<p>Let’s implement the closed form solution. It significantly simplifies the implementation compared to our version using gradient descent.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="k">class</span> <span class="nc">RidgeRegressionGD</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span> <span class="o">=</span> <span class="n">num_iterations</span>
+<span class="k">class</span> <span class="nc">RidgeRegression</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ridge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">=</span> <span class="n">ridge</span>
 
     <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -489,17 +518,11 @@ document.write(`
         <span class="c1"># Loss function (MSE + Ridge penalty)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mse</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Gradient of the loss</span>
-        <span class="k">return</span> <span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
-
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="c1"># Initialize weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        
-        <span class="c1"># Gradient descent loop</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_iterations</span><span class="p">):</span>   
-            <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="c1"># Compute the closed form Solution for the weights</span>
+        <span class="n">XX</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ridge</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  
+        <span class="n">Xy</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XX</span><span class="p">)</span> <span class="o">@</span> <span class="n">Xy</span>
 
     <span class="k">def</span> <span class="nf">pred</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span>
@@ -627,9 +650,7 @@ We will use the following values for the hyperparameters:</p>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">TMAX</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="n">N_train</span><span class="p">]</span>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="mf">0.1</span>     <span class="c1"># strength of the L2 penalty in ridge regression</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span>
-<span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">reg</span> <span class="o">=</span> <span class="n">RidgeRegressionGD</span><span class="p">(</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="n">num_iterations</span><span class="p">)</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">RidgeRegression</span><span class="p">(</span><span class="n">ridge</span><span class="o">=</span><span class="n">ridge</span><span class="p">)</span>
 <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="n">x_days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">366</span><span class="p">)[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
@@ -657,16 +678,15 @@ We will use the following values for the hyperparameters:</p>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 29.2677
-test MSE     : 32.3784
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training MSE : 27.9922
+test MSE     : 32.2063
 </pre></div>
 </div>
-<img alt="../_images/431a7625e0c17aa4a0330905d3924e6d3a93b0a0287a3cbb1240e26e13445fd1.png" src="../_images/431a7625e0c17aa4a0330905d3924e6d3a93b0a0287a3cbb1240e26e13445fd1.png" />
+<img alt="../_images/419ebb856e1e316c24953586088cf21513b4479b03da9657ee187fab7072f532.png" src="../_images/419ebb856e1e316c24953586088cf21513b4479b03da9657ee187fab7072f532.png" />
 </div>
 </div>
-<p>The plot shows that the model fits a model that places three sigmoid basis functions roughly evenly spaced throughout the year. Due to the relatively large slope values the sigmoids look close to step functions.
-While the model fits the data relatively well, our choice of hyperparameters are far from be optimal.</p>
-<p>In the following sections, we will discuss how we can use the gradient descent algorithm to optimize the hyperparameters. However, on order to do so, we will need to introduce the concepts of the <strong>Jacobian</strong> and the <strong>chain rule</strong>, that we will discuss in the following sections.</p>
+<p>We see that we obtain the identical solution to the version using gradient descent.
+However, in this version, it is not trivial to optimize over the basis function parameters.</p>
 </section>
 </section>
 
@@ -701,20 +721,20 @@ While the model fits the data relatively well, our choice of hyperparameters are
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="gradients.html"
+       href="minima_first_order_condition.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gradients and the Gradient Descent Algorithm</p>
+        <p class="prev-next-title">First-order condition for local minima</p>
       </div>
     </a>
     <a class="right-next"
-       href="matrix_calculus.html"
+       href="line_search.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Matrix calculus</p>
+        <p class="prev-next-title">Line Search Methods in Optimization</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
