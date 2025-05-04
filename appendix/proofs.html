@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,8 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/proofs.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Basic Differentiation Rules" href="differentiation_rules.html" />
-    <link rel="prev" title="The Hessian" href="../chapter_calculus/hessian.html" />
+    <link rel="next" title="Cauchy–Schwarz Inequality" href="Cauchy%E2%80%93Schwarz_inequality.html" />
+    <link rel="prev" title="Line Search Methods in Optimization" href="../chapter_calculus/line_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,39 +185,51 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Overview of Machine Learning Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Basics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vectors, Functions and the Spaces they live in</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Form a Vector Space</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric spaces</a></li>
-
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed spaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner product spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
-
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Multivariate Calculus in Machine Learning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients and the Gradient Descent Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent in Ridge Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">The Jacobian</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">The chain rule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">The Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Detailed Proofs</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Detailed Proofs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
 </ul>
 
@@ -436,132 +448,18 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="detailed-proofs">
 <h1>Detailed Proofs<a class="headerlink" href="#detailed-proofs" title="Link to this heading">#</a></h1>
 <p>Here we list more detailed proofs of theorems and lemmas that are not included in the main text.</p>
-<div class="proof theorem admonition" id="theorem-0">
-<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Cauchy–Schwarz Inequality)</p>
-<section class="theorem-content" id="proof-content">
-<p>For all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[
-|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \|\mathbf{x}\| \cdot \|\mathbf{y}\|,
-\]</div>
-<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are linearly dependent.</p>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. Consider any scalar <span class="math notranslate nohighlight">\(t \in \mathbb{R}\)</span>. By the properties of inner products, the norm squared of the vector <span class="math notranslate nohighlight">\(\mathbf{x} - t\mathbf{y}\)</span> is non-negative:</p>
-<div class="math notranslate nohighlight">
-\[
-\|\mathbf{x} - t\mathbf{y}\|^2 = \langle \mathbf{x} - t\mathbf{y}, \mathbf{x} - t\mathbf{y} \rangle \ge 0.
-\]</div>
-<p>Expanding the inner product using linearity gives:</p>
-<div class="math notranslate nohighlight">
-\[
-\|\mathbf{x} - t\mathbf{y}\|^2 = \langle \mathbf{x}, \mathbf{x} \rangle - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2 \langle \mathbf{y}, \mathbf{y} \rangle = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2.
-\]</div>
-<p>This expression is a quadratic function in <span class="math notranslate nohighlight">\(t\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-f(t) = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2.\]</div>
-<p>Since <span class="math notranslate nohighlight">\(f(t) \ge 0\)</span> for all <span class="math notranslate nohighlight">\(t \in \mathbb{R}\)</span>, the quadratic must have a non-positive discriminant. The discriminant is:</p>
-<div class="math notranslate nohighlight">
-\[
-\Delta = (-2 \langle \mathbf{x}, \mathbf{y} \rangle)^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 = 4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2.
-\]</div>
-<p>Thus, we have:</p>
-<div class="math notranslate nohighlight">
-\[
-4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2 \le 0.
-\]</div>
-<p>Dividing both sides by 4 yields:</p>
-<div class="math notranslate nohighlight">
-\[
-\langle \mathbf{x}, \mathbf{y} \rangle^2 \le \|\mathbf{x}\|^2 \|\mathbf{y}\|^2.
-\]</div>
-<p>Taking the square root of both sides (and noting that both norms are nonnegative) gives the desired inequality:</p>
-<div class="math notranslate nohighlight">
-\[
-|\langle \mathbf{x}, \mathbf{y} \rangle| \le \|\mathbf{x}\| \cdot \|\mathbf{y}\|.
-\]</div>
-<p>Equality holds if and only if the discriminant <span class="math notranslate nohighlight">\(\Delta = 0\)</span>, which happens exactly when there exists a scalar <span class="math notranslate nohighlight">\(t\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x} = t\,\mathbf{y}\)</span>, i.e., when <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are linearly dependent.<br />
-◻</p>
-</div>
-<p>The <strong>discriminant</strong> is a term that comes from the study of quadratic equations. When you have a quadratic equation in the form</p>
-<div class="math notranslate nohighlight">
-\[
-at^2 + bt + c = 0,
-\]</div>
-<p>the discriminant is defined as</p>
-<div class="math notranslate nohighlight">
-\[
-\Delta = b^2 - 4ac.
-\]</div>
-<p>The value of the discriminant tells you important information about the solutions (or roots) of the quadratic equation:</p>
-<ul class="simple">
-<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta &gt; 0\)</span>:</strong> There are two distinct real roots.</p></li>
-<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta = 0\)</span>:</strong> There is exactly one real root (a repeated or double root).</p></li>
-<li><p><strong>If <span class="math notranslate nohighlight">\(\Delta &lt; 0\)</span>:</strong> There are no real roots; instead, the roots are complex conjugates.</p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
 </ul>
-<p>In the context of the Cauchy–Schwarz inequality proof, we examined the quadratic function</p>
-<div class="math notranslate nohighlight">
-\[
-f(t) = \|\mathbf{x}\|^2 - 2t \langle \mathbf{x}, \mathbf{y} \rangle + t^2\|\mathbf{y}\|^2,
-\]</div>
-<p>which represents the squared norm <span class="math notranslate nohighlight">\(\|\mathbf{x} - t\mathbf{y}\|^2\)</span> and is nonnegative for all real <span class="math notranslate nohighlight">\(t\)</span>. For this quadratic function to be nonnegative for all <span class="math notranslate nohighlight">\(t\)</span>, its discriminant must be non-positive (i.e., <span class="math notranslate nohighlight">\(\Delta \leq 0\)</span>); otherwise, the quadratic would cross the horizontal axis, implying negative values for some <span class="math notranslate nohighlight">\(t\)</span>. In our derivation, after computing the discriminant</p>
-<div class="math notranslate nohighlight">
-\[
-\Delta = 4\langle \mathbf{x}, \mathbf{y} \rangle^2 - 4\|\mathbf{x}\|^2 \|\mathbf{y}\|^2,
-\]</div>
-<p>requiring <span class="math notranslate nohighlight">\(\Delta \le 0\)</span> gives us the inequality</p>
-<div class="math notranslate nohighlight">
-\[
-\langle \mathbf{x}, \mathbf{y} \rangle^2 \leq \|\mathbf{x}\|^2 \|\mathbf{y}\|^2,
-\]</div>
-<p>which is exactly the Cauchy–Schwarz inequality after taking square roots.</p>
-<p>Thus, the discriminant in this context helps us conclude that the quadratic cannot have two distinct real roots (which would indicate a region where the function dips below zero) and thus must satisfy the inequality.</p>
-<div class="proof theorem admonition" id="theorem-1">
-<p class="admonition-title"><span class="caption-number">Theorem 4 </span> (scalar-scalar chain rule)</p>
-<section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R} \to \mathbb{R}\)</span> and <span class="math notranslate nohighlight">\(g: \mathbb{R} \to \mathbb{R}\)</span> be differentiable functions. If <span class="math notranslate nohighlight">\(f\)</span> is differentiable at <span class="math notranslate nohighlight">\(u_0 = g(x_0)\)</span> and <span class="math notranslate nohighlight">\(g\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, then the composition <span class="math notranslate nohighlight">\(( f \circ g)(x) = f\bigl(g(x)\bigr)\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, and we have</p>
-<div class="math notranslate nohighlight">
-\[
-( f \circ g)'(x_0) = f'(g(x_0)) \cdot g'(x_0).
-\]</div>
-<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function composition.</p>
-<p>where <span class="math notranslate nohighlight">\(\circ\)</span> denotes function composition.</p>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. <strong>Scalar–Scalar Chain Rule.</strong></p>
-<p>Let <span class="math notranslate nohighlight">\(g\)</span> be differentiable at <span class="math notranslate nohighlight">\(x_0\)</span> and <span class="math notranslate nohighlight">\(f\)</span> be differentiable at <span class="math notranslate nohighlight">\(u_0=g(x_0)\)</span>.  Define <span class="math notranslate nohighlight">\(h(x)=f\bigl(g(x)\bigr)\)</span>.  We compute</p>
-<div class="math notranslate nohighlight">
-\[
-h'(x_0)
-=\lim_{\Delta x\to0}\frac{h(x_0+\Delta x)-h(x_0)}{\Delta x}
-=\lim_{\Delta x\to0}\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta x}.
-\]</div>
-<p>Since <span class="math notranslate nohighlight">\(g\)</span> is differentiable at <span class="math notranslate nohighlight">\(x_0\)</span>, as <span class="math notranslate nohighlight">\(\Delta x\to0\)</span> we have</p>
-<div class="math notranslate nohighlight">
-\[
-\Delta u \;=\; g(x_0+\Delta x)-g(x_0)
-\quad\longrightarrow\quad0,
-\quad\text{and}\quad
-\frac{\Delta u}{\Delta x}\;\longrightarrow\;g'(x_0).
-\]</div>
-<p>Likewise, since <span class="math notranslate nohighlight">\(f\)</span> is differentiable at <span class="math notranslate nohighlight">\(u_0\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}\;\longrightarrow\;f'(u_0).
-\]</div>
-<p>Therefore</p>
-<div class="math notranslate nohighlight">
-\[
-h'(x_0)
-=\lim_{\Delta x\to0}
-\frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta u}
-\;\times\;
-\frac{\Delta u}{\Delta x}
-=f'\bigl(g(x_0)\bigr)\,\cdot\,g'(x_0).
-\]</div>
-<p>This completes the proof.
-◻</p>
 </div>
 </section>
 
@@ -596,20 +494,20 @@ h'(x_0)
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../chapter_calculus/hessian.html"
+       href="../chapter_calculus/line_search.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">The Hessian</p>
+        <p class="prev-next-title">Line Search Methods in Optimization</p>
       </div>
     </a>
     <a class="right-next"
-       href="differentiation_rules.html"
+       href="Cauchy%E2%80%93Schwarz_inequality.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Basic Differentiation Rules</p>
+        <p class="prev-next-title">Cauchy–Schwarz Inequality</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

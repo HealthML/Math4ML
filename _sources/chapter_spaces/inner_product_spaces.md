@@ -154,12 +154,14 @@ plt.tight_layout()
 plt.show()
 ```
 
-### Pythagorean Theorem
+## Pythagorean Theorem
 
 The well-known Pythagorean theorem generalizes naturally to arbitrary
 inner product spaces.
 
 :::{prf:theorem} Pythagorean theorem
+:label: thm-pythagorean-teorem
+:nonumber:
 
 If $\mathbf{x} \perp \mathbf{y}$, then
 
@@ -231,10 +233,14 @@ plt.show()
 In this example, we choose two perpendicular vectors $\mathbf{x}$ and $\mathbf{y}$ (for instance, $\mathbf{x}=(3, 0)$ and $\mathbf{y}=(0, 4)$) and plot these vectors along with their sum $\mathbf{x}+\mathbf{y}$. 
 The plot visually demonstrates the Pythagorean theorem, where the lengths of the sides of the right triangle formed by $\mathbf{x}$ and $\mathbf{y}$ correspond to their norms. The dashed line indicates the right angle between the two vectors.
 
-### Cauchy-Schwarz inequality
+## Cauchy-Schwarz inequality
 The Cauchy-Schwarz inequality is a fundamental result in linear algebra and functional analysis. It states that the absolute value of the inner product of two vectors is less than or equal to the product of their norms.
 This inequality is a powerful tool in various fields, including machine learning, statistics, and optimization.
+
 ::: {prf:theorem} Cauchy–Schwarz Inequality
+:label: thm-cauchy–schwarz-inequality
+:nonumber:
+
 For all $\mathbf{x}, \mathbf{y} \in V$,
 
 $$
@@ -414,7 +420,7 @@ plt.show()
 
 ---
 
-**Kernelized Nearest Centroid Classifier**:
+### **Kernelized Nearest Centroid Classifier**:
 
 We have already learned that we can obtain a non-linear version of a linear classifier such as the nearest centroid classifier by using non-linear basis functions $\phi(\cdot)$ to map the data into a higher-dimensional space. 
 
@@ -598,7 +604,7 @@ if __name__ == "__main__":
 ```
 ---
 
-### Insights for Students:
+### Insights:
 
 - **Inner products** provide a flexible geometric tool for measuring angles and similarity.
 - **Kernels** use inner products implicitly to map data into spaces where classification is simplified.

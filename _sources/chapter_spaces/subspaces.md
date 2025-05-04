@@ -201,7 +201,7 @@ Since all three conditions are met, $\operatorname{null}(T)$ is a subspace of $V
 
 
 :::{prf:theorem} Range of a Linear Map
-:label: thm-nullspace-subspace
+:label: thm-range-linear-map
 :nonumber:
 The Range $\operatorname{range}(T)$ is a subspace of $W$.
 :::
@@ -280,7 +280,7 @@ $$\mathbf{v}_0 + U = \{ \mathbf{v}_0 + \mathbf{u} \mid \mathbf{u} \in U \},$$
 
 where $ U \subseteq V $ is a subspace and $ \mathbf{v}_0 \in V $ is a fixed vector. Although an affine subspace is “flat” (it has the same geometric structure as $ U $), it is not a subspace in the strict sense because it does not necessarily contain the zero vector—unless $ \mathbf{v}_0 = \mathbf{0} $.
 
-#### Key Properties
+### Key Properties
 
 - **Translation of a Subspace:**  
   Every affine subspace is a translation of a linear subspace $ U $. The vector $ \mathbf{v}_0 $ “shifts” $ U $ so that the resulting affine subspace need not pass through the origin.
@@ -298,7 +298,7 @@ where $ U \subseteq V $ is a subspace and $ \mathbf{v}_0 \in V $ is a fixed vect
 - **Intersection with a Subspace:**
   The intersection of an affine subspace with a linear subspace is either empty or an affine subspace itself. This is because the intersection can be expressed as a translation of the original subspace.
     
-#### Examples
+### Examples
 - **Line in $\mathbb{R}^2$:**  
   A line through the origin is a subspace. However, a line that does not pass through the origin is an affine subspace. For instance, the set
   
@@ -416,7 +416,7 @@ ax.set_zlim(-3, 3)
 plt.tight_layout()
 plt.show()
 ```
-#### Formal Observation
+### Formal Observation
 If $S$ is an affine subspace of $V$ represented as $S = \mathbf{v}_0 + U$, then for any $\mathbf{x}, \mathbf{y} \in S$, the difference $\mathbf{x} - \mathbf{y}$ lies in the subspace $U$. This property allows us to “recover” the linear structure from an affine one.
 
 In summary, affine subspaces are “shifted” linear subspaces: they maintain the geometric flatness (lines, planes, etc.) but may not include the origin.
@@ -505,7 +505,7 @@ This set contains **all real-valued functions on $\mathbb{R}^d$**, and it forms 
 
 While $\mathcal{F}$ is too large to work with directly in most learning problems, we can identify **useful subspaces** of $\mathcal{F}$ that play an important role in machine learning.
 
-#### Subspace 1: Functions Spanned by Basis Functions
+### Subspace 1: Functions Spanned by Basis Functions
 
 Let $\phi_1, \dots, \phi_k$ be fixed basis functions, such as polynomials, splines, or radial basis functions (RBFs), each mapping $\mathbb{R}^d \to \mathbb{R}$. Then the set:
 
@@ -519,7 +519,7 @@ forms a **finite-dimensional subspace** of $\mathcal{F}$. This subspace is centr
 - It is closed under addition and scalar multiplication
 - It provides a way to **parametrize** functions via their coefficients $\boldsymbol{\theta} \in \mathbb{R}^k$
 
-#### Subspace 2: Affine Functions Learned by Linear Regression
+### Subspace 2: Affine Functions Learned by Linear Regression
 
 Linear regression can also be interpreted as learning a function in a subspace of $\mathcal{F}$. The learned function has the form:
 

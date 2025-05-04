@@ -1,4 +1,4 @@
-## Matrix calculus
+# Matrix calculus
 
 Since a lot of optimization reduces to finding points where the gradient
 vanishes, it is useful to have differentiation rules for matrix and
