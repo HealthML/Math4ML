@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -489,8 +489,9 @@ The converse is not true: there are points where the gradient vanishes which are
 <p>From the <strong>Mean Value Theorem in Several Variables</strong>, we have that for any <span class="math notranslate nohighlight">\(\mathbf{h} \in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(t \in (0,T]\)</span>, there exists a point on that line segment parametrized by <span class="math notranslate nohighlight">\(t' \in (0,t)\)</span> such that</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h})\]</div>
-<p>As we have chosen <span class="math notranslate nohighlight">\(T\)</span> small enough such that <span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; 0\)</span>, we have
-$<span class="math notranslate nohighlight">\(f(\mathbf{x}^* + t\mathbf{h}) &lt; f(\mathbf{x}^*)\)</span>$</p>
+<p>As we have chosen <span class="math notranslate nohighlight">\(T\)</span> small enough such that <span class="math notranslate nohighlight">\(\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t'\mathbf{h}) &lt; 0\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}^* + t\mathbf{h}) &lt; f(\mathbf{x}^*)\]</div>
 <p>whence it follows that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is not a local minimum, a contradiction.</p>
 <p>Hence <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}^*) = \mathbf{0}\)</span>. ◻</p>
 </div>

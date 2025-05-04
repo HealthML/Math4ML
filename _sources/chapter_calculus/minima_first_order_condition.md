@@ -55,6 +55,7 @@ From the **Mean Value Theorem in Several Variables**, we have that for any $\mat
 $$f(\mathbf{x}^* + t\mathbf{h}) = f(\mathbf{x}^*) + t\mathbf{h}^{\!\top\!} \nabla f(\mathbf{x}^* + t'\mathbf{h})$$
 
 As we have chosen $T$ small enough such that $\mathbf{h}^{\!\top\!}\nabla f(\mathbf{x}^* + t'\mathbf{h}) < 0$, we have
+
 $$f(\mathbf{x}^* + t\mathbf{h}) < f(\mathbf{x}^*)$$
 
 whence it follows that $\mathbf{x}^*$ is not a local minimum, a contradiction.
