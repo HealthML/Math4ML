@@ -61,15 +61,30 @@ parts:
         - file: chapter_calculus/chain_rule
           title: Chain Rule
         # end of week 3
-#        - file: chapter_calculus/taylor_expansion
-#        - file: chapter_calculus/hessian
         - file: chapter_calculus/mean_value_theorem
           title: Mean Value Theorem
-#        - file: chapter_taylor/taylor_theorem
         - file: chapter_calculus/minima_first_order_condition
           title: First Order Condition
         - file: chapter_calculus/line_search
           title: Line Search
+        - file: chapter_calculus/hessian
+          title: Hessian
+# study the properties of matrices
+#  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
+#    sections:
+#    - file: chapter_decompositions/eigenvectors
+#    - file: chapter_decompositions/trace_determinant
+#    - file: chapter_decompositions/orthogonal_matrices
+#    - file: chapter_decompositions/symmetric_matrices
+#    - file: chapter_decompositions/psd_matrices
+#    - file: chapter_decompositions/svd
+#    - file: chapter_decompositions/big_picture
+#    - file: chapter_decompositions/pseudoinverse
+#    - file: chapter_decompositions/low_rank_approximation
+#    - file: chapter_decompositions/matrix_norms
+# continue with second order optimization
+#        - file: chapter_calculus/newtons_method
+#          title: Newton's Method
 #        - file: chapter_taylor/minima_second_order_condition
 #        - file: chapter_taylor/optima
 #        - file: chapter_spaces/representer_theorem
@@ -95,18 +110,6 @@ parts:
 #    - file: chapter_probability/estimation
 #    - file: chapter_probability/random_vectors
 #    - file: chapter_probability/gaussian
-#  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
-#    sections:
-#    - file: chapter_decompositions/eigenvectors
-#    - file: chapter_decompositions/trace_determinant
-#    - file: chapter_decompositions/orthogonal_matrices
-#    - file: chapter_decompositions/symmetric_matrices
-#    - file: chapter_decompositions/psd_matrices
-#    - file: chapter_decompositions/svd
-#    - file: chapter_decompositions/big_picture
-#    - file: chapter_decompositions/pseudoinverse
-#    - file: chapter_decompositions/low_rank_approximation
-#    - file: chapter_decompositions/matrix_norms
 #############
 #  - file: example_weather_stations/univariate_linreg 
 #  - file: example_weather_stations/linreg 
