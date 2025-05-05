@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -447,7 +447,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ride-regression">Ride Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-qquadratic-optimization-problem">Ridge Regression as a Qquadratic Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quadratic-optimization-problems">Quadratic Optimization Problems</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-special-case">Ridge Regression as a Special Case</a></li>
 </ul>
 </li>
@@ -674,8 +674,8 @@ test MSE     : 32.2063
 <p>We see that we obtain the nearly identical solution to the version using gradient descent.
 However, in this version it would require some additional work to optimize over the basis function parameters.</p>
 </section>
-<section id="ridge-regression-as-a-qquadratic-optimization-problem">
-<h2>Ridge Regression as a Qquadratic Optimization Problem<a class="headerlink" href="#ridge-regression-as-a-qquadratic-optimization-problem" title="Link to this heading">#</a></h2>
+<section id="quadratic-optimization-problems">
+<h2>Quadratic Optimization Problems<a class="headerlink" href="#quadratic-optimization-problems" title="Link to this heading">#</a></h2>
 <p>Many problems in machine learning and statistics reduce to minimizing a <strong>quadratic function</strong> of the form</p>
 <div class="math notranslate nohighlight">
 \[
@@ -792,7 +792,7 @@ f(\mathbf{w}) = \frac{1}{2} \mathbf{w}^\top (\mathbf{X}^\top \mathbf{X} + \lambd
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ride-regression">Ride Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-qquadratic-optimization-problem">Ridge Regression as a Qquadratic Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quadratic-optimization-problems">Quadratic Optimization Problems</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-special-case">Ridge Regression as a Special Case</a></li>
 </ul>
 </li>
