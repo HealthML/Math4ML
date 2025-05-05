@@ -221,7 +221,7 @@ We see that we obtain the nearly identical solution to the version using gradien
 However, in this version it would require some additional work to optimize over the basis function parameters.
 
 
-## Ridge Regression as a Qquadratic Optimization Problem
+## Quadratic Optimization Problems
 
 Many problems in machine learning and statistics reduce to minimizing a **quadratic function** of the form
 
