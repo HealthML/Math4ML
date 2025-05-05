@@ -10,9 +10,12 @@ kernelspec:
   language: python
   name: python3
 ---
-# Analytical Solution for Ridge Regression
+# Ridge Regression as a Quadratic Optimization Problem
+
 So far, we have optimized ridge regression using the gradient descent algorithm.
-However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression.
+However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression. We will show that Ridge Regression belongs to the set of quadratic Optimization Problems and will show how to solve quadratic optimization problems analytically.
+
+## Ride Regression
 
 The objective function for Ridge regression is given by:
 
@@ -216,3 +219,61 @@ ax = plt.title("Year : %i        N : %i" % (YEAR, N_train))
 ```
 We see that we obtain the nearly identical solution to the version using gradient descent.
 However, in this version it would require some additional work to optimize over the basis function parameters.
+
+
+## Ridge Regression as a Qquadratic Optimization Problem
+
+Many problems in machine learning and statistics reduce to minimizing a **quadratic function** of the form
+
+$$
+f(\mathbf{w}) = \frac{1}{2} \mathbf{w}^\top \mathbf{A} \mathbf{w} - \mathbf{b}^\top \mathbf{w}
+$$
+
+where $\mathbf{A} \in \mathbb{R}^{d \times d}$ is a **symmetric positive definite** matrix, and $\mathbf{b} \in \mathbb{R}^d$. The minimum of this function can be found analytically by setting the gradient to zero:
+
+$$
+\nabla f(\mathbf{w}) = \mathbf{A} \mathbf{w} - \mathbf{b} = 0 \quad \Rightarrow \quad \boxed{\mathbf{w} = \mathbf{A}^{-1} \mathbf{b}}
+$$
+
+---
+
+### Ridge Regression as a Special Case
+
+The Ridge Regression objective can be rewritten in this general form. Starting from:
+
+$$
+f(\mathbf{w}) = \frac{1}{2} \|\mathbf{y} - \mathbf{Xw}\|^2_2 + \frac{\lambda}{2} \|\mathbf{w}\|^2_2
+$$
+
+we expand the squared norm:
+
+$$
+f(\mathbf{w}) = \frac{1}{2} (\mathbf{y} - \mathbf{Xw})^\top (\mathbf{y} - \mathbf{Xw}) + \frac{\lambda}{2} \mathbf{w}^\top \mathbf{w}
+$$
+
+$$
+= \frac{1}{2} \left[ \mathbf{y}^\top \mathbf{y} - 2 \mathbf{y}^\top \mathbf{Xw} + \mathbf{w}^\top \mathbf{X}^\top \mathbf{X} \mathbf{w} \right] + \frac{\lambda}{2} \mathbf{w}^\top \mathbf{w}
+$$
+
+Dropping the constant term $\frac{1}{2} \mathbf{y}^\top \mathbf{y}$, the expression becomes:
+
+$$
+f(\mathbf{w}) = \frac{1}{2} \mathbf{w}^\top (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I}) \mathbf{w} - \mathbf{w}^\top \mathbf{X}^\top \mathbf{y}
+$$
+
+This matches the generalized quadratic form with:
+
+* $\mathbf{A} = \mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I}$
+* $\mathbf{b} = \mathbf{X}^\top \mathbf{y}$
+
+Since $\mathbf{A}$ is symmetric and positive definite for $\lambda > 0$, the minimum is achieved at:
+
+$$
+\boxed{
+\mathbf{w} = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y}
+}
+$$
+
+---
+
+This perspective makes it clear that Ridge Regression is simply a **quadratic optimization problem with a symmetric positive definite matrix**, and therefore has a unique analytical solution. This also connects to broader optimization theory and prepares us to explore other models — including Bayesian linear regression, kernel methods, and even Newton’s method — through the lens of **solving linear systems**.

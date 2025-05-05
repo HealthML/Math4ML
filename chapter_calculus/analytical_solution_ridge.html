@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Analytical Solution for Ridge Regression &#8212; Mathematics for Machine Learning</title>
+    <title>Ridge Regression as a Quadratic Optimization Problem &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -435,7 +435,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Analytical Solution for Ridge Regression</h1>
+    <h1>Ridge Regression as a Quadratic Optimization Problem</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -445,7 +445,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ride-regression">Ride Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-qquadratic-optimization-problem">Ridge Regression as a Qquadratic Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-special-case">Ridge Regression as a Special Case</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -457,10 +462,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="analytical-solution-for-ridge-regression">
-<h1>Analytical Solution for Ridge Regression<a class="headerlink" href="#analytical-solution-for-ridge-regression" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="ridge-regression-as-a-quadratic-optimization-problem">
+<h1>Ridge Regression as a Quadratic Optimization Problem<a class="headerlink" href="#ridge-regression-as-a-quadratic-optimization-problem" title="Link to this heading">#</a></h1>
 <p>So far, we have optimized ridge regression using the gradient descent algorithm.
-However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression.</p>
+However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression. We will show that Ridge Regression belongs to the set of quadratic Optimization Problems and will show how to solve quadratic optimization problems analytically.</p>
+<section id="ride-regression">
+<h2>Ride Regression<a class="headerlink" href="#ride-regression" title="Link to this heading">#</a></h2>
 <p>The objective function for Ridge regression is given by:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -530,6 +537,7 @@ However, the first order condition tells us that at the minimum of the objective
 </div>
 </div>
 </div>
+</section>
 <section id="example-usage">
 <h2>Example usage<a class="headerlink" href="#example-usage" title="Link to this heading">#</a></h2>
 <p>We will use the Ridge regression implementation to fit a model to the maximum temperature data from the year 1900. We will fit a model based on three tanh basis functions with the fixed parameters defined before, without optimizing over the basis functions.</p>
@@ -666,6 +674,56 @@ test MSE     : 32.2063
 <p>We see that we obtain the nearly identical solution to the version using gradient descent.
 However, in this version it would require some additional work to optimize over the basis function parameters.</p>
 </section>
+<section id="ridge-regression-as-a-qquadratic-optimization-problem">
+<h2>Ridge Regression as a Qquadratic Optimization Problem<a class="headerlink" href="#ridge-regression-as-a-qquadratic-optimization-problem" title="Link to this heading">#</a></h2>
+<p>Many problems in machine learning and statistics reduce to minimizing a <strong>quadratic function</strong> of the form</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{w}) = \frac{1}{2} \mathbf{w}^\top \mathbf{A} \mathbf{w} - \mathbf{b}^\top \mathbf{w}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{d \times d}\)</span> is a <strong>symmetric positive definite</strong> matrix, and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^d\)</span>. The minimum of this function can be found analytically by setting the gradient to zero:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla f(\mathbf{w}) = \mathbf{A} \mathbf{w} - \mathbf{b} = 0 \quad \Rightarrow \quad \boxed{\mathbf{w} = \mathbf{A}^{-1} \mathbf{b}}
+\]</div>
+<hr class="docutils" />
+<section id="ridge-regression-as-a-special-case">
+<h3>Ridge Regression as a Special Case<a class="headerlink" href="#ridge-regression-as-a-special-case" title="Link to this heading">#</a></h3>
+<p>The Ridge Regression objective can be rewritten in this general form. Starting from:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{w}) = \frac{1}{2} \|\mathbf{y} - \mathbf{Xw}\|^2_2 + \frac{\lambda}{2} \|\mathbf{w}\|^2_2
+\]</div>
+<p>we expand the squared norm:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{w}) = \frac{1}{2} (\mathbf{y} - \mathbf{Xw})^\top (\mathbf{y} - \mathbf{Xw}) + \frac{\lambda}{2} \mathbf{w}^\top \mathbf{w}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= \frac{1}{2} \left[ \mathbf{y}^\top \mathbf{y} - 2 \mathbf{y}^\top \mathbf{Xw} + \mathbf{w}^\top \mathbf{X}^\top \mathbf{X} \mathbf{w} \right] + \frac{\lambda}{2} \mathbf{w}^\top \mathbf{w}
+\]</div>
+<p>Dropping the constant term <span class="math notranslate nohighlight">\(\frac{1}{2} \mathbf{y}^\top \mathbf{y}\)</span>, the expression becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{w}) = \frac{1}{2} \mathbf{w}^\top (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I}) \mathbf{w} - \mathbf{w}^\top \mathbf{X}^\top \mathbf{y}
+\]</div>
+<p>This matches the generalized quadratic form with:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{b} = \mathbf{X}^\top \mathbf{y}\)</span></p></li>
+</ul>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric and positive definite for <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>, the minimum is achieved at:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf{w} = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y}
+}
+\]</div>
+<hr class="docutils" />
+<p>This perspective makes it clear that Ridge Regression is simply a <strong>quadratic optimization problem with a symmetric positive definite matrix</strong>, and therefore has a unique analytical solution. This also connects to broader optimization theory and prepares us to explore other models — including Bayesian linear regression, kernel methods, and even Newton’s method — through the lens of <strong>solving linear systems</strong>.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -732,7 +790,12 @@ However, in this version it would require some additional work to optimize over 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ride-regression">Ride Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-usage">Example usage</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-qquadratic-optimization-problem">Ridge Regression as a Qquadratic Optimization Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-a-special-case">Ridge Regression as a Special Case</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
