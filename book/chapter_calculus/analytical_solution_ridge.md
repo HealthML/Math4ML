@@ -94,7 +94,7 @@ class RidgeRegression:
 
 ## Example usage
 
-We will use the Ridge regression implementation to fit a model to the maximum temperature data from the year 1900. The data is available in the `data_train` and `data_test` variables, which contain the training and testing datasets, respectively. We will fit a model based on three tanh basis functions to the data and evaluate its performance using Mean Squared Error (MSE).
+We will use the Ridge regression implementation to fit a model to the maximum temperature data from the year 1900. We will fit a model based on three tanh basis functions with the fixed parameters defined before, without optimizing over the basis functions.
 
 The model is given by
 
@@ -115,27 +115,14 @@ $$
   a_1 = 0.1, \quad a_2 = 0.2, \quad a_3 = 0.3 \quad \text{and} \quad  b_1 = -10, \quad b_2 = -50, \quad b_3 = -100.0
 $$
 
-To streamline the implementation, we will collect the hyperparameters for all basis functions $\phi_i$ in a single matrix $\mathbf{W}_\phi$:
-
-$$
-  \mathbf{W}_\phi = \begin{pmatrix}
-    a_1 & a_2 & a_3 \\
-    b_1 & b_2 & b_3
-  \end{pmatrix}
-$$
-
-Using this notation, we can express the tanh basis functions as:
-
-$$
-  \boldsymbol{\phi}(x; \mathbf{W}_\phi) = 
-  \begin{pmatrix}
-  \tanh(\mathbf{W}_\phi[0,i] x + \mathbf{W}_\phi[1,i])
-    \end{pmatrix}_{i=1}^3
-$$
-
-We implement the tanh basis functions in a class called `TanhBasis`. The class has two methods: `XW` and `transform`. The `XW` method computes the product of the input data and the weights, while the `transform` method computes the tanh basis functions.
 
 ```{code-cell} ipython3
+:tags: [hide-input]
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
 import numpy as np
 
 class TanhBasis:
@@ -151,16 +138,7 @@ class TanhBasis:
     def transform(self, x):
         """Compute the tanh basis functions."""
         return np.tanh(self.XW(x))
-```
 
-Let's use the `TanhBasis` class to fit a Ridge regression model to the maximum temperature data from the year 1900. We will use three tanh basis functions with the specified hyperparameters.
-
-```{code-cell} ipython3
-:tags: [hide-input]
-
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 YEAR = 1900
 def load_weather_data(year = None):
     """
