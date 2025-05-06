@@ -189,7 +189,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_ml_basics/intro.html">Machine Learning Basics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/regression.html">Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_ml_basics/clustering.html">Clustering</a></li>
@@ -219,6 +219,7 @@
 <li class="toctree-l2"><a class="reference internal" href="chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_calculus/line_search.html">Line Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
 </ul>
@@ -234,6 +235,7 @@
 <li class="toctree-l2"><a class="reference internal" href="appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/differentiation_rules.html">Differentiation Rules</a></li>
@@ -393,6 +395,8 @@ document.write(`
    <a href="#cap-chain-rule"><strong>chain-rule</strong></a> | 
    <a href="#cap-chain-rule-scalar"><strong>chain-rule-scalar</strong></a> | 
    <a href="#cap-squeeze_theorem-appendix"><strong>squeeze_theorem-appendix</strong></a> | 
+   <a href="#cap-thm-Clairaut"><strong>thm-Clairaut</strong></a> | 
+   <a href="#cap-thm-Clairaut-appendix"><strong>thm-Clairaut-appendix</strong></a> | 
    <a href="#cap-thm-Jacobian"><strong>thm-Jacobian</strong></a> | 
    <a href="#cap-thm-bolzano-weierstrass-appendix"><strong>thm-bolzano-weierstrass-appendix</strong></a> | 
    <a href="#cap-thm-cauchy-schwarz-inequality-appendix"><strong>thm-cauchy-schwarz-inequality-appendix</strong></a> | 
@@ -413,7 +417,10 @@ document.write(`
    <a href="#cap-thm-range-linear-map"><strong>thm-range-linear-map</strong></a> | 
    <a href="#cap-thm-rank-nullity"><strong>thm-rank-nullity</strong></a> | 
    <a href="#cap-thm-rolle-appendix"><strong>thm-rolle-appendix</strong></a> | 
-   <a href="#cap-thm-scalar-scalar-chain-rule-appendix"><strong>thm-scalar-scalar-chain-rule-appendix</strong></a>
+   <a href="#cap-thm-scalar-scalar-chain-rule-appendix"><strong>thm-scalar-scalar-chain-rule-appendix</strong></a> | 
+   <a href="#cap-thm-taylor-multiple-first"><strong>thm-taylor-multiple-first</strong></a> | 
+   <a href="#cap-thm-taylor-multiple-second"><strong>thm-taylor-multiple-second</strong></a> | 
+   <a href="#cap-thm-taylor-single"><strong>thm-taylor-single</strong></a>
    </div>
 
    <table class="indextable modindextable">
@@ -440,6 +447,22 @@ document.write(`
        <td></td>
        <td>
        <a href="appendix/squeeze_theorem.html#squeeze_theorem-appendix"><code class="xref">squeeze_theorem-appendix</code></a> <em>(appendix/squeeze_theorem)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-Clairaut"><td></td><td>
+       <strong>thm-Clairaut</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/hessian.html#thm-Clairaut"><code class="xref">thm-Clairaut</code></a> <em>(chapter_calculus/hessian)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-Clairaut-appendix"><td></td><td>
+       <strong>thm-Clairaut-appendix</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="appendix/Clairauts_theorem.html#thm-Clairaut-appendix"><code class="xref">thm-Clairaut-appendix</code></a> <em>(appendix/Clairauts_theorem)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-thm-Jacobian"><td></td><td>
@@ -608,6 +631,30 @@ document.write(`
        <td></td>
        <td>
        <a href="appendix/scalar-scalar_chain_rule.html#thm-scalar-scalar-chain-rule-appendix"><code class="xref">thm-scalar-scalar-chain-rule-appendix</code></a> <em>(appendix/scalar-scalar_chain_rule)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-taylor-multiple-first"><td></td><td>
+       <strong>thm-taylor-multiple-first</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/taylors_theorem.html#thm-taylor-multiple-first"><code class="xref">thm-taylor-multiple-first</code></a> <em>(chapter_calculus/taylors_theorem)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-taylor-multiple-second"><td></td><td>
+       <strong>thm-taylor-multiple-second</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/taylors_theorem.html#thm-taylor-multiple-second"><code class="xref">thm-taylor-multiple-second</code></a> <em>(chapter_calculus/taylors_theorem)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-taylor-single"><td></td><td>
+       <strong>thm-taylor-single</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_calculus/taylors_theorem.html#thm-taylor-single"><code class="xref">thm-taylor-single</code></a> <em>(chapter_calculus/taylors_theorem)</em></td><td>
        <em>theorem</em></td></tr>
    </table>
 

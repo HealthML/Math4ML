@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The Squeeze Theorem &#8212; Mathematics for Machine Learning</title>
+    <title>Symmetry of Mixed Partial Derivatives (Clairaut’s Theorem) &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,12 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/squeeze_theorem';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/squeeze_theorem.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/Clairauts_theorem';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/Clairauts_theorem.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="First Fundamental Theorem of Calculus" href="first_fundamental_theorem_calculus.html" />
-    <link rel="prev" title="The Chain Rule for Scalar-Scalar Functions" href="scalar-scalar_chain_rule.html" />
+    <link rel="next" title="Basic Differentiation Rules" href="differentiation_rules.html" />
+    <link rel="prev" title="Second Fundamental Theorem of Calculus" href="second_fundamental_theorem_calculus.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -228,10 +228,10 @@
 <li class="toctree-l2"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Clairauts_theorem.html">Clairaut's Theorem</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
@@ -306,7 +306,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/appendix/squeeze_theorem.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/appendix/Clairauts_theorem.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -323,7 +323,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fappendix/squeeze_theorem.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fappendix/Clairauts_theorem.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -353,7 +353,7 @@
       
       
       
-      <li><a href="../_sources/appendix/squeeze_theorem.md" target="_blank"
+      <li><a href="../_sources/appendix/Clairauts_theorem.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -424,7 +424,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -435,11 +437,24 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The Squeeze Theorem</h1>
+    <h1>Symmetry of Mixed Partial Derivatives (Clairaut’s Theorem)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proof-sketch">Proof Sketch</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step">Step-by-step:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-clairauts-theorem-does-not-apply">When Clairaut’s Theorem <strong>Does Not Apply</strong></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -449,152 +464,74 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-squeeze-theorem">
-<h1>The <strong>Squeeze Theorem</strong><a class="headerlink" href="#the-squeeze-theorem" title="Link to this heading">#</a></h1>
-<div class="proof theorem admonition" id="squeeze_theorem-appendix">
-<p class="admonition-title"><span>Theorem </span> (Squeeze theorem)</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="symmetry-of-mixed-partial-derivatives-clairauts-theorem">
+<h1>Symmetry of Mixed Partial Derivatives (Clairaut’s Theorem)<a class="headerlink" href="#symmetry-of-mixed-partial-derivatives-clairauts-theorem" title="Link to this heading">#</a></h1>
+<div class="proof theorem admonition" id="thm-Clairaut-appendix">
+<p class="admonition-title"><span>Theorem </span> (Clairaut Schwarz)</p>
 <section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(g(x), h(x), f(x)\)</span> be functions defined near <span class="math notranslate nohighlight">\(c\)</span>. Suppose that there is an open interval around <span class="math notranslate nohighlight">\(c\)</span>, except possibly at <span class="math notranslate nohighlight">\(c\)</span> itself, such that:</p>
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span> be a function such that both mixed partial derivatives <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x \partial y}\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial y \partial x}\)</span> exist and are <strong>continuous</strong> on an open set containing a point <span class="math notranslate nohighlight">\((x_0, y_0)\)</span></p>
+<p>Then:</p>
 <div class="math notranslate nohighlight">
 \[
-g(x) \;\leq\; f(x) \;\leq\; h(x)\quad\text{for all } x\neq c.
+\boxed{
+\frac{\partial^2 f}{\partial x \partial y}(x_0, y_0) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)
+}
 \]</div>
-<p>If</p>
+<p>That is, <strong>the order of differentiation can be interchanged</strong>.</p>
+</section>
+</div><section id="intuition">
+<h2>Intuition<a class="headerlink" href="#intuition" title="Link to this heading">#</a></h2>
+<p>If a function is smooth enough (specifically, if the second-order partial derivatives exist and are continuous), then the “curvature” in the <span class="math notranslate nohighlight">\(x\)</span> direction after differentiating in the <span class="math notranslate nohighlight">\(y\)</span> direction is the same as the curvature in the <span class="math notranslate nohighlight">\(y\)</span> direction after differentiating in the <span class="math notranslate nohighlight">\(x\)</span> direction.</p>
+</section>
+<hr class="docutils" />
+<section id="proof-sketch">
+<h2>Proof Sketch<a class="headerlink" href="#proof-sketch" title="Link to this heading">#</a></h2>
+<p>We will sketch a proof using the <strong>mean value theorem</strong> and the definition of partial derivatives. Let’s assume that <span class="math notranslate nohighlight">\(f\)</span> has continuous second partial derivatives in an open rectangle around the point <span class="math notranslate nohighlight">\((x_0, y_0)\)</span>.</p>
+<p>Define:</p>
 <div class="math notranslate nohighlight">
 \[
-\lim_{x \to c} g(x) = \lim_{x \to c} h(x) = L,
+F(h,k) = \frac{f(x_0 + h, y_0 + k) - f(x_0 + h, y_0) - f(x_0, y_0 + k) + f(x_0, y_0)}{hk}
 \]</div>
-<p>then</p>
+<p>Then, as <span class="math notranslate nohighlight">\(h, k \to 0\)</span>, <span class="math notranslate nohighlight">\(F(h,k) \to \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)\)</span> and also <span class="math notranslate nohighlight">\(F(h,k) \to \frac{\partial^2 f}{\partial x \partial y}(x_0, y_0)\)</span>, provided the second partial derivatives are continuous.</p>
+<section id="step-by-step">
+<h3>Step-by-step:<a class="headerlink" href="#step-by-step" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p>By the <strong>Mean Value Theorem</strong>, the numerator of <span class="math notranslate nohighlight">\(F(h,k)\)</span> can be interpreted as a finite difference approximation to a mixed partial derivative.</p></li>
+<li><p>Using Taylor’s Theorem with remainder, or via integral representations of derivatives, one can show that:</p>
 <div class="math notranslate nohighlight">
 \[
-\lim_{x \to c} f(x) = L.
+   \lim_{(h,k) \to (0,0)} F(h,k) = \frac{\partial^2 f}{\partial x \partial y}(x_0, y_0)
+   \]</div>
+<p>and also</p>
+<div class="math notranslate nohighlight">
+\[
+   \lim_{(h,k) \to (0,0)} F(h,k) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)
+   \]</div>
+<p>due to continuity of the second derivatives.</p>
+</li>
+<li><p>Hence, the limits agree and the mixed partials are equal.</p></li>
+</ol>
+<p>Therefore:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 f}{\partial x \partial y}(x_0, y_0) = \frac{\partial^2 f}{\partial y \partial x}(x_0, y_0)
 \]</div>
 </section>
-</div><p>The squeeze theorem (also called the sandwich theorem) intuitively says that if a function <span class="math notranslate nohighlight">\(f(x)\)</span> is “trapped” or “squeezed” between two other functions <span class="math notranslate nohighlight">\(g(x)\)</span> and <span class="math notranslate nohighlight">\(h(x)\)</span> that both approach the same limit <span class="math notranslate nohighlight">\(L\)</span>, then the squeezed function <span class="math notranslate nohighlight">\(f(x)\)</span> must also approach that same limit <span class="math notranslate nohighlight">\(L\)</span>. This is particularly useful for evaluating limits of complicated functions by bounding them with simpler ones whose limits we already know.</p>
+</section>
 <hr class="docutils" />
-<div class="proof admonition" id="proof">
-<p>Proof. <strong>Squeeze theorem.</strong></p>
-<p><strong>Step 1: Set up the assumptions clearly.</strong>
-We have three functions <span class="math notranslate nohighlight">\(g(x), f(x), h(x)\)</span> satisfying:</p>
+<section id="when-clairauts-theorem-does-not-apply">
+<h2>When Clairaut’s Theorem <strong>Does Not Apply</strong><a class="headerlink" href="#when-clairauts-theorem-does-not-apply" title="Link to this heading">#</a></h2>
+<p>If the second-order mixed partial derivatives exist but are <strong>not continuous</strong>, the symmetry may fail. A classic counterexample is:</p>
 <div class="math notranslate nohighlight">
-\[
-g(x) \leq f(x) \leq h(x),\quad \text{for all } x \text{ near } c, x \neq c,
-\]</div>
-<p>and we have the limit conditions:</p>
-<div class="math notranslate nohighlight">
-\[
-\lim_{x\to c} g(x) = L \quad \text{and} \quad \lim_{x\to c} h(x) = L.
-\]</div>
-<p>Let’s prove that <span class="math notranslate nohighlight">\(\lim_{x\to c} f(x) = L\)</span>.</p>
-<p><strong>Step 2: Use the definition of limit.</strong>
-By definition of limits, for any <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>, there exists some <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span> such that whenever <span class="math notranslate nohighlight">\(0 &lt; |x - c| &lt; \delta\)</span>:</p>
-<ul class="simple">
-<li><p>For <span class="math notranslate nohighlight">\(g(x)\)</span>:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-|g(x)-L| &lt; \varepsilon \quad\Longleftrightarrow\quad L-\varepsilon &lt; g(x) &lt; L+\varepsilon.
-\]</div>
-<ul class="simple">
-<li><p>For <span class="math notranslate nohighlight">\(h(x)\)</span>:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-|h(x)-L| &lt; \varepsilon \quad\Longleftrightarrow\quad L-\varepsilon &lt; h(x) &lt; L+\varepsilon.
-\]</div>
-<p><strong>Step 3: Combine inequalities.</strong>
-From these two inequalities, for <span class="math notranslate nohighlight">\(0 &lt; |x-c|&lt;\delta\)</span>, we have:</p>
-<ul>
-<li><p>Lower bound:</p>
-<div class="math notranslate nohighlight">
-\[
-  g(x) &gt; L-\varepsilon.
-  \]</div>
-</li>
-<li><p>Upper bound:</p>
-<div class="math notranslate nohighlight">
-\[
-  h(x) &lt; L+\varepsilon.
-  \]</div>
-</li>
-</ul>
-<p>Thus, combining these with the given inequalities for <span class="math notranslate nohighlight">\(f(x)\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-L-\varepsilon \;&lt;\; g(x) \;\leq\; f(x) \;\leq\; h(x) \;&lt;\; L+\varepsilon.
-\]</div>
-<p>Hence, for any <span class="math notranslate nohighlight">\(\varepsilon &gt;0\)</span>, there exists a <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span>, such that if <span class="math notranslate nohighlight">\(0 &lt; |x-c| &lt; \delta\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-|f(x)-L|&lt;\varepsilon.
-\]</div>
-<p>This precisely matches the definition of the limit <span class="math notranslate nohighlight">\(\lim_{x\to c} f(x)=L\)</span>.</p>
-<p><strong>Step 4: Conclusion.</strong>
-Thus, by definition of the limit, we have:</p>
-<div class="math notranslate nohighlight">
-\[
-\lim_{x\to c} f(x)=L,
-\]</div>
-<p>which proves the squeeze theorem. ◻</p>
-</div>
-<p>Here’s the visualization of a function <span class="math notranslate nohighlight">\(f(x)\)</span>, which oscillates between a lower bound <span class="math notranslate nohighlight">\(g(x)\)</span> and an upper bound <span class="math notranslate nohighlight">\(h(x)\)</span>.</p>
-<p>The bounding functions <span class="math notranslate nohighlight">\(g(x)\)</span> and <span class="math notranslate nohighlight">\(h(x)\)</span> are defined as:</p>
-<div class="math notranslate nohighlight">
-\[
-g(x) = x^2 \cos\left(\frac{1}{x}\right) - x^2 \quad \text{ and } \quad h(x) = x^2 \cos\left(\frac{1}{x}\right) + x^2
-\]</div>
-<p>As <span class="math notranslate nohighlight">\(x\)</span> approaches the limit point <span class="math notranslate nohighlight">\(c=0\)</span>, both <span class="math notranslate nohighlight">\(g(x)\)</span> and <span class="math notranslate nohighlight">\(h(x)\)</span> approach <span class="math notranslate nohighlight">\(0\)</span>, squeezing the function <span class="math notranslate nohighlight">\(f(x)\)</span> to also approach <span class="math notranslate nohighlight">\(0\)</span>.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Define the functions</span>
-<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
-
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">x</span><span class="p">)</span>
-
-<span class="c1"># Define the x values (avoiding division by zero)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
-
-<span class="c1"># Plot the functions</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$g(x)$ (lower bound)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$h(x)$ (upper bound)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(x)$ (squeezed)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-
-<span class="c1"># Limit point c=0</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Limit at $c=0$&#39;</span><span class="p">)</span>
-
-<span class="c1"># Formatting the plot</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Visualization of the Squeeze Theorem&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Function values&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<img alt="../_images/a288d1ce1c3b226c7ccf21603df9490a0cc07f6db81b8d173b777d8f77ecb042.png" src="../_images/a288d1ce1c3b226c7ccf21603df9490a0cc07f6db81b8d173b777d8f77ecb042.png" />
-</div>
-</div>
-<p>The red function <span class="math notranslate nohighlight">\(f(x)\)</span> is “squeezed” between the green <span class="math notranslate nohighlight">\(g(x)\)</span> and blue <span class="math notranslate nohighlight">\(h(x)\)</span> functions as <span class="math notranslate nohighlight">\(x \to 0\)</span>. Both the upper and lower bounding functions approach zero, forcing the squeezed function <span class="math notranslate nohighlight">\(f(x)\)</span> to approach zero as well.</p>
+\[\begin{split}
+f(x, y) =
+\begin{cases}
+\frac{xy(x^2 - y^2)}{x^2 + y^2}, &amp; \text{if } (x, y) \neq (0, 0) \\
+0, &amp; \text{if } (x, y) = (0, 0)
+\end{cases}
+\end{split}\]</div>
+<p>This function has both mixed partial derivatives at the origin, but they are not equal because they are not continuous there.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -628,20 +565,20 @@ g(x) = x^2 \cos\left(\frac{1}{x}\right) - x^2 \quad \text{ and } \quad h(x) = x^
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="scalar-scalar_chain_rule.html"
+       href="second_fundamental_theorem_calculus.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">The Chain Rule for Scalar-Scalar Functions</p>
+        <p class="prev-next-title">Second Fundamental Theorem of Calculus</p>
       </div>
     </a>
     <a class="right-next"
-       href="first_fundamental_theorem_calculus.html"
+       href="differentiation_rules.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">First Fundamental Theorem of Calculus</p>
+        <p class="prev-next-title">Basic Differentiation Rules</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -651,6 +588,26 @@ g(x) = x^2 \cos\left(\frac{1}{x}\right) - x^2 \quad \text{ and } \quad h(x) = x^
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proof-sketch">Proof Sketch</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step">Step-by-step:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-clairauts-theorem-does-not-apply">When Clairaut’s Theorem <strong>Does Not Apply</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

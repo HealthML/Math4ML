@@ -1,7 +1,6 @@
 # Generalized Least Squares for Logistic Regression
 
 It frames each IRLS step as solving a **generalized least squares problem** involving a symmetric positive definite matrix. This unifies the treatment with Ridge Regression and provides a nice segue to Newton's method (which you revisit later).
-
 ---
 
 ## IRLS as a Sequence of Generalized Least Squares Problems

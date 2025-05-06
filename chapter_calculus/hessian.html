@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/hessian.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
+    <link rel="next" title="Taylor’s Theorem" href="taylors_theorem.html" />
     <link rel="prev" title="Line Search Methods in Optimization" href="line_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -185,7 +185,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Basics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
@@ -215,6 +215,7 @@
 <li class="toctree-l2"><a class="reference internal" href="analytical_solution_ridge.html">Quadratic Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_search.html">Line Search</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
 </ul>
@@ -230,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
@@ -445,12 +447,25 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-taylor-expansion">First-Order Taylor Expansion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion">Second-Order Taylor Expansion</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvature-in-one-dimension"><strong>Curvature in One Dimension</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvature-in-two-dimensions"><strong>Curvature in Two Dimensions</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example"><strong>A Simple Example</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-vector-fields">Gradient Vector Fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-works-in-the-two-examples">🔍 How This Works in the Two Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bowl-f-x-y-x-2-y-2">🟢 <strong>Bowl: <span class="math notranslate nohighlight">\(f(x, y) = x^2 + y^2\)</span></strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saddle-f-x-y-x-2-y-2">🔵 <strong>Saddle: <span class="math notranslate nohighlight">\(f(x, y) = x^2 - y^2\)</span></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extension-the-hessian-as-jacobian-of-the-gradient">🧩 Optional Extension: The Hessian as Jacobian of the Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-and-the-hessian-why-off-diagonal-terms-matter">Gradient Descent and the Hessian: Why Off-Diagonal Terms Matter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-idea">🧠 Key Idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-spherical-hessian-identity-matrix">Case 1: Spherical Hessian (Identity Matrix)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-anisotropic-hessian-different-curvatures">Case 2: Anisotropic Hessian (Different Curvatures)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-3-skewed-hessian-off-diagonal-elements">Case 3: Skewed Hessian (Off-Diagonal Elements)</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -464,8 +479,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-hessian">
 <h1>The Hessian<a class="headerlink" href="#the-hessian" title="Link to this heading">#</a></h1>
-<p>The <strong>Hessian</strong> matrix of a scalar-valued function <span class="math notranslate nohighlight">\( f : \mathbb{R}^d \to \mathbb{R} \)</span> is a square matrix
-of second-order partial derivatives:</p>
+<p>In one variable, the second derivative of a function is a number that tells us about the curvature of the function.
+But in many variables, each partial derivative can change in many directions—so we need a <strong>matrix</strong> of second derivatives:</p>
+<p>The <strong>Hessian</strong> matrix of a scalar-valued function <span class="math notranslate nohighlight">\( f : \mathbb{R}^d \to \mathbb{R} \)</span> is a square matrix of second-order partial derivatives:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\nabla^2 f(\mathbf{x}) = \begin{bmatrix}
     \frac{\partial^2 f}{\partial x_1^2} &amp; \dots &amp; \frac{\partial^2 f}{\partial x_1 \partial x_d} \\
@@ -473,37 +489,28 @@ of second-order partial derivatives:</p>
     \frac{\partial^2 f}{\partial x_d \partial x_1} &amp; \dots &amp; \frac{\partial^2 f}{\partial x_d^2}
 \end{bmatrix}, \quad\text{i.e.,}\quad
 [\nabla^2 f]_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j} \end{split}\]</div>
-<p>If the second partial derivatives are continuous (as they often are in optimization), then by <strong>Clairaut’s theorem</strong>,
-the order of differentiation can be interchanged: <span class="math notranslate nohighlight">\( \frac{\partial^2 f}{\partial x_i \partial x_j} = \frac{\partial^2 f}{\partial x_j \partial x_i} \)</span>,
-which implies that the Hessian matrix is symmetric.</p>
-<hr class="docutils" />
-<section id="first-order-taylor-expansion">
-<h2>First-Order Taylor Expansion<a class="headerlink" href="#first-order-taylor-expansion" title="Link to this heading">#</a></h2>
-<p>Recall, that we can create a locally linear approximation to a function at a point <span class="math notranslate nohighlight">\(\mathbf{x}_0 \in \mathbb{R}^d \)</span> using the gradient at <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}_0)\)</span>.</p>
+<div class="proof theorem admonition" id="thm-Clairaut">
+<p class="admonition-title"><span>Theorem </span> (Clairaut Schwarz)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R}^d \to \mathbb{R}\)</span> be a function such that both mixed partial derivatives <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_i \partial x_j}\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_i \partial x_j}\)</span> exist and are <strong>continuous</strong> on an open set containing a point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span></p>
+<p>Then:</p>
 <div class="math notranslate nohighlight">
-\[ f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) . \]</div>
-<p>This affine approximation is also known as the <strong>first-order Taylor approximation</strong>.</p>
-<p>It agrees with the original function in value and gradient at the point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p>
+\[
+\boxed{
+\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial y \partial x}(\mathbf{x}_0)
+}
+\]</div>
+<p>That is, <strong>the order of differentiation can be interchanged</strong>.</p>
 </section>
-<section id="second-order-taylor-expansion">
-<h2>Second-Order Taylor Expansion<a class="headerlink" href="#second-order-taylor-expansion" title="Link to this heading">#</a></h2>
-<p>The Hessian appears naturally in the <strong>second-order Taylor approximation</strong> of a function around a point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \in \mathbb{R}^d \)</span>.
-For a sufficiently smooth function <span class="math notranslate nohighlight">\( f : \mathbb{R}^d \to \mathbb{R} \)</span>, we can approximate its values near <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span> as:</p>
-<div class="math notranslate nohighlight">
-\[ f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) + \frac{1}{2}(\mathbf{x} - \mathbf{x}_0)^\top \nabla^2 f(\mathbf{x}_0)(\mathbf{x} - \mathbf{x}_0). \]</div>
-<p>This is a <strong>local quadratic approximation</strong> to the function. It agrees with the original function in value, gradient, and Hessian at the point <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p>
-<section id="interpretation">
-<h3>Interpretation:<a class="headerlink" href="#interpretation" title="Link to this heading">#</a></h3>
+</div><p>Clairut’s Theorem implies that the Hessian matrix is symmetric. We provide a proof sketch in the appendix.</p>
+<section id="curvature-in-one-dimension">
+<h2><strong>Curvature in One Dimension</strong><a class="headerlink" href="#curvature-in-one-dimension" title="Link to this heading">#</a></h2>
+<p>Recall the second derivative in one dimension:</p>
 <ul class="simple">
-<li><p>The <strong>gradient</strong> term captures the linear behavior (slope) of the function near <span class="math notranslate nohighlight">\( \mathbf{x}_0 \)</span>.</p></li>
-<li><p>The <strong>Hessian</strong> term captures the curvature — how the gradient changes in different directions.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x) = x^2\)</span>: curve is “smiling” ⇒ second derivative is positive ⇒ function is curving upward.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x) = -x^2\)</span>: curve is “frowning” ⇒ second derivative is negative ⇒ function is curving downward.</p></li>
+<li><p>Point: second derivative tells us <strong>how the function curves</strong>.</p></li>
 </ul>
-<hr class="docutils" />
-<p>We illustrate both the first-order and the second-order Taylor expansion using the following function.</p>
-<div class="math notranslate nohighlight">
-\[ f(x, y) = \log(1 + x^2 + y^2) \]</div>
-<p>We compute the first-order and second-order Taylor approximations at the point <span class="math notranslate nohighlight">\( (x_0, y_0) = (0.3, 0.3) \)</span>.</p>
-<p>The true function and the linear approximation match in value and gradient at the point <span class="math notranslate nohighlight">\( (x_0, y_0)\)</span> but differ elsewhere. Similarly, the quadratic approximation match in value, gradient, and Hessian at this point but differ elsewhere.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -513,68 +520,30 @@ For a sufficiently smooth function <span class="math notranslate nohighlight">\(
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
 
-<span class="c1"># Define the function and its gradient and Hessian</span>
-<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">f1_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># Second derivative of x^2</span>
+<span class="n">f2_dd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Second derivative of -x^2</span>
 
-<span class="c1"># Compute value, gradient, and Hessian at (x0, y0)</span>
-<span class="n">r2</span> <span class="o">=</span> <span class="n">x0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y0</span><span class="o">**</span><span class="mi">2</span>
-<span class="n">f0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span>
-<span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">y0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span>
-<span class="n">H</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">],</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-<span class="c1"># Taylor expansion up to second order</span>
-<span class="k">def</span> <span class="nf">f_taylor_first_order</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x0</span>
-    <span class="n">dy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y0</span>
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">f0</span> <span class="o">+</span> <span class="p">(</span><span class="n">grad</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="c1"># Plot for f(x) = x^2</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(x) = x^2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f1_dd</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f</span><span class="se">\&#39;\&#39;</span><span class="s1">(x) = 2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Positive Curvature&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Taylor expansion up to second order</span>
-<span class="k">def</span> <span class="nf">f_taylor_second_order</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x0</span>
-    <span class="n">dy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y0</span>
-    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">f0</span> <span class="o">+</span> <span class="p">(</span><span class="n">grad</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">delta</span> <span class="o">@</span> <span class="n">H</span> <span class="o">@</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="c1"># Plot for f(x) = -x^2</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(x) = -x^2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f2_dd</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f</span><span class="se">\&#39;\&#39;</span><span class="s1">(x) = -2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Negative Curvature&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Create grid for plotting</span>
-<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x0</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y0</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
-<span class="n">Z_true</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
-<span class="n">Z_first</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">Z_second</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-        <span class="n">Z_first</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_taylor_first_order</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
-        <span class="n">Z_second</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_taylor_second_order</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
-
-<span class="c1"># Plot both Taylor approximations</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-
-<span class="n">true_surface1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_true</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">approx_surface1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_first</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;First-Order Taylor Approximation&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-
-<span class="n">true_surface2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_true</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">approx_surface2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_second</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Second-Order Taylor Approximation&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Second Derivative as Curvature in 1D&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -582,18 +551,350 @@ For a sufficiently smooth function <span class="math notranslate nohighlight">\(
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/6c37d82f628c849e04c42112f9185e882077595ab2146dc80433158ab00aacc6.png" src="../_images/6c37d82f628c849e04c42112f9185e882077595ab2146dc80433158ab00aacc6.png" />
+<img alt="../_images/280ad0c54080d3566fe03cd951ef9e3b951eb1ef49d7ca01435ef7f39920d428.png" src="../_images/280ad0c54080d3566fe03cd951ef9e3b951eb1ef49d7ca01435ef7f39920d428.png" />
 </div>
 </div>
-<p>This visualization shows how the first-order (left) and second-order (right) Taylor expansions approximate the original function locally around the point <span class="math notranslate nohighlight">\( (0.3,0.3) \)</span>, but deviates farther away. Both approximations are shown in blue to red and the original function in yellow to green colors.</p>
+<p>The Hessian generalizes this intuition to multiple Dimensions.</p>
+</section>
+<section id="curvature-in-two-dimensions">
+<h2><strong>Curvature in Two Dimensions</strong><a class="headerlink" href="#curvature-in-two-dimensions" title="Link to this heading">#</a></h2>
+<p>Now, let’s look at a simple 2D surface like:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x, y) = x^2 + y^2\)</span>: bowl shape</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x, y) = x^2 - y^2\)</span>: saddle shape</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Bowl: f(x, y) = x^2 + y^2</span>
+<span class="n">Z_bowl</span> <span class="o">=</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Saddle: f(x, y) = x^2 - y^2</span>
+<span class="n">Z_saddle</span> <span class="o">=</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Bowl surface</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_bowl</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Bowl: $f(x, y) = x^2 + y^2$&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;f(x, y)&quot;</span><span class="p">)</span>
+<span class="c1"># Add annotations for curvature</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;∂²f/∂x² = 2</span><span class="se">\n</span><span class="s1">∂²f/∂y² = 2&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Saddle surface</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z_saddle</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Saddle: $f(x, y) = x^2 - y^2$&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;f(x, y)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;∂²f/∂x² = 2</span><span class="se">\n</span><span class="s1">∂²f/∂y² = -2&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Curvature in 2D: Bowl vs Saddle&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/e0cf843493f13d1a7132675e668b3016c8c3bf1951a4dc7cb594c2ac341c0e08.png" src="../_images/e0cf843493f13d1a7132675e668b3016c8c3bf1951a4dc7cb594c2ac341c0e08.png" />
+</div>
+</div>
+<p>At each point, the function curves more or less in certain directions. The Hessian is a matrix that captures all this curvature information—it tells us how the slope (the gradient) changes in every direction.</p>
+<hr class="docutils" />
+<section id="a-simple-example">
+<h3><strong>A Simple Example</strong><a class="headerlink" href="#a-simple-example" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+f(x, y) = 3x^2 + 2xy + y^2
+\]</div>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x} = 6x + 2y\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y} = 2x + 2y\)</span></p></li>
+<li><p>Hessian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \nabla^2 f = \begin{bmatrix}
+  6 &amp; 2 \\
+  2 &amp; 2
+  \end{bmatrix}
+  \end{split}\]</div>
+</li>
+</ul>
+<p>Each entry corresponds to a second derivative—either in the x-direction, y-direction, or mixed for the off-diagonals.</p>
 </section>
 </section>
-<section id="summary-and-outlook">
-<h2>Summary and Outlook<a class="headerlink" href="#summary-and-outlook" title="Link to this heading">#</a></h2>
-<p>An advantage of a local quadratic approximation is that we can find its minimum analytically.
-This idea lies at the heart of <strong>Newton’s method</strong>.
-The Hessian matrix also allows us also to better understand the properties of stationary points of a function and derive <strong>second-order conditions of minima</strong>.</p>
-<p>Before we will explore these two topics further, we first have to better understand the <strong>properties of matrices</strong> such as the Hessian. So let’s turn to the topic of <strong>matrix algebra</strong>.</p>
+<section id="gradient-vector-fields">
+<h2>Gradient Vector Fields<a class="headerlink" href="#gradient-vector-fields" title="Link to this heading">#</a></h2>
+<p>The <strong>Hessian matrix</strong> describes how the <strong>gradient vector</strong> changes as you move through space. Let’s visualize this in a grid with arrows pointing in the direction of the gradient — i.e., where the function increases most steeply.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Gradients</span>
+<span class="n">U_bowl</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span>
+<span class="n">V_bowl</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Y</span>
+
+<span class="n">U_saddle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">X</span>
+<span class="n">V_saddle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Y</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Bowl gradient field</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U_bowl</span><span class="p">,</span> <span class="n">V_bowl</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Gradient Field: $f(x, y) = x^2 + y^2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">2.3</span><span class="p">,</span><span class="mf">2.3</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">2.3</span><span class="p">,</span><span class="mf">2.3</span><span class="p">])</span>
+
+<span class="c1"># Saddle gradient field</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">U_saddle</span><span class="p">,</span> <span class="n">V_saddle</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Gradient Field: $f(x, y) = x^2 - y^2$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">2.3</span><span class="p">,</span><span class="mf">2.3</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">2.3</span><span class="p">,</span><span class="mf">2.3</span><span class="p">])</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Gradient Vector Fields Show How ∇f Changes&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/1b4b214a58ab48eab72c06aadc91143467dd8aba880c452e3cec108d21a5cb0b.png" src="../_images/1b4b214a58ab48eab72c06aadc91143467dd8aba880c452e3cec108d21a5cb0b.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>The <strong>gradient vector field</strong> shows how gradients vary over space.</p></li>
+<li><p>The <strong>Hessian</strong> is the <em>rate of change of the gradient</em>—it tells you how steep the slope is getting in every direction.</p></li>
+<li><p>The direction and length of arrows = the <strong>gradient vector</strong> at each point.</p></li>
+<li><p>The <strong>rate of change</strong> of those arrows = what the <strong>Hessian</strong> captures.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="how-this-works-in-the-two-examples">
+<h2>🔍 How This Works in the Two Examples<a class="headerlink" href="#how-this-works-in-the-two-examples" title="Link to this heading">#</a></h2>
+<section id="bowl-f-x-y-x-2-y-2">
+<h3>🟢 <strong>Bowl: <span class="math notranslate nohighlight">\(f(x, y) = x^2 + y^2\)</span></strong><a class="headerlink" href="#bowl-f-x-y-x-2-y-2" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Gradient</strong>: <span class="math notranslate nohighlight">\(\nabla f(x, y) = [2x,\ 2y]\)</span></p></li>
+<li><p><strong>Hessian</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \nabla^2 f = \begin{bmatrix}
+  2 &amp; 0 \\
+  0 &amp; 2
+  \end{bmatrix}
+  \end{split}\]</div>
+</li>
+</ul>
+<p>This means:</p>
+<ul class="simple">
+<li><p>In the <strong>x-direction</strong>, the gradient increases by 2 units per unit of x.</p></li>
+<li><p>In the <strong>y-direction</strong>, the gradient increases by 2 units per unit of y.</p></li>
+<li><p>The gradient field shows arrows pointing radially outward—getting longer linearly with distance from the origin.</p></li>
+<li><p>This <strong>linear increase</strong> in slope is exactly what the constant entries (2) in the Hessian mean.</p></li>
+</ul>
+</section>
+<section id="saddle-f-x-y-x-2-y-2">
+<h3>🔵 <strong>Saddle: <span class="math notranslate nohighlight">\(f(x, y) = x^2 - y^2\)</span></strong><a class="headerlink" href="#saddle-f-x-y-x-2-y-2" title="Link to this heading">#</a></h3>
+<ul>
+<li><p><strong>Gradient</strong>: <span class="math notranslate nohighlight">\(\nabla f(x, y) = [2x,\ -2y]\)</span></p></li>
+<li><p><strong>Hessian</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \nabla^2 f = \begin{bmatrix}
+  2 &amp; 0 \\
+  0 &amp; -2
+  \end{bmatrix}
+  \end{split}\]</div>
+</li>
+</ul>
+<p>This means:</p>
+<ul class="simple">
+<li><p>In the <strong>x-direction</strong>, the gradient increases at the same rate as before: 2 per unit of x.</p></li>
+<li><p>In the <strong>y-direction</strong>, the gradient <strong>decreases</strong> (negative rate): -2 per unit of y.</p></li>
+<li><p>The gradient field shows <strong>outward arrows</strong> in the x-direction, but <strong>inward arrows</strong> in the y-direction.</p></li>
+<li><p>That flip in sign in the <strong>Hessian entry <span class="math notranslate nohighlight">\(\partial^2 f/\partial y^2 = -2\)</span></strong> explains why the gradient pulls you <em>toward</em> the origin in y.</p></li>
+</ul>
+</section>
+</section>
+<section id="optional-extension-the-hessian-as-jacobian-of-the-gradient">
+<h2>🧩 Optional Extension: The Hessian as Jacobian of the Gradient<a class="headerlink" href="#optional-extension-the-hessian-as-jacobian-of-the-gradient" title="Link to this heading">#</a></h2>
+<p>We can think of the Hessian as the <strong>Jacobian of the gradient</strong> — it’s the matrix of all partial derivatives of the components of the gradient vector field.</p>
+<p>That is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla f(x, y) = 
+\begin{bmatrix}
+\frac{\partial f}{\partial x} \\
+\frac{\partial f}{\partial y}
+\end{bmatrix}
+\quad\Rightarrow\quad
+\nabla^2 f(x, y) = \text{Jacobian}\left( \nabla f(x, y) \right)
+\end{split}\]</div>
+</section>
+<section id="gradient-descent-and-the-hessian-why-off-diagonal-terms-matter">
+<h2>Gradient Descent and the Hessian: Why Off-Diagonal Terms Matter<a class="headerlink" href="#gradient-descent-and-the-hessian-why-off-diagonal-terms-matter" title="Link to this heading">#</a></h2>
+<section id="key-idea">
+<h3>🧠 Key Idea<a class="headerlink" href="#key-idea" title="Link to this heading">#</a></h3>
+<p>Gradient descent minimizes functions by moving in the direction <strong>opposite the gradient</strong>.</p>
+<p>For quadratic functions:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \frac{1}{2} x^\top A x
+\quad \text{with gradient} \quad \nabla f(x) = A x
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(A\)</span> is the <strong>Hessian matrix</strong>, and it determines the <strong>shape of level sets</strong> and how gradient descent behaves.</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(A\)</span> is diagonal → level sets are <strong>axis-aligned ellipses</strong> (or circles).</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(A\)</span> has off-diagonal elements → ellipses are <strong>rotated</strong>, and gradient descent struggles (zig-zags).</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad</span>
+        <span class="n">traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_descent</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+
+    <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">gradient_descent</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">traj</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">traj</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GD Path&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="case-1-spherical-hessian-identity-matrix">
+<h3>Case 1: Spherical Hessian (Identity Matrix)<a class="headerlink" href="#case-1-spherical-hessian-identity-matrix" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_sphere</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">plot_descent</span><span class="p">(</span><span class="n">A_sphere</span><span class="p">,</span> <span class="s2">&quot;Spherical Hessian: $A = I$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b81f84419d1bba1ea196cff3cfcc29d30f2be3c1b28048aecd7e6b5d4230fa8f.png" src="../_images/b81f84419d1bba1ea196cff3cfcc29d30f2be3c1b28048aecd7e6b5d4230fa8f.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Level sets are circles.</p></li>
+<li><p>Gradient descent takes straight, efficient steps toward the minimum.</p></li>
+</ul>
+</section>
+<section id="case-2-anisotropic-hessian-different-curvatures">
+<h3>Case 2: Anisotropic Hessian (Different Curvatures)<a class="headerlink" href="#case-2-anisotropic-hessian-different-curvatures" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_aniso</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">plot_descent</span><span class="p">(</span><span class="n">A_aniso</span><span class="p">,</span> <span class="s2">&quot;Anisotropic Hessian: $A = </span><span class="se">\\</span><span class="s2">mathrm</span><span class="si">{diag}</span><span class="s2">(10, 1)$&quot;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/aa9a4e27b95901b8c0c548fa66b5fc873f027c945b90b5e9fc2693bae141d497.png" src="../_images/aa9a4e27b95901b8c0c548fa66b5fc873f027c945b90b5e9fc2693bae141d497.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Level sets are stretched ellipses.</p></li>
+<li><p>Gradient descent zig-zags, especially in the steep direction.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="case-3-skewed-hessian-off-diagonal-elements">
+<h3>Case 3: Skewed Hessian (Off-Diagonal Elements)<a class="headerlink" href="#case-3-skewed-hessian-off-diagonal-elements" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_skew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
+<span class="n">plot_descent</span><span class="p">(</span><span class="n">A_skew</span><span class="p">,</span> <span class="s2">&quot;Skewed Hessian&quot;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/0944ee110ce02ef6287964ccdf0578b1cddf124755fea114d7d6ebbd25b3b5e2.png" src="../_images/0944ee110ce02ef6287964ccdf0578b1cddf124755fea114d7d6ebbd25b3b5e2.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(A = \begin{bmatrix} 10 &amp; 6 \\ 6 &amp; 8 \end{bmatrix}\)</span></p>
+<ul class="simple">
+<li><p>Level sets are rotated ellipses.</p></li>
+<li><p>Gradient descent strongly zig-zags and converges slowly.</p></li>
+<li><p>The skew comes directly from the <strong>off-diagonal elements in the Hessian</strong>.</p></li>
+</ul>
+<p>Off-diagonal terms in the Hessian rotate the level curves. Since gradient descent moves perpendicular to level curves, it zig-zags when these are skewed. This is one of the motivations for using <strong>second-order methods</strong> that take the Hessian into account.</p>
+</section>
 </section>
 </section>
 
@@ -637,11 +938,11 @@ The Hessian matrix also allows us also to better understand the properties of st
       </div>
     </a>
     <a class="right-next"
-       href="../appendix/proofs.html"
+       href="taylors_theorem.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Detailed Proofs</p>
+        <p class="prev-next-title">Taylor’s Theorem</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -661,12 +962,25 @@ The Hessian matrix also allows us also to better understand the properties of st
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-order-taylor-expansion">First-Order Taylor Expansion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion">Second-Order Taylor Expansion</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvature-in-one-dimension"><strong>Curvature in One Dimension</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvature-in-two-dimensions"><strong>Curvature in Two Dimensions</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-simple-example"><strong>A Simple Example</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-vector-fields">Gradient Vector Fields</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-works-in-the-two-examples">🔍 How This Works in the Two Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bowl-f-x-y-x-2-y-2">🟢 <strong>Bowl: <span class="math notranslate nohighlight">\(f(x, y) = x^2 + y^2\)</span></strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#saddle-f-x-y-x-2-y-2">🔵 <strong>Saddle: <span class="math notranslate nohighlight">\(f(x, y) = x^2 - y^2\)</span></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extension-the-hessian-as-jacobian-of-the-gradient">🧩 Optional Extension: The Hessian as Jacobian of the Gradient</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-and-the-hessian-why-off-diagonal-terms-matter">Gradient Descent and the Hessian: Why Off-Diagonal Terms Matter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-idea">🧠 Key Idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-spherical-hessian-identity-matrix">Case 1: Spherical Hessian (Identity Matrix)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-anisotropic-hessian-different-curvatures">Case 2: Anisotropic Hessian (Different Curvatures)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#case-3-skewed-hessian-off-diagonal-elements">Case 3: Skewed Hessian (Off-Diagonal Elements)</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

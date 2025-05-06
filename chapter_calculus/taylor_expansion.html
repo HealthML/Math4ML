@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Matrix calculus &#8212; Mathematics for Machine Learning</title>
+    <title>Summary and Outlook &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/matrix_calculus';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/matrix_calculus.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_calculus/taylor_expansion';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_calculus/taylor_expansion.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The Jacobian" href="jacobian.html" />
-    <link rel="prev" title="Gradient Descent in Ridge Regression" href="gradient_descent_ridge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -203,11 +203,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_calculus.html">Calculus and Optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="extrema.html">Extrema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradients.html">Gradients</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gradient_descent_ridge.html">Gradient Descent</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_calculus.html">Matrix Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jacobian.html">Jacobian</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chain_rule.html">Chain Rule</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mean_value_theorem.html">Mean Value Theorem</a></li>
@@ -306,7 +306,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/matrix_calculus.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_calculus/taylor_expansion.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -323,7 +323,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/matrix_calculus.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_calculus/taylor_expansion.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -353,7 +353,7 @@
       
       
       
-      <li><a href="../_sources/chapter_calculus/matrix_calculus.md" target="_blank"
+      <li><a href="../_sources/chapter_calculus/taylor_expansion.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -424,7 +424,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -435,11 +437,36 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Matrix calculus</h1>
+    <h1>Summary and Outlook</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Summary and Outlook</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion-in-mathbb-r-n">✅ Second-Order Taylor Expansion in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remainder-term-in-mathbb-r-n">🎯 Remainder Term in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-idea-2d-case">📈 Visualization Idea (2D case)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shall-i-generate-that-visualization-next">✅ Shall I generate that visualization next?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-mean-by-exact">🎓 What We Mean by “Exact”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-when-the-taylor-series-is-exact-the-analytic-case">✅ Case 1: When the Taylor Series is Exact — The Analytic Case</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-multivariate-taylor-series-analytic-functions"><strong>Theorem (Multivariate Taylor Series — Analytic Functions)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-when-the-taylor-series-is-not-exact">🚫 Case 2: When the Taylor Series Is Not Exact</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counterexample-bump-function">Counterexample (bump function):</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-3-when-the-series-is-exactly-finite-polynomial-case">✅ Case 3: When the Series is Exactly Finite (Polynomial Case)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧠 Summary</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">✍️ Conclusion</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -449,20 +476,192 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="matrix-calculus">
-<h1>Matrix calculus<a class="headerlink" href="#matrix-calculus" title="Link to this heading">#</a></h1>
-<p>Since a lot of optimization reduces to finding points where the gradient
-vanishes, it is useful to have differentiation rules for matrix and
-vector expressions. We give some common rules here. Probably the two
-most important for our purposes are</p>
+  <p>We illustrate both the first-order and the second-order Taylor expansion using the following function.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\nabla_\mathbf{x} &amp;(\mathbf{a}^{\!\top\!}\mathbf{x}) = \mathbf{a} \\
-\nabla_\mathbf{x} &amp;(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}) = (\mathbf{A} + \mathbf{A}^{\!\top\!})\mathbf{x}
-\end{aligned}\end{split}\]</div>
-<p>Note that this second rule is defined only if
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is square. Furthermore, if <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric, we
-can simplify the result to <span class="math notranslate nohighlight">\(2\mathbf{A}\mathbf{x}\)</span>.</p>
+\[ f(x, y) = \log(1 + x^2 + y^2) \]</div>
+<p>We compute the first-order and second-order Taylor approximations at the point <span class="math notranslate nohighlight">\( (x_0, y_0) = (0.3, 0.3) \)</span>.</p>
+<p>The true function and the linear approximation match in value and gradient at the point <span class="math notranslate nohighlight">\( (x_0, y_0)\)</span> but differ elsewhere. Similarly, the quadratic approximation match in value, gradient, and Hessian at this point but differ elsewhere.</p>
+<p>This visualization shows how the first-order (left) and second-order (right) Taylor expansions approximate the original function locally around the point <span class="math notranslate nohighlight">\( (0.3,0.3) \)</span>, but deviates farther away. Both approximations are shown in blue to red and the original function in yellow to green colors.</p>
+<section id="summary-and-outlook">
+<h1>Summary and Outlook<a class="headerlink" href="#summary-and-outlook" title="Link to this heading">#</a></h1>
+<p>An advantage of a local quadratic approximation is that we can find its minimum analytically.
+This idea lies at the heart of <strong>Newton’s method</strong>.
+The Hessian matrix also allows us also to better understand the properties of stationary points of a function and derive <strong>second-order conditions of minima</strong>.</p>
+<p>Before we will explore these two topics further, we first have to better understand the <strong>properties of matrices</strong> such as the Hessian. So let’s turn to the topic of <strong>matrix algebra</strong>.</p>
+<p>Perfect! You’re now looking at <strong>Taylor expansions for scalar-valued functions</strong> <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span>. This generalization is foundational for:</p>
+<ul class="simple">
+<li><p>Multivariate approximation</p></li>
+<li><p>Optimization (e.g. Newton’s method)</p></li>
+<li><p>Machine learning models (e.g. loss function landscapes)</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="second-order-taylor-expansion-in-mathbb-r-n">
+<h1>✅ Second-Order Taylor Expansion in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span><a class="headerlink" href="#second-order-taylor-expansion-in-mathbb-r-n" title="Link to this heading">#</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span> be twice continuously differentiable. The <strong>second-order Taylor expansion</strong> of <span class="math notranslate nohighlight">\(f\)</span> around a point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) + \frac{1}{2} (\mathbf{x} - \mathbf{x}_0)^\top \nabla^2 f(\mathbf{x}_0) (\mathbf{x} - \mathbf{x}_0)
+\]</div>
+<p>This approximation is:</p>
+<ul class="simple">
+<li><p>Exact up to first and second derivatives at <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span></p></li>
+<li><p>A <strong>quadratic form</strong> in <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{x}_0\)</span></p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="remainder-term-in-mathbb-r-n">
+<h1>🎯 Remainder Term in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span><a class="headerlink" href="#remainder-term-in-mathbb-r-n" title="Link to this heading">#</a></h1>
+<p>The <strong>remainder</strong> or <strong>error</strong> term (in Lagrange form) is:</p>
+<div class="math notranslate nohighlight">
+\[
+R(\mathbf{x}) = \frac{1}{6} \sum_{i,j,k} \frac{\partial^3 f}{\partial x_i \partial x_j \partial x_k}(\boldsymbol{\xi}) (x_i - x_{0i})(x_j - x_{0j})(x_k - x_{0k})
+\]</div>
+<p>or more compactly, in terms of the third-order tensor of derivatives:</p>
+<div class="math notranslate nohighlight">
+\[
+R(\mathbf{x}) = \mathcal{O}(\|\mathbf{x} - \mathbf{x}_0\|^3)
+\]</div>
+<p>So the second-order approximation becomes <strong>very accurate</strong> when <span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{x}_0\|\)</span> is small.</p>
+<hr class="docutils" />
+</section>
+<section id="visualization-idea-2d-case">
+<h1>📈 Visualization Idea (2D case)<a class="headerlink" href="#visualization-idea-2d-case" title="Link to this heading">#</a></h1>
+<p>We can visualize the true function and its second-order Taylor approximation for a function like:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x, y) = \log(1 + x^2 + y^2)
+\]</div>
+<p>Which is:</p>
+<ul class="simple">
+<li><p>Scalar-valued</p></li>
+<li><p>Twice differentiable</p></li>
+<li><p>Non-quadratic (so approximation is informative)</p></li>
+</ul>
+<p>We’ll plot:</p>
+<ul class="simple">
+<li><p>The true surface <span class="math notranslate nohighlight">\(f(x, y)\)</span></p></li>
+<li><p>The quadratic approximation centered at <span class="math notranslate nohighlight">\((x_0, y_0)\)</span></p></li>
+<li><p>The absolute error <span class="math notranslate nohighlight">\(|f(x, y) - T_2(x, y)|\)</span></p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="shall-i-generate-that-visualization-next">
+<h1>✅ Shall I generate that visualization next?<a class="headerlink" href="#shall-i-generate-that-visualization-next" title="Link to this heading">#</a></h1>
+<p>Let me know:</p>
+<ul class="simple">
+<li><p>The center point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span> (e.g. <span class="math notranslate nohighlight">\((1, 1)\)</span>)</p></li>
+<li><p>Any preferred function (or we use <span class="math notranslate nohighlight">\(\log(1 + x^2 + y^2)\)</span>)</p></li>
+<li><p>Whether you want the <strong>error surface</strong> plotted separately or as a heatmap over the function</p></li>
+</ul>
+<p>Yes — and this is a great question!</p>
+<p>The <strong>Taylor series</strong> is not <em>always</em> exact for general functions, but under certain regularity conditions, it can be <strong>provably exact</strong> in the limit (i.e., as the degree <span class="math notranslate nohighlight">\(k \to \infty\)</span>), or even <strong>exact after a finite number of terms</strong> (e.g., for polynomials).</p>
+<p>Let’s break this down step by step.</p>
+<hr class="docutils" />
+</section>
+<section id="what-we-mean-by-exact">
+<h1>🎓 What We Mean by “Exact”<a class="headerlink" href="#what-we-mean-by-exact" title="Link to this heading">#</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span> be a smooth function and <span class="math notranslate nohighlight">\(\mathbf{x}_0 \in \mathbb{R}^n\)</span>. We say the Taylor series is <strong>exact</strong> at <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> if:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) = \sum_{|\alpha| \ge 0} \frac{D^\alpha f(\mathbf{x}_0)}{\alpha!} (\mathbf{x} - \mathbf{x}_0)^\alpha
+\]</div>
+<p>That is, the infinite Taylor series <strong>converges</strong> to the actual value of the function.</p>
+<hr class="docutils" />
+</section>
+<section id="case-1-when-the-taylor-series-is-exact-the-analytic-case">
+<h1>✅ Case 1: When the Taylor Series is Exact — The Analytic Case<a class="headerlink" href="#case-1-when-the-taylor-series-is-exact-the-analytic-case" title="Link to this heading">#</a></h1>
+<section id="theorem-multivariate-taylor-series-analytic-functions">
+<h2><strong>Theorem (Multivariate Taylor Series — Analytic Functions)</strong><a class="headerlink" href="#theorem-multivariate-taylor-series-analytic-functions" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(f : \mathbb{R}^n \to \mathbb{R}\)</span> be <strong>analytic</strong> at <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>, meaning that it equals its Taylor series in a neighborhood of <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) = \sum_{k=0}^\infty \sum_{|\alpha| = k} \frac{D^\alpha f(\mathbf{x}_0)}{\alpha!} (\mathbf{x} - \mathbf{x}_0)^\alpha
+\quad \text{for all } \mathbf{x} \text{ near } \mathbf{x}_0.
+\]</div>
+<p>✅ Then the Taylor series is exact (it converges to <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>).</p>
+<p><strong>Proof idea</strong>:</p>
+<ul class="simple">
+<li><p>Use bounds on all derivatives <span class="math notranslate nohighlight">\(D^\alpha f\)</span></p></li>
+<li><p>Show the remainder <span class="math notranslate nohighlight">\(R_k(\mathbf{x}) \to 0\)</span> as <span class="math notranslate nohighlight">\(k \to \infty\)</span></p></li>
+<li><p>This follows from standard results in analysis (e.g., ratio test + uniform convergence)</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+<section id="case-2-when-the-taylor-series-is-not-exact">
+<h1>🚫 Case 2: When the Taylor Series Is Not Exact<a class="headerlink" href="#case-2-when-the-taylor-series-is-not-exact" title="Link to this heading">#</a></h1>
+<p>There exist <strong>infinitely differentiable functions</strong> <span class="math notranslate nohighlight">\(f \in C^\infty\)</span> for which the Taylor series <strong>does not converge to <span class="math notranslate nohighlight">\(f\)</span></strong>.</p>
+<section id="counterexample-bump-function">
+<h2>Counterexample (bump function):<a class="headerlink" href="#counterexample-bump-function" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = 
+\begin{cases}
+e^{-1/x^2} &amp; \text{if } x \neq 0 \\
+0 &amp; \text{if } x = 0
+\end{cases}
+\end{split}\]</div>
+<p>Then <span class="math notranslate nohighlight">\(f \in C^\infty(\mathbb{R})\)</span>, and <strong>all</strong> derivatives at 0 vanish:</p>
+<div class="math notranslate nohighlight">
+\[
+f^{(k)}(0) = 0 \quad \text{for all } k
+\]</div>
+<p>So its Taylor series at 0 is identically zero:</p>
+<div class="math notranslate nohighlight">
+\[
+T(x) = 0
+\]</div>
+<p>But <span class="math notranslate nohighlight">\(f(x) \neq 0\)</span> for <span class="math notranslate nohighlight">\(x \neq 0\)</span> — the Taylor series <strong>fails</strong> to approximate <span class="math notranslate nohighlight">\(f\)</span> at all!</p>
+<hr class="docutils" />
+</section>
+</section>
+<section id="case-3-when-the-series-is-exactly-finite-polynomial-case">
+<h1>✅ Case 3: When the Series is Exactly Finite (Polynomial Case)<a class="headerlink" href="#case-3-when-the-series-is-exactly-finite-polynomial-case" title="Link to this heading">#</a></h1>
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is a <strong>polynomial of degree <span class="math notranslate nohighlight">\(k\)</span></strong>, then:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) = \sum_{|\alpha| \le k} \frac{D^\alpha f(\mathbf{x}_0)}{\alpha!} (\mathbf{x} - \mathbf{x}_0)^\alpha
+\]</div>
+<p>This is exact because all derivatives of order <span class="math notranslate nohighlight">\(&gt; k\)</span> vanish.</p>
+<hr class="docutils" />
+</section>
+<section id="summary">
+<h1>🧠 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function Type</p></th>
+<th class="head"><p>Taylor Series</p></th>
+<th class="head"><p>Error Term Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Polynomial (degree <span class="math notranslate nohighlight">\(k\)</span>)</p></td>
+<td><p>Exact after <span class="math notranslate nohighlight">\(k\)</span> terms</p></td>
+<td><p>Zero</p></td>
+</tr>
+<tr class="row-odd"><td><p>Analytic</p></td>
+<td><p>Converges to <span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(R_k \to 0\)</span> as <span class="math notranslate nohighlight">\(k \to \infty\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Smooth but non-analytic</p></td>
+<td><p>Not exact</p></td>
+<td><p>May fail even if <span class="math notranslate nohighlight">\(f^{(k)}\)</span> exist</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+<section id="conclusion">
+<h1>✍️ Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>The Taylor series is <strong>exact</strong> for <strong>analytic functions</strong></p></li>
+<li><p>It is <strong>finite and exact</strong> for <strong>polynomials</strong></p></li>
+<li><p>It is <strong>not always exact</strong> for <strong>infinitely differentiable but non-analytic functions</strong></p></li>
+<li><p>The remainder term gives a way to <strong>bound the error</strong>, and shows convergence if the derivatives are well-behaved</p></li>
+</ul>
+<p>Would you like a symbolic or numerical example in code (e.g., computing and comparing remainder errors)?</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -495,30 +694,44 @@ can simplify the result to <span class="math notranslate nohighlight">\(2\mathbf
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="gradient_descent_ridge.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gradient Descent in Ridge Regression</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="jacobian.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The Jacobian</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Summary and Outlook</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-taylor-expansion-in-mathbb-r-n">✅ Second-Order Taylor Expansion in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#remainder-term-in-mathbb-r-n">🎯 Remainder Term in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-idea-2d-case">📈 Visualization Idea (2D case)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#shall-i-generate-that-visualization-next">✅ Shall I generate that visualization next?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#what-we-mean-by-exact">🎓 What We Mean by “Exact”</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-1-when-the-taylor-series-is-exact-the-analytic-case">✅ Case 1: When the Taylor Series is Exact — The Analytic Case</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theorem-multivariate-taylor-series-analytic-functions"><strong>Theorem (Multivariate Taylor Series — Analytic Functions)</strong></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-2-when-the-taylor-series-is-not-exact">🚫 Case 2: When the Taylor Series Is Not Exact</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#counterexample-bump-function">Counterexample (bump function):</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#case-3-when-the-series-is-exactly-finite-polynomial-case">✅ Case 3: When the Series is Exactly Finite (Polynomial Case)</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧠 Summary</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">✍️ Conclusion</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -185,7 +185,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Basics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
@@ -215,6 +215,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
 </ul>
@@ -230,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
@@ -449,6 +451,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="the-chain-rule-for-scalar-scalar-functions">
 <h1>The Chain Rule for Scalar-Scalar Functions<a class="headerlink" href="#the-chain-rule-for-scalar-scalar-functions" title="Link to this heading">#</a></h1>
+<p>The <strong>Chain Rule</strong> is a fundamental theorem in calculus that describes how to differentiate composite functions. It states that if you have two functions, <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>, and you want to differentiate their composition <span class="math notranslate nohighlight">\(f(g(x))\)</span>, you can do so by multiplying the derivative of <span class="math notranslate nohighlight">\(f\)</span> evaluated at <span class="math notranslate nohighlight">\(g(x)\)</span> by the derivative of <span class="math notranslate nohighlight">\(g\)</span> evaluated at <span class="math notranslate nohighlight">\(x\)</span>.
+This is particularly useful when dealing with functions that are composed of other functions, as it allows us to break down the differentiation process into manageable parts.</p>
 <div class="proof theorem admonition" id="thm-scalar-scalar-chain-rule-appendix">
 <p class="admonition-title"><span>Theorem </span> (scalar-scalar chain rule)</p>
 <section class="theorem-content" id="proof-content">
@@ -479,7 +483,8 @@ h'(x_0)
 \[
 \Delta u = g(x_0+\Delta x)-g(x_0),
 \]</div>
-<p>so that <span class="math notranslate nohighlight">\(\Delta u\to0\)</span> and <span class="math notranslate nohighlight">\(\tfrac{\Delta u}{\Delta x}\to g'(x_0)\)</span> by differentiability of <span class="math notranslate nohighlight">\(g\)</span>.  We now write</p>
+<p>so that <span class="math notranslate nohighlight">\(\Delta u\to0\)</span> and <span class="math notranslate nohighlight">\(\tfrac{\Delta u}{\Delta x}\to g'(x_0)\)</span> by differentiability of <span class="math notranslate nohighlight">\(g\)</span>.</p>
+<p>We now write</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta x}
@@ -494,7 +499,8 @@ h'(x_0)
 \frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}
 = f'(\xi).
 \]</div>
-<p>As <span class="math notranslate nohighlight">\(\Delta x\to0\)</span>, we have <span class="math notranslate nohighlight">\(\xi\to u_0\)</span>, and hence <span class="math notranslate nohighlight">\(f'(\xi)\to f'(u_0)\)</span>.  Therefore</p>
+<p>As <span class="math notranslate nohighlight">\(\Delta x\to0\)</span>, we have <span class="math notranslate nohighlight">\(\xi\to u_0\)</span>, and hence <span class="math notranslate nohighlight">\(f'(\xi)\to f'(u_0)\)</span>.</p>
+<p>Therefore</p>
 <div class="math notranslate nohighlight">
 \[
 h'(x_0)

@@ -1,5 +1,8 @@
 # The Chain Rule for Scalar-Scalar Functions
 
+The **Chain Rule** is a fundamental theorem in calculus that describes how to differentiate composite functions. It states that if you have two functions, $f$ and $g$, and you want to differentiate their composition $f(g(x))$, you can do so by multiplying the derivative of $f$ evaluated at $g(x)$ by the derivative of $g$ evaluated at $x$.
+This is particularly useful when dealing with functions that are composed of other functions, as it allows us to break down the differentiation process into manageable parts. 
+
 ::: {prf:theorem} scalar-scalar chain rule
 :label: thm-scalar-scalar-chain-rule-appendix
 :nonumber:
@@ -33,7 +36,9 @@ Set
 $$
 \Delta u = g(x_0+\Delta x)-g(x_0),
 $$
-so that $\Delta u\to0$ and $\tfrac{\Delta u}{\Delta x}\to g'(x_0)$ by differentiability of $g$.  We now write
+so that $\Delta u\to0$ and $\tfrac{\Delta u}{\Delta x}\to g'(x_0)$ by differentiability of $g$.
+
+We now write
 
 $$
 \frac{f\bigl(g(x_0+\Delta x)\bigr)-f\bigl(g(x_0)\bigr)}{\Delta x}
@@ -48,7 +53,9 @@ $$
 \frac{f(u_0+\Delta u)-f(u_0)}{\Delta u}
 = f'(\xi).
 $$
-As $\Delta x\to0$, we have $\xi\to u_0$, and hence $f'(\xi)\to f'(u_0)$.  Therefore
+As $\Delta x\to0$, we have $\xi\to u_0$, and hence $f'(\xi)\to f'(u_0)$.
+
+Therefore
 
 $$
 h'(x_0)

@@ -1,0 +1,81 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from math import factorial
+import sympy as sp
+
+# Define the function f symbolically
+x = sp.symbols('x')
+f_expr = sp.sin(x)  # Change this to any (n+1)-times differentiable function
+f = sp.lambdify(x, f_expr, modules='numpy')
+
+# Taylor expansion at point a
+a = 0
+N = 5  # Highest degree of Taylor polynomial to visualize
+x_vals = np.linspace(-2*np.pi, 2*np.pi, 400)
+
+# Generate the Taylor polynomial of degree n
+def taylor_poly(expr, a, n):
+    return sum((expr.diff(x, k).subs(x, a) / factorial(k)) * (x - a)**k for k in range(n+1))
+
+# Plotting
+fig, ax = plt.figure(figsize=(10, 6))
+plt.plot(x_vals, f(x_vals), label='True function', color='black')
+
+colors = plt.cm.viridis(np.linspace(0, 1, N))
+for n in range(1, N+1):
+    taylor_expr = taylor_poly(f_expr, a, n)
+    taylor_func = sp.lambdify(x, taylor_expr, modules='numpy')
+    plt.plot(x_vals, taylor_func(x_vals), label=f'Taylor degree {n}', color=colors[n-1])
+
+plt.axvline(a, color='gray', linestyle='--', alpha=0.5)
+plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.grid(True)
+ax.set_ylim([-1.3,1.3])
+plt.tight_layout()
+plt.show()
+------------------
+
+----- stderr -----
+<>:31: SyntaxWarning: invalid escape sequence '\s'
+<>:31: SyntaxWarning: invalid escape sequence '\s'
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_53396/1869920233.py:31: SyntaxWarning: invalid escape sequence '\s'
+  plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+----- stderr -----
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_53396/1869920233.py:31: SyntaxWarning: invalid escape sequence '\s'
+  plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[1], line 21[0m
+[1;32m     18[0m     [38;5;28;01mreturn[39;00m [38;5;28msum[39m((expr[38;5;241m.[39mdiff(x, k)[38;5;241m.[39msubs(x, a) [38;5;241m/[39m factorial(k)) [38;5;241m*[39m (x [38;5;241m-[39m a)[38;5;241m*[39m[38;5;241m*[39mk [38;5;28;01mfor[39;00m k [38;5;129;01min[39;00m [38;5;28mrange[39m(n[38;5;241m+[39m[38;5;241m1[39m))
+[1;32m     20[0m [38;5;66;03m# Plotting[39;00m
+[0;32m---> 21[0m fig, ax [38;5;241m=[39m plt[38;5;241m.[39mfigure(figsize[38;5;241m=[39m([38;5;241m10[39m, [38;5;241m6[39m))
+[1;32m     22[0m plt[38;5;241m.[39mplot(x_vals, f(x_vals), label[38;5;241m=[39m[38;5;124m'[39m[38;5;124mTrue function[39m[38;5;124m'[39m, color[38;5;241m=[39m[38;5;124m'[39m[38;5;124mblack[39m[38;5;124m'[39m)
+[1;32m     24[0m colors [38;5;241m=[39m plt[38;5;241m.[39mcm[38;5;241m.[39mviridis(np[38;5;241m.[39mlinspace([38;5;241m0[39m, [38;5;241m1[39m, N))
+
+[0;31mTypeError[0m: cannot unpack non-iterable Figure object
+

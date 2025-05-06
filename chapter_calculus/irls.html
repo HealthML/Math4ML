@@ -185,7 +185,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Basics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
@@ -215,6 +215,7 @@
 <li class="toctree-l2"><a class="reference internal" href="analytical_solution_ridge.html">Quadratic Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_search.html">Line Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
 </ul>
@@ -230,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
@@ -445,6 +447,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#it-frames-each-irls-step-as-solving-a-generalized-least-squares-problem-involving-a-symmetric-positive-definite-matrix-this-unifies-the-treatment-with-ridge-regression-and-provides-a-nice-segue-to-newtons-method-which-you-revisit-later">It frames each IRLS step as solving a <strong>generalized least squares problem</strong> involving a symmetric positive definite matrix. This unifies the treatment with Ridge Regression and provides a nice segue to Newton’s method (which you revisit later).</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#irls-as-a-sequence-of-generalized-least-squares-problems">IRLS as a Sequence of Generalized Least Squares Problems</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#irls-as-quadratic-optimization">IRLS as Quadratic Optimization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
@@ -468,8 +471,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="generalized-least-squares-for-logistic-regression">
 <h1>Generalized Least Squares for Logistic Regression<a class="headerlink" href="#generalized-least-squares-for-logistic-regression" title="Link to this heading">#</a></h1>
-<p>It frames each IRLS step as solving a <strong>generalized least squares problem</strong> involving a symmetric positive definite matrix. This unifies the treatment with Ridge Regression and provides a nice segue to Newton’s method (which you revisit later).</p>
-<hr class="docutils" />
+<section id="it-frames-each-irls-step-as-solving-a-generalized-least-squares-problem-involving-a-symmetric-positive-definite-matrix-this-unifies-the-treatment-with-ridge-regression-and-provides-a-nice-segue-to-newtons-method-which-you-revisit-later">
+<h2>It frames each IRLS step as solving a <strong>generalized least squares problem</strong> involving a symmetric positive definite matrix. This unifies the treatment with Ridge Regression and provides a nice segue to Newton’s method (which you revisit later).<a class="headerlink" href="#it-frames-each-irls-step-as-solving-a-generalized-least-squares-problem-involving-a-symmetric-positive-definite-matrix-this-unifies-the-treatment-with-ridge-regression-and-provides-a-nice-segue-to-newtons-method-which-you-revisit-later" title="Link to this heading">#</a></h2>
+</section>
 <section id="irls-as-a-sequence-of-generalized-least-squares-problems">
 <h2>IRLS as a Sequence of Generalized Least Squares Problems<a class="headerlink" href="#irls-as-a-sequence-of-generalized-least-squares-problems" title="Link to this heading">#</a></h2>
 <p>In each iteration of <strong>Iteratively Reweighted Least Squares (IRLS)</strong> for logistic regression, we solve a <strong>weighted least squares problem</strong> of the form:</p>
@@ -713,6 +717,7 @@ The derivation involves linearizing the loss function and solving for a weight u
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#it-frames-each-irls-step-as-solving-a-generalized-least-squares-problem-involving-a-symmetric-positive-definite-matrix-this-unifies-the-treatment-with-ridge-regression-and-provides-a-nice-segue-to-newtons-method-which-you-revisit-later">It frames each IRLS step as solving a <strong>generalized least squares problem</strong> involving a symmetric positive definite matrix. This unifies the treatment with Ridge Regression and provides a nice segue to Newton’s method (which you revisit later).</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#irls-as-a-sequence-of-generalized-least-squares-problems">IRLS as a Sequence of Generalized Least Squares Problems</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#irls-as-quadratic-optimization">IRLS as Quadratic Optimization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-outlook">Summary and Outlook</a></li>
