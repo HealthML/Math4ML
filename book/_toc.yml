@@ -71,6 +71,9 @@ parts:
           title: Line Search
         - file: chapter_calculus/hessian
           title: Hessian
+        - file: chapter_calculus/taylors_theorem
+#        - file: chapter_calculus/irls
+#          title: Iteratively Re-Weighted Least Squares
 # study the properties of matrices
 #  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
 #    title: Matrix Analysis and Decompositions   
@@ -152,6 +155,8 @@ parts:
             title: First Fundamental Theorem of Calculus
           - file: appendix/second_fundamental_theorem_calculus
             title: Second Fundamental Theorem of Calculus
+          - file: appendix/Clairauts_theorem
+            title: Clairaut's Theorem
       - file: appendix/differentiation_rules
         title: Differentiation Rules
 #        sections:
