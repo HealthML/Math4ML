@@ -73,7 +73,7 @@ for n in range(1, N+1):
     plt.plot(x_vals, taylor_func(x_vals), label=f'Taylor degree {n}', color=colors[n-1])
 
 plt.axvline(a, color='gray', linestyle='--', alpha=0.5)
-plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+plt.title(r'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
 plt.xlabel('x')
 plt.ylabel('f(x)')
 plt.legend()
