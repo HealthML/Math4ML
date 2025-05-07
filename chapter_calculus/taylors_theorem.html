@@ -447,7 +447,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-functions">Analytic Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-analytic-function">🔍 What Is an Analytic Function?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-relates-to-the-big-o-remainder">🔄 How This Relates to the Big-O Remainder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">🧠 Summary Table</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylors-theorem-in-multiple-variables">Taylor’s Theorem in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🔍 Summary</a></li>
@@ -669,8 +676,89 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - a)^{n+1}
 \]</div>
 <p>Q.E.D.</p>
 </div>
+<section id="analytic-functions">
+<h3>Analytic Functions<a class="headerlink" href="#analytic-functions" title="Link to this heading">#</a></h3>
+<p><strong>Analytic functions</strong> are intimately related to Taylor series and to the <strong>remainder</strong> behavior.</p>
 </section>
 <hr class="docutils" />
+<section id="what-is-an-analytic-function">
+<h3>🔍 What Is an Analytic Function?<a class="headerlink" href="#what-is-an-analytic-function" title="Link to this heading">#</a></h3>
+<p>A function <span class="math notranslate nohighlight">\(f : \mathbb{R} \to \mathbb{R}\)</span> (or <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>) is called <strong>analytic at a point</strong> <span class="math notranslate nohighlight">\(a\)</span> if:</p>
+<blockquote>
+<div><p>The Taylor series of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(a\)</span> <strong>converges to</strong> the function in a neighborhood of <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^k\quad \text{for all } x \text{ near } a\]</div>
+</div></blockquote>
+<p>That is:</p>
+<ul class="simple">
+<li><p>Not only does the Taylor series <strong>exist</strong> (i.e., <span class="math notranslate nohighlight">\(f\)</span> is infinitely differentiable),</p></li>
+<li><p>But it <strong>converges to the true function</strong> (i.e., the remainder <span class="math notranslate nohighlight">\(R_n(x) \to 0\)</span> as <span class="math notranslate nohighlight">\(n \to \infty\)</span>).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="not-all-smooth-functions-are-analytic">
+<h2>🚫 Not All Smooth Functions Are Analytic<a class="headerlink" href="#not-all-smooth-functions-are-analytic" title="Link to this heading">#</a></h2>
+<p>An important subtlety:</p>
+<blockquote>
+<div><p>There exist functions that are <strong>infinitely differentiable</strong> (smooth), but <strong>not analytic</strong>.</p>
+</div></blockquote>
+<p>For example, the function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = \begin{cases}
+e^{-1/x^2} &amp; \text{if } x \neq 0 \\\\
+0 &amp; \text{if } x = 0
+\end{cases}
+\end{split}\]</div>
+<p>is <strong><span class="math notranslate nohighlight">\(C^\infty\)</span></strong> everywhere, but its <strong>Taylor series at 0 is identically zero</strong> (all derivatives vanish at 0) — even though the function is not identically zero.</p>
+<p>So:
+✅ smooth ≠ analytic
+✅ analytic ⇒ smooth
+❌ smooth ⇒ analytic</p>
+</section>
+<hr class="docutils" />
+<section id="how-this-relates-to-the-big-o-remainder">
+<h2>🔄 How This Relates to the Big-O Remainder<a class="headerlink" href="#how-this-relates-to-the-big-o-remainder" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The <strong>Big‑O bound</strong> tells you that the remainder <strong>goes to zero like <span class="math notranslate nohighlight">\((x - a)^{n+1}\)</span></strong> near <span class="math notranslate nohighlight">\(a\)</span>, <em>for fixed <span class="math notranslate nohighlight">\(n\)</span></em>.</p></li>
+<li><p>But to be <strong>analytic</strong>, you need:</p>
+<div class="math notranslate nohighlight">
+\[
+  \lim_{n \to \infty} R_n(x) = 0
+  \quad \text{for all } x \text{ in a neighborhood of } a
+  \]</div>
+<p>i.e., convergence of the full infinite series, not just the rate of vanishing of each finite approximation.</p>
+</li>
+</ul>
+<p>So, <strong>Big-O bounds are necessary</strong> (they control approximation error), but <strong>not sufficient</strong> for analyticity. You need the entire remainder sequence <span class="math notranslate nohighlight">\(R_n(x) \to 0\)</span> for analytic behavior.</p>
+</section>
+<hr class="docutils" />
+<section id="summary-table">
+<h2>🧠 Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>What It Implies</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Smooth <span class="math notranslate nohighlight">\(C^\infty\)</span></p></td>
+<td><p>All derivatives exist and are continuous</p></td>
+</tr>
+<tr class="row-odd"><td><p>Analytic</p></td>
+<td><p>Taylor series converges to function locally</p></td>
+</tr>
+<tr class="row-even"><td><p>Big-O remainder</p></td>
+<td><p>Controls approximation error for fixed <span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_n(x) \to 0\)</span></p></td>
+<td><p>Required for analyticity</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="taylor-expansion-in-multiple-variables">
 <h2>Taylor Expansion in Multiple Variables<a class="headerlink" href="#taylor-expansion-in-multiple-variables" title="Link to this heading">#</a></h2>
 <p>Recall, that we can create a locally linear approximation to a function at a point <span class="math notranslate nohighlight">\(\mathbf{x}_0 \in \mathbb{R}^d \)</span> using the gradient at <span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}_0)\)</span>.</p>
@@ -976,7 +1064,14 @@ f(\mathbf{x}) = f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^T (\mathbf{x} - \mathbf
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-functions">Analytic Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-analytic-function">🔍 What Is an Analytic Function?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-relates-to-the-big-o-remainder">🔄 How This Relates to the Big-O Remainder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">🧠 Summary Table</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylors-theorem-in-multiple-variables">Taylor’s Theorem in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🔍 Summary</a></li>
