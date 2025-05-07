@@ -245,8 +245,8 @@ Q.E.D.
 
 ### 🔍 What Is an Analytic Function?
 
-A function $f : \mathbb{R} \to \mathbb{R}$ (or $f : \mathbb{R}^d \to \mathbb{R}$) is called **analytic at a point** $a$ if:
-
+> A function $f : \mathbb{R} \to \mathbb{R}$ (or $f : \mathbb{R}^d \to \mathbb{R}$) is called **analytic at a point** $a$ if:
+> 
 > The Taylor series of $f$ at $a$ **converges to** the function in a neighborhood of $a$:
 > 
 > $$f(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^k\quad \text{for all } x \text{ near } a$$
