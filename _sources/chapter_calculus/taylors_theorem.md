@@ -295,8 +295,9 @@ x_vals = np.linspace(-1, 1, 400)
 f_vals = f(x_vals)
 
 # Plot the true function and several Taylor approximations
-plt.figure(figsize=(10, 6))
-plt.plot(x_vals, f_vals, label='$f(x) = e^{-1/x^2}$ (extended by 0 at 0)', color='black')
+# Create the plot
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(x_vals, f_vals, label='$f(x) = e^{-1/x^2}$ (extended by 0 at 0)', color='black')
 
 colors = plt.cm.viridis(np.linspace(0, 1, 5))
 for n, c in zip([1, 3, 5, 10, 20], colors):
@@ -306,7 +307,8 @@ plt.axvline(0, color='gray', linestyle='--', alpha=0.5)
 plt.title('Smooth but Non-Analytic Function at $x = 0$')
 plt.xlabel('x')
 plt.ylabel('f(x)')
-plt.ylim([-0.1, 1.1])
+ax.set_ylim([-0.03, 0.2])
+ax.set_xlim([-0.75, 0.75])
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
