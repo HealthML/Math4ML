@@ -84,6 +84,35 @@ plt.tight_layout()
 plt.show()
 ```
 
+## Big-O Form of Taylor's Remainder (Single Variable)
+
+:::{prf:corollary}
+:label: thm-taylor-single-BigO
+:nonumber:
+
+Let $f: \mathbb{R} \to \mathbb{R}$ be $(n+1)$-times continuously differentiable in a neighborhood of $a$.
+
+Then:
+
+$$
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!}(x - a)^k + \mathcal{O}((x - a)^{n+1})
+\quad \text{as } x \to a
+$$
+
+:::
+
+This means:
+
+> There exists a constant $C$ and a neighborhood around $a$ such that
+
+$$
+|R_{n+1}(x)| \leq C |x - a|^{n+1}
+\quad \text{as } x \to a
+$$
+
+The notation tells us that **the remainder vanishes at the same rate as $(x - a)^{n+1}$** as $x \to a$.
+
+Let's prove Taylor's Theorem with the exact expression for the remainder.
 
 :::{prf:proof}  (Single Variable, Lagrange Form of the Remainder)
 
@@ -358,14 +387,42 @@ $$
 for some $\boldsymbol{\xi}$ on the segment between $\mathbf{x}_0$ and $\mathbf{x}$.
 :::
 
+
 **Notes on Higher-Order Remainders**
 
 * The **third-order term** involves a **third-order tensor** (all third partial derivatives), and the remainder is often written using **multi-index notation** or **tensor contraction**.
 * For applications in optimization and machine learning, most practical Taylor approximations stop at **second-order**, because third- and higher-order terms are expensive to compute and rarely needed unless using higher-order optimization methods.
 
 
-While in principle, one can state and prove Taylor's theorem for a remainder of arbitrary order, ee prove only the version of the theorem for the first order Taylor expansion with second-order remainder.
 
+:::{prf:theorem} Big-O Remainder in Multivariable Case
+:label: thm-taylor-multiple-BigO
+:nonumber:
+
+For $f: \mathbb{R}^d \to \mathbb{R}$, we can write:
+
+$$
+f(\mathbf{x}) = \sum_{|\alpha| \leq n} \frac{D^\alpha f(\mathbf{x}_0)}{\alpha!} (\mathbf{x} - \mathbf{x}_0)^\alpha + \mathcal{O}(\|\mathbf{x} - \mathbf{x}_0\|^{n+1})
+\quad \text{as } \mathbf{x} \to \mathbf{x}_0
+$$
+
+Where:
+
+* $\alpha \in \mathbb{N}^d$ is a multi-index,
+* $D^\alpha f$ is the partial derivative corresponding to $\alpha$,
+* $(\mathbf{x} - \mathbf{x}_0)^\alpha = \prod_i (x_i - x_{0,i})^{\alpha_i}$,
+* And $|\alpha| = \sum_i \alpha_i$.
+:::
+
+* The **exact form** (Lagrange or integral remainder) gives precise values, but is often impractical.
+* The **Big-O remainder** focuses on **how the error behaves**, not what it is exactly.
+* This is especially useful in:
+
+  * Error estimates
+  * Convergence analysis
+  * Algorithm design (e.g. gradient descent, Newton’s method)
+
+While we can state and prove Taylor's theorem for a remainder of arbitrary order, we prove only the version of the theorem for the first order Taylor expansion with second-order remainder.
 
 :::{prf:proof} Proof Sketch (Mean Value Form of the Remainder)
 

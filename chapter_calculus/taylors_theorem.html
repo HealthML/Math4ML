@@ -447,6 +447,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylors-theorem-in-multiple-variables">Taylor’s Theorem in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🔍 Summary</a></li>
@@ -545,6 +546,30 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 <img alt="../_images/8724e860bd707ef49583fe350228417269dd38079cda5e5bc6b0cd002c62289a.png" src="../_images/8724e860bd707ef49583fe350228417269dd38079cda5e5bc6b0cd002c62289a.png" />
 </div>
 </div>
+<section id="big-o-form-of-taylors-remainder-single-variable">
+<h2>Big-O Form of Taylor’s Remainder (Single Variable)<a class="headerlink" href="#big-o-form-of-taylors-remainder-single-variable" title="Link to this heading">#</a></h2>
+<div class="proof corollary admonition" id="thm-taylor-single-BigO">
+<p class="admonition-title"><span>Corollary </span></p>
+<section class="corollary-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R} \to \mathbb{R}\)</span> be <span class="math notranslate nohighlight">\((n+1)\)</span>-times continuously differentiable in a neighborhood of <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!}(x - a)^k + \mathcal{O}((x - a)^{n+1})
+\quad \text{as } x \to a
+\]</div>
+</section>
+</div><p>This means:</p>
+<blockquote>
+<div><p>There exists a constant <span class="math notranslate nohighlight">\(C\)</span> and a neighborhood around <span class="math notranslate nohighlight">\(a\)</span> such that</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+|R_{n+1}(x)| \leq C |x - a|^{n+1}
+\quad \text{as } x \to a
+\]</div>
+<p>The notation tells us that <strong>the remainder vanishes at the same rate as <span class="math notranslate nohighlight">\((x - a)^{n+1}\)</span></strong> as <span class="math notranslate nohighlight">\(x \to a\)</span>.</p>
+<p>Let’s prove Taylor’s Theorem with the exact expression for the remainder.</p>
 <div class="proof admonition" id="proof">
 <p>Proof. (Single Variable, Lagrange Form of the Remainder)</p>
 <p>We want to prove that:</p>
@@ -647,6 +672,7 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - a)^{n+1}
 \]</div>
 <p>Q.E.D.</p>
 </div>
+</section>
 <hr class="docutils" />
 <section id="taylor-expansion-in-multiple-variables">
 <h2>Taylor Expansion in Multiple Variables<a class="headerlink" href="#taylor-expansion-in-multiple-variables" title="Link to this heading">#</a></h2>
@@ -792,7 +818,35 @@ f(\mathbf{x}) = f(\mathbf{x}_0)
 <li><p>The <strong>third-order term</strong> involves a <strong>third-order tensor</strong> (all third partial derivatives), and the remainder is often written using <strong>multi-index notation</strong> or <strong>tensor contraction</strong>.</p></li>
 <li><p>For applications in optimization and machine learning, most practical Taylor approximations stop at <strong>second-order</strong>, because third- and higher-order terms are expensive to compute and rarely needed unless using higher-order optimization methods.</p></li>
 </ul>
-<p>While in principle, one can state and prove Taylor’s theorem for a remainder of arbitrary order, ee prove only the version of the theorem for the first order Taylor expansion with second-order remainder.</p>
+<div class="proof theorem admonition" id="thm-taylor-multiple-BigO">
+<p class="admonition-title"><span>Theorem </span> (Big-O Remainder in Multivariable Case)</p>
+<section class="theorem-content" id="proof-content">
+<p>For <span class="math notranslate nohighlight">\(f: \mathbb{R}^d \to \mathbb{R}\)</span>, we can write:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) = \sum_{|\alpha| \leq n} \frac{D^\alpha f(\mathbf{x}_0)}{\alpha!} (\mathbf{x} - \mathbf{x}_0)^\alpha + \mathcal{O}(\|\mathbf{x} - \mathbf{x}_0\|^{n+1})
+\quad \text{as } \mathbf{x} \to \mathbf{x}_0
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha \in \mathbb{N}^d\)</span> is a multi-index,</p></li>
+<li><p><span class="math notranslate nohighlight">\(D^\alpha f\)</span> is the partial derivative corresponding to <span class="math notranslate nohighlight">\(\alpha\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{x} - \mathbf{x}_0)^\alpha = \prod_i (x_i - x_{0,i})^{\alpha_i}\)</span>,</p></li>
+<li><p>And <span class="math notranslate nohighlight">\(|\alpha| = \sum_i \alpha_i\)</span>.</p></li>
+</ul>
+</section>
+</div><ul class="simple">
+<li><p>The <strong>exact form</strong> (Lagrange or integral remainder) gives precise values, but is often impractical.</p></li>
+<li><p>The <strong>Big-O remainder</strong> focuses on <strong>how the error behaves</strong>, not what it is exactly.</p></li>
+<li><p>This is especially useful in:</p>
+<ul>
+<li><p>Error estimates</p></li>
+<li><p>Convergence analysis</p></li>
+<li><p>Algorithm design (e.g. gradient descent, Newton’s method)</p></li>
+</ul>
+</li>
+</ul>
+<p>While we can state and prove Taylor’s theorem for a remainder of arbitrary order, we prove only the version of the theorem for the first order Taylor expansion with second-order remainder.</p>
 <div class="proof admonition" id="proof">
 <p>Proof. Proof Sketch (Mean Value Form of the Remainder)</p>
 <p>Let’s define the path:</p>
@@ -925,6 +979,7 @@ f(\mathbf{x}) = f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^T (\mathbf{x} - \mathbf
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylors-theorem-in-multiple-variables">Taylor’s Theorem in Multiple Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🔍 Summary</a></li>
