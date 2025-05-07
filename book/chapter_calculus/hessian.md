@@ -29,13 +29,13 @@ $$\nabla^2 f(\mathbf{x}) = \begin{bmatrix}
 :label: thm-Clairaut
 :nonumber:
 
-Let $f: \mathbb{R}^d \to \mathbb{R}$ be a function such that both mixed partial derivatives $\frac{\partial^2 f}{\partial x_i \partial x_j}$ and $\frac{\partial^2 f}{\partial x_i \partial x_j}$ exist and are **continuous** on an open set containing a point $\mathbf{x}_0$
+Let $f: \mathbb{R}^d \to \mathbb{R}$ be a function such that both mixed partial derivatives $\frac{\partial^2 f}{\partial x_i \partial x_j}$ and $\frac{\partial^2 f}{\partial x_j \partial x_i}$ exist and are **continuous** on an open set containing a point $\mathbf{x}_0$
 
 Then:
 
 $$
 \boxed{
-\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial y \partial x}(\mathbf{x}_0)
+\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}_0)
 }
 $$
 
