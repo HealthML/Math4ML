@@ -104,11 +104,8 @@ $$
 This means:
 
 > There exists a constant $C$ and a neighborhood around $a$ such that
-
-$$
-|R_{n+1}(x)| \leq C |x - a|^{n+1}
-\quad \text{as } x \to a
-$$
+>
+> $$ |R_{n+1}(x)| \leq C |x - a|^{n+1} \quad \text{as } x \to a $$
 
 The notation tells us that **the remainder vanishes at the same rate as $(x - a)^{n+1}$** as $x \to a$.
 
