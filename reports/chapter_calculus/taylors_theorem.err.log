@@ -21,51 +21,143 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 import numpy as np
 import matplotlib.pyplot as plt
 from math import factorial
+import sympy as sp
 
-# Define the smooth but non-analytic function
-def f(x):
-    out = np.zeros_like(x)
-    nonzero = x != 0
-    out[nonzero] = np.exp(-1 / x[nonzero]**2)
-    return out
+# Define the function f symbolically
+x = sp.symbols('x')
+f_expr = sp.sin(x)  # Change this to any (n+1)-times differentiable function
+f = sp.lambdify(x, f_expr, modules='numpy')
 
-# Compute Taylor polynomials at x=0 (they are all zero)
-def taylor_approx(x, n):
-    return np.zeros_like(x)  # All derivatives at 0 are zero
+# Taylor expansion at point a
+a = 1
+N = 15  # Highest degree of Taylor polynomial to visualize
+x_vals = np.linspace(-2*np.pi+a, 2*np.pi+a, 400)
 
-# Set up x-values
-x_vals = np.linspace(-1, 1, 400)
-f_vals = f(x_vals)
+# Generate the Taylor polynomial of degree n
+def taylor_poly(expr, a, n):
+    return sum((expr.diff(x, k).subs(x, a) / factorial(k)) * (x - a)**k for k in range(n+1))
 
-# Plot the true function and several Taylor approximations
-fig = plt.figure(figsize=(10, 6))
-plt.plot(x_vals, f_vals, label='$f(x) = e^{-1/x^2}$ (extended by 0 at 0)', color='black')
+# Plotting
+fig, ax = plt.subplots(figsize=(10, 6))
+plt.plot(x_vals, f(x_vals), label='True function', color='black', size=10)
 
-colors = plt.cm.viridis(np.linspace(0, 1, 5))
-for n, c in zip([1, 3, 5, 10, 20], colors):
-    plt.plot(x_vals, taylor_approx(x_vals, n), linestyle='--', color=c, label=f'Taylor degree {n}')
+colors = plt.cm.viridis(np.linspace(0, 1, N))
+for n in range(1, N+1):
+    taylor_expr = taylor_poly(f_expr, a, n)
+    taylor_func = sp.lambdify(x, taylor_expr, modules='numpy')
+    plt.plot(x_vals, taylor_func(x_vals), label=f'Taylor degree {n}', color=colors[n-1])
 
-plt.axvline(0, color='gray', linestyle='--', alpha=0.5)
-plt.title('Smooth but Non-Analytic Function at $x = 0$')
+plt.axvline(a, color='gray', linestyle='--', alpha=0.5)
+plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
 plt.xlabel('x')
 plt.ylabel('f(x)')
-plt.set_ylim([-0.1, 0.4])
-plt.set_xlim([-1, 1])
 plt.legend()
 plt.grid(True)
+ax.set_ylim([-2.7,2.7])
+ax.set_xlim([-2*np.pi+a, 2*np.pi+a])
 plt.tight_layout()
 plt.show()
 ------------------
 
+----- stderr -----
+<>:31: SyntaxWarning: invalid escape sequence '\s'
+<>:31: SyntaxWarning: invalid escape sequence '\s'
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_76103/3854152770.py:31: SyntaxWarning: invalid escape sequence '\s'
+  plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+----- stderr -----
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_76103/3854152770.py:31: SyntaxWarning: invalid escape sequence '\s'
+  plt.title(f'Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$')
+------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mAttributeError[0m                            Traceback (most recent call last)
-Cell [0;32mIn[2], line 32[0m
-[1;32m     30[0m plt[38;5;241m.[39mxlabel([38;5;124m'[39m[38;5;124mx[39m[38;5;124m'[39m)
-[1;32m     31[0m plt[38;5;241m.[39mylabel([38;5;124m'[39m[38;5;124mf(x)[39m[38;5;124m'[39m)
-[0;32m---> 32[0m plt[38;5;241m.[39mset_ylim([[38;5;241m-[39m[38;5;241m0.1[39m, [38;5;241m0.4[39m])
-[1;32m     33[0m plt[38;5;241m.[39mset_xlim([[38;5;241m-[39m[38;5;241m1[39m, [38;5;241m1[39m])
-[1;32m     34[0m plt[38;5;241m.[39mlegend()
+Cell [0;32mIn[1], line 22[0m
+[1;32m     20[0m [38;5;66;03m# Plotting[39;00m
+[1;32m     21[0m fig, ax [38;5;241m=[39m plt[38;5;241m.[39msubplots(figsize[38;5;241m=[39m([38;5;241m10[39m, [38;5;241m6[39m))
+[0;32m---> 22[0m plt[38;5;241m.[39mplot(x_vals, f(x_vals), label[38;5;241m=[39m[38;5;124m'[39m[38;5;124mTrue function[39m[38;5;124m'[39m, color[38;5;241m=[39m[38;5;124m'[39m[38;5;124mblack[39m[38;5;124m'[39m, size[38;5;241m=[39m[38;5;241m10[39m)
+[1;32m     24[0m colors [38;5;241m=[39m plt[38;5;241m.[39mcm[38;5;241m.[39mviridis(np[38;5;241m.[39mlinspace([38;5;241m0[39m, [38;5;241m1[39m, N))
+[1;32m     25[0m [38;5;28;01mfor[39;00m n [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m1[39m, N[38;5;241m+[39m[38;5;241m1[39m):
 
-[0;31mAttributeError[0m: module 'matplotlib.pyplot' has no attribute 'set_ylim'
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/pyplot.py:3590[0m, in [0;36mplot[0;34m(scalex, scaley, data, *args, **kwargs)[0m
+[1;32m   3582[0m [38;5;129m@_copy_docstring_and_deprecators[39m(Axes[38;5;241m.[39mplot)
+[1;32m   3583[0m [38;5;28;01mdef[39;00m [38;5;21mplot[39m(
+[1;32m   3584[0m     [38;5;241m*[39margs: [38;5;28mfloat[39m [38;5;241m|[39m ArrayLike [38;5;241m|[39m [38;5;28mstr[39m,
+[0;32m   (...)[0m
+[1;32m   3588[0m     [38;5;241m*[39m[38;5;241m*[39mkwargs,
+[1;32m   3589[0m ) [38;5;241m-[39m[38;5;241m>[39m [38;5;28mlist[39m[Line2D]:
+[0;32m-> 3590[0m     [38;5;28;01mreturn[39;00m gca()[38;5;241m.[39mplot(
+[1;32m   3591[0m         [38;5;241m*[39margs,
+[1;32m   3592[0m         scalex[38;5;241m=[39mscalex,
+[1;32m   3593[0m         scaley[38;5;241m=[39mscaley,
+[1;32m   3594[0m         [38;5;241m*[39m[38;5;241m*[39m({[38;5;124m"[39m[38;5;124mdata[39m[38;5;124m"[39m: data} [38;5;28;01mif[39;00m data [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m {}),
+[1;32m   3595[0m         [38;5;241m*[39m[38;5;241m*[39mkwargs,
+[1;32m   3596[0m     )
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_axes.py:1724[0m, in [0;36mAxes.plot[0;34m(self, scalex, scaley, data, *args, **kwargs)[0m
+[1;32m   1481[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[1;32m   1482[0m [38;5;124;03mPlot y versus x as lines and/or markers.[39;00m
+[1;32m   1483[0m 
+[0;32m   (...)[0m
+[1;32m   1721[0m [38;5;124;03m(``'green'``) or hex strings (``'#008000'``).[39;00m
+[1;32m   1722[0m [38;5;124;03m"""[39;00m
+[1;32m   1723[0m kwargs [38;5;241m=[39m cbook[38;5;241m.[39mnormalize_kwargs(kwargs, mlines[38;5;241m.[39mLine2D)
+[0;32m-> 1724[0m lines [38;5;241m=[39m [[38;5;241m*[39m[38;5;28mself[39m[38;5;241m.[39m_get_lines([38;5;28mself[39m, [38;5;241m*[39margs, data[38;5;241m=[39mdata, [38;5;241m*[39m[38;5;241m*[39mkwargs)]
+[1;32m   1725[0m [38;5;28;01mfor[39;00m line [38;5;129;01min[39;00m lines:
+[1;32m   1726[0m     [38;5;28mself[39m[38;5;241m.[39madd_line(line)
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:303[0m, in [0;36m_process_plot_var_args.__call__[0;34m(self, axes, data, *args, **kwargs)[0m
+[1;32m    301[0m     this [38;5;241m+[39m[38;5;241m=[39m args[[38;5;241m0[39m],
+[1;32m    302[0m     args [38;5;241m=[39m args[[38;5;241m1[39m:]
+[0;32m--> 303[0m [38;5;28;01myield from[39;00m [38;5;28mself[39m[38;5;241m.[39m_plot_args(
+[1;32m    304[0m     axes, this, kwargs, ambiguous_fmt_datakey[38;5;241m=[39mambiguous_fmt_datakey)
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:539[0m, in [0;36m_process_plot_var_args._plot_args[0;34m(self, axes, tup, kwargs, return_kwargs, ambiguous_fmt_datakey)[0m
+[1;32m    537[0m     [38;5;28;01mreturn[39;00m [38;5;28mlist[39m(result)
+[1;32m    538[0m [38;5;28;01melse[39;00m:
+[0;32m--> 539[0m     [38;5;28;01mreturn[39;00m [l[[38;5;241m0[39m] [38;5;28;01mfor[39;00m l [38;5;129;01min[39;00m result]
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:532[0m, in [0;36m<genexpr>[0;34m(.0)[0m
+[1;32m    529[0m [38;5;28;01melse[39;00m:
+[1;32m    530[0m     labels [38;5;241m=[39m [label] [38;5;241m*[39m n_datasets
+[0;32m--> 532[0m result [38;5;241m=[39m (make_artist(axes, x[:, j [38;5;241m%[39m ncx], y[:, j [38;5;241m%[39m ncy], kw,
+[1;32m    533[0m                       {[38;5;241m*[39m[38;5;241m*[39mkwargs, [38;5;124m'[39m[38;5;124mlabel[39m[38;5;124m'[39m: label})
+[1;32m    534[0m           [38;5;28;01mfor[39;00m j, label [38;5;129;01min[39;00m [38;5;28menumerate[39m(labels))
+[1;32m    536[0m [38;5;28;01mif[39;00m return_kwargs:
+[1;32m    537[0m     [38;5;28;01mreturn[39;00m [38;5;28mlist[39m(result)
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:346[0m, in [0;36m_process_plot_var_args._makeline[0;34m(self, axes, x, y, kw, kwargs)[0m
+[1;32m    344[0m default_dict [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_getdefaults([38;5;28mset[39m(), kw)
+[1;32m    345[0m [38;5;28mself[39m[38;5;241m.[39m_setdefaults(default_dict, kw)
+[0;32m--> 346[0m seg [38;5;241m=[39m mlines[38;5;241m.[39mLine2D(x, y, [38;5;241m*[39m[38;5;241m*[39mkw)
+[1;32m    347[0m [38;5;28;01mreturn[39;00m seg, kw
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/lines.py:407[0m, in [0;36mLine2D.__init__[0;34m(self, xdata, ydata, linewidth, linestyle, color, gapcolor, marker, markersize, markeredgewidth, markeredgecolor, markerfacecolor, markerfacecoloralt, fillstyle, antialiased, dash_capstyle, solid_capstyle, dash_joinstyle, solid_joinstyle, pickradius, drawstyle, markevery, **kwargs)[0m
+[1;32m    403[0m [38;5;28mself[39m[38;5;241m.[39mset_markeredgewidth(markeredgewidth)
+[1;32m    405[0m [38;5;66;03m# update kwargs before updating data to give the caller a[39;00m
+[1;32m    406[0m [38;5;66;03m# chance to init axes (and hence unit support)[39;00m
+[0;32m--> 407[0m [38;5;28mself[39m[38;5;241m.[39m_internal_update(kwargs)
+[1;32m    408[0m [38;5;28mself[39m[38;5;241m.[39mpickradius [38;5;241m=[39m pickradius
+[1;32m    409[0m [38;5;28mself[39m[38;5;241m.[39mind_offset [38;5;241m=[39m [38;5;241m0[39m
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/artist.py:1219[0m, in [0;36mArtist._internal_update[0;34m(self, kwargs)[0m
+[1;32m   1212[0m [38;5;28;01mdef[39;00m [38;5;21m_internal_update[39m([38;5;28mself[39m, kwargs):
+[1;32m   1213[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m   1214[0m [38;5;124;03m    Update artist properties without prenormalizing them, but generating[39;00m
+[1;32m   1215[0m [38;5;124;03m    errors as if calling `set`.[39;00m
+[1;32m   1216[0m 
+[1;32m   1217[0m [38;5;124;03m    The lack of prenormalization is to maintain backcompatibility.[39;00m
+[1;32m   1218[0m [38;5;124;03m    """[39;00m
+[0;32m-> 1219[0m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m[38;5;241m.[39m_update_props(
+[1;32m   1220[0m         kwargs, [38;5;124m"[39m[38;5;132;01m{cls.__name__}[39;00m[38;5;124m.set() got an unexpected keyword argument [39m[38;5;124m"[39m
+[1;32m   1221[0m         [38;5;124m"[39m[38;5;132;01m{prop_name!r}[39;00m[38;5;124m"[39m)
+
+File [0;32m/opt/anaconda3/lib/python3.12/site-packages/matplotlib/artist.py:1193[0m, in [0;36mArtist._update_props[0;34m(self, props, errfmt)[0m
+[1;32m   1191[0m             func [38;5;241m=[39m [38;5;28mgetattr[39m([38;5;28mself[39m, [38;5;124mf[39m[38;5;124m"[39m[38;5;124mset_[39m[38;5;132;01m{[39;00mk[38;5;132;01m}[39;00m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
+[1;32m   1192[0m             [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mcallable[39m(func):
+[0;32m-> 1193[0m                 [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(
+[1;32m   1194[0m                     errfmt[38;5;241m.[39mformat([38;5;28mcls[39m[38;5;241m=[39m[38;5;28mtype[39m([38;5;28mself[39m), prop_name[38;5;241m=[39mk))
+[1;32m   1195[0m             ret[38;5;241m.[39mappend(func(v))
+[1;32m   1196[0m [38;5;28;01mif[39;00m ret:
+
+[0;31mAttributeError[0m: Line2D.set() got an unexpected keyword argument 'size'
 

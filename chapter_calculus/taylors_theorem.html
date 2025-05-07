@@ -511,9 +511,9 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 <span class="n">f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f_expr</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
 
 <span class="c1"># Taylor expansion at point a</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Highest degree of Taylor polynomial to visualize</span>
-<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">16</span>  <span class="c1"># Highest degree of Taylor polynomial to visualize</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">a</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
 
 <span class="c1"># Generate the Taylor polynomial of degree n</span>
 <span class="k">def</span> <span class="nf">taylor_poly</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
@@ -521,7 +521,7 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 
 <span class="c1"># Plotting</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_vals</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_vals</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True function&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
@@ -535,8 +535,8 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.7</span><span class="p">,</span><span class="mf">1.7</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">6.1</span><span class="p">,</span><span class="mf">6.1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">2.7</span><span class="p">,</span><span class="mf">2.7</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="n">a</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -546,11 +546,11 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
 &lt;&gt;:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
-/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_88437/1110624638.py:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_77824/2469620493.py:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
   plt.title(f&#39;Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$&#39;)
 </pre></div>
 </div>
-<img alt="../_images/8724e860bd707ef49583fe350228417269dd38079cda5e5bc6b0cd002c62289a.png" src="../_images/8724e860bd707ef49583fe350228417269dd38079cda5e5bc6b0cd002c62289a.png" />
+<img alt="../_images/917231c5c4172263e475de53d5df0097c82884bcb96dd488f7e4df660b890c63.png" src="../_images/917231c5c4172263e475de53d5df0097c82884bcb96dd488f7e4df660b890c63.png" />
 </div>
 </div>
 <section id="big-o-form-of-taylors-remainder-single-variable">
