@@ -450,9 +450,9 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-functions">Analytic Functions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-analytic-function">🔍 What Is an Analytic Function?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-relates-to-the-big-o-remainder">🔄 How This Relates to the Big-O Remainder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">🧠 Summary Table</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
@@ -546,7 +546,7 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
 &lt;&gt;:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
-/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_58936/1110624638.py:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
+/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_85545/1110624638.py:31: SyntaxWarning: invalid escape sequence &#39;\s&#39;
   plt.title(f&#39;Taylor Approximations of $f(x) = \sin(x)$ at $x = {a}$&#39;)
 </pre></div>
 </div>
@@ -680,7 +680,6 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - a)^{n+1}
 <h3>Analytic Functions<a class="headerlink" href="#analytic-functions" title="Link to this heading">#</a></h3>
 <p><strong>Analytic functions</strong> are intimately related to Taylor series and to the <strong>remainder</strong> behavior.</p>
 </section>
-<hr class="docutils" />
 <section id="what-is-an-analytic-function">
 <h3>🔍 What Is an Analytic Function?<a class="headerlink" href="#what-is-an-analytic-function" title="Link to this heading">#</a></h3>
 <p>A function <span class="math notranslate nohighlight">\(f : \mathbb{R} \to \mathbb{R}\)</span> (or <span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span>) is called <strong>analytic at a point</strong> <span class="math notranslate nohighlight">\(a\)</span> if:</p>
@@ -695,10 +694,8 @@ R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - a)^{n+1}
 <li><p>But it <strong>converges to the true function</strong> (i.e., the remainder <span class="math notranslate nohighlight">\(R_n(x) \to 0\)</span> as <span class="math notranslate nohighlight">\(n \to \infty\)</span>).</p></li>
 </ul>
 </section>
-</section>
-<hr class="docutils" />
 <section id="not-all-smooth-functions-are-analytic">
-<h2>🚫 Not All Smooth Functions Are Analytic<a class="headerlink" href="#not-all-smooth-functions-are-analytic" title="Link to this heading">#</a></h2>
+<h3>🚫 Not All Smooth Functions Are Analytic<a class="headerlink" href="#not-all-smooth-functions-are-analytic" title="Link to this heading">#</a></h3>
 <p>An important subtlety:</p>
 <blockquote>
 <div><p>There exist functions that are <strong>infinitely differentiable</strong> (smooth), but <strong>not analytic</strong>.</p>
@@ -712,12 +709,68 @@ e^{-1/x^2} &amp; \text{if } x \neq 0 \\\\
 \end{cases}
 \end{split}\]</div>
 <p>is <strong><span class="math notranslate nohighlight">\(C^\infty\)</span></strong> everywhere, but its <strong>Taylor series at 0 is identically zero</strong> (all derivatives vanish at 0) — even though the function is not identically zero.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+
+<span class="c1"># Define the smooth but non-analytic function</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="n">out</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="c1"># Compute Taylor polynomials at x=0 (they are all zero)</span>
+<span class="k">def</span> <span class="nf">taylor_approx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># All derivatives at 0 are zero</span>
+
+<span class="c1"># Set up x-values</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">f_vals</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x_vals</span><span class="p">)</span>
+
+<span class="c1"># Plot the true function and several Taylor approximations</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">f_vals</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$f(x) = e^{-1/x^2}$ (extended by 0 at 0)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">taylor_approx</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Taylor degree </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Smooth but Non-Analytic Function at $x = 0$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7aac55772b9e900764d73c952c75c7a6925640cc1dcc274cf702b59fa3f2fe1b.png" src="../_images/7aac55772b9e900764d73c952c75c7a6925640cc1dcc274cf702b59fa3f2fe1b.png" />
+</div>
+</div>
+<p>This function is <strong>infinitely differentiable</strong> (smooth) at <span class="math notranslate nohighlight">\(x = 0\)</span>, but <strong>not analytic</strong> there: all of its derivatives at 0 vanish, so every Taylor polynomial is the zero function. Yet the function is clearly nonzero for any <span class="math notranslate nohighlight">\(x \neq 0\)</span>.</p>
+<ul class="simple">
+<li><p>The true function <span class="math notranslate nohighlight">\(f(x)\)</span> (black curve), sharply rising near zero.</p></li>
+<li><p>All Taylor polynomials (dashed lines) are identically zero and fail to approximate the function anywhere except exactly at <span class="math notranslate nohighlight">\(x = 0\)</span>.</p></li>
+</ul>
 <p>So:
 ✅ smooth ≠ analytic
 ✅ analytic ⇒ smooth
 ❌ smooth ⇒ analytic</p>
 </section>
-<hr class="docutils" />
+</section>
 <section id="how-this-relates-to-the-big-o-remainder">
 <h2>🔄 How This Relates to the Big-O Remainder<a class="headerlink" href="#how-this-relates-to-the-big-o-remainder" title="Link to this heading">#</a></h2>
 <ul>
@@ -1067,9 +1120,9 @@ f(\mathbf{x}) = f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^T (\mathbf{x} - \mathbf
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#big-o-form-of-taylors-remainder-single-variable">Big-O Form of Taylor’s Remainder (Single Variable)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-functions">Analytic Functions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-an-analytic-function">🔍 What Is an Analytic Function?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-smooth-functions-are-analytic">🚫 Not All Smooth Functions Are Analytic</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-relates-to-the-big-o-remainder">🔄 How This Relates to the Big-O Remainder</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">🧠 Summary Table</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taylor-expansion-in-multiple-variables">Taylor Expansion in Multiple Variables</a></li>
