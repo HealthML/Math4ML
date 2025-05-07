@@ -492,12 +492,12 @@ But in many variables, each partial derivative can change in many directions—s
 <div class="proof theorem admonition" id="thm-Clairaut">
 <p class="admonition-title"><span>Theorem </span> (Clairaut Schwarz)</p>
 <section class="theorem-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R}^d \to \mathbb{R}\)</span> be a function such that both mixed partial derivatives <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_i \partial x_j}\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_i \partial x_j}\)</span> exist and are <strong>continuous</strong> on an open set containing a point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span></p>
+<p>Let <span class="math notranslate nohighlight">\(f: \mathbb{R}^d \to \mathbb{R}\)</span> be a function such that both mixed partial derivatives <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_i \partial x_j}\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x_j \partial x_i}\)</span> exist and are <strong>continuous</strong> on an open set containing a point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span></p>
 <p>Then:</p>
 <div class="math notranslate nohighlight">
 \[
 \boxed{
-\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial y \partial x}(\mathbf{x}_0)
+\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}_0)
 }
 \]</div>
 <p>That is, <strong>the order of differentiation can be interchanged</strong>.</p>
