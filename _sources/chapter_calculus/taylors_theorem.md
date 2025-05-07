@@ -64,7 +64,7 @@ def taylor_poly(expr, a, n):
 
 # Plotting
 fig, ax = plt.subplots(figsize=(10, 6))
-plt.plot(x_vals, f(x_vals), label='True function', color='black', linewidth=5)
+plt.plot(x_vals, f(x_vals), label='True function', color='black', linewidth=6)
 
 colors = plt.cm.viridis(np.linspace(0, 1, N))
 for n in range(1, N+1):
