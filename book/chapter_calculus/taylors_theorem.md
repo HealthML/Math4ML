@@ -238,7 +238,120 @@ $$
 Q.E.D.
 
 :::
+
+### Analytic Functions
+
+**Analytic functions** are intimately related to Taylor series and to the **remainder** behavior.
+
+### 🔍 What Is an Analytic Function?
+
+> A function $f : \mathbb{R} \to \mathbb{R}$ (or $f : \mathbb{R}^d \to \mathbb{R}$) is called **analytic at a point** $a$ if:
+> 
+> The Taylor series of $f$ at $a$ **converges to** the function in a neighborhood of $a$:
+> 
+> $$f(x) = \sum_{k=0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^k\quad \text{for all } x \text{ near } a$$
+
+That is:
+
+* Not only does the Taylor series **exist** (i.e., $f$ is infinitely differentiable),
+* But it **converges to the true function** (i.e., the remainder $R_n(x) \to 0$ as $n \to \infty$).
+
+### 🚫 Not All Smooth Functions Are Analytic
+
+An important subtlety:
+
+> There exist functions that are **infinitely differentiable** (smooth), but **not analytic**.
+
+For example, the function
+
+$$
+f(x) = \begin{cases}
+e^{-1/x^2} & \text{if } x \neq 0 \\\\
+0 & \text{if } x = 0
+\end{cases}
+$$
+
+is **$C^\infty$** everywhere, but its **Taylor series at 0 is identically zero** (all derivatives vanish at 0) — even though the function is not identically zero.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from math import factorial
+
+# Define the smooth but non-analytic function
+def f(x):
+    out = np.zeros_like(x)
+    nonzero = x != 0
+    out[nonzero] = np.exp(-1 / x[nonzero]**2)
+    return out
+
+# Compute Taylor polynomials at x=0 (they are all zero)
+def taylor_approx(x, n):
+    return np.zeros_like(x)  # All derivatives at 0 are zero
+
+# Set up x-values
+x_vals = np.linspace(-1, 1, 400)
+f_vals = f(x_vals)
+
+# Plot the true function and several Taylor approximations
+# Create the plot
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(x_vals, f_vals, label='$f(x) = e^{-1/x^2}$ (extended by 0 at 0)', color='black')
+
+colors = plt.cm.viridis(np.linspace(0, 1, 5))
+for n, c in zip([1, 3, 5, 10, 20], colors):
+    plt.plot(x_vals, taylor_approx(x_vals, n), linestyle='--', color=c, label=f'Taylor degree {n}')
+
+plt.axvline(0, color='gray', linestyle='--', alpha=0.5)
+plt.title('Smooth but Non-Analytic Function at $x = 0$')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+ax.set_ylim([-0.03, 0.2])
+ax.set_xlim([-0.75, 0.75])
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+
+This function is **infinitely differentiable** (smooth) at $x = 0$, but **not analytic** there: all of its derivatives at 0 vanish, so every Taylor polynomial is the zero function. Yet the function is clearly nonzero for any $x \neq 0$.
+
+* The true function $f(x)$ (black curve), sharply rising near zero.
+* All Taylor polynomials (dashed lines) are identically zero and fail to approximate the function anywhere except exactly at $x = 0$.
+
+So:
+✅ smooth ≠ analytic
+✅ analytic ⇒ smooth
+❌ smooth ⇒ analytic
+
+
+## 🔄 How This Relates to the Big-O Remainder
+
+* The **Big‑O bound** tells you that the remainder **goes to zero like $(x - a)^{n+1}$** near $a$, *for fixed $n$*.
+* But to be **analytic**, you need:
+
+  $$
+  \lim_{n \to \infty} R_n(x) = 0
+  \quad \text{for all } x \text{ in a neighborhood of } a
+  $$
+
+  i.e., convergence of the full infinite series, not just the rate of vanishing of each finite approximation.
+
+So, **Big-O bounds are necessary** (they control approximation error), but **not sufficient** for analyticity. You need the entire remainder sequence $R_n(x) \to 0$ for analytic behavior.
+
 ---
+
+## 🧠 Summary Table
+
+| Property          | What It Implies                             |
+| ----------------- | ------------------------------------------- |
+| Smooth $C^\infty$ | All derivatives exist and are continuous    |
+| Analytic          | Taylor series converges to function locally |
+| Big-O remainder   | Controls approximation error for fixed $n$  |
+| $R_n(x) \to 0$    | Required for analyticity                    |
+
+
 
 ## Taylor Expansion in Multiple Variables
 
