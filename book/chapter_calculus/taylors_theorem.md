@@ -54,9 +54,9 @@ f_expr = sp.sin(x)  # Change this to any (n+1)-times differentiable function
 f = sp.lambdify(x, f_expr, modules='numpy')
 
 # Taylor expansion at point a
-a = 0
-N = 5  # Highest degree of Taylor polynomial to visualize
-x_vals = np.linspace(-2*np.pi, 2*np.pi, 400)
+a = 1
+N = 16  # Highest degree of Taylor polynomial to visualize
+x_vals = np.linspace(-2*np.pi+a, 2*np.pi+a, 400)
 
 # Generate the Taylor polynomial of degree n
 def taylor_poly(expr, a, n):
@@ -64,7 +64,7 @@ def taylor_poly(expr, a, n):
 
 # Plotting
 fig, ax = plt.subplots(figsize=(10, 6))
-plt.plot(x_vals, f(x_vals), label='True function', color='black')
+plt.plot(x_vals, f(x_vals), label='True function', color='black', linewidth=5)
 
 colors = plt.cm.viridis(np.linspace(0, 1, N))
 for n in range(1, N+1):
@@ -78,8 +78,8 @@ plt.xlabel('x')
 plt.ylabel('f(x)')
 plt.legend()
 plt.grid(True)
-ax.set_ylim([-1.7,1.7])
-ax.set_xlim([-6.1,6.1])
+ax.set_ylim([-2.7,2.7])
+ax.set_xlim([-2*np.pi+a, 2*np.pi+a])
 plt.tight_layout()
 plt.show()
 ```
