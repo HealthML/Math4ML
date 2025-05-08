@@ -75,19 +75,19 @@ parts:
 #        - file: chapter_calculus/irls
 #          title: Iteratively Re-Weighted Least Squares
 # study the properties of matrices
-#  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
-#    title: Matrix Analysis and Decompositions   
-# sections:
-#    - file: chapter_decompositions/eigenvectors
-#    - file: chapter_decompositions/trace_determinant
-#    - file: chapter_decompositions/orthogonal_matrices
-#    - file: chapter_decompositions/symmetric_matrices
-#    - file: chapter_decompositions/psd_matrices
-#    - file: chapter_decompositions/svd
-#    - file: chapter_decompositions/big_picture
-#    - file: chapter_decompositions/pseudoinverse
-#    - file: chapter_decompositions/low_rank_approximation
-#    - file: chapter_decompositions/matrix_norms
+      - file: chapter_decompositions/overview_decompositions
+        title: Matrix Analysis and Decompositions   
+        sections:
+        - file: chapter_decompositions/eigenvectors
+        - file: chapter_decompositions/trace_determinant
+        - file: chapter_decompositions/orthogonal_matrices
+        - file: chapter_decompositions/symmetric_matrices
+        - file: chapter_decompositions/psd_matrices
+        - file: chapter_decompositions/svd
+        - file: chapter_decompositions/big_picture
+        - file: chapter_decompositions/pseudoinverse
+        - file: chapter_decompositions/low_rank_approximation
+        - file: chapter_decompositions/matrix_norms
 #  - file: chapter_convexity/overview_convexity
 #    title: Convexity
 #    sections:
