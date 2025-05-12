@@ -94,16 +94,3 @@ equivalently the $j$th column of $\mathbf{B}^{\!\top\!}$. Hence by the
 definition of matrix multiplication, it is equal to
 $[\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}$. ◻
 
-### Quadratic forms
-
-Let $\mathbf{A} \in \mathbb{R}^{n \times n}$ be a symmetric matrix, and
-recall that the expression $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$
-is called a quadratic form of $\mathbf{A}$. It is in some cases helpful
-to rewrite the quadratic form in terms of the individual elements that
-make up $\mathbf{A}$ and $\mathbf{x}$:
-
-$$\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \sum_{i=1}^n\sum_{j=1}^n A_{ij}x_ix_j$$
-
-This identity is valid for any square matrix (need not be symmetric),
-although quadratic forms are usually only discussed in the context of
-symmetric matrices.
