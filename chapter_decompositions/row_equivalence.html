@@ -1,0 +1,1706 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gaussian Elimination and the PLU Decomposition &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/row_equivalence';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/row_equivalence.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fundamental Equivalences for Square matrices" href="square_matrices.html" />
+    <link rel="prev" title="Determinant" href="determinant.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/row_equivalence.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/row_equivalence.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_decompositions/row_equivalence.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gaussian Elimination and the PLU Decomposition</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#elementary-row-operations">Elementary Row Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-echelon-form-ref-zeilen-stufenform">Row Echelon Form (REF) (🇩🇪 <strong>Zeilen-Stufenform</strong>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-row-echelon-form-rref">Reduced Row Echelon Form (RREF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-rref">Conditions for RREF</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ref-vs-rref-key-differences">REF vs. RREF: Key Differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-elimination">Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-of-gaussian-elimination">Steps of Gaussian Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-gaussian-elimination-by-hand">Example: Gaussian Elimination by Hand</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-linear-systems-via-gaussian-elimination">Solving Linear Systems via Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-linear-system">Example Linear System</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-solving-systems-by-gaussian-elimination">Interpretation of Solving Systems by Gaussian Elimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-substitution">Back Substitution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-idea">General Idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-substitution-example">Back Substitution Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-columns-and-free-variables">Pivot Columns and Free Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-columns-and-basic-variables">✅ Pivot Columns and Basic Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-pivot-columns-and-free-variables">🆓 Non-Pivot Columns and Free Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-structure">🧠 Solution Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">🔢 Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧩 Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-equivalent-matrices">Row-Equivalent Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inversion-via-gaussian-elimination">Matrix Inversion via Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plu-decomposition">PLU Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-plu-decomposition">Example PLU Decomposition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-why-gaussian-elimination-and-matrix-forms-matter-in-machine-learning">Summary: Why Gaussian Elimination and Matrix Forms Matter in Machine Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-linear-systems">Solving Linear Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-rank-and-feature-spaces">Understanding Rank and Feature Spaces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-model-structure">Interpreting Model Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-stability-and-preconditioning">Numerical Stability and Preconditioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#big-picture">Big Picture</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-elimination-and-the-plu-decomposition">
+<h1>Gaussian Elimination and the PLU Decomposition<a class="headerlink" href="#gaussian-elimination-and-the-plu-decomposition" title="Link to this heading">#</a></h1>
+<p>Gaussian elimination is one of the most fundamental algorithms in linear algebra.
+It provides a systematic procedure for simplifying matrices using elementary row operations and lies at the heart of solving linear systems, computing inverses, determining rank, and understanding matrix structure.</p>
+<p>This section introduces the core concepts and forms related to Gaussian elimination:</p>
+<ul class="simple">
+<li><p><strong>Row Echelon Form (REF)</strong>: A simplified form of a matrix that resembles an upper-triangular structure. REF is sufficient for solving linear systems using <strong>back substitution</strong>.</p></li>
+<li><p><strong>Reduced Row Echelon Form (RREF)</strong>: A further simplified and canonical form where each pivot is 1 and the only nonzero entry in its column. RREF enables direct reading of solutions to linear systems.</p></li>
+<li><p><strong>Row Equivalence</strong>: The idea that matrices related through row operations preserve important properties such as solvability and rank.</p></li>
+<li><p><strong>Gaussian Elimination</strong>: The algorithm used to transform matrices into REF, using a sequence of elementary row operations.</p></li>
+</ul>
+<p>Throughout this section, we will define these forms, illustrate them with examples, and demonstrate how they relate to one another and to solving equations of the form <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span>.
+We will also discuss when a matrix is invertible based on its row-reduced form, and how to use back substitution after performing Gaussian elimination.</p>
+<p>This foundation is essential for understanding many areas of applied linear algebra, from numerical methods to machine learning.</p>
+<hr class="docutils" />
+<section id="elementary-row-operations">
+<h2>Elementary Row Operations<a class="headerlink" href="#elementary-row-operations" title="Link to this heading">#</a></h2>
+<p>One of the most important facts underlying <strong>Gaussian elimination</strong> is that the following <strong>elementary row operations</strong> do not change the solution set of a linear system.
+That is, if we apply these operations to both the matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and the right-hand side <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> in the system <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span>, we obtain an <strong>equivalent system</strong> with the <strong>same solutions</strong>.</p>
+<ol class="arabic simple">
+<li><p><strong>Swap</strong> two rows
+<span class="math notranslate nohighlight">\(R_i \leftrightarrow R_j\)</span></p></li>
+<li><p><strong>Scale</strong> a row by a nonzero scalar
+<span class="math notranslate nohighlight">\(R_i \to \alpha R_i\)</span>, <span class="math notranslate nohighlight">\(\alpha \neq 0\)</span></p></li>
+<li><p><strong>Add a multiple</strong> of one row to another
+<span class="math notranslate nohighlight">\(R_i \to R_i + \beta R_j\)</span></p></li>
+</ol>
+<hr class="docutils" />
+<div class="proof theorem admonition" id="trm-elementary-rop-operations">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span> (Elementary Row Operations Preserve Solution Sets)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span> be a system of linear equations.</p>
+<p>If we apply a finite sequence of <strong>elementary row operations</strong> to both <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, the resulting system has the <strong>same solution set</strong> as the original.</p>
+<p>That is, <span class="math notranslate nohighlight">\(\mathbf{A} \sim \mathbf{A}'\)</span> implies:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \mathbf{x} = \mathbf{b} \iff \mathbf{A}' \mathbf{x} = \mathbf{b}'
+\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Each elementary row operation corresponds to <strong>left-multiplication</strong> of both sides of the equation by an <strong>invertible matrix</strong> <span class="math notranslate nohighlight">\(\mathbf{C}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \mathbf{x} = \mathbf{b} \iff \mathbf{C}\mathbf{A} \mathbf{x} = \mathbf{C}\mathbf{b}
+\]</div>
+<ul class="simple">
+<li><p>Swapping rows ↔ permutation matrix</p></li>
+<li><p>Scaling a row ↔ diagonal matrix</p></li>
+<li><p>Adding a multiple of one row to another ↔ elementary row matrix</p></li>
+</ul>
+<p>Since invertible matrices preserve linear equivalence, applying these operations preserves the solution set.</p>
+</div>
+</section>
+<section id="row-echelon-form-ref-zeilen-stufenform">
+<h2>Row Echelon Form (REF) (🇩🇪 <strong>Zeilen-Stufenform</strong>)<a class="headerlink" href="#row-echelon-form-ref-zeilen-stufenform" title="Link to this heading">#</a></h2>
+<p>A matrix is said to be in <strong>row echelon form (REF)</strong> if it satisfies the following conditions:</p>
+<ol class="arabic simple">
+<li><p><strong>All zero rows</strong> (if any) appear <strong>at the bottom</strong> of the matrix.</p></li>
+<li><p>The <strong>leading entry</strong> (or pivot) of each nonzero row is strictly to the <strong>right</strong> of the leading entry of the row above it.</p></li>
+<li><p>All entries <strong>below</strong> a pivot are <strong>zero</strong>.</p></li>
+</ol>
+<hr class="docutils" />
+<p>The following is a matrix in row echelon form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+0 &amp; 1 &amp; 4 \\
+0 &amp; 0 &amp; 5
+\end{bmatrix}
+\end{split}\]</div>
+<p>But this is <strong>not</strong> in row echelon form (pivot in row 3 is not to the right of the pivot in row 2):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<p>A matrix in <strong>REF</strong> is a “staircase” matrix with each nonzero row starting further to the right, and all entries below each pivot are zero:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\text{REF = Upper triangular-like form from which back substitution is possible}
+}
+\]</div>
+</section>
+<section id="reduced-row-echelon-form-rref">
+<h2>Reduced Row Echelon Form (RREF)<a class="headerlink" href="#reduced-row-echelon-form-rref" title="Link to this heading">#</a></h2>
+<p>A matrix is in <strong>reduced row echelon form (RREF)</strong> if it satisfies <strong>all the conditions of row echelon form (REF)</strong>, <em>plus</em> two additional conditions:</p>
+<hr class="docutils" />
+<section id="conditions-for-rref">
+<h3>Conditions for RREF<a class="headerlink" href="#conditions-for-rref" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>REF conditions</strong>:</p>
+<ul class="simple">
+<li><p>All nonzero rows are above any all-zero rows.</p></li>
+<li><p>Each leading (nonzero) entry of a row is strictly to the right of the leading entry of the row above it.</p></li>
+<li><p>All entries below a pivot are zero.</p></li>
+</ul>
+</li>
+<li><p><strong>Additional conditions</strong>:</p>
+<ul class="simple">
+<li><p>Each <strong>pivot is equal to 1</strong> (i.e. all leading entries are 1).</p></li>
+<li><p>Each pivot is the <strong>only nonzero entry in its column</strong>.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0 &amp; 2 \\
+0 &amp; 1 &amp; -3 \\
+0 &amp; 0 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<p>This is in <strong>RREF</strong> because:</p>
+<ul class="simple">
+<li><p>Each pivot is 1.</p></li>
+<li><p>Each pivot column contains only one nonzero entry (the pivot itself).</p></li>
+<li><p>Pivots step to the right as you go down the rows.</p></li>
+<li><p>Zero row is at the bottom.</p></li>
+</ul>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; 6 \\
+0 &amp; 3 &amp; 9 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<p>This is in <strong>REF</strong>, but not RREF:</p>
+<ul class="simple">
+<li><p>It satisfies the “staircase” structure.</p></li>
+<li><p>But pivots are not 1.</p></li>
+<li><p>There are other nonzero entries in pivot columns.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ref-vs-rref-key-differences">
+<h2>REF vs. RREF: Key Differences<a class="headerlink" href="#ref-vs-rref-key-differences" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>REF</p></th>
+<th class="head"><p>RREF</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Zero rows at bottom</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pivots step to the right</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>Zeros below pivots</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pivots are 1</p></td>
+<td><p>❌ (not required)</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>Zeros <strong>above and below</strong> pivots</p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="gaussian-elimination">
+<h2>Gaussian Elimination<a class="headerlink" href="#gaussian-elimination" title="Link to this heading">#</a></h2>
+<p><strong>Gaussian elimination</strong> is a method for solving systems of linear equations by systematically transforming the coefficient matrix into <strong>row echelon form</strong> (REF) using the <strong>elementary row operations</strong> defined above.</p>
+<p>It is one of the fundamental algorithms in linear algebra and underlies techniques such as solving <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span>, computing the rank, and inverting matrices.
+If we track the elementary operations of Gaussian Elimination, we obtain the PLU decomposition of a <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<hr class="docutils" />
+<section id="goal">
+<h3>Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h3>
+<p>Transform a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> into an <strong>upper triangular matrix</strong> (or REF), such that all entries below the pivot positions (leading entries in each row) are zero.</p>
+</section>
+<hr class="docutils" />
+<section id="steps-of-gaussian-elimination">
+<h3>Steps of Gaussian Elimination<a class="headerlink" href="#steps-of-gaussian-elimination" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Identify the leftmost column</strong> that contains a nonzero entry (the pivot column).</p></li>
+<li><p><strong>Swap rows</strong> (if necessary) so that the pivot entry is at the top of the current submatrix.</p></li>
+<li><p><strong>Normalize</strong> the pivot row so the pivot equals 1 (optional — standard Gaussian elimination doesn’t require this).</p></li>
+<li><p><strong>Eliminate below the pivot</strong>: Subtract suitable multiples of the pivot row from rows below to make all entries in the pivot column below the pivot zero.</p></li>
+<li><p><strong>Move to the submatrix</strong> that lies below and to the right, and repeat until the entire matrix is in row echelon form.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="example-gaussian-elimination-by-hand">
+<h3>Example: Gaussian Elimination by Hand<a class="headerlink" href="#example-gaussian-elimination-by-hand" title="Link to this heading">#</a></h3>
+<p>Start with:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} =
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 \\
+4 &amp; 9 &amp; -3 \\
+-2 &amp; -1 &amp; 7
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 1: Normalize the first pivot</strong></p>
+<p>Pivot is <span class="math notranslate nohighlight">\(A_{11} = 2\)</span>. We’ll eliminate below it.</p>
+<p>Eliminate row 2:</p>
+<div class="math notranslate nohighlight">
+\[
+R_2 \leftarrow R_2 - 2 \cdot R_1
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 \\
+0 &amp; 1 &amp; 1 \\
+-2 &amp; -1 &amp; 7
+\end{bmatrix}
+\end{split}\]</div>
+<p>Eliminate row 3:</p>
+<div class="math notranslate nohighlight">
+\[
+R_3 \leftarrow R_3 + R_1
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 3 &amp; 5
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 2: Eliminate below second pivot</strong></p>
+<p>Pivot at <span class="math notranslate nohighlight">\(A_{22} = 1\)</span>. Eliminate below.</p>
+<div class="math notranslate nohighlight">
+\[
+R_3 \leftarrow R_3 - 3 \cdot R_2
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 3: Normalize all pivots (optional, for RREF)</strong></p>
+<p>We can divide each pivot row to make the pivots equal to 1:</p>
+<div class="math notranslate nohighlight">
+\[
+R_1 \leftarrow \frac{1}{2} R_1, \quad
+R_3 \leftarrow \frac{1}{2} R_3
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 2 &amp; -1 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p>Final Result: Row Echelon Form (REF)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\begin{bmatrix}
+1 &amp; 2 &amp; -1 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+}
+\end{split}\]</div>
+<p>This is the <strong>upper triangular matrix</strong> resulting from Gaussian elimination.</p>
+</section>
+</section>
+<section id="solving-linear-systems-via-gaussian-elimination">
+<h2>Solving Linear Systems via Gaussian Elimination<a class="headerlink" href="#solving-linear-systems-via-gaussian-elimination" title="Link to this heading">#</a></h2>
+<p>To solve a linear system <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span> using <strong>Gaussian elimination followed by back substitution</strong>, it’s not enough to row-reduce <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> alone — we must also apply the <strong>same row operations</strong> to the right-hand side vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>. This gives a consistent system that we can solve in the transformed space.</p>
+<p>Gaussian elimination turns the system:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \mathbf{x} = \mathbf{b}
+\]</div>
+<p>into an equivalent upper-triangular system:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{U} \mathbf{x} = \mathbf{c}
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is the row-reduced form of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (usually REF)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is the result of applying the <strong>same row operations</strong> to <span class="math notranslate nohighlight">\(\mathbf{b}\)</span></p></li>
+</ul>
+<p>Only with this consistent transformation can back substitution be applied.</p>
+<section id="example-linear-system">
+<h3>Example Linear System<a class="headerlink" href="#example-linear-system" title="Link to this heading">#</a></h3>
+<p>Let’s extend the example to <strong>solve a system</strong> <span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span> using <strong>Gaussian elimination + back substitution</strong>.</p>
+<p>Given:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} =
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 \\
+4 &amp; 9 &amp; -3 \\
+-2 &amp; -1 &amp; 7
+\end{bmatrix}, \quad
+\mathbf{b} =
+\begin{bmatrix}
+2 \\
+8 \\
+10
+\end{bmatrix}
+\end{split}\]</div>
+<p>We want to solve:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \mathbf{x} = \mathbf{b}
+\]</div>
+<hr class="docutils" />
+<p><strong>Step 1: Augmented Matrix</strong></p>
+<p>Form the augmented matrix <span class="math notranslate nohighlight">\([\mathbf{A} \mid \mathbf{b}]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 &amp; \big| &amp; 2 \\
+4 &amp; 9 &amp; -3 &amp; \big| &amp; 8 \\
+-2 &amp; -1 &amp; 7 &amp; \big| &amp; 10
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 2: Apply Gaussian Elimination</strong></p>
+<p><strong>Eliminate below pivot (row 1)</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R_2 \leftarrow R_2 - 2 \cdot R_1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(R_3 \leftarrow R_3 + R_1\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 &amp; \big| &amp; 2 \\
+0 &amp; 1 &amp; 1 &amp; \big| &amp; 4 \\
+0 &amp; 3 &amp; 5 &amp; \big| &amp; 12
+\end{bmatrix}
+\end{split}\]</div>
+<p><strong>Eliminate below pivot (row 2)</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R_3 \leftarrow R_3 - 3 \cdot R_2\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+2 &amp; 4 &amp; -2 &amp; \big| &amp; 2 \\
+0 &amp; 1 &amp; 1 &amp; \big| &amp; 4 \\
+0 &amp; 0 &amp; 2 &amp; \big| &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+<p><strong>Normalize pivots (optional)</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R_1 \leftarrow \frac{1}{2} R_1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(R_3 \leftarrow \frac{1}{2} R_3\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\begin{bmatrix}
+1 &amp; 2 &amp; -1 &amp; \big| &amp; 1 \\
+0 &amp; 1 &amp; 1 &amp; \big| &amp; 4 \\
+0 &amp; 0 &amp; 1 &amp; \big| &amp; 0
+\end{bmatrix}
+}
+\end{split}\]</div>
+<p>This is the system in <strong>row echelon form</strong>.</p>
+<hr class="docutils" />
+<p><strong>Step 3: Back Substitution</strong></p>
+<p>Let the system be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+x_1 + 2x_2 - x_3 &amp;= 1 \quad \text{(Row 1)} \\
+\quad\;\;\;\; x_2 + x_3 &amp;= 4 \quad \text{(Row 2)} \\
+\quad\quad\quad\quad\; x_3 &amp;= 0 \quad \text{(Row 3)}
+\end{aligned}
+\end{split}\]</div>
+<p>Back-substitute from bottom to top:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(x_3 = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_2 + x_3 = 4 \Rightarrow x_2 = 4\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_1 + 2x_2 - x_3 = 1 \Rightarrow x_1 + 8 = 1 \Rightarrow x_1 = -7\)</span></p></li>
+</ol>
+<hr class="docutils" />
+<p>Final Solution</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\mathbf{x} =
+\begin{bmatrix}
+-7 \\
+4 \\
+0
+\end{bmatrix}
+}
+\end{split}\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="interpretation-of-solving-systems-by-gaussian-elimination">
+<h2>Interpretation of Solving Systems by Gaussian Elimination<a class="headerlink" href="#interpretation-of-solving-systems-by-gaussian-elimination" title="Link to this heading">#</a></h2>
+<p>Think of it as row-reducing the <strong>augmented matrix</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf{A} \mid \mathbf{b}] \quad \longrightarrow \quad [\mathbf{U} \mid \mathbf{c}]
+\]</div>
+<p>You solve the simplified system <span class="math notranslate nohighlight">\(\mathbf{U} \mathbf{x} = \mathbf{c}\)</span>, not the original one.</p>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\text{Gaussian elimination modifies both } \mathbf{A} \text{ and } \mathbf{b} \text{ together.}
+}
+\]</div>
+<p>Then you can solve <span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span> via <strong>back substitution</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="back-substitution">
+<h2>Back Substitution<a class="headerlink" href="#back-substitution" title="Link to this heading">#</a></h2>
+<p>Once a matrix has been transformed into <strong>row echelon form (REF)</strong> using Gaussian elimination, we can solve a system of equations <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span> using <strong>back substitution</strong>.</p>
+<p>This method proceeds from the bottom row of the triangular system upward, solving for each variable one at a time.</p>
+<hr class="docutils" />
+<section id="general-idea">
+<h3>General Idea<a class="headerlink" href="#general-idea" title="Link to this heading">#</a></h3>
+<p>Suppose, after Gaussian elimination, we have the augmented system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+x_3 &amp;= c_3 \\
+x_2 + a_{23}x_3 &amp;= c_2 \\
+x_1 + a_{12}x_2 + a_{13}x_3 &amp;= c_1
+\end{aligned}
+\end{split}\]</div>
+<p>We can compute the solution in reverse order:</p>
+<ol class="arabic simple">
+<li><p>Solve for <span class="math notranslate nohighlight">\(x_3\)</span> from the last equation.</p></li>
+<li><p>Plug <span class="math notranslate nohighlight">\(x_3\)</span> into the second equation and solve for <span class="math notranslate nohighlight">\(x_2\)</span>.</p></li>
+<li><p>Plug <span class="math notranslate nohighlight">\(x_2\)</span> and <span class="math notranslate nohighlight">\(x_3\)</span> into the first equation to solve for <span class="math notranslate nohighlight">\(x_1\)</span>.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="back-substitution-example">
+<h3>Back Substitution Example<a class="headerlink" href="#back-substitution-example" title="Link to this heading">#</a></h3>
+<p>Let’s solve:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 2 &amp; -1 \\
+0 &amp; 1 &amp; 3 \\
+0 &amp; 0 &amp; 2
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\ x_2 \\ x_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+5 \\ 4 \\ 6
+\end{bmatrix}
+\end{split}\]</div>
+<p>We solve from the bottom up:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_3 = \frac{6}{2} = 3\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_2 + 3 \cdot 3 = 4 \Rightarrow x_2 = 4 - 9 = -5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_1 + 2(-5) - 3 = 5 \Rightarrow x_1 = 5 + 10 + 3 = 18\)</span></p></li>
+</ul>
+<p>So the solution is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\mathbf{x} =
+\begin{bmatrix}
+18 \\
+-5 \\
+3
+\end{bmatrix}
+}
+\end{split}\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="pivot-columns-and-free-variables">
+<h2>Pivot Columns and Free Variables<a class="headerlink" href="#pivot-columns-and-free-variables" title="Link to this heading">#</a></h2>
+<p>When we reduce a matrix to <strong>row echelon form (REF)</strong> or <strong>reduced row echelon form (RREF)</strong>, the position of <strong>pivots</strong> in the matrix gives us direct insight into the structure of the solution set of the system <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span>.</p>
+<hr class="docutils" />
+<section id="pivot-columns-and-basic-variables">
+<h3>✅ Pivot Columns and Basic Variables<a class="headerlink" href="#pivot-columns-and-basic-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A <strong>pivot</strong> is the first nonzero entry in a row of REF or RREF.</p></li>
+<li><p>The <strong>columns</strong> of the original matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> that contain pivots are called <strong>pivot columns</strong>.</p></li>
+<li><p>The variables corresponding to pivot columns are called <strong>basic variables</strong>.</p>
+<ul>
+<li><p>These are the variables you solve for directly using back substitution.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="non-pivot-columns-and-free-variables">
+<h3>🆓 Non-Pivot Columns and Free Variables<a class="headerlink" href="#non-pivot-columns-and-free-variables" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The <strong>columns that do not contain a pivot</strong> are called <strong>free columns</strong>.</p></li>
+<li><p>The variables corresponding to these columns are called <strong>free variables</strong>.</p>
+<ul>
+<li><p>They can take on arbitrary values.</p></li>
+<li><p>The values of basic variables depend on the free variables.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="solution-structure">
+<h3>🧠 Solution Structure<a class="headerlink" href="#solution-structure" title="Link to this heading">#</a></h3>
+<p>The presence or absence of pivot positions determines the nature of the solution:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Situation</p></th>
+<th class="head"><p>Interpretation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Pivot in every column of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></p></td>
+<td><p><strong>Unique solution</strong> (if consistent)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Some columns with no pivot</p></td>
+<td><p><strong>Infinitely many solutions</strong> (free variables)</p></td>
+</tr>
+<tr class="row-even"><td><p>Inconsistent system (e.g., row of zeros in <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, nonzero in <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>)</p></td>
+<td><p><strong>No solution</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="example">
+<h3>🔢 Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>Suppose we reduce the augmented matrix to RREF:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[
+\begin{array}{ccc|c}
+1 &amp; 0 &amp; 2 &amp; 3 \\
+0 &amp; 1 &amp; -1 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}
+\right]
+\end{split}\]</div>
+<ul>
+<li><p>Pivots in columns 1 and 2 → <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> are <strong>basic</strong></p></li>
+<li><p>No pivot in column 3 → <span class="math notranslate nohighlight">\(x_3\)</span> is a <strong>free variable</strong></p></li>
+<li><p>The solution has the form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{aligned}
+  x_1 &amp;= 3 - 2x_3 \\
+  x_2 &amp;= 1 + x_3 \\
+  x_3 &amp;\text{ is free}
+  \end{aligned}
+  \end{split}\]</div>
+</li>
+</ul>
+<p>This system has <strong>infinitely many solutions</strong>, parameterized by <span class="math notranslate nohighlight">\(x_3\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h3>🧩 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\text{Pivot columns } \leftrightarrow \text{ basic variables}, \quad
+\text{Non-pivot columns } \leftrightarrow \text{ free variables}
+}
+\]</div>
+<p>Understanding this structure helps us:</p>
+<ul class="simple">
+<li><p>Determine how many solutions exist</p></li>
+<li><p>Express the solution set explicitly</p></li>
+<li><p>Identify the degrees of freedom in underdetermined systems</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="row-equivalent-matrices">
+<h2>Row-Equivalent Matrices<a class="headerlink" href="#row-equivalent-matrices" title="Link to this heading">#</a></h2>
+<p>Two matrices <span class="math notranslate nohighlight">\(\mathbf{A}, \mathbf{B} \in \mathbb{R}^{m \times n}\)</span> are called <strong>row-equivalent</strong> if one can be transformed into the other using a finite sequence of the <strong>elementary row operations</strong> defined above.</p>
+<hr class="docutils" />
+<section id="notation">
+<h3>Notation<a class="headerlink" href="#notation" title="Link to this heading">#</a></h3>
+<p>We write:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \sim \mathbf{B}
+\]</div>
+<p>to denote that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>row-equivalent</strong> to <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="intuition">
+<h3>Intuition<a class="headerlink" href="#intuition" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Row-equivalence preserves the <strong>solution set</strong> of the linear system <span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span>.</p></li>
+<li><p>It <strong>does not</strong> change the <strong>row space</strong>, and hence <strong>preserves the rank</strong>.</p></li>
+<li><p>A matrix is row-equivalent to the <strong>identity matrix</strong> <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> if and only if it is <strong>invertible</strong> (for square matrices).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h3>Summary<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf{A} \sim \mathbf{B} \iff \text{you can get from one to the other by row operations}
+}
+\]</div>
+</section>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>Here are the step-by-step row operations showing that the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} = \begin{bmatrix}
+2 &amp; 1 &amp; -1 \\
+-3 &amp; -1 &amp; 2 \\
+-2 &amp; 1 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<p>is <strong>row-equivalent</strong> to the identity matrix <span class="math notranslate nohighlight">\(\mathbf{I}\)</span>.
+This confirms that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>invertible</strong>.</p>
+<p>Here are the steps of the row reduction process rendered with corresponding <strong>elementary row operations</strong> and resulting matrices:</p>
+<hr class="docutils" />
+<p><strong>Step 0</strong>: Start with matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} =
+\begin{bmatrix}
+2 &amp; 1 &amp; -1 \\
+-3 &amp; -1 &amp; 2 \\
+-2 &amp; 1 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 1</strong>: Normalize row 1</p>
+<p><span class="math notranslate nohighlight">\(R_1 \leftarrow \frac{1}{2} R_1\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0.5 &amp; -0.5 \\
+-3 &amp; -1 &amp; 2 \\
+-2 &amp; 1 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 2</strong>: Eliminate entries below pivot in column 1</p>
+<p><span class="math notranslate nohighlight">\(R_2 \leftarrow R_2 + 3 R_1\)</span>
+<span class="math notranslate nohighlight">\(R_3 \leftarrow R_3 + 2 R_1\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0.5 &amp; -0.5 \\
+0 &amp; 0.5 &amp; 0.5 \\
+0 &amp; 2 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 3</strong>: Normalize row 2</p>
+<p><span class="math notranslate nohighlight">\(R_2 \leftarrow \frac{1}{0.5} R_2 = 2 R_2\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0.5 &amp; -0.5 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 2 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 4</strong>: Eliminate below pivot in column 2</p>
+<p><span class="math notranslate nohighlight">\(R_3 \leftarrow R_3 - 2 R_2\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0.5 &amp; -0.5 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; -1
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p><strong>Step 5</strong>: Normalize row 3</p>
+<p><span class="math notranslate nohighlight">\(R_3 \leftarrow -1 \cdot R_3\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+1 &amp; 0.5 &amp; -0.5 \\
+0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<hr class="docutils" />
+<p>We have row-reduced <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> to <strong>row echelon form</strong>, which is the identity matrix after further elimination above the pivots (not shown).</p>
+<p>Hence:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} \sim \mathbf{I} \quad \Rightarrow \quad \textbf{A is invertible.}
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="matrix-inversion-via-gaussian-elimination">
+<h2>Matrix Inversion via Gaussian Elimination<a class="headerlink" href="#matrix-inversion-via-gaussian-elimination" title="Link to this heading">#</a></h2>
+<p>Gaussian elimination can not only be used to solve systems <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{b}\)</span>, but also to <strong>compute the inverse</strong> of a square matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span>, <strong>if it exists</strong>.</p>
+<p>This is done by augmenting <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with the identity matrix <span class="math notranslate nohighlight">\(\mathbf{I}\)</span>, and applying row operations to reduce <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> to <span class="math notranslate nohighlight">\(\mathbf{I}\)</span>.</p>
+<p>The operations that convert <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> into <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> will simultaneously convert <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> into <span class="math notranslate nohighlight">\(\mathbf{A}^{-1}\)</span>.
+This approach is a <strong>constructive proof</strong> of invertibility.</p>
+<hr class="docutils" />
+<section id="procedure">
+<h3>Procedure<a class="headerlink" href="#procedure" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Form the augmented matrix <span class="math notranslate nohighlight">\([\mathbf{A} \mid \mathbf{I}]\)</span>.</p></li>
+<li><p>Apply <strong>Gaussian elimination</strong> to row-reduce the left side to the identity matrix.</p></li>
+<li><p>If successful, the right side will become <span class="math notranslate nohighlight">\(\mathbf{A}^{-1}\)</span>.</p></li>
+<li><p>If the left side cannot be reduced to identity (e.g. a zero row appears), <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>not invertible</strong>.</p></li>
+</ol>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+[\mathbf{A} \mid \mathbf{I}] \longrightarrow [\mathbf{I} \mid \mathbf{A}^{-1}] \quad \text{via Gaussian elimination}.
+}
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="plu-decomposition">
+<h2>PLU Decomposition<a class="headerlink" href="#plu-decomposition" title="Link to this heading">#</a></h2>
+<p>Every square matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> has a <strong>PLU decomposition</strong> (or <strong>LU decomposition with partial pivoting</strong>):</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf{A} = \mathbf{P} \mathbf{L} \mathbf{U}
+}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{P}^\top\)</span> is a <strong>permutation matrix</strong>  (a rearrangement of the identity matrix) that tracks the row swaps</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{L}\)</span> is <strong>lower triangular</strong> with unit diagonal (contains the elimination multipliers).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is <strong>upper triangular</strong> (result of Gaussian elimination).</p></li>
+</ul>
+<p>As <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is a permuation matrix <span class="math notranslate nohighlight">\(\mathbf{P}^{-1} = \mathbf{P}^{\top}\)</span>, we can alternatively write</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}^\top \mathbf{A} = \mathbf{L} \mathbf{U}
+\]</div>
+<p>The PLU decomposition</p>
+<ul class="simple">
+<li><p>always exists for any square matrix.</p></li>
+<li><p>is used in stable numerical solvers.</p></li>
+<li><p>is efficient for solving systems and computing inverses.</p></li>
+</ul>
+<hr class="docutils" />
+<section id="example-plu-decomposition">
+<h3>Example PLU Decomposition<a class="headerlink" href="#example-plu-decomposition" title="Link to this heading">#</a></h3>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} =
+\begin{bmatrix}
+0 &amp; 2 \\
+1 &amp; 4
+\end{bmatrix}
+\end{split}\]</div>
+<p>To eliminate below the pivot, we need to <strong>swap rows</strong>, since <span class="math notranslate nohighlight">\(A_{11} = 0\)</span>.
+The permutation matrix is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{P} =
+\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{bmatrix}, \quad
+\mathbf{P}^\top \mathbf{A} =
+\begin{bmatrix}
+1 &amp; 4 \\
+0 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{L} =
+\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}, \quad
+\mathbf{U} =
+\begin{bmatrix}
+1 &amp; 4 \\
+0 &amp; 2
+\end{bmatrix}
+\end{split}\]</div>
+<p>So:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}^\top \mathbf{A} = \mathbf{L} \mathbf{U}
+\]</div>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">lu</span>
+
+<span class="c1"># Example matrix</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Perform PLU decomposition</span>
+<span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;P.T @ A:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">P</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;L @ U:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">L</span> <span class="o">@</span> <span class="n">U</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P.T @ A:
+ [[2. 1. 1.]
+ [0. 2. 1.]
+ [1. 1. 0.]]
+L @ U:
+ [[2. 1. 1.]
+ [0. 2. 1.]
+ [1. 1. 0.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This uses <strong>SciPy’s <code class="docutils literal notranslate"><span class="pre">lu</span></code> function</strong>, returning:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{P}\)</span>: permutation matrix</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{L}\)</span>: unit lower triangular matrix</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}\)</span>: upper triangular matrix
+such that:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\text{LU decomposition with pivoting gives } \mathbf{P}, \mathbf{L}, \mathbf{U} \text{ such that }  \mathbf{A} = \mathbf{P}\mathbf{L} \mathbf{U}
+\]</div>
+<hr class="docutils" />
+<p>To solve a linear system <span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{x} = \mathbf{b}\)</span> <strong>given the PLU decomposition</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, that is:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf{P}^\top \mathbf{A} = \mathbf{L} \mathbf{U}
+}
+\]</div>
+<p>You solve the system in <strong>three steps</strong>:</p>
+<p><strong>1. Permute the right-hand side</strong></p>
+<p>Multiply both sides by <span class="math notranslate nohighlight">\(\mathbf{P}^\top\)</span> to align with the decomposition:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}^\top \mathbf{A} \mathbf{x} = \mathbf{P}^\top \mathbf{b}
+\Rightarrow \mathbf{L} \mathbf{U} \mathbf{x} = \mathbf{P}^\top \mathbf{b}
+\]</div>
+<p>Let:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{c} = \mathbf{P}^\top \mathbf{b}
+\]</div>
+<hr class="docutils" />
+<p><strong>2. Forward substitution</strong></p>
+<p>Solve for intermediate vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{L} \mathbf{y} = \mathbf{c}
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> is lower triangular, this can be done <strong>top-down</strong>.</p>
+<hr class="docutils" />
+<p><strong>3. Backward substitution</strong></p>
+<p>Solve for final solution <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{U} \mathbf{x} = \mathbf{y}
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is upper triangular, this can be done <strong>bottom-up</strong>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">solve_triangular</span>
+<span class="c1"># Right Hand Side of Equation</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="c1"># Step 1: permute b</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">P</span> <span class="o">@</span> <span class="n">b</span>
+
+<span class="c1"># Step 2: solve L y = P b</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">solve_triangular</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Step 3: solve U x = y</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">solve_triangular</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solution x:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Solution x: [ 0.  4. -2.]
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\mathbf{A} \mathbf{x} = \mathbf{b} \quad \Rightarrow \quad
+\mathbf{P}^\top \mathbf{A} \mathbf{x} = \mathbf{L} \mathbf{U} \mathbf{x} = \mathbf{P}^\top \mathbf{b}
+}
+\]</div>
+<p>Solve via:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{L} \mathbf{y} = \mathbf{P}^\top \mathbf{b}\)</span> (forward)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U} \mathbf{x} = \mathbf{y}\)</span> (backward)</p></li>
+</ul>
+<p>This is numerically efficient and stable, especially for <strong>repeated solves</strong> with the same <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+</section>
+</section>
+<section id="summary-why-gaussian-elimination-and-matrix-forms-matter-in-machine-learning">
+<h2>Summary: Why Gaussian Elimination and Matrix Forms Matter in Machine Learning<a class="headerlink" href="#summary-why-gaussian-elimination-and-matrix-forms-matter-in-machine-learning" title="Link to this heading">#</a></h2>
+<p>Understanding Gaussian elimination and matrix forms like <strong>REF</strong> and <strong>RREF</strong> is more than a theoretical exercise — it builds essential intuition and computational tools for many areas of <strong>machine learning</strong>.</p>
+<p>Here’s how these concepts directly relate:</p>
+<section id="solving-linear-systems">
+<h3>Solving Linear Systems<a class="headerlink" href="#solving-linear-systems" title="Link to this heading">#</a></h3>
+<p>Many machine learning algorithms boil down to solving systems of linear equations. For example:</p>
+<ul>
+<li><p>In <strong>linear regression</strong>, the optimal weights minimize a quadratic loss and satisfy the <strong>normal equations</strong>, which are linear:</p>
+<div class="math notranslate nohighlight">
+\[
+  (\mathbf{X}^\top \mathbf{X}) \mathbf{w} = \mathbf{X}^\top \mathbf{y}
+  \]</div>
+<p>Gaussian elimination provides an efficient way to solve these equations, especially for small- to medium-scale problems.</p>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="understanding-rank-and-feature-spaces">
+<h3>Understanding Rank and Feature Spaces<a class="headerlink" href="#understanding-rank-and-feature-spaces" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The <strong>rank</strong> of a data matrix <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> tells us the number of <strong>linearly independent features</strong>.</p></li>
+<li><p>Low-rank matrices appear naturally in <strong>dimensionality reduction</strong> (e.g. PCA), <strong>collaborative filtering</strong>, and <strong>matrix completion</strong>.</p></li>
+<li><p>Detecting whether features are redundant, or whether a system is under- or overdetermined, comes down to understanding row operations and rank.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="interpreting-model-structure">
+<h3>Interpreting Model Structure<a class="headerlink" href="#interpreting-model-structure" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Matrices in <strong>RREF</strong> reveal directly which variables (features) are <strong>pivotal</strong> to a system — a perspective that underlies <strong>feature selection</strong>, <strong>interpretability</strong>, and <strong>symbolic regression</strong>.</p></li>
+<li><p>Understanding when systems have <strong>unique</strong>, <strong>infinite</strong>, or <strong>no solutions</strong> helps us reason about <strong>well-posedness</strong> and <strong>overfitting</strong> in models.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="numerical-stability-and-preconditioning">
+<h3>Numerical Stability and Preconditioning<a class="headerlink" href="#numerical-stability-and-preconditioning" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Even when not done directly, Gaussian elimination underpins many <strong>numerical algorithms</strong> (e.g., LU decomposition, QR factorization).</p></li>
+<li><p>These are used in optimization, iterative solvers, and deep learning libraries for computing gradients, inverses, and solving systems in a stable way.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="big-picture">
+<h3>Big Picture<a class="headerlink" href="#big-picture" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>While machine learning often uses <strong>high-level abstractions</strong> and <strong>automatic solvers</strong>, understanding how these methods work at the matrix level helps build <strong>intuition</strong>, <strong>debugging skills</strong>, and <strong>mathematical fluency</strong> for real-world modeling.</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_decompositions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="determinant.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Determinant</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="square_matrices.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fundamental Equivalences for Square matrices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#elementary-row-operations">Elementary Row Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-echelon-form-ref-zeilen-stufenform">Row Echelon Form (REF) (🇩🇪 <strong>Zeilen-Stufenform</strong>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-row-echelon-form-rref">Reduced Row Echelon Form (RREF)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditions-for-rref">Conditions for RREF</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ref-vs-rref-key-differences">REF vs. RREF: Key Differences</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-elimination">Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-of-gaussian-elimination">Steps of Gaussian Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-gaussian-elimination-by-hand">Example: Gaussian Elimination by Hand</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-linear-systems-via-gaussian-elimination">Solving Linear Systems via Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-linear-system">Example Linear System</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-solving-systems-by-gaussian-elimination">Interpretation of Solving Systems by Gaussian Elimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#back-substitution">Back Substitution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-idea">General Idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-substitution-example">Back Substitution Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-columns-and-free-variables">Pivot Columns and Free Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pivot-columns-and-basic-variables">✅ Pivot Columns and Basic Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-pivot-columns-and-free-variables">🆓 Non-Pivot Columns and Free Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-structure">🧠 Solution Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">🔢 Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧩 Summary</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-equivalent-matrices">Row-Equivalent Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">Intuition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inversion-via-gaussian-elimination">Matrix Inversion via Gaussian Elimination</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#procedure">Procedure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plu-decomposition">PLU Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-plu-decomposition">Example PLU Decomposition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-why-gaussian-elimination-and-matrix-forms-matter-in-machine-learning">Summary: Why Gaussian Elimination and Matrix Forms Matter in Machine Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-linear-systems">Solving Linear Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-rank-and-feature-spaces">Understanding Rank and Feature Spaces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-model-structure">Interpreting Model Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-stability-and-preconditioning">Numerical Stability and Preconditioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#big-picture">Big Picture</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Positive (semi-)definite matrices &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/psd_matrices';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/psd_matrices.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/psd_matrices.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/psd_matrices.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_decompositions/psd_matrices.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Positive (semi-)definite matrices</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-positive-definite-quadratic-forms">The geometry of positive definite quadratic forms</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="positive-semi-definite-matrices">
+<h1>Positive (semi-)definite matrices<a class="headerlink" href="#positive-semi-definite-matrices" title="Link to this heading">#</a></h1>
+<p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive semi-definite</strong> if for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0\)</span>. Sometimes people
+write <span class="math notranslate nohighlight">\(\mathbf{A} \succeq 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive
+semi-definite.</p>
+<p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive definite</strong> if for all
+nonzero <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} &gt; 0\)</span>. Sometimes people write
+<span class="math notranslate nohighlight">\(\mathbf{A} \succ 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite.
+Note that positive definiteness is a strictly stronger property than
+positive semi-definiteness, in the sense that every positive definite
+matrix is positive semi-definite but not vice-versa.</p>
+<p>These properties are related to eigenvalues in the following way.</p>
+<p><em>Proposition.</em>
+A symmetric matrix is positive semi-definite if and only if all of its
+eigenvalues are nonnegative, and positive definite if and only if all of
+its eigenvalues are positive.</p>
+<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(A\)</span> is positive semi-definite, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be
+an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> (by the assumption that it is an
+eigenvector), we have <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2 &gt; 0\)</span>, so we can divide both
+sides by <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2\)</span> to arrive at <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span>. If
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite, the inequality above holds strictly,
+so <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>. This proves one direction.</p>
+<p>To simplify the proof of the other direction, we will use the machinery
+of Rayleigh quotients. Suppose that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric and all
+its eigenvalues are nonnegative. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> matches
+<span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x})\)</span> in sign, we conclude that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
+positive semi-definite. If the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are all
+strictly positive, then <span class="math notranslate nohighlight">\(0 &lt; \lambda_{\min}(\mathbf{A})\)</span>, whence it
+follows that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite. ◻</p>
+<p>As an example of how these matrices arise, consider</p>
+<p><em>Proposition.</em>
+Suppose <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>. Then
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite. If
+<span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>, then
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite.</p>
+<p><em>Proof.</em> For any <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0\]</div>
+<p>so <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite.</p>
+<p>Note that <span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2^2 = 0\)</span> implies
+<span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2 = 0\)</span>, which in turn implies
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span> (recall that this is a property of
+norms). If <span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span> implies <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>,
+so
+<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = 0\)</span>
+if and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>, and thus
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite. ◻</p>
+<p>Positive definite matrices are invertible (since their eigenvalues are
+nonzero), whereas positive semi-definite matrices might not be. However,
+if you already have a positive semi-definite matrix, it is possible to
+perturb its diagonal slightly to produce a positive definite matrix.</p>
+<p><em>Proposition.</em>
+If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, then
+<span class="math notranslate nohighlight">\(\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive definite.</p>
+<p><em>Proof.</em> Assuming <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and
+<span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have for any <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> that</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{&gt; 0} &gt; 0\]</div>
+<p>as claimed. ◻</p>
+<p>An obvious but frequently useful consequence of the two propositions we
+have just shown is that
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive
+definite (and in particular, invertible) for <em>any</em> matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>
+and any <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>.</p>
+<section id="the-geometry-of-positive-definite-quadratic-forms">
+<h2>The geometry of positive definite quadratic forms<a class="headerlink" href="#the-geometry-of-positive-definite-quadratic-forms" title="Link to this heading">#</a></h2>
+<p>A useful way to understand quadratic forms is by the geometry of their
+level sets. A <strong>level set</strong> or <strong>isocontour</strong> of a function is the set
+of all inputs such that the function applied to those inputs yields a
+given output. Mathematically, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is
+<span class="math notranslate nohighlight">\(\{\mathbf{x} \in \operatorname{dom} f : f(\mathbf{x}) = c\}\)</span>.</p>
+<p>Let us consider the special case
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> where
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a positive definite matrix. Since <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
+positive definite, it has a unique matrix square root
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{Q}^{\!\top\!}\)</span>,
+where <span class="math notranslate nohighlight">\(\mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}\)</span> is the
+eigendecomposition of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{\Lambda}^{\frac{1}{2}} = \operatorname{diag}(\sqrt{\lambda_1}, \dots \sqrt{\lambda_n})\)</span>.
+It is easy to see that this matrix <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span> is
+positive definite (consider its eigenvalues) and satisfies
+<span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}} = \mathbf{A}\)</span>. Fixing
+a value <span class="math notranslate nohighlight">\(c \geq 0\)</span>, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is the set of
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[c = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}}\mathbf{x} = \|\mathbf{A}^{\frac{1}{2}}\mathbf{x}\|_2^2\]</div>
+<p>where we have used the symmetry of <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span>. Making
+the change of variable
+<span class="math notranslate nohighlight">\(\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}\)</span>, we have the condition
+<span class="math notranslate nohighlight">\(\|\mathbf{z}\|_2 = \sqrt{c}\)</span>. That is, the values <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> lie on a
+sphere of radius <span class="math notranslate nohighlight">\(\sqrt{c}\)</span>. These can be parameterized as
+<span class="math notranslate nohighlight">\(\mathbf{z} = \sqrt{c}\hat{\mathbf{z}}\)</span> where <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}\)</span> has
+<span class="math notranslate nohighlight">\(\|\hat{\mathbf{z}}\|_2 = 1\)</span>. Then since
+<span class="math notranslate nohighlight">\(\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\)</span>,
+we have</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\sqrt{c}\hat{\mathbf{z}} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{z}} = \mathbf{Q}^{\!\top\!}\hat{\mathbf{z}}\)</span> also
+satisfies <span class="math notranslate nohighlight">\(\|\tilde{\mathbf{z}}\|_2 = 1\)</span> since <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> is
+orthogonal. Using this parameterization, we see that the solution set
+<span class="math notranslate nohighlight">\(\{\mathbf{x} \in \mathbb{R}^n : f(\mathbf{x}) = c\}\)</span> is the image of
+the unit sphere
+<span class="math notranslate nohighlight">\(\{\tilde{\mathbf{z}} \in \mathbb{R}^n : \|\tilde{\mathbf{z}}\|_2 = 1\}\)</span>
+under the invertible linear map
+<span class="math notranslate nohighlight">\(\mathbf{x} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\)</span>.</p>
+<p>What we have gained with all these manipulations is a clear algebraic
+understanding of the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> in terms of a sequence of
+linear transformations applied to a well-understood set. We begin with
+the unit sphere, then scale every axis <span class="math notranslate nohighlight">\(i\)</span> by
+<span class="math notranslate nohighlight">\(\lambda_i^{-\frac{1}{2}}\)</span>, resulting in an axis-aligned ellipsoid.
+Observe that the axis lengths of the ellipsoid are proportional to the
+inverse square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. Hence larger
+eigenvalues correspond to shorter axis lengths, and vice-versa.</p>
+<p>Then this axis-aligned ellipsoid undergoes a rigid transformation (i.e.
+one that preserves length and angles, such as a rotation/reflection)
+given by <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>. The result of this transformation is that the
+axes of the ellipse are no longer along the coordinate axes in general,
+but rather along the directions given by the corresponding eigenvectors.
+To see this, consider the unit vector <span class="math notranslate nohighlight">\(\mathbf{e}_i \in \mathbb{R}^n\)</span>
+that has <span class="math notranslate nohighlight">\([\mathbf{e}_i]_j = \delta_{ij}\)</span>. In the pre-transformed space,
+this vector points along the axis with length proportional to
+<span class="math notranslate nohighlight">\(\lambda_i^{-\frac{1}{2}}\)</span>. But after applying the rigid transformation
+<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, the resulting vector points in the direction of the
+corresponding eigenvector <span class="math notranslate nohighlight">\(\mathbf{q}_i\)</span>, since</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q}_i\]</div>
+<p>where we have used the matrix-vector product identity from earlier.</p>
+<p>In summary: the isocontours of
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> are
+ellipsoids such that the axes point in the directions of the
+eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the radii of these axes are
+proportional to the inverse square roots of the corresponding
+eigenvalues.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_decompositions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-positive-definite-quadratic-forms">The geometry of positive definite quadratic forms</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

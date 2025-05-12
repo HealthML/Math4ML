@@ -1,0 +1,47 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 685, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Right Hand Side of Equation
+b = np.array([4, 2, 6], dtype=float)
+
+# Step 1: permute b
+c = P @ b
+
+# Step 2: solve L y = P b
+y = solve_triangular(L, c, lower=True)
+
+# Step 3: solve U x = y
+x = solve_triangular(U, y)
+
+print("Solution x:", x)
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[2], line 8[0m
+[1;32m      5[0m c [38;5;241m=[39m P [38;5;241m@[39m b
+[1;32m      7[0m [38;5;66;03m# Step 2: solve L y = P b[39;00m
+[0;32m----> 8[0m y [38;5;241m=[39m solve_triangular(L, c, lower[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
+[1;32m     10[0m [38;5;66;03m# Step 3: solve U x = y[39;00m
+[1;32m     11[0m x [38;5;241m=[39m solve_triangular(U, y)
+
+[0;31mNameError[0m: name 'solve_triangular' is not defined
+
