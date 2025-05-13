@@ -86,6 +86,7 @@ parts:
         - file: chapter_decompositions/eigenvectors
         - file: chapter_decompositions/orthogonal_matrices
         - file: chapter_decompositions/symmetric_matrices
+#        - file: chapter_decompositions/Rayleigh_quotients
 #        - file: chapter_decompositions/psd_matrices
 #        - file: chapter_decompositions/svd
 #        - file: chapter_decompositions/big_picture
