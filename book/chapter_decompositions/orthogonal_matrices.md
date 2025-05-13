@@ -20,8 +20,9 @@ This definition implies that
 
 $$\mathbf{Q}^{\!\top\!} \mathbf{Q} = \mathbf{Q}\mathbf{Q}^{\!\top\!} = \mathbf{I}$$
 
-or equivalently, $\mathbf{Q}^{\!\top\!} = \mathbf{Q}^{-1}$. A nice thing
-about orthogonal matrices is that they preserve inner products:
+or equivalently, $\mathbf{Q}^{\!\top\!} = \mathbf{Q}^{-1}$.
+
+A nice thing about orthogonal matrices is that they preserve inner products:
 
 $$(\mathbf{Q}\mathbf{x})^{\!\top\!}(\mathbf{Q}\mathbf{y}) = \mathbf{x}^{\!\top\!} \mathbf{Q}^{\!\top\!} \mathbf{Q}\mathbf{y} = \mathbf{x}^{\!\top\!} \mathbf{I}\mathbf{y} = \mathbf{x}^{\!\top\!}\mathbf{y}$$
 
@@ -105,5 +106,64 @@ This enhanced visualization shows how **orthogonal transformations** affect both
 
 ✅ This highlights that orthogonal matrices are **distance- and angle-preserving**, making them key to rigid transformations like rotations and reflections.
 
-Would you like to include a numerical check that verifies length and angle invariance?
 
+---
+:::{prf:theorem} Determinant of an Orthogonal Matrix
+:label: thm-determinant-orthogonal-matrix
+:nonumber:
+
+Let $\mathbf{Q} \in \mathbb{R}^{n \times n}$ be an **orthogonal matrix**, meaning:
+
+$$
+\mathbf{Q}^\top \mathbf{Q} = \mathbf{I}
+$$
+
+Then:
+
+$$
+\boxed{
+\det(\mathbf{Q}) = \pm 1
+}
+$$
+:::
+
+:::{prf:proof}
+
+We start with the identity:
+
+$$
+\mathbf{Q}^\top \mathbf{Q} = \mathbf{I}
+$$
+
+Now take the determinant of both sides:
+
+$$
+\det(\mathbf{Q}^\top \mathbf{Q}) = \det(\mathbf{I}) = 1
+$$
+
+Using the **multiplicativity of determinants** and the fact that $\det(\mathbf{Q}^\top) = \det(\mathbf{Q})$ (since $\det(\mathbf{A}^\top) = \det(\mathbf{A})$):
+
+$$
+\det(\mathbf{Q}^\top) \cdot \det(\mathbf{Q}) = (\det(\mathbf{Q}))^2 = 1
+$$
+
+Taking square roots:
+
+$$
+\boxed{
+\det(\mathbf{Q}) = \pm 1
+}
+$$
+
+Thus, the determinant of any orthogonal matrix is either $+1$ (rotation) or $-1$ (reflection).
+
+$\quad \blacksquare$
+:::
+---
+
+## 🧠 Interpretation
+
+* **$\det(\mathbf{Q}) = 1$**: The transformation preserves orientation — e.g., **rotation**.
+* **$\det(\mathbf{Q}) = -1$**: The transformation flips orientation — e.g., **reflection**.
+
+This theorem is foundational in rigid body transformations, 3D graphics, PCA, and more.

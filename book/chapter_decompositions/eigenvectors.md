@@ -16,7 +16,7 @@ For a *square matrix* $\mathbf{A} \in \mathbb{R}^{n \times n}$, there may
 be vectors which, when $\mathbf{A}$ is applied to them, are simply
 scaled by some constant.
 
-We say that a nonzero vector $\mathbf{x} \in \mathbb{R}^n$ is an **eigenvector** of $\mathbf{A}$ corresponding to **eigenvalue** $\lambda$ if
+A nonzero vector $\mathbf{x} \in \mathbb{C}^n$ is an **eigenvector** of $\mathbf{A}$ corresponding to **eigenvalue** $\lambda \in \mathbb{C}$ if
 
 $$\mathbf{A}\mathbf{x} = \lambda\mathbf{x}$$
 
@@ -24,9 +24,10 @@ The zero vector is excluded from this definition because
 $\mathbf{A}\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}$
 for every $\lambda$.
 
----
+Eigenvalues and eigenvectors can be complex numbers, even if $\mathbf{A}$ is real-valued.
+We will provide a high-level discussion of the conditions below.
 
-Let's look at an example and how multiplication with a matrix $\mathbf{A}$ transforms vectors that lie on the unit circle and, in particular, how it changes it's eivenvectors during multiplication.
+First, let's look at an example and how multiplication with a matrix $\mathbf{A}$ transforms vectors that lie on the unit circle and, in particular, how it changes it's eivenvectors during multiplication.
 
 $$
 \mathbf{A} = \begin{pmatrix}1.5 & 0.5 \\ 0.1 & 1.2\end{pmatrix}
@@ -93,6 +94,105 @@ The visualization shows:
 - The **eigenvectors** in blue and their **scaled images** in green
 
 Note how the eigenvectors are aligned with the directions that remain unchanged in orientation under transformation — they are only scaled by their respective eigenvalues.
+
+## Eigenvectors can be real-valued or complex.
+
+Here’s a breakdown of the geometric distinction between linear maps that have **only real eigenvectors** and those that have **complex eigenvectors**:
+
+### Real Eigenvectors → Maps That Stretch or Reflect Along Fixed Directions
+
+If a matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$ has **only real eigenvalues and eigenvectors**, it means:
+
+* There exist **real directions** in space that are preserved (up to scaling).
+* The action of the matrix is intuitively:
+
+  * **Scaling** (positive eigenvalues)
+  * **Reflection + scaling** (negative eigenvalues)
+* You can visualize this as:
+
+  * Pulling/stretching space along certain axes
+  * Possibly flipping directions
+
+
+### Complex Eigenvectors → Maps That Rotate or Spiral
+
+If a matrix has **complex eigenvalues** and **no real eigenvectors**, it **cannot leave any real direction invariant**.
+
+This typically corresponds to:
+
+* **Rotation** or **spiral** motion
+* Sometimes **rotation + scaling** (when complex eigenvalues have modulus $\ne 1$)
+* The action in real space:
+
+  * **No real eigenvector**
+  * Points are **rotated** or **rotated and scaled**
+  * Repeated application creates **circular** or **spiraling trajectories**
+
+#### Example: Stretching vs. Shearing vs. Rotation
+* **Stretching**: scales space differently along the axes. The matrix has only real eigenvalues and eigenvectors.
+* **Shearing**: shifts one axis direction while keeping the other fixed. The matrix has only real eigenvalues and eigenvectors.
+* **Rotation**: turns everything around the origin. The matrix has only complex eigenvalues and eigenvectors.
+
+Each transformation is applied to a **unit square** and a **grid**, so you can clearly see how space is deformed under each linear map.
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def apply_transform(grid, matrix):
+    return np.tensordot(matrix, grid, axes=1)
+
+def draw_transform(ax, matrix, title, color='red'):
+    # Draw original grid
+    x = np.linspace(-1, 1, 11)
+    y = np.linspace(-1, 1, 11)
+    for xi in x:
+        ax.plot([xi]*len(y), y, color='lightgray', lw=0.5)
+    for yi in y:
+        ax.plot(x, [yi]*len(x), color='lightgray', lw=0.5)
+
+    # Draw transformed grid
+    for xi in x:
+        line = np.stack(([xi]*len(y), y))
+        transformed = apply_transform(line, matrix)
+        ax.plot(transformed[0], transformed[1], color=color, lw=1)
+    for yi in y:
+        line = np.stack((x, [yi]*len(x)))
+        transformed = apply_transform(line, matrix)
+        ax.plot(transformed[0], transformed[1], color=color, lw=1)
+
+    # Draw unit square before and after
+    square = np.array([[0, 1, 1, 0, 0],
+                       [0, 0, 1, 1, 0]])
+    transformed_square = matrix @ square
+    ax.plot(square[0], square[1], 'k--', label='Original square')
+    ax.plot(transformed_square[0], transformed_square[1], 'k-', label='Transformed square')
+    ax.set_aspect('equal')
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-2, 2)
+    ax.set_title(title)
+    ax.legend()
+
+# Define transformation matrices
+stretch = np.array([[1.5, 0],
+                    [0, 0.5]])
+
+shear = np.array([[1, 1],
+                  [0, 1]])
+
+theta = np.pi / 4
+rotation = np.array([[np.cos(theta), -np.sin(theta)],
+                     [np.sin(theta),  np.cos(theta)]])
+
+# Plot all three
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+draw_transform(axes[0], stretch, "Stretching")
+draw_transform(axes[1], shear, "Shearing")
+draw_transform(axes[2], rotation, "Rotation")
+plt.suptitle("Linear Transformations: Stretch vs Shear vs Rotation", fontsize=14)
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.show()
+```
 
 ---
 
@@ -201,7 +301,8 @@ We observe that:
 
 Note how the red-transformed circles deform differently in each panel, but the eigenvector stays aligned.
 
-:::{prf:proof}
+:::{prf:proof} 
+
 (i) follows readily:
 
 $$(\mathbf{A} + \gamma\mathbf{I})\mathbf{x} = \mathbf{A}\mathbf{x} + \gamma\mathbf{I}\mathbf{x} = \lambda\mathbf{x} + \gamma\mathbf{x} = (\lambda + \gamma)\mathbf{x}$$
@@ -220,110 +321,13 @@ $k \geq 0$ case with (ii). ◻
 :::
 
 
-## Eigenvectors can be real-valued or complex.
-There's a deep and intuitive geometric distinction between linear maps that have **only real eigenvectors** and those that have **complex eigenvectors**.
-
-Here’s a breakdown:
 
 
-### Real Eigenvectors → Maps That Stretch or Reflect Along Fixed Directions
-
-If a matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$ has **only real eigenvalues and eigenvectors**, it means:
-
-* There exist **real directions** in space that are preserved (up to scaling).
-* The action of the matrix is intuitively:
-
-  * **Scaling** (positive eigenvalues)
-  * **Reflection + scaling** (negative eigenvalues)
-* You can visualize this as:
-
-  * Pulling/stretching space along certain axes
-  * Possibly flipping directions
-
-
-### Complex Eigenvectors → Maps That Rotate or Spiral
-
-If a matrix has **complex eigenvalues** and **no real eigenvectors**, it **cannot leave any real direction invariant**. This typically corresponds to:
-
-* **Rotation** or **spiral** motion
-* Sometimes **rotation + scaling** (when complex eigenvalues have modulus $\ne 1$)
-* The action in real space:
-
-  * **No real eigenvector**
-  * Points are **rotated** or **rotated and scaled**
-  * Repeated application creates **circular** or **spiraling trajectories**
-
-#### Example: Stretching vs. Shearing vs. Rotation
-* **Stretching**: scales space differently along the axes. The matrix has only real eigenvalues and eigenvectors.
-* **Shearing**: shifts one axis direction while keeping the other fixed. The matrix has only real eigenvalues and eigenvectors.
-* **Rotation**: turns everything around the origin. The matrix has only complex eigenvalues and eigenvectors.
-
-Each transformation is applied to a **unit square** and a **grid**, so you can clearly see how space is deformed under each linear map.
-```{code-cell} ipython3
-:tags: [hide-input]
-import numpy as np
-import matplotlib.pyplot as plt
-
-def apply_transform(grid, matrix):
-    return np.tensordot(matrix, grid, axes=1)
-
-def draw_transform(ax, matrix, title, color='red'):
-    # Draw original grid
-    x = np.linspace(-1, 1, 11)
-    y = np.linspace(-1, 1, 11)
-    for xi in x:
-        ax.plot([xi]*len(y), y, color='lightgray', lw=0.5)
-    for yi in y:
-        ax.plot(x, [yi]*len(x), color='lightgray', lw=0.5)
-
-    # Draw transformed grid
-    for xi in x:
-        line = np.stack(([xi]*len(y), y))
-        transformed = apply_transform(line, matrix)
-        ax.plot(transformed[0], transformed[1], color=color, lw=1)
-    for yi in y:
-        line = np.stack((x, [yi]*len(x)))
-        transformed = apply_transform(line, matrix)
-        ax.plot(transformed[0], transformed[1], color=color, lw=1)
-
-    # Draw unit square before and after
-    square = np.array([[0, 1, 1, 0, 0],
-                       [0, 0, 1, 1, 0]])
-    transformed_square = matrix @ square
-    ax.plot(square[0], square[1], 'k--', label='Original square')
-    ax.plot(transformed_square[0], transformed_square[1], 'k-', label='Transformed square')
-    ax.set_aspect('equal')
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-2, 2)
-    ax.set_title(title)
-    ax.legend()
-
-# Define transformation matrices
-stretch = np.array([[1.5, 0],
-                    [0, 0.5]])
-
-shear = np.array([[1, 1],
-                  [0, 1]])
-
-theta = np.pi / 4
-rotation = np.array([[np.cos(theta), -np.sin(theta)],
-                     [np.sin(theta),  np.cos(theta)]])
-
-# Plot all three
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-draw_transform(axes[0], stretch, "Stretching")
-draw_transform(axes[1], shear, "Shearing")
-draw_transform(axes[2], rotation, "Rotation")
-plt.suptitle("Linear Transformations: Stretch vs Shear vs Rotation", fontsize=14)
-plt.tight_layout(rect=[0, 0, 1, 0.95])
-plt.show()
-```
-
-## Relationship between Eienvalues and Determinant
+## Relationship between Eigenvalues and Determinant
 Interestingly, the determinant of a matrix is equal to the product of
 its eigenvalues (repeated according to multiplicity):
 
-$$\det(\mathbf{A}) = \prod_i \lambda_i(\mathbf{A})$$
+$$\det(\mathbf{A}) = \prod_{i=1}^n \lambda_i(\mathbf{A})$$
 
 This provides a means to find the eigenvalues by deriving the roots of the characteristic polynomial.
 
@@ -341,7 +345,8 @@ It is a degree-$n$ polynomial in $\lambda$, and its roots are precisely the eige
 
 :::
 
-:::{prf:proof}
+:::{prf:proof} Characteristic Polynomial
+
 By definition, $\lambda$ is an **eigenvalue** of $\mathbf{A}$ if:
 
 $$
@@ -355,7 +360,7 @@ $$
 $$
 
 This is a homogeneous linear system.
-A **nontrivial solution** exists **if and only if** the matrix $\mathbf{A} - \lambda \mathbf{I}$ is **not invertible**, which means:
+A **nontrivial solution** exists **if and only if** the matrix $\mathbf{A} - \lambda \mathbf{I}$ is **not invertible**, which according to the **fundamental equivalences for square matrices** is equivalent to:
 
 $$
 \det(\mathbf{A} - \lambda \mathbf{I}) = 0
@@ -364,3 +369,106 @@ $$
 Therefore, the **eigenvalues are the roots of the characteristic polynomial** $p(\lambda)$.
 :::
 
+$$
+\mathbf{A} - \lambda \mathbf{I} =
+\begin{bmatrix}
+a_{11} - \lambda & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} - \lambda & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn} - \lambda
+\end{bmatrix}.
+$$
+
+Taking the determinant of this matrix yields a **polynomial in $\lambda$**.
+
+Each term in the determinant expansion is a product of $n$ entries, and due to the linearity in $\lambda$ of each diagonal term, the highest degree term in $\lambda$ is $(-\lambda)^n$.
+
+Hence:
+
+$$
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}) = (-1)^n \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0,
+$$
+
+for some coefficients $c_i \in \mathbb{R}$.
+
+Thus, $p(\lambda)$ is a **monic polynomial** of degree $n$.
+
+### **Example: Characteristic Polynomial of a 2×2 Matrix**
+
+Here is the full derivation of the **characteristic polynomial** for a general $2 \times 2$ matrix, step by step:
+
+
+Let
+
+$$
+\mathbf{A} = \begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix} \in \mathbb{R}^{2 \times 2}.
+$$
+
+We want to compute the characteristic polynomial:
+
+$$
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}).
+$$
+
+#### Step 1: Subtract $\lambda \mathbf{I}$
+
+$$
+\mathbf{A} - \lambda \mathbf{I} = 
+\begin{bmatrix}
+a - \lambda & b \\
+c & d - \lambda
+\end{bmatrix}.
+$$
+
+#### Step 2: Compute the determinant
+
+$$
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}) 
+= (a - \lambda)(d - \lambda) - bc.
+$$
+
+#### Step 3: Expand the polynomial
+
+$$
+p(\lambda) 
+= ad - a\lambda - d\lambda + \lambda^2 - bc 
+= \lambda^2 - (a + d)\lambda + (ad - bc).
+$$
+
+---
+
+### **Interpretation**
+
+So the characteristic polynomial is:
+
+$$
+p(\lambda) = \lambda^2 - \mathrm{tr}(\mathbf{A})\lambda + \det(\mathbf{A}),
+$$
+
+where:
+
+* $\mathrm{tr}(\mathbf{A}) = a + d$ is the **trace**,
+* $\det(\mathbf{A}) = ad - bc$ is the **determinant**.
+
+---
+
+### **Eigenvalues**
+
+The eigenvalues are the roots of this quadratic polynomial:
+
+$$
+\lambda_{1,2} = \frac{1}{2} \left( \mathrm{tr}(\mathbf{A}) \pm \sqrt{ \mathrm{tr}(\mathbf{A})^2 - 4 \det(\mathbf{A}) } \right).
+$$
+
+## Relationship between the Trace of a Matrix and its Eigenvalues
+
+Interestingly, the trace of a matrix $\mathbf{A}\in\mathbb{R}^{n \times n}$ is equal to the sum of its eigenvalues (repeated according to multiplicity):
+
+$$\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n \lambda_i(\mathbf{A})$$
+
+Note that this sum yields a real value even holds if $\mathbf{A}$ has complex eigenvalues.
+
+The reason is that complex eigenvalues always appear in conjugate pairs.
