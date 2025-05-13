@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -223,6 +223,10 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trace.html">Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 </ul>
 </details></li>
 </ul>
@@ -431,7 +435,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -447,6 +453,19 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-determinant">What is the Determinant?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-computation-of-the-determinant">Practical Computation of the Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cofactor-expansion-definition">Cofactor Expansion: Definition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cofactor-expantion-example-33-matrix">Cofactor Expantion Example (3×3 Matrix)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -458,10 +477,26 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="determinant">
 <h1>Determinant<a class="headerlink" href="#determinant" title="Link to this heading">#</a></h1>
-<p>The <strong>determinant</strong> of a square matrix can be defined in several
-different ways.</p>
-<p>Let’s illustrate the determinant geometrically.
-The determinant can be considered a factor on the change of volume of a unit square after transformation.</p>
+<p>The <strong>determinant</strong> is a scalar quantity associated with any square matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span>. It encodes important geometric and algebraic information about the transformation represented by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p><strong>Geometrically</strong>, the determinant tells us:</p>
+<ul class="simple">
+<li><p>How the matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> <strong>scales volume</strong>:
+The absolute value <span class="math notranslate nohighlight">\(|\det(\mathbf{A})|\)</span> is the <strong>volume-scaling factor</strong> for the linear transformation <span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \mathbf{A}\mathbf{x}\)</span>.</p></li>
+<li><p>Whether the transformation <strong>preserves or flips orientation</strong>:
+If <span class="math notranslate nohighlight">\(\det(\mathbf{A}) &gt; 0\)</span>, the transformation preserves orientation; if <span class="math notranslate nohighlight">\(\det(\mathbf{A}) &lt; 0\)</span>, it reverses it (like a reflection).</p></li>
+</ul>
+<p><strong>Algebraically</strong>, the determinant can be defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(\mathbf{A}) = \sum_{\sigma \in S_n} \operatorname{sgn}(\sigma) \cdot a_{1\sigma(1)} a_{2\sigma(2)} \cdots a_{n\sigma(n)}
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p>The sum is over all permutations <span class="math notranslate nohighlight">\(\sigma\)</span> of <span class="math notranslate nohighlight">\(\{1, 2, \dots, n\}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\operatorname{sgn}(\sigma)\)</span> is <span class="math notranslate nohighlight">\(+1\)</span> or <span class="math notranslate nohighlight">\(-1\)</span> depending on the parity of the permutation.</p></li>
+</ul>
+<p>This formula is <strong>computationally expensive</strong> and confusing, but conceptually important: it captures how the determinant depends on all possible signed products of entries, each taken once from a distinct row and column.</p>
+<p>Let’s illustrate the determinant geometrically.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -534,6 +569,11 @@ The determinant can be considered a factor on the change of volume of a unit squ
 <li><p><strong>Flip</strong>: Reflects across the diagonal — determinant &lt; 0.</p></li>
 <li><p><strong>Rotation</strong>: Rotates without distortion — determinant = 1.</p></li>
 </ol>
+<section id="what-is-the-determinant">
+<h2>What is the Determinant?<a class="headerlink" href="#what-is-the-determinant" title="Link to this heading">#</a></h2>
+<p>The <strong>determinant</strong> of a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> is a scalar that describes how <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> scales space.
+Algebraically, it is defined by a signed sum over all permutations of the matrix’s entries.
+Geometrically, it quantifies the change in <strong>signed volume</strong> of a unit shape under transformation by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. If the determinant is zero, the transformation collapses the volume entirely, and <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is singular (non-invertible).</p>
 <hr class="docutils" />
 <p>The determinant has several important properties:</p>
 <p>(i) <span class="math notranslate nohighlight">\(\det(\mathbf{I}) = 1\)</span></p>
@@ -541,7 +581,186 @@ The determinant can be considered a factor on the change of volume of a unit squ
 <p>(iii) <span class="math notranslate nohighlight">\(\det(\mathbf{A}\mathbf{B}) = \det(\mathbf{A})\det(\mathbf{B})\)</span></p>
 <p>(iv) <span class="math notranslate nohighlight">\(\det(\mathbf{A}^{-1}) = \det(\mathbf{A})^{-1}\)</span></p>
 <p>(v) <span class="math notranslate nohighlight">\(\det(\alpha\mathbf{A}) = \alpha^n \det(\mathbf{A})\)</span></p>
+</section>
 <hr class="docutils" />
+<section id="practical-computation-of-the-determinant">
+<h2>Practical Computation of the Determinant<a class="headerlink" href="#practical-computation-of-the-determinant" title="Link to this heading">#</a></h2>
+<p>The algebraic definition of the determinant is computationally expensive.
+In practice, we compute the determinant using property (iii) and a matrix factorization such as the <strong>PLU decomposition</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} = \mathbf{P} \mathbf{L} \mathbf{U}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is a permutation matrix, <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> is a unit lower triangular matrix, and <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is an upper triangular matrix.</p>
+<div class="proof theorem admonition" id="trm-triangular-determinant">
+<p class="admonition-title"><span>Theorem </span> (Triangular Matrix Determinant)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{T} \in \mathbb{R}^{n \times n}\)</span> be a <strong>triangular matrix</strong>, either upper or lower triangular.</p>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\det(\mathbf{T}) = \prod_{i=1}^n T_{ii}
+}
+\]</div>
+</section>
+</div><p>Then,</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\det(\mathbf{A}) = \det(\mathbf{P}) \cdot \det(\mathbf{L}) \cdot \det(\mathbf{U})
+}
+\]</div>
+<p>Since:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{L}) = 1\)</span> (if unit lower triangular),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{U}) = \prod_{i=1}^n u_{ii}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{P}) = (-1)^s\)</span>, where <span class="math notranslate nohighlight">\(s\)</span> is the number of row swaps,</p></li>
+</ul>
+<p>this method reduces determinant computation to <span class="math notranslate nohighlight">\(\mathcal{O}(n)\)</span> operations after LU decomposition.
+As the cost for the LU decomposition is <span class="math notranslate nohighlight">\(\mathcal{O}(n^3),\)</span> the total cost of computing the determinant is <span class="math notranslate nohighlight">\(\mathcal{O}(n^3).\)</span></p>
+</section>
+<section id="cofactor-expansion-definition">
+<h2>Cofactor Expansion: Definition<a class="headerlink" href="#cofactor-expansion-definition" title="Link to this heading">#</a></h2>
+<p><strong>Cofactor expansion</strong> (also called <strong>Laplace expansion</strong>) gives a <strong>recursive definition</strong> of the determinant.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> be a square matrix.</p>
+<p>Then the <strong>determinant</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> can be computed by expanding along <strong>any row or column</strong>.</p>
+<p>For simplicity, we’ll define it for the <strong>first column</strong>.</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\det(\mathbf{A}) = \sum_{i=1}^{n} (-1)^{i+1} \cdot A_{i1} \cdot \det(\mathbf{A}^{(i,1)})
+}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A_{i1}\)</span> is the entry in row <span class="math notranslate nohighlight">\(i\)</span>, column 1</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}^{(i,1)}\)</span> is the <strong>minor</strong> matrix obtained by deleting row <span class="math notranslate nohighlight">\(i\)</span> and column 1 from <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((-1)^{i+1}\)</span> is the <strong>sign</strong> factor for alternating signs (from the <strong>checkerboard sign pattern</strong>)</p></li>
+<li><p><span class="math notranslate nohighlight">\((-1)^{i+j} \cdot \det(\mathbf{A}^{(i,j)})\)</span> is called the <strong>cofactor</strong> of <span class="math notranslate nohighlight">\(A_{ij}\)</span></p></li>
+</ul>
+<p>This formula recursively reduces the computation of a determinant to smaller and smaller submatrices.</p>
+<hr class="docutils" />
+<section id="cofactor-expantion-example-33-matrix">
+<h3>Cofactor Expantion Example (3×3 Matrix)<a class="headerlink" href="#cofactor-expantion-example-33-matrix" title="Link to this heading">#</a></h3>
+<p>Let:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} =
+\begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+4 &amp; 5 &amp; 6 \\
+7 &amp; 8 &amp; 9
+\end{bmatrix}
+\end{split}\]</div>
+<p>Expand along the <strong>first column</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\det(\mathbf{A}) =
+(+1) \cdot 1 \cdot
+\begin{vmatrix}
+5 &amp; 6 \\
+8 &amp; 9
+\end{vmatrix}
+- 4 \cdot
+\begin{vmatrix}
+2 &amp; 3 \\
+8 &amp; 9
+\end{vmatrix}
++ 7 \cdot
+\begin{vmatrix}
+2 &amp; 3 \\
+5 &amp; 6
+\end{vmatrix}
+\end{split}\]</div>
+<p>Now compute the 2×2 determinants:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(\mathbf{A}) =
+1 \cdot (5 \cdot 9 - 6 \cdot 8)
+- 4 \cdot (2 \cdot 9 - 3 \cdot 8)
++ 7 \cdot (2 \cdot 6 - 3 \cdot 5)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+= 1 \cdot (-3) - 4 \cdot (-6) + 7 \cdot (-3)
+= -3 + 24 - 21 = 0
+\]</div>
+<p>So:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{\det(\mathbf{A}) = 0}
+\]</div>
+<div class="proof admonition" id="proof">
+<p>Proof. via Laplace Expansion / Cofactor Expansion</p>
+<p>We’ll prove this for <strong>upper triangular</strong> matrices by induction on the matrix size <span class="math notranslate nohighlight">\(n\)</span>. The same argument applies symmetrically for lower triangular matrices.</p>
+<hr class="docutils" />
+<h3 class="rubric" id="base-case-n-1">Base Case: <span class="math notranslate nohighlight">\(n = 1\)</span></h3>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{T} = [t_{11}]\)</span>. Then clearly:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(\mathbf{T}) = t_{11}
+= \prod_{i=1}^1 T_{ii}
+\]</div>
+<p>The base case holds.</p>
+<hr class="docutils" />
+<h3 class="rubric" id="inductive-step">Inductive Step</h3>
+<p>Assume the result holds for <span class="math notranslate nohighlight">\((n-1) \times (n-1)\)</span> upper triangular matrices.</p>
+<p>Now let <span class="math notranslate nohighlight">\(\mathbf{T} \in \mathbb{R}^{n \times n}\)</span> be upper triangular. That means all entries below the diagonal are zero:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{T} =
+\begin{bmatrix}
+t_{11} &amp; t_{12} &amp; \dots &amp; t_{1n} \\
+0      &amp; t_{22} &amp; \dots &amp; t_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0      &amp; 0      &amp; \dots &amp; t_{nn}
+\end{bmatrix}
+\end{split}\]</div>
+<p>Use <strong>cofactor expansion</strong> along the first column. Since the only nonzero entry in the first column is <span class="math notranslate nohighlight">\(t_{11}\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(\mathbf{T}) = t_{11} \cdot \det(\mathbf{T}^{(1,1)})
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\mathbf{T}^{(1,1)}\)</span> is the <span class="math notranslate nohighlight">\((n-1)\times(n-1)\)</span> matrix obtained by deleting row 1 and column 1. But:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{T}^{(1,1)}\)</span> is still upper triangular.</p></li>
+<li><p>By the inductive hypothesis:</p>
+<div class="math notranslate nohighlight">
+\[
+  \det(\mathbf{T}^{(1,1)}) = \prod_{i=2}^{n} T_{ii}
+  \]</div>
+</li>
+</ul>
+<p>So:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(\mathbf{T}) = t_{11} \cdot \prod_{i=2}^{n} T_{ii}
+= \prod_{i=1}^{n} T_{ii}
+\]</div>
+<p>The inductive step holds.</p>
+<hr class="docutils" />
+<h3 class="rubric" id="conclusion">Conclusion</h3>
+<p>By induction, for any upper (or lower) triangular matrix <span class="math notranslate nohighlight">\(\mathbf{T} \in \mathbb{R}^{n \times n}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\det(\mathbf{T}) = \prod_{i=1}^n T_{ii}
+}
+\]</div>
+</div>
+<ul class="simple">
+<li><p>The determinant accumulates only the diagonal entries because <strong>each pivot is isolated</strong>, and all other paths in the expansion have zero entries.</p></li>
+<li><p>This result is frequently used in:</p>
+<ul>
+<li><p>Computing determinants from <strong>LU decomposition</strong></p></li>
+<li><p>Checking invertibility efficiently</p></li>
+<li><p>Proving properties of <strong>eigenvalues</strong> and <strong>characteristic polynomials</strong></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -598,6 +817,26 @@ The determinant can be considered a factor on the change of volume of a unit squ
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-determinant">What is the Determinant?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-computation-of-the-determinant">Practical Computation of the Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cofactor-expansion-definition">Cofactor Expansion: Definition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cofactor-expantion-example-33-matrix">Cofactor Expantion Example (3×3 Matrix)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

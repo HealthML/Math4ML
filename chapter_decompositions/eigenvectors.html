@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/eigenvectors.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Orthogonal matrices" href="orthogonal_matrices.html" />
+    <link rel="prev" title="Trace" href="trace.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -218,11 +218,15 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trace.html">Trace</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 </ul>
 </details></li>
 </ul>
@@ -462,7 +466,18 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-eienvalues-and-determinant">Relationship between Eienvalues and Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-eigenvalues-and-determinant">Relationship between Eigenvalues and Determinant</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-characteristic-polynomial-of-a-22-matrix"><strong>Example: Characteristic Polynomial of a 2×2 Matrix</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-subtract-lambda-mathbf-i">Step 1: Subtract <span class="math notranslate nohighlight">\(\lambda \mathbf{I}\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-the-determinant">Step 2: Compute the determinant</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-expand-the-polynomial">Step 3: Expand the polynomial</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation"><strong>Interpretation</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalues"><strong>Eigenvalues</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-the-trace-of-a-matrix-and-its-eigenvalues">Relationship between the Trace of a Matrix and its Eigenvalues</a></li>
 </ul>
             </nav>
         </div>
@@ -479,14 +494,15 @@ document.write(`
 <p>For a <em>square matrix</em> <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span>, there may
 be vectors which, when <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is applied to them, are simply
 scaled by some constant.</p>
-<p>We say that a nonzero vector <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> is an <strong>eigenvector</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> corresponding to <strong>eigenvalue</strong> <span class="math notranslate nohighlight">\(\lambda\)</span> if</p>
+<p>A nonzero vector <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{C}^n\)</span> is an <strong>eigenvector</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> corresponding to <strong>eigenvalue</strong> <span class="math notranslate nohighlight">\(\lambda \in \mathbb{C}\)</span> if</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{A}\mathbf{x} = \lambda\mathbf{x}\]</div>
 <p>The zero vector is excluded from this definition because
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}\)</span>
 for every <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
-<hr class="docutils" />
-<p>Let’s look at an example and how multiplication with a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> transforms vectors that lie on the unit circle and, in particular, how it changes it’s eivenvectors during multiplication.</p>
+<p>Eigenvalues and eigenvectors can be complex numbers, even if <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is real-valued.
+We will provide a high-level discussion of the conditions below.</p>
+<p>First, let’s look at an example and how multiplication with a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> transforms vectors that lie on the unit circle and, in particular, how it changes it’s eivenvectors during multiplication.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbf{A} = \begin{pmatrix}1.5 &amp; 0.5 \\ 0.1 &amp; 1.2\end{pmatrix}
@@ -566,6 +582,122 @@ for every <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <li><p>The <strong>eigenvectors</strong> in blue and their <strong>scaled images</strong> in green</p></li>
 </ul>
 <p>Note how the eigenvectors are aligned with the directions that remain unchanged in orientation under transformation — they are only scaled by their respective eigenvalues.</p>
+<section id="eigenvectors-can-be-real-valued-or-complex">
+<h2>Eigenvectors can be real-valued or complex.<a class="headerlink" href="#eigenvectors-can-be-real-valued-or-complex" title="Link to this heading">#</a></h2>
+<p>Here’s a breakdown of the geometric distinction between linear maps that have <strong>only real eigenvectors</strong> and those that have <strong>complex eigenvectors</strong>:</p>
+<section id="real-eigenvectors-maps-that-stretch-or-reflect-along-fixed-directions">
+<h3>Real Eigenvectors → Maps That Stretch or Reflect Along Fixed Directions<a class="headerlink" href="#real-eigenvectors-maps-that-stretch-or-reflect-along-fixed-directions" title="Link to this heading">#</a></h3>
+<p>If a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> has <strong>only real eigenvalues and eigenvectors</strong>, it means:</p>
+<ul class="simple">
+<li><p>There exist <strong>real directions</strong> in space that are preserved (up to scaling).</p></li>
+<li><p>The action of the matrix is intuitively:</p>
+<ul>
+<li><p><strong>Scaling</strong> (positive eigenvalues)</p></li>
+<li><p><strong>Reflection + scaling</strong> (negative eigenvalues)</p></li>
+</ul>
+</li>
+<li><p>You can visualize this as:</p>
+<ul>
+<li><p>Pulling/stretching space along certain axes</p></li>
+<li><p>Possibly flipping directions</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="complex-eigenvectors-maps-that-rotate-or-spiral">
+<h3>Complex Eigenvectors → Maps That Rotate or Spiral<a class="headerlink" href="#complex-eigenvectors-maps-that-rotate-or-spiral" title="Link to this heading">#</a></h3>
+<p>If a matrix has <strong>complex eigenvalues</strong> and <strong>no real eigenvectors</strong>, it <strong>cannot leave any real direction invariant</strong>.</p>
+<p>This typically corresponds to:</p>
+<ul class="simple">
+<li><p><strong>Rotation</strong> or <strong>spiral</strong> motion</p></li>
+<li><p>Sometimes <strong>rotation + scaling</strong> (when complex eigenvalues have modulus <span class="math notranslate nohighlight">\(\ne 1\)</span>)</p></li>
+<li><p>The action in real space:</p>
+<ul>
+<li><p><strong>No real eigenvector</strong></p></li>
+<li><p>Points are <strong>rotated</strong> or <strong>rotated and scaled</strong></p></li>
+<li><p>Repeated application creates <strong>circular</strong> or <strong>spiraling trajectories</strong></p></li>
+</ul>
+</li>
+</ul>
+<section id="example-stretching-vs-shearing-vs-rotation">
+<h4>Example: Stretching vs. Shearing vs. Rotation<a class="headerlink" href="#example-stretching-vs-shearing-vs-rotation" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Stretching</strong>: scales space differently along the axes. The matrix has only real eigenvalues and eigenvectors.</p></li>
+<li><p><strong>Shearing</strong>: shifts one axis direction while keeping the other fixed. The matrix has only real eigenvalues and eigenvectors.</p></li>
+<li><p><strong>Rotation</strong>: turns everything around the origin. The matrix has only complex eigenvalues and eigenvectors.</p></li>
+</ul>
+<p>Each transformation is applied to a <strong>unit square</strong> and a <strong>grid</strong>, so you can clearly see how space is deformed under each linear map.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">apply_transform</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">draw_transform</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">):</span>
+    <span class="c1"># Draw original grid</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">yi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># Draw transformed grid</span>
+    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(([</span><span class="n">xi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="p">))</span>
+        <span class="n">transformed</span> <span class="o">=</span> <span class="n">apply_transform</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">yi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+        <span class="n">transformed</span> <span class="o">=</span> <span class="n">apply_transform</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Draw unit square before and after</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="n">transformed_square</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">@</span> <span class="n">square</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">square</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">square</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original square&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed_square</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed_square</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Transformed square&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Define transformation matrices</span>
+<span class="n">stretch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+
+<span class="n">shear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
+                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
+
+<span class="c1"># Plot all three</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stretch</span><span class="p">,</span> <span class="s2">&quot;Stretching&quot;</span><span class="p">)</span>
+<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shear</span><span class="p">,</span> <span class="s2">&quot;Shearing&quot;</span><span class="p">)</span>
+<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">rotation</span><span class="p">,</span> <span class="s2">&quot;Rotation&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Linear Transformations: Stretch vs Shear vs Rotation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7cb620d5899a876b48a7912b7167199ee6e3fc48ddba83f74f522daeb4c1922e.png" src="../_images/7cb620d5899a876b48a7912b7167199ee6e3fc48ddba83f74f522daeb4c1922e.png" />
+</div>
+</div>
 <hr class="docutils" />
 <p>We now give some useful results about how eigenvalues change after
 various manipulations.</p>
@@ -692,131 +824,15 @@ definition).</p>
 Then the general case <span class="math notranslate nohighlight">\(k \in \mathbb{Z}\)</span> follows by combining the
 <span class="math notranslate nohighlight">\(k \geq 0\)</span> case with (ii). ◻</p>
 </div>
-<section id="eigenvectors-can-be-real-valued-or-complex">
-<h2>Eigenvectors can be real-valued or complex.<a class="headerlink" href="#eigenvectors-can-be-real-valued-or-complex" title="Link to this heading">#</a></h2>
-<p>There’s a deep and intuitive geometric distinction between linear maps that have <strong>only real eigenvectors</strong> and those that have <strong>complex eigenvectors</strong>.</p>
-<p>Here’s a breakdown:</p>
-<section id="real-eigenvectors-maps-that-stretch-or-reflect-along-fixed-directions">
-<h3>Real Eigenvectors → Maps That Stretch or Reflect Along Fixed Directions<a class="headerlink" href="#real-eigenvectors-maps-that-stretch-or-reflect-along-fixed-directions" title="Link to this heading">#</a></h3>
-<p>If a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> has <strong>only real eigenvalues and eigenvectors</strong>, it means:</p>
-<ul class="simple">
-<li><p>There exist <strong>real directions</strong> in space that are preserved (up to scaling).</p></li>
-<li><p>The action of the matrix is intuitively:</p>
-<ul>
-<li><p><strong>Scaling</strong> (positive eigenvalues)</p></li>
-<li><p><strong>Reflection + scaling</strong> (negative eigenvalues)</p></li>
-</ul>
-</li>
-<li><p>You can visualize this as:</p>
-<ul>
-<li><p>Pulling/stretching space along certain axes</p></li>
-<li><p>Possibly flipping directions</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="complex-eigenvectors-maps-that-rotate-or-spiral">
-<h3>Complex Eigenvectors → Maps That Rotate or Spiral<a class="headerlink" href="#complex-eigenvectors-maps-that-rotate-or-spiral" title="Link to this heading">#</a></h3>
-<p>If a matrix has <strong>complex eigenvalues</strong> and <strong>no real eigenvectors</strong>, it <strong>cannot leave any real direction invariant</strong>. This typically corresponds to:</p>
-<ul class="simple">
-<li><p><strong>Rotation</strong> or <strong>spiral</strong> motion</p></li>
-<li><p>Sometimes <strong>rotation + scaling</strong> (when complex eigenvalues have modulus <span class="math notranslate nohighlight">\(\ne 1\)</span>)</p></li>
-<li><p>The action in real space:</p>
-<ul>
-<li><p><strong>No real eigenvector</strong></p></li>
-<li><p>Points are <strong>rotated</strong> or <strong>rotated and scaled</strong></p></li>
-<li><p>Repeated application creates <strong>circular</strong> or <strong>spiraling trajectories</strong></p></li>
-</ul>
-</li>
-</ul>
-<section id="example-stretching-vs-shearing-vs-rotation">
-<h4>Example: Stretching vs. Shearing vs. Rotation<a class="headerlink" href="#example-stretching-vs-shearing-vs-rotation" title="Link to this heading">#</a></h4>
-<ul class="simple">
-<li><p><strong>Stretching</strong>: scales space differently along the axes. The matrix has only real eigenvalues and eigenvectors.</p></li>
-<li><p><strong>Shearing</strong>: shifts one axis direction while keeping the other fixed. The matrix has only real eigenvalues and eigenvectors.</p></li>
-<li><p><strong>Rotation</strong>: turns everything around the origin. The matrix has only complex eigenvalues and eigenvectors.</p></li>
-</ul>
-<p>Each transformation is applied to a <strong>unit square</strong> and a <strong>grid</strong>, so you can clearly see how space is deformed under each linear map.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="k">def</span> <span class="nf">apply_transform</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">draw_transform</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">):</span>
-    <span class="c1"># Draw original grid</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">yi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-
-    <span class="c1"># Draw transformed grid</span>
-    <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(([</span><span class="n">xi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">y</span><span class="p">))</span>
-        <span class="n">transformed</span> <span class="o">=</span> <span class="n">apply_transform</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">yi</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-        <span class="n">transformed</span> <span class="o">=</span> <span class="n">apply_transform</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Draw unit square before and after</span>
-    <span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
-    <span class="n">transformed_square</span> <span class="o">=</span> <span class="n">matrix</span> <span class="o">@</span> <span class="n">square</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">square</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">square</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original square&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transformed_square</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transformed_square</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Transformed square&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="c1"># Define transformation matrices</span>
-<span class="n">stretch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-                    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
-
-<span class="n">shear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-
-<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>
-<span class="n">rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span>
-                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]])</span>
-
-<span class="c1"># Plot all three</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stretch</span><span class="p">,</span> <span class="s2">&quot;Stretching&quot;</span><span class="p">)</span>
-<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shear</span><span class="p">,</span> <span class="s2">&quot;Shearing&quot;</span><span class="p">)</span>
-<span class="n">draw_transform</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">rotation</span><span class="p">,</span> <span class="s2">&quot;Rotation&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Linear Transformations: Stretch vs Shear vs Rotation&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<img alt="../_images/7cb620d5899a876b48a7912b7167199ee6e3fc48ddba83f74f522daeb4c1922e.png" src="../_images/7cb620d5899a876b48a7912b7167199ee6e3fc48ddba83f74f522daeb4c1922e.png" />
-</div>
-</div>
 </section>
 </section>
 </section>
-<section id="relationship-between-eienvalues-and-determinant">
-<h2>Relationship between Eienvalues and Determinant<a class="headerlink" href="#relationship-between-eienvalues-and-determinant" title="Link to this heading">#</a></h2>
+<section id="relationship-between-eigenvalues-and-determinant">
+<h2>Relationship between Eigenvalues and Determinant<a class="headerlink" href="#relationship-between-eigenvalues-and-determinant" title="Link to this heading">#</a></h2>
 <p>Interestingly, the determinant of a matrix is equal to the product of
 its eigenvalues (repeated according to multiplicity):</p>
 <div class="math notranslate nohighlight">
-\[\det(\mathbf{A}) = \prod_i \lambda_i(\mathbf{A})\]</div>
+\[\det(\mathbf{A}) = \prod_{i=1}^n \lambda_i(\mathbf{A})\]</div>
 <p>This provides a means to find the eigenvalues by deriving the roots of the characteristic polynomial.</p>
 <div class="proof corollary admonition" id="trm-characteristic-polynomial">
 <p class="admonition-title"><span>Corollary </span> (Characteristic Polynomial)</p>
@@ -829,7 +845,8 @@ p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I})
 <p>It is a degree-<span class="math notranslate nohighlight">\(n\)</span> polynomial in <span class="math notranslate nohighlight">\(\lambda\)</span>, and its roots are precisely the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. By definition, <span class="math notranslate nohighlight">\(\lambda\)</span> is an <strong>eigenvalue</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> if:</p>
+<p>Proof. Characteristic Polynomial</p>
+<p>By definition, <span class="math notranslate nohighlight">\(\lambda\)</span> is an <strong>eigenvalue</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> if:</p>
 <div class="math notranslate nohighlight">
 \[
 \exists \, \mathbf{x} \neq \mathbf{0} \text{ such that } \mathbf{A} \mathbf{x} = \lambda \mathbf{x}
@@ -840,13 +857,108 @@ p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I})
 (\mathbf{A} - \lambda \mathbf{I}) \mathbf{x} = \mathbf{0}
 \]</div>
 <p>This is a homogeneous linear system.
-A <strong>nontrivial solution</strong> exists <strong>if and only if</strong> the matrix <span class="math notranslate nohighlight">\(\mathbf{A} - \lambda \mathbf{I}\)</span> is <strong>not invertible</strong>, which means:</p>
+A <strong>nontrivial solution</strong> exists <strong>if and only if</strong> the matrix <span class="math notranslate nohighlight">\(\mathbf{A} - \lambda \mathbf{I}\)</span> is <strong>not invertible</strong>, which according to the <strong>fundamental equivalences for square matrices</strong> is equivalent to:</p>
 <div class="math notranslate nohighlight">
 \[
 \det(\mathbf{A} - \lambda \mathbf{I}) = 0
 \]</div>
 <p>Therefore, the <strong>eigenvalues are the roots of the characteristic polynomial</strong> <span class="math notranslate nohighlight">\(p(\lambda)\)</span>.</p>
 </div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} - \lambda \mathbf{I} =
+\begin{bmatrix}
+a_{11} - \lambda &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+a_{21} &amp; a_{22} - \lambda &amp; \cdots &amp; a_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} - \lambda
+\end{bmatrix}.
+\end{split}\]</div>
+<p>Taking the determinant of this matrix yields a <strong>polynomial in <span class="math notranslate nohighlight">\(\lambda\)</span></strong>.</p>
+<p>Each term in the determinant expansion is a product of <span class="math notranslate nohighlight">\(n\)</span> entries, and due to the linearity in <span class="math notranslate nohighlight">\(\lambda\)</span> of each diagonal term, the highest degree term in <span class="math notranslate nohighlight">\(\lambda\)</span> is <span class="math notranslate nohighlight">\((-\lambda)^n\)</span>.</p>
+<p>Hence:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}) = (-1)^n \lambda^n + c_{n-1} \lambda^{n-1} + \cdots + c_1 \lambda + c_0,
+\]</div>
+<p>for some coefficients <span class="math notranslate nohighlight">\(c_i \in \mathbb{R}\)</span>.</p>
+<p>Thus, <span class="math notranslate nohighlight">\(p(\lambda)\)</span> is a <strong>monic polynomial</strong> of degree <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<section id="example-characteristic-polynomial-of-a-22-matrix">
+<h3><strong>Example: Characteristic Polynomial of a 2×2 Matrix</strong><a class="headerlink" href="#example-characteristic-polynomial-of-a-22-matrix" title="Link to this heading">#</a></h3>
+<p>Here is the full derivation of the <strong>characteristic polynomial</strong> for a general <span class="math notranslate nohighlight">\(2 \times 2\)</span> matrix, step by step:</p>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} = \begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix} \in \mathbb{R}^{2 \times 2}.
+\end{split}\]</div>
+<p>We want to compute the characteristic polynomial:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}).
+\]</div>
+<section id="step-1-subtract-lambda-mathbf-i">
+<h4>Step 1: Subtract <span class="math notranslate nohighlight">\(\lambda \mathbf{I}\)</span><a class="headerlink" href="#step-1-subtract-lambda-mathbf-i" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} - \lambda \mathbf{I} = 
+\begin{bmatrix}
+a - \lambda &amp; b \\
+c &amp; d - \lambda
+\end{bmatrix}.
+\end{split}\]</div>
+</section>
+<section id="step-2-compute-the-determinant">
+<h4>Step 2: Compute the determinant<a class="headerlink" href="#step-2-compute-the-determinant" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) = \det(\mathbf{A} - \lambda \mathbf{I}) 
+= (a - \lambda)(d - \lambda) - bc.
+\]</div>
+</section>
+<section id="step-3-expand-the-polynomial">
+<h4>Step 3: Expand the polynomial<a class="headerlink" href="#step-3-expand-the-polynomial" title="Link to this heading">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) 
+= ad - a\lambda - d\lambda + \lambda^2 - bc 
+= \lambda^2 - (a + d)\lambda + (ad - bc).
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="interpretation">
+<h3><strong>Interpretation</strong><a class="headerlink" href="#interpretation" title="Link to this heading">#</a></h3>
+<p>So the characteristic polynomial is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) = \lambda^2 - \mathrm{tr}(\mathbf{A})\lambda + \det(\mathbf{A}),
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}) = a + d\)</span> is the <strong>trace</strong>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{A}) = ad - bc\)</span> is the <strong>determinant</strong>.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="eigenvalues">
+<h3><strong>Eigenvalues</strong><a class="headerlink" href="#eigenvalues" title="Link to this heading">#</a></h3>
+<p>The eigenvalues are the roots of this quadratic polynomial:</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_{1,2} = \frac{1}{2} \left( \mathrm{tr}(\mathbf{A}) \pm \sqrt{ \mathrm{tr}(\mathbf{A})^2 - 4 \det(\mathbf{A}) } \right).
+\]</div>
+</section>
+</section>
+<section id="relationship-between-the-trace-of-a-matrix-and-its-eigenvalues">
+<h2>Relationship between the Trace of a Matrix and its Eigenvalues<a class="headerlink" href="#relationship-between-the-trace-of-a-matrix-and-its-eigenvalues" title="Link to this heading">#</a></h2>
+<p>Interestingly, the trace of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\in\mathbb{R}^{n \times n}\)</span> is equal to the sum of its eigenvalues (repeated according to multiplicity):</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n \lambda_i(\mathbf{A})\]</div>
+<p>Note that this sum yields a real value even holds if <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> has complex eigenvalues.</p>
+<p>The reason is that complex eigenvalues always appear in conjugate pairs.</p>
 </section>
 </section>
 
@@ -880,6 +992,24 @@ A <strong>nontrivial solution</strong> exists <strong>if and only if</strong> th
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="trace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Trace</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="orthogonal_matrices.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Orthogonal matrices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -904,7 +1034,18 @@ A <strong>nontrivial solution</strong> exists <strong>if and only if</strong> th
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-eienvalues-and-determinant">Relationship between Eienvalues and Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-eigenvalues-and-determinant">Relationship between Eigenvalues and Determinant</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-characteristic-polynomial-of-a-22-matrix"><strong>Example: Characteristic Polynomial of a 2×2 Matrix</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-subtract-lambda-mathbf-i">Step 1: Subtract <span class="math notranslate nohighlight">\(\lambda \mathbf{I}\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-compute-the-determinant">Step 2: Compute the determinant</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-expand-the-polynomial">Step 3: Expand the polynomial</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation"><strong>Interpretation</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eigenvalues"><strong>Eigenvalues</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-between-the-trace-of-a-matrix-and-its-eigenvalues">Relationship between the Trace of a Matrix and its Eigenvalues</a></li>
 </ul>
   </nav></div>
 
