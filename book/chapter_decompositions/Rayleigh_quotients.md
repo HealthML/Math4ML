@@ -1,5 +1,4 @@
-# Rayleigh quotients
-
+# Rayleigh Quotients
 
 There turns out to be an interesting connection between the quadratic
 form of a symmetric matrix and its eigenvalues. This connection is
@@ -21,23 +20,32 @@ We can further show that the Rayleigh quotient is bounded by the largest
 and smallest eigenvalues of $\mathbf{A}$. But first we will show a
 useful special case of the final result.
 
-*Proposition.* 
+:::{prf:theorem} Bound Rayleigh Quotient
+:label: trm-bound-Rayleigh-quotient
+:nonumber:
+
 For any $\mathbf{x}$ such that $\|\mathbf{x}\|_2 = 1$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
+:::
 
-*Proof.* We show only the $\max$ case because the argument for the
+:::{prf:proof}
+We show only the $\max$ case because the argument for the
 $\min$ case is entirely analogous.
 
 Since $\mathbf{A}$ is symmetric, we can decompose it as
-$\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}$. Then use
+$\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}$.
+
+Then use
 the change of variable $\mathbf{y} = \mathbf{Q}^{\!\top\!}\mathbf{x}$,
 noting that the relationship between $\mathbf{x}$ and $\mathbf{y}$ is
 one-to-one and that $\|\mathbf{y}\|_2 = 1$ since $\mathbf{Q}$ is
-orthogonal. Hence
+orthogonal.
+
+Hence
 
 $$\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \max_{\|\mathbf{y}\|_2 = 1} \mathbf{y}^{\!\top\!}\mathbf{\Lambda}\mathbf{y} = \max_{y_1^2+\dots+y_n^2=1} \sum_{i=1}^n \lambda_i y_i^2$$
 
@@ -45,7 +53,9 @@ Written this way, it is clear that $\mathbf{y}$ maximizes this
 expression exactly if and only if it satisfies
 $\sum_{i \in I} y_i^2 = 1$ where
 $I = \{i : \lambda_i = \max_{j=1,\dots,n} \lambda_j = \lambda_{\max}(\mathbf{A})\}$
-and $y_j = 0$ for $j \not\in I$. That is, $I$ contains the index or
+and $y_j = 0$ for $j \not\in I$.
+
+That is, $I$ contains the index or
 indices of the largest eigenvalue. In this case, the maximal value of
 the expression is
 
@@ -59,8 +69,9 @@ $$\mathbf{x} = \mathbf{Q}\mathbf{Q}^{\!\top\!}\mathbf{x} = \mathbf{Q}\mathbf{y} 
 where we have used the matrix-vector product identity.
 
 Recall that $\mathbf{q}_1, \dots, \mathbf{q}_n$ are eigenvectors of
-$\mathbf{A}$ and form an orthonormal basis for $\mathbb{R}^n$. Therefore
-by construction, the set $\{\mathbf{q}_i : i \in I\}$ forms an
+$\mathbf{A}$ and form an orthonormal basis for $\mathbb{R}^n$.
+
+Therefore by construction, the set $\{\mathbf{q}_i : i \in I\}$ forms an
 orthonormal basis for the eigenspace of $\lambda_{\max}(\mathbf{A})$.
 Hence $\mathbf{x}$, which is a linear combination of these, lies in that
 eigenspace and thus is an eigenvector of $\mathbf{A}$ corresponding to
@@ -71,20 +82,24 @@ $\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \lambda
 from which we have the general inequality
 $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})$
 for all unit-length $\mathbf{x}$. ◻
-
+:::
 
 By the scale invariance of the Rayleigh quotient, we immediately have as
 a corollary (since
 $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = R_{\mathbf{A}}(\mathbf{x})$
 for unit $\mathbf{x}$)
 
-*Theorem.* 
-(Min-max theorem) For all $\mathbf{x} \neq \mathbf{0}$,
+:::{prf:theorem} Min-Max Theorem
+:label: trm-min-max
+:nonumber:
+
+For all $\mathbf{x} \neq \mathbf{0}$,
 
 $$\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})$$
 
 with equality if and only if $\mathbf{x}$ is a corresponding
 eigenvector.
+:::
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -236,7 +251,9 @@ But since $\mathbf{Q}$ and $\mathbf{Q}^\top$ cancel out geometrically (they are 
 
 ### Step 2: Show $\mathbf{A}$ preserves alignment
 
-Let $\mathbf{v}$ be any eigenvector of $\mathbf{A}$. Then:
+Let $\mathbf{v}$ be any eigenvector of $\mathbf{A}$.
+
+Then:
 
 $$
 \mathbf{A} \mathbf{v} = \lambda \mathbf{v}
@@ -279,52 +296,6 @@ A matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$ can perform rotation **only if
 * It is **not symmetric**, and
 * It has **complex eigenvalues** (at least in 2D rotation)
 
-Excellent and important question. The answer is:
-
-> ❗️**Not all non-symmetric matrices have an eigen-decomposition over $\mathbb{R}$ or even $\mathbb{C}$.**
-
-Let’s unpack what this means.
-
----
-
-## ✅ What is an Eigen-Decomposition?
-
-An **eigen-decomposition** of a matrix $\mathbf{A} \in \mathbb{R}^{n \times n}$ means:
-
-$$
-\mathbf{A} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^{-1}
-$$
-
-Where:
-
-* $\mathbf{\Lambda}$ is a diagonal matrix of eigenvalues
-* $\mathbf{V}$ contains eigenvectors as columns
-* $\mathbf{V}^{-1}$ exists (i.e., $\mathbf{V}$ is invertible)
-
-This decomposition is **only possible when $\mathbf{A}$ is diagonalizable**.
-
----
-
-## ❌ Not All Matrices Are Diagonalizable
-
-A matrix is **not diagonalizable** if:
-
-* It **does not have enough linearly independent eigenvectors** (i.e., the geometric multiplicity < algebraic multiplicity)
-
-This can happen even if all the eigenvalues are real!
-
-### 🔴 Example (Defective Matrix):
-
-$$
-\mathbf{A} = \begin{pmatrix}
-1 & 1 \\
-0 & 1
-\end{pmatrix}
-$$
-
-* Eigenvalue: $\lambda = 1$
-* But only **one** linearly independent eigenvector
-* So it **cannot be diagonalized**
 
 ---
 
