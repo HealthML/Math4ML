@@ -163,6 +163,13 @@ parts:
             title: Clairaut's Theorem
       - file: appendix/differentiation_rules
         title: Differentiation Rules
+      - file: appendix/Exercise Sheet Solutions.md
+        title: Exercise Sheet Solutions
+        sections:
+          - file: appendix/Exercise Sheet 1 Solutions.md
+            title: Exercise Sheet 1 Solutions
+          - file: appendix/Exercise Sheet 2 Solutions.md
+            title: Exercise Sheet 2 Solutions
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces
