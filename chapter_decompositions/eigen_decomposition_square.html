@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Rayleigh Quotients &#8212; Mathematics for Machine Learning</title>
+    <title>The Eigen-Decomposition &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/Rayleigh_quotients';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/Rayleigh_quotients.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/eigen_decomposition_square';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/eigen_decomposition_square.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Positive (semi-)definite matrices" href="psd_matrices.html" />
-    <link rel="prev" title="Symmetric matrices" href="symmetric_matrices.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -218,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
@@ -227,7 +227,7 @@
 <li class="toctree-l2"><a class="reference internal" href="eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
 
@@ -322,7 +322,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/Rayleigh_quotients.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/eigen_decomposition_square.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -339,7 +339,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/Rayleigh_quotients.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/eigen_decomposition_square.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -369,7 +369,7 @@
       
       
       
-      <li><a href="../_sources/chapter_decompositions/Rayleigh_quotients.md" target="_blank"
+      <li><a href="../_sources/chapter_decompositions/eigen_decomposition_square.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -440,7 +440,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -451,11 +453,24 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Rayleigh Quotients</h1>
+    <h1>The Eigen-Decomposition</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Eigen-Decomposition</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-matrices-are-diagonalizable">❌ Not All Matrices Are Diagonalizable</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-defective-matrix">🔴 Example (Defective Matrix):</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -465,122 +480,45 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="rayleigh-quotients">
-<h1>Rayleigh Quotients<a class="headerlink" href="#rayleigh-quotients" title="Link to this heading">#</a></h1>
-<p>There turns out to be an interesting connection between the quadratic form of a symmetric matrix and its eigenvalues.
-This connection is provided by the <strong>Rayleigh quotient</strong></p>
-<blockquote>
-<div><div class="math notranslate nohighlight">
-\[R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}}\]</div>
-</div></blockquote>
-<p>The Rayleigh quotient has a couple of important properties:</p>
-<div class="proof lemma admonition" id="trm-Rayleigh-properties">
-<p class="admonition-title"><span>Lemma </span> (Properties of the Rayleigh Quotient)</p>
-<section class="lemma-content" id="proof-content">
-<p>(i) <strong>Scale invariance</strong>: for any vector <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>
-and any scalar <span class="math notranslate nohighlight">\(\alpha \neq 0\)</span>,
-<span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x}) = R_\mathbf{A}(\alpha\mathbf{x})\)</span>.</p>
-<p>(ii) If <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue
-<span class="math notranslate nohighlight">\(\lambda\)</span>, then <span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x}) = \lambda\)</span>.</p>
+  <section id="the-eigen-decomposition">
+<h1>The Eigen-Decomposition<a class="headerlink" href="#the-eigen-decomposition" title="Link to this heading">#</a></h1>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n \times n}\)</span> be an invertible square matrix.</p>
+<p>Denote the basis of eigenvectors
+<span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> and their eigenvalues
+<span class="math notranslate nohighlight">\(\lambda_1, \dots, \lambda_n\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> be a matrix with <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> as its columns, and</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{\Lambda} = \operatorname{diag}(\lambda_1, \dots, \lambda_n).\]</div>
+<p>The <strong>eigen-decomposition</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> means:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} = \mathbf{Q} \mathbf{\Lambda} \mathbf{Q}^{-1}
+\]</div>
+<p>This decomposition is <strong>only possible when <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is invertible</strong>.</p>
+<hr class="docutils" />
 </section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. (i)</p>
-<div class="math notranslate nohighlight">
-\[R_\mathbf{A}(\alpha\mathbf{x}) = \frac{(\alpha\mathbf{x})^{\!\top\!}\mathbf{A}(\alpha\mathbf{x})}{(\alpha\mathbf{x})^{\!\top\!}(\alpha\mathbf{x})} = \frac{\alpha^2}{\alpha^2}\frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}}=R_\mathbf{A}(\mathbf{x}).\]</div>
-<p>(ii) Let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue
-<span class="math notranslate nohighlight">\(\lambda\)</span>, then</p>
-<div class="math notranslate nohighlight">
-\[R_\mathbf{A}(\mathbf{x})= \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}} = \frac{\mathbf{x}^{\!\top\!}(\lambda\mathbf{x})}{\mathbf{x}^{\!\top\!}\mathbf{x}}=\lambda\frac{\mathbf{x}^{\!\top\!}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}} = \lambda.\]</div>
-</div>
-<p>We can further show that the Rayleigh quotient is bounded by the largest
-and smallest eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>But first we will show a useful special case of the final result.</p>
-<div class="proof theorem admonition" id="trm-bound-Rayleigh-quotient">
-<p class="admonition-title"><span>Theorem </span> (Bound Rayleigh Quotient)</p>
-<section class="theorem-content" id="proof-content">
-<p>For any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2 = 1\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[\lambda_{\min}(\mathbf{A}) \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})\]</div>
-<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a corresponding eigenvector.</p>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. We show only the <span class="math notranslate nohighlight">\(\max\)</span> case because the argument for the
-<span class="math notranslate nohighlight">\(\min\)</span> case is entirely analogous.</p>
-<p>Since <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric, we can decompose it as
-<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}\)</span>.</p>
-<p>Then use
-the change of variable <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{Q}^{\!\top\!}\mathbf{x}\)</span>,
-noting that the relationship between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is
-one-to-one and that <span class="math notranslate nohighlight">\(\|\mathbf{y}\|_2 = 1\)</span> since <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> is
-orthogonal.</p>
-<p>Hence</p>
-<div class="math notranslate nohighlight">
-\[\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \max_{\|\mathbf{y}\|_2 = 1} \mathbf{y}^{\!\top\!}\mathbf{\Lambda}\mathbf{y} = \max_{y_1^2+\dots+y_n^2=1} \sum_{i=1}^n \lambda_i y_i^2\]</div>
-<p>Written this way, it is clear that <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> maximizes this
-expression exactly if and only if it satisfies
-<span class="math notranslate nohighlight">\(\sum_{i \in I} y_i^2 = 1\)</span> where
-<span class="math notranslate nohighlight">\(I = \{i : \lambda_i = \max_{j=1,\dots,n} \lambda_j = \lambda_{\max}(\mathbf{A})\}\)</span>
-and <span class="math notranslate nohighlight">\(y_j = 0\)</span> for <span class="math notranslate nohighlight">\(j \not\in I\)</span>.</p>
-<p>That is, <span class="math notranslate nohighlight">\(I\)</span> contains the index or
-indices of the largest eigenvalue.</p>
-<p>In this case, the maximal value of
-the expression is</p>
-<div class="math notranslate nohighlight">
-\[\sum_{i=1}^n \lambda_i y_i^2 = \sum_{i \in I} \lambda_i y_i^2 = \lambda_{\max}(\mathbf{A}) \sum_{i \in I} y_i^2 = \lambda_{\max}(\mathbf{A})\]</div>
-<p>Then writing <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> for the columns of
-<span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>, we have</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{x} = \mathbf{Q}\mathbf{Q}^{\!\top\!}\mathbf{x} = \mathbf{Q}\mathbf{y} = \sum_{i=1}^n y_i\mathbf{q}_i = \sum_{i \in I} y_i\mathbf{q}_i\]</div>
-<p>where we have used the matrix-vector product identity.</p>
-<p>Recall that <span class="math notranslate nohighlight">\(\mathbf{q}_1, \dots, \mathbf{q}_n\)</span> are eigenvectors of
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and form an orthonormal basis for <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>.</p>
-<p>Therefore by construction, the set <span class="math notranslate nohighlight">\(\{\mathbf{q}_i : i \in I\}\)</span> forms an
-orthonormal basis for the eigenspace of <span class="math notranslate nohighlight">\(\lambda_{\max}(\mathbf{A})\)</span>.</p>
-<p>Hence <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, which is a linear combination of these, lies in that
-eigenspace and thus is an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> corresponding to
-<span class="math notranslate nohighlight">\(\lambda_{\max}(\mathbf{A})\)</span>.</p>
-<p>We have shown that
-<span class="math notranslate nohighlight">\(\max_{\|\mathbf{x}\|_2 = 1} \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \lambda_{\max}(\mathbf{A})\)</span>,
-from which we have the general inequality
-<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \leq \lambda_{\max}(\mathbf{A})\)</span>
-for all unit-length <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. ◻</p>
-</div>
-<p>By the scale invariance of the Rayleigh quotient, we immediately have as
-a corollary</p>
-<div class="proof theorem admonition" id="trm-min-max">
-<p class="admonition-title"><span>Theorem </span> (Min-Max Theorem)</p>
-<section class="theorem-content" id="proof-content">
-<p>For all <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})\]</div>
-<p>with equality if and only if <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a corresponding
-eigenvector.</p>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{x}\neq \boldsymbol{0},\)</span> then</p>
-<p><span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}} = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\|\mathbf{x}\|^2} = (\frac{\mathbf{x}}{\|\mathbf{x}\|})^{\!\top\!}\mathbf{A}(\frac{\mathbf{x}}{\|\mathbf{x}\|})\)</span></p>
-<p>Thus, minimimum and maximum of the Rayleigh quotient are identical to minimum and maximum of the squared form <span class="math notranslate nohighlight">\(\mathbf{y}\mathbf{A}\mathbf{y}\)</span> for the unit-norm vector <span class="math notranslate nohighlight">\(\mathbf{y}=\mathbf{x}/\|\mathbf{x}\|\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})\]</div>
-<p>◻</p>
-</div>
-<p>This combined visualization brings together the <strong>Rayleigh quotient</strong> and the <strong>level sets of the quadratic form</strong> <span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{A} \mathbf{x}\)</span>:</p>
+<section id="not-all-matrices-are-diagonalizable">
+<h1>❌ Not All Matrices Are Diagonalizable<a class="headerlink" href="#not-all-matrices-are-diagonalizable" title="Link to this heading">#</a></h1>
+<p>A matrix is <strong>not diagonalizable</strong> if:</p>
 <ul class="simple">
-<li><p><strong>Left panel</strong>: Rayleigh quotient <span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x})\)</span> on the unit circle</p>
-<ul>
-<li><p>Color shows how the value varies with direction.</p></li>
-<li><p>Extremes occur at eigenvector directions (marked with arrows).</p></li>
+<li><p>It <strong>does not have enough linearly independent eigenvectors</strong> (i.e., the geometric multiplicity &lt; algebraic multiplicity)</p></li>
 </ul>
-</li>
-<li><p><strong>Right panel</strong>: Level sets (contours) of the quadratic form</p>
-<ul>
-<li><p>Elliptical shapes aligned with eigenvectors.</p></li>
-<li><p>Red vectors indicate principal axes (scaled eigenvectors).</p></li>
+<p>This can happen even if <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is invertible!</p>
+<section id="example-defective-matrix">
+<h2>🔴 Example (Defective Matrix):<a class="headerlink" href="#example-defective-matrix" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} = \begin{pmatrix}
+1 &amp; 1 \\
+0 &amp; 1
+\end{pmatrix}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>Eigenvalue: <span class="math notranslate nohighlight">\(\lambda = 1\)</span></p></li>
+<li><p>But only <strong>one</strong> linearly independent eigenvector</p></li>
+<li><p>So it <strong>cannot be diagonalized</strong></p></li>
 </ul>
-</li>
-</ul>
-<p>Together, these panels illustrate how the <strong>direction of a vector determines how strongly it is scaled</strong> by the symmetric matrix, and how this scaling relates to the matrix’s <strong>eigenstructure</strong>.</p>
-<p>✅ As guaranteed by the <strong>Min–Max Theorem</strong>, the maximum and minimum of the Rayleigh quotient occur precisely at the <strong>eigenvectors corresponding to the largest and smallest eigenvalues</strong>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -613,30 +551,32 @@ eigenvector.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="symmetric_matrices.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Symmetric matrices</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="psd_matrices.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Positive (semi-)definite matrices</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Eigen-Decomposition</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-matrices-are-diagonalizable">❌ Not All Matrices Are Diagonalizable</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-defective-matrix">🔴 Example (Defective Matrix):</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

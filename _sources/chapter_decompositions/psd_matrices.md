@@ -1,62 +1,80 @@
-## Positive (semi-)definite matrices
+# Positive (semi-)definite matrices
 
-A symmetric matrix $\mathbf{A}$ is **positive semi-definite** if for all
-$\mathbf{x} \in \mathbb{R}^n$,
-$\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0$. Sometimes people
-write $\mathbf{A} \succeq 0$ to indicate that $\mathbf{A}$ is positive
+>A symmetric matrix $\mathbf{A}$ is **positive semi-definite** if for all $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0$. 
+>
+>Sometimes people write $\mathbf{A} \succeq 0$ to indicate that $\mathbf{A}$ is positive
 semi-definite.
 
-A symmetric matrix $\mathbf{A}$ is **positive definite** if for all
-nonzero $\mathbf{x} \in \mathbb{R}^n$,
-$\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} > 0$. Sometimes people write
-$\mathbf{A} \succ 0$ to indicate that $\mathbf{A}$ is positive definite.
+> A symmetric matrix $\mathbf{A}$ is **positive definite** if for all nonzero $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} > 0$.
+>
+>Sometimes people write $\mathbf{A} \succ 0$ to indicate that $\mathbf{A}$ is positive definite.
+
 Note that positive definiteness is a strictly stronger property than
 positive semi-definiteness, in the sense that every positive definite
 matrix is positive semi-definite but not vice-versa.
 
 These properties are related to eigenvalues in the following way.
 
-*Proposition.* 
+:::{prf:proposition} Eigenvalues of Positive Definite Matrices 
+:label: trm-psd-eigenvalues
+:nonumber:
 A symmetric matrix is positive semi-definite if and only if all of its
 eigenvalues are nonnegative, and positive definite if and only if all of
 its eigenvalues are positive.
+:::
 
-
-*Proof.* Suppose $A$ is positive semi-definite, and let $\mathbf{x}$ be
+:::{prf:proof}
+Suppose $A$ is positive semi-definite, and let $\mathbf{x}$ be
 an eigenvector of $\mathbf{A}$ with eigenvalue $\lambda$. Then
 
 $$0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2$$
 
 Since $\mathbf{x} \neq \mathbf{0}$ (by the assumption that it is an
 eigenvector), we have $\|\mathbf{x}\|_2^2 > 0$, so we can divide both
-sides by $\|\mathbf{x}\|_2^2$ to arrive at $\lambda \geq 0$. If
-$\mathbf{A}$ is positive definite, the inequality above holds strictly,
-so $\lambda > 0$. This proves one direction.
+sides by $\|\mathbf{x}\|_2^2$ to arrive at $\lambda \geq 0$.
+
+If $\mathbf{A}$ is positive definite, the inequality above holds strictly,
+so $\lambda > 0$.
+
+This proves one direction.
 
 To simplify the proof of the other direction, we will use the machinery
-of Rayleigh quotients. Suppose that $\mathbf{A}$ is symmetric and all
-its eigenvalues are nonnegative. Then for all
+of Rayleigh quotients.
+
+Suppose that $\mathbf{A}$ is symmetric and all
+its eigenvalues are nonnegative.
+
+Then for all
 $\mathbf{x} \neq \mathbf{0}$,
 
 $$0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})$$
 
 Since $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$ matches
 $R_\mathbf{A}(\mathbf{x})$ in sign, we conclude that $\mathbf{A}$ is
-positive semi-definite. If the eigenvalues of $\mathbf{A}$ are all
+positive semi-definite. 
+
+If the eigenvalues of $\mathbf{A}$ are all
 strictly positive, then $0 < \lambda_{\min}(\mathbf{A})$, whence it
 follows that $\mathbf{A}$ is positive definite. ◻
-
+:::
 
 As an example of how these matrices arise, consider
 
-*Proposition.*
-Suppose $\mathbf{A} \in \mathbb{R}^{m \times n}$. Then
-$\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive semi-definite. If
-$\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}$, then
+:::{prf:proposition} Gram Matrices
+:label: trm-gram-matrices
+:nonumber:
+
+Suppose $\mathbf{A} \in \mathbb{R}^{m \times n}$.
+
+Then $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive semi-definite.
+
+If $\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}$, then
 $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive definite.
+:::
 
+:::{prf:proof}
 
-*Proof.* For any $\mathbf{x} \in \mathbb{R}^n$,
+For any $\mathbf{x} \in \mathbb{R}^n$,
 
 $$\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0$$
 
@@ -65,28 +83,37 @@ so $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive semi-definite.
 Note that $\|\mathbf{A}\mathbf{x}\|_2^2 = 0$ implies
 $\|\mathbf{A}\mathbf{x}\|_2 = 0$, which in turn implies
 $\mathbf{A}\mathbf{x} = \mathbf{0}$ (recall that this is a property of
-norms). If $\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}$,
+norms).
+
+If $\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}$,
 $\mathbf{A}\mathbf{x} = \mathbf{0}$ implies $\mathbf{x} = \mathbf{0}$,
 so
 $\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = 0$
 if and only if $\mathbf{x} = \mathbf{0}$, and thus
 $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive definite. ◻
+:::
 
 Positive definite matrices are invertible (since their eigenvalues are
 nonzero), whereas positive semi-definite matrices might not be. However,
 if you already have a positive semi-definite matrix, it is possible to
 perturb its diagonal slightly to produce a positive definite matrix.
 
-*Proposition.* 
+:::{prf:proposition}
+:label: trm-A-plus-eps
+:nonumber:
+
 If $\mathbf{A}$ is positive semi-definite and $\epsilon > 0$, then
 $\mathbf{A} + \epsilon\mathbf{I}$ is positive definite.
+:::
 
-*Proof.* Assuming $\mathbf{A}$ is positive semi-definite and
+:::{prf:proof}
+Assuming $\mathbf{A}$ is positive semi-definite and
 $\epsilon > 0$, we have for any $\mathbf{x} \neq \mathbf{0}$ that
 
 $$\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{> 0} > 0$$
 
 as claimed. ◻
+:::
 
 An obvious but frequently useful consequence of the two propositions we
 have just shown is that
@@ -104,12 +131,15 @@ $\{\mathbf{x} \in \operatorname{dom} f : f(\mathbf{x}) = c\}$.
 
 Let us consider the special case
 $f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$ where
-$\mathbf{A}$ is a positive definite matrix. Since $\mathbf{A}$ is
+$\mathbf{A}$ is a positive definite matrix.
+
+Since $\mathbf{A}$ is
 positive definite, it has a unique matrix square root
 $\mathbf{A}^{\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{Q}^{\!\top\!}$,
 where $\mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}$ is the
 eigendecomposition of $\mathbf{A}$ and
 $\mathbf{\Lambda}^{\frac{1}{2}} = \operatorname{diag}(\sqrt{\lambda_1}, \dots \sqrt{\lambda_n})$.
+
 It is easy to see that this matrix $\mathbf{A}^{\frac{1}{2}}$ is
 positive definite (consider its eigenvalues) and satisfies
 $\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}} = \mathbf{A}$. Fixing
@@ -121,10 +151,16 @@ $$c = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A
 where we have used the symmetry of $\mathbf{A}^{\frac{1}{2}}$. Making
 the change of variable
 $\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}$, we have the condition
-$\|\mathbf{z}\|_2 = \sqrt{c}$. That is, the values $\mathbf{z}$ lie on a
-sphere of radius $\sqrt{c}$. These can be parameterized as
+$\|\mathbf{z}\|_2 = \sqrt{c}$. 
+
+That is, the values $\mathbf{z}$ lie on a
+sphere of radius $\sqrt{c}$. 
+
+These can be parameterized as
 $\mathbf{z} = \sqrt{c}\hat{\mathbf{z}}$ where $\hat{\mathbf{z}}$ has
-$\|\hat{\mathbf{z}}\|_2 = 1$. Then since
+$\|\hat{\mathbf{z}}\|_2 = 1$. 
+
+Then since
 $\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}$,
 we have
 
@@ -132,7 +168,9 @@ $$\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^
 
 where $\tilde{\mathbf{z}} = \mathbf{Q}^{\!\top\!}\hat{\mathbf{z}}$ also
 satisfies $\|\tilde{\mathbf{z}}\|_2 = 1$ since $\mathbf{Q}$ is
-orthogonal. Using this parameterization, we see that the solution set
+orthogonal. 
+
+Using this parameterization, we see that the solution set
 $\{\mathbf{x} \in \mathbb{R}^n : f(\mathbf{x}) = c\}$ is the image of
 the unit sphere
 $\{\tilde{\mathbf{z}} \in \mathbb{R}^n : \|\tilde{\mathbf{z}}\|_2 = 1\}$
@@ -164,11 +202,10 @@ $$\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q
 
 where we have used the matrix-vector product identity from earlier.
 
-In summary: the isocontours of
+**In summary:** the isocontours of
 $f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$ are
 ellipsoids such that the axes point in the directions of the
 eigenvectors of $\mathbf{A}$, and the radii of these axes are
 proportional to the inverse square roots of the corresponding
 eigenvalues.
-
 

@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/psd_matrices.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Singular value decomposition" href="svd.html" />
+    <link rel="prev" title="Rayleigh Quotients" href="Rayleigh_quotients.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -218,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
@@ -227,6 +227,11 @@
 <li class="toctree-l2"><a class="reference internal" href="eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
 </ul>
@@ -470,76 +475,96 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="positive-semi-definite-matrices">
+  <section class="tex2jax_ignore mathjax_ignore" id="positive-semi-definite-matrices">
 <h1>Positive (semi-)definite matrices<a class="headerlink" href="#positive-semi-definite-matrices" title="Link to this heading">#</a></h1>
-<p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive semi-definite</strong> if for all
-<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,
-<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0\)</span>. Sometimes people
-write <span class="math notranslate nohighlight">\(\mathbf{A} \succeq 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive
+<blockquote>
+<div><p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive semi-definite</strong> if for all <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>, <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0\)</span>.</p>
+<p>Sometimes people write <span class="math notranslate nohighlight">\(\mathbf{A} \succeq 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive
 semi-definite.</p>
-<p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive definite</strong> if for all
-nonzero <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,
-<span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} &gt; 0\)</span>. Sometimes people write
-<span class="math notranslate nohighlight">\(\mathbf{A} \succ 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite.
-Note that positive definiteness is a strictly stronger property than
+</div></blockquote>
+<blockquote>
+<div><p>A symmetric matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <strong>positive definite</strong> if for all nonzero <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>, <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} &gt; 0\)</span>.</p>
+<p>Sometimes people write <span class="math notranslate nohighlight">\(\mathbf{A} \succ 0\)</span> to indicate that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite.</p>
+</div></blockquote>
+<p>Note that positive definiteness is a strictly stronger property than
 positive semi-definiteness, in the sense that every positive definite
 matrix is positive semi-definite but not vice-versa.</p>
 <p>These properties are related to eigenvalues in the following way.</p>
-<p><em>Proposition.</em>
-A symmetric matrix is positive semi-definite if and only if all of its
+<div class="proof proposition admonition" id="trm-psd-eigenvalues">
+<p class="admonition-title"><span>Proposition </span> (Eigenvalues of Positive Definite Matrices)</p>
+<section class="proposition-content" id="proof-content">
+<p>A symmetric matrix is positive semi-definite if and only if all of its
 eigenvalues are nonnegative, and positive definite if and only if all of
 its eigenvalues are positive.</p>
-<p><em>Proof.</em> Suppose <span class="math notranslate nohighlight">\(A\)</span> is positive semi-definite, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(A\)</span> is positive semi-definite, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be
 an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>. Then</p>
 <div class="math notranslate nohighlight">
 \[0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2\]</div>
 <p>Since <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> (by the assumption that it is an
 eigenvector), we have <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2 &gt; 0\)</span>, so we can divide both
-sides by <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2\)</span> to arrive at <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span>. If
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite, the inequality above holds strictly,
-so <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>. This proves one direction.</p>
+sides by <span class="math notranslate nohighlight">\(\|\mathbf{x}\|_2^2\)</span> to arrive at <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite, the inequality above holds strictly,
+so <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>.</p>
+<p>This proves one direction.</p>
 <p>To simplify the proof of the other direction, we will use the machinery
-of Rayleigh quotients. Suppose that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric and all
-its eigenvalues are nonnegative. Then for all
+of Rayleigh quotients.</p>
+<p>Suppose that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is symmetric and all
+its eigenvalues are nonnegative.</p>
+<p>Then for all
 <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[0 \leq \lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x})\]</div>
 <p>Since <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> matches
 <span class="math notranslate nohighlight">\(R_\mathbf{A}(\mathbf{x})\)</span> in sign, we conclude that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
-positive semi-definite. If the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are all
+positive semi-definite.</p>
+<p>If the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are all
 strictly positive, then <span class="math notranslate nohighlight">\(0 &lt; \lambda_{\min}(\mathbf{A})\)</span>, whence it
 follows that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite. ◻</p>
+</div>
 <p>As an example of how these matrices arise, consider</p>
-<p><em>Proposition.</em>
-Suppose <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>. Then
-<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite. If
-<span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>, then
+<div class="proof proposition admonition" id="trm-gram-matrices">
+<p class="admonition-title"><span>Proposition </span> (Gram Matrices)</p>
+<section class="proposition-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>.</p>
+<p>Then <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite.</p>
+<p>If <span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>, then
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite.</p>
-<p><em>Proof.</em> For any <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. For any <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = (\mathbf{A}\mathbf{x})^{\!\top\!}(\mathbf{A}\mathbf{x}) = \|\mathbf{A}\mathbf{x}\|_2^2 \geq 0\]</div>
 <p>so <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive semi-definite.</p>
 <p>Note that <span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2^2 = 0\)</span> implies
 <span class="math notranslate nohighlight">\(\|\mathbf{A}\mathbf{x}\|_2 = 0\)</span>, which in turn implies
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span> (recall that this is a property of
-norms). If <span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>,
+norms).</p>
+<p>If <span class="math notranslate nohighlight">\(\operatorname{null}(\mathbf{A}) = \{\mathbf{0}\}\)</span>,
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span> implies <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>,
 so
 <span class="math notranslate nohighlight">\(\mathbf{x}^{\!\top\!} (\mathbf{A}^{\!\top\!}\mathbf{A})\mathbf{x} = 0\)</span>
 if and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>, and thus
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite. ◻</p>
+</div>
 <p>Positive definite matrices are invertible (since their eigenvalues are
 nonzero), whereas positive semi-definite matrices might not be. However,
 if you already have a positive semi-definite matrix, it is possible to
 perturb its diagonal slightly to produce a positive definite matrix.</p>
-<p><em>Proposition.</em>
-If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, then
+<div class="proof proposition admonition" id="trm-A-plus-eps">
+<p class="admonition-title"><span>Proposition </span></p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, then
 <span class="math notranslate nohighlight">\(\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive definite.</p>
-<p><em>Proof.</em> Assuming <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Assuming <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive semi-definite and
 <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have for any <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> that</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{x}^{\!\top\!}(\mathbf{A}+\epsilon\mathbf{I})\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} + \epsilon\mathbf{x}^{\!\top\!}\mathbf{I}\mathbf{x} = \underbrace{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}_{\geq 0} + \underbrace{\epsilon\|\mathbf{x}\|_2^2}_{&gt; 0} &gt; 0\]</div>
 <p>as claimed. ◻</p>
+</div>
 <p>An obvious but frequently useful consequence of the two propositions we
 have just shown is that
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive
@@ -554,13 +579,14 @@ given output. Mathematically, the <span class="math notranslate nohighlight">\(c
 <span class="math notranslate nohighlight">\(\{\mathbf{x} \in \operatorname{dom} f : f(\mathbf{x}) = c\}\)</span>.</p>
 <p>Let us consider the special case
 <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> where
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a positive definite matrix. Since <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a positive definite matrix.</p>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is
 positive definite, it has a unique matrix square root
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{Q}^{\!\top\!}\)</span>,
 where <span class="math notranslate nohighlight">\(\mathbf{Q}\mathbf{\Lambda}\mathbf{Q}^{\!\top\!}\)</span> is the
 eigendecomposition of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{\Lambda}^{\frac{1}{2}} = \operatorname{diag}(\sqrt{\lambda_1}, \dots \sqrt{\lambda_n})\)</span>.
-It is easy to see that this matrix <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span> is
+<span class="math notranslate nohighlight">\(\mathbf{\Lambda}^{\frac{1}{2}} = \operatorname{diag}(\sqrt{\lambda_1}, \dots \sqrt{\lambda_n})\)</span>.</p>
+<p>It is easy to see that this matrix <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span> is
 positive definite (consider its eigenvalues) and satisfies
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\mathbf{A}^{\frac{1}{2}} = \mathbf{A}\)</span>. Fixing
 a value <span class="math notranslate nohighlight">\(c \geq 0\)</span>, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is the set of
@@ -570,17 +596,21 @@ a value <span class="math notranslate nohighlight">\(c \geq 0\)</span>, the <spa
 <p>where we have used the symmetry of <span class="math notranslate nohighlight">\(\mathbf{A}^{\frac{1}{2}}\)</span>. Making
 the change of variable
 <span class="math notranslate nohighlight">\(\mathbf{z} = \mathbf{A}^{\frac{1}{2}}\mathbf{x}\)</span>, we have the condition
-<span class="math notranslate nohighlight">\(\|\mathbf{z}\|_2 = \sqrt{c}\)</span>. That is, the values <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> lie on a
-sphere of radius <span class="math notranslate nohighlight">\(\sqrt{c}\)</span>. These can be parameterized as
+<span class="math notranslate nohighlight">\(\|\mathbf{z}\|_2 = \sqrt{c}\)</span>.</p>
+<p>That is, the values <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> lie on a
+sphere of radius <span class="math notranslate nohighlight">\(\sqrt{c}\)</span>.</p>
+<p>These can be parameterized as
 <span class="math notranslate nohighlight">\(\mathbf{z} = \sqrt{c}\hat{\mathbf{z}}\)</span> where <span class="math notranslate nohighlight">\(\hat{\mathbf{z}}\)</span> has
-<span class="math notranslate nohighlight">\(\|\hat{\mathbf{z}}\|_2 = 1\)</span>. Then since
+<span class="math notranslate nohighlight">\(\|\hat{\mathbf{z}}\|_2 = 1\)</span>.</p>
+<p>Then since
 <span class="math notranslate nohighlight">\(\mathbf{A}^{-\frac{1}{2}} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\)</span>,
 we have</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{x} = \mathbf{A}^{-\frac{1}{2}}\mathbf{z} = \mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\mathbf{Q}^{\!\top\!}\sqrt{c}\hat{\mathbf{z}} = \sqrt{c}\mathbf{Q}\mathbf{\Lambda}^{-\frac{1}{2}}\tilde{\mathbf{z}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{z}} = \mathbf{Q}^{\!\top\!}\hat{\mathbf{z}}\)</span> also
 satisfies <span class="math notranslate nohighlight">\(\|\tilde{\mathbf{z}}\|_2 = 1\)</span> since <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> is
-orthogonal. Using this parameterization, we see that the solution set
+orthogonal.</p>
+<p>Using this parameterization, we see that the solution set
 <span class="math notranslate nohighlight">\(\{\mathbf{x} \in \mathbb{R}^n : f(\mathbf{x}) = c\}\)</span> is the image of
 the unit sphere
 <span class="math notranslate nohighlight">\(\{\tilde{\mathbf{z}} \in \mathbb{R}^n : \|\tilde{\mathbf{z}}\|_2 = 1\}\)</span>
@@ -608,7 +638,7 @@ corresponding eigenvector <span class="math notranslate nohighlight">\(\mathbf{q
 <div class="math notranslate nohighlight">
 \[\mathbf{Q}\mathbf{e}_i = \sum_{j=1}^n [\mathbf{e}_i]_j\mathbf{q}_j = \mathbf{q}_i\]</div>
 <p>where we have used the matrix-vector product identity from earlier.</p>
-<p>In summary: the isocontours of
+<p><strong>In summary:</strong> the isocontours of
 <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> are
 ellipsoids such that the axes point in the directions of the
 eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the radii of these axes are
@@ -647,6 +677,24 @@ eigenvalues.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Rayleigh_quotients.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Rayleigh Quotients</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="svd.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Singular value decomposition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               

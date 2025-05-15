@@ -31,9 +31,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -231,6 +231,11 @@
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/psd_matrices.html">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/svd.html">Singular value decomposition</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
 </ul>
@@ -436,10 +441,17 @@ document.write(`
    <a href="#cap-thm-taylor-multiple-second"><strong>thm-taylor-multiple-second</strong></a> | 
    <a href="#cap-thm-taylor-single"><strong>thm-taylor-single</strong></a> | 
    <a href="#cap-thm-taylor-single-BigO"><strong>thm-taylor-single-BigO</strong></a> | 
+   <a href="#cap-trm-A-plus-eps"><strong>trm-A-plus-eps</strong></a> | 
+   <a href="#cap-trm-Rayleigh-properties"><strong>trm-Rayleigh-properties</strong></a> | 
+   <a href="#cap-trm-bound-Rayleigh-quotient"><strong>trm-bound-Rayleigh-quotient</strong></a> | 
    <a href="#cap-trm-characteristic-polynomial"><strong>trm-characteristic-polynomial</strong></a> | 
    <a href="#cap-trm-elementary-rop-operations"><strong>trm-elementary-rop-operations</strong></a> | 
    <a href="#cap-trm-fundamental-equivalences"><strong>trm-fundamental-equivalences</strong></a> | 
+   <a href="#cap-trm-gram-matrices"><strong>trm-gram-matrices</strong></a> | 
+   <a href="#cap-trm-min-max"><strong>trm-min-max</strong></a> | 
+   <a href="#cap-trm-psd-eigenvalues"><strong>trm-psd-eigenvalues</strong></a> | 
    <a href="#cap-trm-spectral-decomposition"><strong>trm-spectral-decomposition</strong></a> | 
+   <a href="#cap-trm-symmetric-no-rotation"><strong>trm-symmetric-no-rotation</strong></a> | 
    <a href="#cap-trm-triangular-determinant"><strong>trm-triangular-determinant</strong></a>
    </div>
 
@@ -709,6 +721,30 @@ document.write(`
        <a href="chapter_calculus/taylors_theorem.html#thm-taylor-single-BigO"><code class="xref">thm-taylor-single-BigO</code></a> <em>(chapter_calculus/taylors_theorem)</em></td><td>
        <em>corollary</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-A-plus-eps"><td></td><td>
+       <strong>trm-A-plus-eps</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/psd_matrices.html#trm-A-plus-eps"><code class="xref">trm-A-plus-eps</code></a> <em>(chapter_decompositions/psd_matrices)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-Rayleigh-properties"><td></td><td>
+       <strong>trm-Rayleigh-properties</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/Rayleigh_quotients.html#trm-Rayleigh-properties"><code class="xref">trm-Rayleigh-properties</code></a> <em>(chapter_decompositions/Rayleigh_quotients)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-bound-Rayleigh-quotient"><td></td><td>
+       <strong>trm-bound-Rayleigh-quotient</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/Rayleigh_quotients.html#trm-bound-Rayleigh-quotient"><code class="xref">trm-bound-Rayleigh-quotient</code></a> <em>(chapter_decompositions/Rayleigh_quotients)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-trm-characteristic-polynomial"><td></td><td>
        <strong>trm-characteristic-polynomial</strong></td><td></td></tr>
      <tr>
@@ -733,12 +769,44 @@ document.write(`
        <a href="chapter_decompositions/square_matrices.html#trm-fundamental-equivalences"><code class="xref">trm-fundamental-equivalences</code></a> <em>(chapter_decompositions/square_matrices)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-gram-matrices"><td></td><td>
+       <strong>trm-gram-matrices</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/psd_matrices.html#trm-gram-matrices"><code class="xref">trm-gram-matrices</code></a> <em>(chapter_decompositions/psd_matrices)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-min-max"><td></td><td>
+       <strong>trm-min-max</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/Rayleigh_quotients.html#trm-min-max"><code class="xref">trm-min-max</code></a> <em>(chapter_decompositions/Rayleigh_quotients)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-psd-eigenvalues"><td></td><td>
+       <strong>trm-psd-eigenvalues</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/psd_matrices.html#trm-psd-eigenvalues"><code class="xref">trm-psd-eigenvalues</code></a> <em>(chapter_decompositions/psd_matrices)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-trm-spectral-decomposition"><td></td><td>
        <strong>trm-spectral-decomposition</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
        <a href="chapter_decompositions/symmetric_matrices.html#trm-spectral-decomposition"><code class="xref">trm-spectral-decomposition</code></a> <em>(chapter_decompositions/symmetric_matrices)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-symmetric-no-rotation"><td></td><td>
+       <strong>trm-symmetric-no-rotation</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/real_symmetric_eigenvalues.html#trm-symmetric-no-rotation"><code class="xref">trm-symmetric-no-rotation</code></a> <em>(chapter_decompositions/real_symmetric_eigenvalues)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-trm-triangular-determinant"><td></td><td>
