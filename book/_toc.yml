@@ -86,7 +86,7 @@ parts:
         - file: chapter_decompositions/eigenvectors # end week 05
         - file: chapter_decompositions/orthogonal_matrices
         - file: chapter_decompositions/symmetric_matrices
-#        - file: chapter_decompositions/Rayleigh_quotients # skip for now
+        - file: chapter_decompositions/Rayleigh_quotients # skip for now
         - file: chapter_decompositions/psd_matrices # PCA as example
         - file: chapter_decompositions/svd # 
         - file: chapter_decompositions/big_picture
