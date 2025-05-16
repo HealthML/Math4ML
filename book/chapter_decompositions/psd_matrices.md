@@ -209,3 +209,6 @@ eigenvectors of $\mathbf{A}$, and the radii of these axes are
 proportional to the inverse square roots of the corresponding
 eigenvalues.
 
+
+To demonstrate the eigenvalue decomposition of a positive semi-definite matrix, we will be looking at Principal Component Analysis (PCA) algorithm in the next section. The algorithm is a technique used for applications like dimensionality reduction, lossy data compression, feature extraction and data visualization. 
+
