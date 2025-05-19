@@ -10,10 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-+++ {"slideshow": {"slide_type": "slide"}}
-
 # Principal Components Analysis
-
 
 Pricnipal Components Analysis (PCA) performs the orthogonal projection of the data onto a lower dimensional linear space. The goal is to find the directions (principal components) in which the variance of the data is maximized.
 An alternative definition of PCA is based on minimizing the sum-of-sqares of the projection errors.
@@ -196,30 +193,6 @@ Choose $\mathbf{U}_k = [\mathbf{u}_1, \dots, \mathbf{u}_k]$ to maximize $\text{t
 
 This is optimal because trace is maximized by choosing eigenvectors with **largest** eigenvalues (known from Rayleigh-Ritz and Courant-Fischer principles).
 
----
-
-### Step 6: Compute PCA via SVD (Optional)
-
-Rather than computing $\mathbf{X}^\top \mathbf{X}$, you can also directly compute the **Singular Value Decomposition** of $\mathbf{X}$:
-
-$$
-\mathbf{X} = \mathbf{U} \Sigma \mathbf{V}^\top
-$$
-
-* $\mathbf{U} \in \mathbb{R}^{N \times N}$
-* $\Sigma \in \mathbb{R}^{N \times D}$
-* $\mathbf{V} \in \mathbb{R}^{D \times D}$
-
-Then the principal components are the **first $k$ columns** of $\mathbf{V}$, and:
-
-$$
-\mathbf{Z} = \mathbf{X} \mathbf{V}_k
-$$
-
-is the reduced representation.
-
----
-
 ## PCA Derivation Summary
 
 - **Input**: Centered data matrix \(\mathbf{X} \in \mathbb{R}^{N \times D}\)
@@ -358,11 +331,11 @@ We consider five ancestries in the dataset:
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-snpreader = Bed('./genetic_data/example2.bed', count_A1=True)
+snpreader = Bed('../../datasets/genetic_data_1kg/example2.bed', count_A1=True)
 data = snpreader.read()
 print(data.shape)
 # y includes our labels and x includes our features
-labels = pd.read_csv("./genetic_data/1kg_annotations_edit.txt", sep="\t", index_col="Sample")
+labels = pd.read_csv("../../datasets/genetic_data_1kg/1kg_annotations_edit.txt", sep="\t", index_col="Sample")
 list1 = data.iid[:,1].tolist()  #list with the Sample numbers present in genetic dataset
 labels = labels[labels.index.isin(list1)]  #filter labels DataFrame so it only contains the sampleIDs present in genetic data
 y = labels.SuperPopulation  # EUR, AFR, AMR, EAS, SAS
