@@ -231,7 +231,6 @@
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Principal Components Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
@@ -470,7 +469,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-define-the-reconstruction-error">Step 3: Define the Reconstruction Error</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-reformulate-as-a-maximization-problem">Step 4: Reformulate as a Maximization Problem</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-solve-using-the-spectral-theorem">Step 5: Solve Using the Spectral Theorem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-compute-pca-via-svd-optional">Step 6: Compute PCA via SVD (Optional)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-derivation-summary">PCA Derivation Summary</a></li>
@@ -665,28 +663,7 @@ An alternative definition of PCA is based on minimizing the sum-of-sqares of the
 <p>Choose <span class="math notranslate nohighlight">\(\mathbf{U}_k = [\mathbf{u}_1, \dots, \mathbf{u}_k]\)</span> to maximize <span class="math notranslate nohighlight">\(\text{tr}( \mathbf{U}_k^\top \mathbf{M} \mathbf{U}_k )\)</span>.</p>
 <p>This is optimal because trace is maximized by choosing eigenvectors with <strong>largest</strong> eigenvalues (known from Rayleigh-Ritz and Courant-Fischer principles).</p>
 </section>
-<hr class="docutils" />
-<section id="step-6-compute-pca-via-svd-optional">
-<h3>Step 6: Compute PCA via SVD (Optional)<a class="headerlink" href="#step-6-compute-pca-via-svd-optional" title="Link to this heading">#</a></h3>
-<p>Rather than computing <span class="math notranslate nohighlight">\(\mathbf{X}^\top \mathbf{X}\)</span>, you can also directly compute the <strong>Singular Value Decomposition</strong> of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{X} = \mathbf{U} \Sigma \mathbf{V}^\top
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{U} \in \mathbb{R}^{N \times N}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\Sigma \in \mathbb{R}^{N \times D}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{V} \in \mathbb{R}^{D \times D}\)</span></p></li>
-</ul>
-<p>Then the principal components are the <strong>first <span class="math notranslate nohighlight">\(k\)</span> columns</strong> of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>, and:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{Z} = \mathbf{X} \mathbf{V}_k
-\]</div>
-<p>is the reduced representation.</p>
 </section>
-</section>
-<hr class="docutils" />
 <section id="pca-derivation-summary">
 <h2>PCA Derivation Summary<a class="headerlink" href="#pca-derivation-summary" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -831,11 +808,11 @@ This step is implemented in the <code class="docutils literal notranslate"><span
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">snpreader</span> <span class="o">=</span> <span class="n">Bed</span><span class="p">(</span><span class="s1">&#39;./genetic_data/example2.bed&#39;</span><span class="p">,</span> <span class="n">count_A1</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">snpreader</span> <span class="o">=</span> <span class="n">Bed</span><span class="p">(</span><span class="s1">&#39;../../datasets/genetic_data_1kg/example2.bed&#39;</span><span class="p">,</span> <span class="n">count_A1</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">snpreader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="c1"># y includes our labels and x includes our features</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./genetic_data/1kg_annotations_edit.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;Sample&quot;</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../datasets/genetic_data_1kg/1kg_annotations_edit.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;Sample&quot;</span><span class="p">)</span>
 <span class="n">list1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iid</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1">#list with the Sample numbers present in genetic dataset</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">labels</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">list1</span><span class="p">)]</span>  <span class="c1">#filter labels DataFrame so it only contains the sampleIDs present in genetic data</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">SuperPopulation</span>  <span class="c1"># EUR, AFR, AMR, EAS, SAS</span>
@@ -900,82 +877,32 @@ This step is implemented in the <code class="docutils literal notranslate"><span
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">snpreader</span> <span class="o">=</span> <span class="n">Bed</span><span class="p">(</span><span class="s1">&#39;./genetic_data/example2.bed&#39;</span><span class="p">,</span> <span class="n">count_A1</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">data</span> <span class="o">=</span> <span class="n">snpreader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># y includes our labels and x includes our features</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pysnptools/snpreader/snpreader.py:489,</span> in <span class="ni">SnpReader.read</span><span class="nt">(self, order, dtype, force_python_only, view_ok, num_threads, _require_float32_64)</span>
-<span class="g g-Whitespace">    </span><span class="mi">434</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Reads the SNP values and returns a :class:`.SnpData` (with :attr:`.SnpData.val` property containing a new ndarray of the SNP values).</span>
-<span class="g g-Whitespace">    </span><span class="mi">435</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">436</span><span class="sd"> :param order: {&#39;F&#39; (default), &#39;C&#39;, &#39;A&#39;}, optional -- Specify the order of the ndarray. If order is &#39;F&#39; (default),</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">486</span><span class="sd"> &gt;&gt;&gt; # print np.may_share_memory(subset_snpdata.val, subsub_snpdata.val) # Do the two ndarray&#39;s share memory? They could. Currently they won&#39;t.</span>
-<span class="g g-Whitespace">    </span><span class="mi">487</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">488</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">489</span> <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">490</span>     <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">force_python_only</span><span class="p">,</span> <span class="n">view_ok</span><span class="p">,</span> <span class="n">num_threads</span>
-<span class="g g-Whitespace">    </span><span class="mi">491</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">492</span> <span class="kn">from</span> <span class="nn">pysnptools.snpreader</span> <span class="kn">import</span> <span class="n">SnpData</span>
-<span class="g g-Whitespace">    </span><span class="mi">494</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">SnpData</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">495</span>     <span class="bp">self</span><span class="o">.</span><span class="n">iid</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">496</span>     <span class="bp">self</span><span class="o">.</span><span class="n">sid</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">500</span>     <span class="n">_require_float32_64</span><span class="o">=</span><span class="n">_require_float32_64</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">501</span> <span class="p">)</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pysnptools/snpreader/bed.py:323,</span> in <span class="ni">Bed._read</span><span class="nt">(self, iid_index_or_none, sid_index_or_none, order, dtype, force_python_only, view_ok, num_threads)</span>
-<span class="g g-Whitespace">    </span><span class="mi">313</span> <span class="k">def</span> <span class="nf">_read</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">314</span>     <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">315</span>     <span class="n">iid_index_or_none</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">321</span>     <span class="n">num_threads</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">322</span> <span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">323</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_run_once</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">325</span>     <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="n">order</span> <span class="o">=</span> <span class="s2">&quot;F&quot;</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pysnptools/snpreader/bed.py:194,</span> in <span class="ni">Bed._run_once</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="k">return</span>
-<span class="g g-Whitespace">    </span><span class="mi">192</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ran_once</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="ne">--&gt; </span><span class="mi">194</span> <span class="bp">self</span><span class="o">.</span><span class="n">row</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span> <span class="bp">self</span><span class="o">.</span><span class="n">col</span>
-<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_property</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pysnptools/snpreader/bed.py:151,</span> in <span class="ni">Bed.row</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;*same as* :attr:`iid`&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_row&quot;</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">151</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_open_bed_if_needed</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">154</span>         <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_open_bed</span><span class="o">.</span><span class="n">fid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_bed</span><span class="o">.</span><span class="n">iid</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">155</span>     <span class="p">)</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># LATER: could copy in batches or use concatenate</span>
-<span class="g g-Whitespace">    </span><span class="mi">157</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_row</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/pysnptools/snpreader/bed.py:137,</span> in <span class="ni">Bed._open_bed_if_needed</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">134</span>     <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;cm_position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">135</span>     <span class="n">properties</span><span class="p">[</span><span class="s2">&quot;bp_position&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_pos</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">137</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_bed</span> <span class="o">=</span> <span class="n">open_bed</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">139</span>     <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">140</span>     <span class="n">skip_format_check</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_skip_format_check</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">141</span>     <span class="n">count_A1</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">count_A1</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">142</span>     <span class="n">num_threads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_threads</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="n">fam_filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fam_filename</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">144</span>     <span class="n">bim_filepath</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bim_filename</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">145</span> <span class="p">)</span>
-
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/bed_reader/_open_bed.py:306,</span> in <span class="ni">open_bed.__init__</span><span class="nt">(self, location, iid_count, sid_count, properties, count_A1, num_threads, skip_format_check, fam_location, bim_location, cloud_options, max_concurrent_requests, max_chunk_bytes, filepath, fam_filepath, bim_filepath)</span>
-<span class="g g-Whitespace">    </span><span class="mi">304</span>     <span class="n">check_file_cloud</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">geturl</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cloud_options</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">305</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">306</span>     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filepointer</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">307</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_file</span><span class="p">(</span><span class="n">filepointer</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;genetic_data/example2.bed&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(267, 10626)
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for full PCA : 1.3924E-09 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for rank 0 PCA : 3.7316E+05 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for rank 1 PCA : 3.4989E+05 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for rank 2 PCA : 3.3704E+05 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for rank 3 PCA : 3.3322E+05 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>L1 reconstruction error for rank 4 PCA : 3.3049E+05 
+</pre></div>
+</div>
+<img alt="../_images/5dc0c1c3d0a3c2c9b14ec4dbe1633b0af5eb754a380ce68c37f06ed182921a7f.png" src="../_images/5dc0c1c3d0a3c2c9b14ec4dbe1633b0af5eb754a380ce68c37f06ed182921a7f.png" />
+<img alt="../_images/72b07d27bff1c0cadef62d9937206c2d31089e066ac82752a7d940246c72d315.png" src="../_images/72b07d27bff1c0cadef62d9937206c2d31089e066ac82752a7d940246c72d315.png" />
+<img alt="../_images/8b68ff04fde324a3f71c3f0e025c6809d5d523525dbecd38f74b96b078a603f4.png" src="../_images/8b68ff04fde324a3f71c3f0e025c6809d5d523525dbecd38f74b96b078a603f4.png" />
+<img alt="../_images/8547435c4e04061dd9e829dad782037ab0029fb0a902d39b01bedad662c12f5e.png" src="../_images/8547435c4e04061dd9e829dad782037ab0029fb0a902d39b01bedad662c12f5e.png" />
+<img alt="../_images/f5fb83d76c068ee828dd105c6c403904e31dabd65a855f426b8f0166ed7fe35a.png" src="../_images/f5fb83d76c068ee828dd105c6c403904e31dabd65a855f426b8f0166ed7fe35a.png" />
 </div>
 </div>
 </section>
@@ -1051,7 +978,6 @@ This step is implemented in the <code class="docutils literal notranslate"><span
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-define-the-reconstruction-error">Step 3: Define the Reconstruction Error</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-reformulate-as-a-maximization-problem">Step 4: Reformulate as a Maximization Problem</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-solve-using-the-spectral-theorem">Step 5: Solve Using the Spectral Theorem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-compute-pca-via-svd-optional">Step 6: Compute PCA via SVD (Optional)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-derivation-summary">PCA Derivation Summary</a></li>

@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # Rayleigh Quotients
 
 There turns out to be an interesting connection between the quadratic form of a symmetric matrix and its eigenvalues.

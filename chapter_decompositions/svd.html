@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="The fundamental subspaces of a matrix" href="big_picture.html" />
-    <link rel="prev" title="Principal Components Analysis of Genetic Data" href="pca.html" />
+    <link rel="prev" title="Principal Components Analysis" href="pca.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -229,9 +229,8 @@
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis of Genetic Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Singular value decomposition</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
@@ -464,14 +463,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Singular value decomposition</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
 </ul>
 </li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -482,7 +479,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="singular-value-decomposition">
+  <section class="tex2jax_ignore mathjax_ignore" id="singular-value-decomposition">
 <h1>Singular value decomposition<a class="headerlink" href="#singular-value-decomposition" title="Link to this heading">#</a></h1>
 <p>Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that <em>every matrix</em>
@@ -521,11 +518,11 @@ size, but both are diagonal with the squared singular values
 singular values of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the square roots of the eigenvalues
 of <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> (or equivalently, of
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>)[^5].</p>
-</section>
 <section id="some-useful-matrix-identities">
-<h1>Some useful matrix identities<a class="headerlink" href="#some-useful-matrix-identities" title="Link to this heading">#</a></h1>
+<h2>Some useful matrix identities<a class="headerlink" href="#some-useful-matrix-identities" title="Link to this heading">#</a></h2>
+<p>In the following, we present a number of important identities for the SVD.</p>
 <section id="matrix-vector-product-as-linear-combination-of-matrix-columns">
-<h2>Matrix-vector product as linear combination of matrix columns<a class="headerlink" href="#matrix-vector-product-as-linear-combination-of-matrix-columns" title="Link to this heading">#</a></h2>
+<h3>Matrix-vector product as linear combination of matrix columns<a class="headerlink" href="#matrix-vector-product-as-linear-combination-of-matrix-columns" title="Link to this heading">#</a></h3>
 <p><em>Proposition.</em>
 Let <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> be a vector and
 <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> a matrix with columns
@@ -538,7 +535,7 @@ each element of <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x
 definitions) but it is a good exercise to convince yourself.</p>
 </section>
 <section id="sum-of-outer-products-as-matrix-matrix-product">
-<h2>Sum of outer products as matrix-matrix product<a class="headerlink" href="#sum-of-outer-products-as-matrix-matrix-product" title="Link to this heading">#</a></h2>
+<h3>Sum of outer products as matrix-matrix product<a class="headerlink" href="#sum-of-outer-products-as-matrix-matrix-product" title="Link to this heading">#</a></h3>
 <p>An <strong>outer product</strong> is an expression of the form
 <span class="math notranslate nohighlight">\(\mathbf{a}\mathbf{b}^{\!\top\!}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{a} \in \mathbb{R}^m\)</span>
 and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. By inspection it is not hard to see
@@ -565,6 +562,7 @@ the <span class="math notranslate nohighlight">\(i\)</span>th row of <span class
 equivalently the <span class="math notranslate nohighlight">\(j\)</span>th column of <span class="math notranslate nohighlight">\(\mathbf{B}^{\!\top\!}\)</span>. Hence by the
 definition of matrix multiplication, it is equal to
 <span class="math notranslate nohighlight">\([\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}\)</span>. ◻</p>
+</section>
 </section>
 </section>
 
@@ -604,7 +602,7 @@ definition of matrix multiplication, it is equal to
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Principal Components Analysis of Genetic Data</p>
+        <p class="prev-next-title">Principal Components Analysis</p>
       </div>
     </a>
     <a class="right-next"
@@ -632,14 +630,12 @@ definition of matrix multiplication, it is equal to
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Singular value decomposition</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
 </ul>
 </li>
 </ul>
-
   </nav></div>
 
 </div></div>

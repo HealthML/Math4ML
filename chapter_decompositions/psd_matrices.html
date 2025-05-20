@@ -231,7 +231,6 @@
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
@@ -464,6 +463,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gram-matrices">Gram matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invertibility">Invertibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-positive-definite-quadratic-forms">The geometry of positive definite quadratic forms</a></li>
 </ul>
             </nav>
@@ -500,7 +501,8 @@ its eigenvalues are positive.</p>
 </section>
 </div><div class="proof admonition" id="proof">
 <p>Proof. Suppose <span class="math notranslate nohighlight">\(A\)</span> is positive semi-definite, and let <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> be
-an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>. Then</p>
+an eigenvector of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> with eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.
+Then</p>
 <div class="math notranslate nohighlight">
 \[0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2\]</div>
 <p>Since <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{0}\)</span> (by the assumption that it is an
@@ -524,7 +526,9 @@ positive semi-definite.</p>
 strictly positive, then <span class="math notranslate nohighlight">\(0 &lt; \lambda_{\min}(\mathbf{A})\)</span>, whence it
 follows that <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is positive definite. ◻</p>
 </div>
-<p>As an example of how these matrices arise, consider</p>
+<section id="gram-matrices">
+<h2>Gram matrices<a class="headerlink" href="#gram-matrices" title="Link to this heading">#</a></h2>
+<p>In many machine learning algorithms, especially those involving regression, classification, or kernel methods, we frequently work with <strong>data matrices</strong> <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>, where each <strong>row</strong> represents a sample and each <strong>column</strong> a feature. From such matrices, we often compute <strong>matrices of inner products</strong> like <span class="math notranslate nohighlight">\(\mathbf{A}^\top \mathbf{A}\)</span>. These matrices — called <strong>Gram matrices</strong> — encode the pairwise <strong>similarity between features</strong> (or, in kernelized settings, between samples), and play a central role in optimization problems such as least squares, ridge regression, and principal component analysis.</p>
 <div class="proof proposition admonition" id="trm-gram-matrices">
 <p class="admonition-title"><span>Proposition </span> (Gram Matrices)</p>
 <section class="proposition-content" id="proof-content">
@@ -549,9 +553,13 @@ so
 if and only if <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{0}\)</span>, and thus
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> is positive definite. ◻</p>
 </div>
+<p>We observe that kernel matrices computed for all pairs of instances in a data set are positive semi definite. In fact, many kernel functions, like for example the RBF kernel, guarantee positive definiteness of the kernel matrix as long as all data points are pairwise distinct.</p>
+</section>
+<section id="invertibility">
+<h2>Invertibility<a class="headerlink" href="#invertibility" title="Link to this heading">#</a></h2>
 <p>Positive definite matrices are invertible (since their eigenvalues are
-nonzero), whereas positive semi-definite matrices might not be. However,
-if you already have a positive semi-definite matrix, it is possible to
+nonzero), whereas positive semi-definite matrices might not be.</p>
+<p>However, if you already have a positive semi-definite matrix, it is possible to
 perturb its diagonal slightly to produce a positive definite matrix.</p>
 <div class="proof proposition admonition" id="trm-A-plus-eps">
 <p class="admonition-title"><span>Proposition </span></p>
@@ -571,12 +579,15 @@ have just shown is that
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A} + \epsilon\mathbf{I}\)</span> is positive
 definite (and in particular, invertible) for <em>any</em> matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>
 and any <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>.</p>
+</section>
 <section id="the-geometry-of-positive-definite-quadratic-forms">
 <h2>The geometry of positive definite quadratic forms<a class="headerlink" href="#the-geometry-of-positive-definite-quadratic-forms" title="Link to this heading">#</a></h2>
 <p>A useful way to understand quadratic forms is by the geometry of their
-level sets. A <strong>level set</strong> or <strong>isocontour</strong> of a function is the set
+level sets.
+A <strong>level set</strong> or <strong>isocontour</strong> of a function is the set
 of all inputs such that the function applied to those inputs yields a
-given output. Mathematically, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is
+given output.</p>
+<p>Mathematically, the <span class="math notranslate nohighlight">\(c\)</span>-isocontour of <span class="math notranslate nohighlight">\(f\)</span> is
 <span class="math notranslate nohighlight">\(\{\mathbf{x} \in \operatorname{dom} f : f(\mathbf{x}) = c\}\)</span>.</p>
 <p>Let us consider the special case
 <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> where
@@ -713,6 +724,8 @@ eigenvalues.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gram-matrices">Gram matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invertibility">Invertibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-positive-definite-quadratic-forms">The geometry of positive definite quadratic forms</a></li>
 </ul>
   </nav></div>

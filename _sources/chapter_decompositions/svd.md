@@ -1,4 +1,4 @@
-## Singular value decomposition
+# Singular value decomposition
 
 Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that *every matrix*
@@ -45,6 +45,8 @@ of $\mathbf{A}^{\!\top\!}\mathbf{A}$ (or equivalently, of
 $\mathbf{A}\mathbf{A}^{\!\top\!}$)[^5].
 
 ## Some useful matrix identities
+
+In the following, we present a number of important identities for the SVD.
 
 ### Matrix-vector product as linear combination of matrix columns
 

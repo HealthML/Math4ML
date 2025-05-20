@@ -29,7 +29,7 @@ $$
 
 ---
 
-### ✅ Interpretations
+## ✅ Interpretations
 
 * **Column Rank**: The number of linearly independent **columns**
 * **Row Rank**: The number of linearly independent **rows**
@@ -38,7 +38,7 @@ $$
 
 ---
 
-### ✅ Practical View
+## ✅ Practical View
 
 To compute $\operatorname{rank}(\mathbf{A})$ in practice:
 
@@ -47,7 +47,7 @@ To compute $\operatorname{rank}(\mathbf{A})$ in practice:
 
 ---
 
-### 🧠 Summary
+## 🧠 Summary
 
 $$
 \boxed{

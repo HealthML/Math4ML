@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -229,9 +229,8 @@
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis of Genetic Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
-
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
 </ul>
 </details></li>
@@ -501,8 +500,8 @@ document.write(`
 <blockquote>
 <div><p>For all matrices, the <strong>row rank equals the column rank</strong>, even if <span class="math notranslate nohighlight">\(m \neq n\)</span>. This is a deep result in linear algebra.</p>
 </div></blockquote>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="practical-view">
 <h2>✅ Practical View<a class="headerlink" href="#practical-view" title="Link to this heading">#</a></h2>
 <p>To compute <span class="math notranslate nohighlight">\(\operatorname{rank}(\mathbf{A})\)</span> in practice:</p>
@@ -510,8 +509,8 @@ document.write(`
 <li><p>Reduce <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> to <strong>row echelon form</strong> (via Gaussian elimination)</p></li>
 <li><p>Count the number of <strong>non-zero rows</strong></p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="summary">
 <h2>🧠 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">

@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # Positive (semi-)definite matrices
 
 >A symmetric matrix $\mathbf{A}$ is **positive semi-definite** if for all $\mathbf{x} \in \mathbb{R}^n$, $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} \geq 0$. 
@@ -25,7 +37,8 @@ its eigenvalues are positive.
 
 :::{prf:proof}
 Suppose $A$ is positive semi-definite, and let $\mathbf{x}$ be
-an eigenvector of $\mathbf{A}$ with eigenvalue $\lambda$. Then
+an eigenvector of $\mathbf{A}$ with eigenvalue $\lambda$.
+Then
 
 $$0 \leq \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x} = \mathbf{x}^{\!\top\!}(\lambda\mathbf{x}) = \lambda\mathbf{x}^{\!\top\!}\mathbf{x} = \lambda\|\mathbf{x}\|_2^2$$
 
@@ -58,7 +71,8 @@ strictly positive, then $0 < \lambda_{\min}(\mathbf{A})$, whence it
 follows that $\mathbf{A}$ is positive definite. ◻
 :::
 
-As an example of how these matrices arise, consider
+## Gram matrices
+In many machine learning algorithms, especially those involving regression, classification, or kernel methods, we frequently work with **data matrices** $\mathbf{A} \in \mathbb{R}^{m \times n}$, where each **row** represents a sample and each **column** a feature. From such matrices, we often compute **matrices of inner products** like $\mathbf{A}^\top \mathbf{A}$. These matrices — called **Gram matrices** — encode the pairwise **similarity between features** (or, in kernelized settings, between samples), and play a central role in optimization problems such as least squares, ridge regression, and principal component analysis.
 
 :::{prf:proposition} Gram Matrices
 :label: trm-gram-matrices
@@ -93,9 +107,15 @@ if and only if $\mathbf{x} = \mathbf{0}$, and thus
 $\mathbf{A}^{\!\top\!}\mathbf{A}$ is positive definite. ◻
 :::
 
+We observe that kernel matrices computed for all pairs of instances in a data set are positive semi definite. In fact, many kernel functions, like for example the RBF kernel, guarantee positive definiteness of the kernel matrix as long as all data points are pairwise distinct.
+
+
+## Invertibility
+
 Positive definite matrices are invertible (since their eigenvalues are
-nonzero), whereas positive semi-definite matrices might not be. However,
-if you already have a positive semi-definite matrix, it is possible to
+nonzero), whereas positive semi-definite matrices might not be. 
+
+However, if you already have a positive semi-definite matrix, it is possible to
 perturb its diagonal slightly to produce a positive definite matrix.
 
 :::{prf:proposition}
@@ -121,12 +141,15 @@ $\mathbf{A}^{\!\top\!}\mathbf{A} + \epsilon\mathbf{I}$ is positive
 definite (and in particular, invertible) for *any* matrix $\mathbf{A}$
 and any $\epsilon > 0$.
 
-### The geometry of positive definite quadratic forms
+## The geometry of positive definite quadratic forms
 
 A useful way to understand quadratic forms is by the geometry of their
-level sets. A **level set** or **isocontour** of a function is the set
+level sets. 
+A **level set** or **isocontour** of a function is the set
 of all inputs such that the function applied to those inputs yields a
-given output. Mathematically, the $c$-isocontour of $f$ is
+given output.
+
+Mathematically, the $c$-isocontour of $f$ is
 $\{\mathbf{x} \in \operatorname{dom} f : f(\mathbf{x}) = c\}$.
 
 Let us consider the special case
