@@ -93,6 +93,7 @@ parts:
         - file: chapter_decompositions/svd # 
         - file: chapter_decompositions/big_picture
         - file: chapter_decompositions/RBF_kernel_Positive_Definite
+        - file: chapter_decompositions/representer_theorem
         - file: chapter_decompositions/pseudoinverse
         - file: chapter_decompositions/matrix_norms
       - file: chapter_convexity/overview_convexity
