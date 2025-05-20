@@ -92,13 +92,13 @@ parts:
           title: Principal Components Analysis
         - file: chapter_decompositions/svd # 
         - file: chapter_decompositions/big_picture
-#        - file: chapter_decompositions/RBF_kernel_Positive_Definite
+        - file: chapter_decompositions/RBF_kernel_Positive_Definite
         - file: chapter_decompositions/pseudoinverse
         - file: chapter_decompositions/matrix_norms
-#  - file: chapter_convexity/overview_convexity
-#    title: Convexity
-#    sections:
-#    - file: chapter_convexity/convexity
+      - file: chapter_convexity/overview_convexity
+        title: Convexity
+        sections:
+        - file: chapter_convexity/convexity
 # continue with second order optimization
 #      title: Second-Order Optimization
 #        - file: chapter_calculus/newtons_method
