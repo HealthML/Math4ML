@@ -14,6 +14,7 @@ kernelspec:
 
 :::{prf:theorem} Squeeze theorem
 :label: squeeze_theorem-appendix
+:nonumber:
 
 Let $g(x), h(x), f(x)$ be functions defined near $c$. Suppose that there is an open interval around $c$, except possibly at $c$ itself, such that:
 
