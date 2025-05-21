@@ -463,6 +463,8 @@ $$
 \lambda_{1,2} = \frac{1}{2} \left( \mathrm{tr}(\mathbf{A}) \pm \sqrt{ \mathrm{tr}(\mathbf{A})^2 - 4 \det(\mathbf{A}) } \right).
 $$
 
+
+
 ## Relationship between the Trace of a Matrix and its Eigenvalues
 
 Interestingly, the trace of a matrix $\mathbf{A}\in\mathbb{R}^{n \times n}$ is equal to the sum of its eigenvalues (repeated according to multiplicity):
@@ -472,3 +474,5 @@ $$\operatorname{tr}(\mathbf{A}) = \sum_{i=1}^n \lambda_i(\mathbf{A})$$
 Note that this sum yields a real value even holds if $\mathbf{A}$ has complex eigenvalues.
 
 The reason is that complex eigenvalues always appear in conjugate pairs.
+
+

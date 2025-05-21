@@ -60,7 +60,6 @@ Let $\mathbf{A} \in \mathbb{R}^{n \times n}$ be a symmetric matrix.
 The expression $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$ is called a
 **quadratic form**.
 
-
 Let $\mathbf{A} \in \mathbb{R}^{n \times n}$ be a symmetric matrix, and
 recall that the expression $\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}$
 is called a quadratic form of $\mathbf{A}$. It is in some cases helpful
@@ -73,3 +72,4 @@ This identity is valid for any square matrix (need not be symmetric),
 although quadratic forms are usually only discussed in the context of
 symmetric matrices.
 
+We have seen quadratic forms in the context of quadratic optimization problems, where the goal was to minimize a quadratic form.

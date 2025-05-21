@@ -10,7 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
-## The fundamental subspaces of a matrix
+# The fundamental subspaces of a matrix
 
 The fundamental subspaces of a matrix $A$ are the four subspaces associated with the matrix and its transpose. These subspaces are important in linear algebra and numerical analysis, particularly in the context of solving linear systems and eigenvalue problems.
 
