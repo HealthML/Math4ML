@@ -99,7 +99,8 @@ parts:
       - file: chapter_convexity/overview_convexity
         title: Convexity
         sections:
-        - file: chapter_convexity/convexity
+        - file: chapter_convexity/convex_sets
+        - file: chapter_convexity/convex_functions
 # continue with second order optimization
 #      title: Second-Order Optimization
 #        - file: chapter_calculus/newtons_method
