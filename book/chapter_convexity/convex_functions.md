@@ -1,3 +1,15 @@
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: math4ml
+  language: python
+  name: python3
+---
 # Basics of convex functions
 
 In the remainder of this section, assume
@@ -24,19 +36,89 @@ is convex.
 These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.
 
- ::: center
-![What convex functions look like](../figures/convex-function.png)
-What convex functions look like
-:::
+
+
+## Geometric interpretation
+The following figure illustrates the three types of convexity:
 
 Geometrically, convexity means that the line segment between two points
-on the graph of $f$ lies on or above the graph itself. See Figure
-[2](#fig:convexfunction){reference-type="ref"
-reference="fig:convexfunction"} for a visual.
+on the graph of $f$ lies on or above the graph itself.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define a convex function
+f = lambda x: x**2
+
+# Define x values and compute y
+x = np.linspace(-2, 2, 400)
+y = f(x)
+
+# Choose two points on the graph
+x1, x2 = -1.5, 1.0
+y1, y2 = f(x1), f(x2)
+
+# Compute the line segment between the two points
+t = np.linspace(0, 1, 100)
+xt = t * x1 + (1 - t) * x2
+yt_line = t * y1 + (1 - t) * y2
+
+# Plot the function and the line segment
+plt.figure(figsize=(8, 6))
+plt.plot(x, y, label=r'$f(x) = x^2$', color='blue')
+plt.plot(xt, yt_line, 'r--', label='Line segment')
+plt.plot([x1, x2], [y1, y2], 'ro')  # endpoints
+plt.title("Geometric Interpretation of Convexity")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
 
 Strict convexity means that the graph of $f$ lies strictly above the
-line segment, except at the segment endpoints. (So actually the function
-in the figure appears to be strictly convex.)
+line segment, except at the segment endpoints. 
+(So actually the function in the figure appears to be strictly convex.)
+
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define x values
+x = np.linspace(-2, 2, 400)
+
+# Define three functions: convex, strictly convex, and strongly convex
+f1 = lambda x: np.abs(x)              # convex but not strictly convex
+f2 = lambda x: x**4                   # strictly convex but not strongly convex
+f3 = lambda x: x**2 + 1               # strongly convex
+
+# Evaluate functions
+y1 = f1(x)
+y2 = f2(x)
+y3 = f3(x)
+
+# Plot the functions
+plt.figure(figsize=(10, 6))
+plt.plot(x, y1, label=r'$f(x) = |x|$ (Convex)', linestyle='--')
+plt.plot(x, y2, label=r'$f(x) = x^4$ (Strictly Convex)', linestyle='-.')
+plt.plot(x, y3, label=r'$f(x) = x^2 + 1$ (Strongly Convex)', linestyle='-')
+plt.title("Examples of Convex, Strictly Convex, and Strongly Convex Functions")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+* A **convex but not strictly convex** function $f(x) = |x|$
+* A **strictly convex but not strongly convex** function $f(x) = x^4$
+* A **strongly convex** function $f(x) = x^2 + 1$
+
 
 ## Consequences of convexity
 
