@@ -47,6 +47,8 @@ plt.tight_layout()
 plt.show()
 
 ```
+This figure visualizes a **convex set**: a polygon where the line segment connecting any two points within the set (e.g., points A and B) lies entirely inside the set. The red dashed line confirms this key geometric property of convex sets.
+
 
 
 ```{code-cell} ipython3
@@ -84,6 +86,7 @@ plt.tight_layout()
 plt.show()
 
 ```
+This figure illustrates a **non-convex set**: a shape where the line segment between two points inside the set (A and B) partially lies **outside** the set. This violation of the convexity condition distinguishes non-convex sets from convex ones.
 
 A set $\mathcal{X} \subseteq \mathbb{R}^d$ is **convex** if
 

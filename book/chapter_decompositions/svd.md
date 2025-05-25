@@ -3,7 +3,9 @@
 Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that *every matrix*
 $\mathbf{A} \in \mathbb{R}^{m \times n}$ has an SVD (even non-square
-matrices)! The decomposition goes as follows:
+matrices)!
+
+The decomposition goes as follows:
 
 $$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}$$
 
@@ -76,7 +78,10 @@ immediately obvious, but the sum of outer products is actually
 equivalent to an appropriate matrix-matrix product! We formalize this
 statement as
 
-*Proposition.* 
+:::{prf:proposition}
+:label: prop-sum-outer-products
+:nonumber:
+
 Let $\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m$ and
 $\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n$. Then
 
@@ -85,8 +90,11 @@ $$\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{
 where
 
 $$\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 & \cdots & \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 & \cdots & \mathbf{b}_k\end{bmatrix}$$
+:::
 
-*Proof.* For each $(i,j)$, we have
+:::{prf:proof}
+
+For each $(i,j)$, we have
 
 $$\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}$$
 
@@ -95,4 +103,4 @@ the $i$th row of $\mathbf{A}$ and the $j$th row of $\mathbf{B}$, or
 equivalently the $j$th column of $\mathbf{B}^{\!\top\!}$. Hence by the
 definition of matrix multiplication, it is equal to
 $[\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}$. ◻
-
+:::
