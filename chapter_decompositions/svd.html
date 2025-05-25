@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/svd.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="The fundamental subspaces of a matrix" href="big_picture.html" />
+    <link rel="next" title="Moore-Penrose Pseudoinverse" href="pseudoinverse.html" />
     <link rel="prev" title="Principal Components Analysis" href="pca.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -228,10 +228,13 @@
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_norms.html">Matrix Norms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Singular value decomposition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -484,7 +487,8 @@ document.write(`
 <p>Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that <em>every matrix</em>
 <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> has an SVD (even non-square
-matrices)! The decomposition goes as follows:</p>
+matrices)!</p>
+<p>The decomposition goes as follows:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\]</div>
 <p>where
@@ -546,15 +550,19 @@ that such an expression yields an <span class="math notranslate nohighlight">\(m
 immediately obvious, but the sum of outer products is actually
 equivalent to an appropriate matrix-matrix product! We formalize this
 statement as</p>
-<p><em>Proposition.</em>
-Let <span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m\)</span> and
+<div class="proof proposition admonition" id="prop-sum-outer-products">
+<p class="admonition-title"><span>Proposition </span></p>
+<section class="proposition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m\)</span> and
 <span class="math notranslate nohighlight">\(\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n\)</span>. Then</p>
 <div class="math notranslate nohighlight">
 \[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 &amp; \cdots &amp; \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 &amp; \cdots &amp; \mathbf{b}_k\end{bmatrix}\]</div>
-<p><em>Proof.</em> For each <span class="math notranslate nohighlight">\((i,j)\)</span>, we have</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. For each <span class="math notranslate nohighlight">\((i,j)\)</span>, we have</p>
 <div class="math notranslate nohighlight">
 \[\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}\]</div>
 <p>This last expression should be recognized as an inner product between
@@ -562,6 +570,7 @@ the <span class="math notranslate nohighlight">\(i\)</span>th row of <span class
 equivalently the <span class="math notranslate nohighlight">\(j\)</span>th column of <span class="math notranslate nohighlight">\(\mathbf{B}^{\!\top\!}\)</span>. Hence by the
 definition of matrix multiplication, it is equal to
 <span class="math notranslate nohighlight">\([\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}\)</span>. ◻</p>
+</div>
 </section>
 </section>
 </section>
@@ -606,11 +615,11 @@ definition of matrix multiplication, it is equal to
       </div>
     </a>
     <a class="right-next"
-       href="big_picture.html"
+       href="pseudoinverse.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The fundamental subspaces of a matrix</p>
+        <p class="prev-next-title">Moore-Penrose Pseudoinverse</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

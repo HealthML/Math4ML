@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Orthogonal projections &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/orthogonal_projections';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/orthogonal_projections.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The fundamental subspaces of a matrix" href="big_picture.html" />
+    <link rel="prev" title="Moore-Penrose Pseudoinverse" href="pseudoinverse.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trace.html">Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_norms.html">Matrix Norms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/orthogonal_projections.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/orthogonal_projections.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_decompositions/orthogonal_projections.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Orthogonal projections</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="orthogonal-projections">
+<h1>Orthogonal projections<a class="headerlink" href="#orthogonal-projections" title="Link to this heading">#</a></h1>
+<p>We now consider a particular kind of optimization problem that is
+particularly well-understood and can often be solved in closed form:
+given some point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in an inner product space <span class="math notranslate nohighlight">\(V\)</span>, find the
+closest point to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in a subspace <span class="math notranslate nohighlight">\(S\)</span> of <span class="math notranslate nohighlight">\(V\)</span>. This process is
+referred to as <strong>projection onto a subspace</strong>.</p>
+<p>The following diagram should make it geometrically clear that, at least
+in Euclidean space, the solution is intimately related to orthogonality
+and the Pythagorean theorem:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-import required packages due to kernel reset</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define subspace S spanned by vector e1</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">e1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">e1</span><span class="p">)</span>  <span class="c1"># normalize to make it orthonormal</span>
+
+<span class="c1"># Define arbitrary point x not in the subspace</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Compute projection of x onto the subspace spanned by e1</span>
+<span class="n">x_proj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e1</span><span class="p">)</span> <span class="o">*</span> <span class="n">e1</span>
+
+<span class="c1"># Define a second point y in the subspace (for triangle)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">e1</span>
+
+<span class="c1"># Set up plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Draw vectors</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">x_proj</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{y}</span><span class="s1">^* = P\mathbf</span><span class="si">{x}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{y}</span><span class="s1"> \in S$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Draw dashed lines to form triangle</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_proj</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_proj</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_proj</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_proj</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Annotate</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">),</span> <span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{x}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">x_proj</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">),</span> <span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{y}</span><span class="s1">^*$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">),</span> <span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{y}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Draw subspace line</span>
+<span class="n">line_extent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">s_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">line_extent</span><span class="p">,</span> <span class="n">e1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s_line</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">s_line</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Subspace $S$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Formatting</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Orthogonal Projection of $\mathbf</span><span class="si">{x}</span><span class="s2">$ onto Subspace $S$&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/5eff4ced8bfe1dea951691caf7fa65b22607cdda25815d2112b100855ff74104.png" src="../_images/5eff4ced8bfe1dea951691caf7fa65b22607cdda25815d2112b100855ff74104.png" />
+</div>
+</div>
+<p>In this diagram, the blue vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is an arbitrary point in the
+inner product space <span class="math notranslate nohighlight">\(V\)</span>, the green vector <span class="math notranslate nohighlight">\(\mathbf{y}^* = P\mathbf{x}\)</span> is
+the projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto the subspace <span class="math notranslate nohighlight">\(S\)</span>, and the gray vector
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary point in <span class="math notranslate nohighlight">\(S\)</span>. The dashed lines form a right
+triangle with <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> as vertices.
+The right triangle formed by these three points illustrates the
+relationship between the projection and orthogonality: the line segment
+from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is perpendicular to the subspace <span class="math notranslate nohighlight">\(S\)</span>,
+and the distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the shortest
+distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to any point in <span class="math notranslate nohighlight">\(S\)</span>. This is a direct
+consequence of the Pythagorean theorem, which states that in a right
+triangle, the square of the length of the hypotenuse (in this case,
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>) is equal to the sum of the squares of the
+lengths of the other two sides (in this case, <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\|\)</span> and <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\|\)</span>).</p>
+<p>Here <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary element of the subspace <span class="math notranslate nohighlight">\(S\)</span>, and
+<span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the point in <span class="math notranslate nohighlight">\(S\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^*\)</span>
+is perpendicular to <span class="math notranslate nohighlight">\(S\)</span>. The hypotenuse of a right triangle (in this
+case <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>) is always longer than either of the
+legs (in this case <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\|\)</span> and
+<span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\|\)</span>), and when <span class="math notranslate nohighlight">\(\mathbf{y} \neq \mathbf{y}^*\)</span>
+there always exists such a triangle between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>,
+and <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>.</p>
+<p>Our intuition from Euclidean space suggests that the closest point to
+<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in <span class="math notranslate nohighlight">\(S\)</span> has the perpendicularity property described above,
+and we now show that this is indeed the case.</p>
+<div class="proof proposition admonition" id="prop-unique-minimizer">
+<p class="admonition-title"><span>Proposition </span></p>
+<section class="proposition-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
+is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over
+<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span> if and only if <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. <span class="math notranslate nohighlight">\((\implies)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. That is,
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, with equality only if <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{y}^*\)</span>.
+Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+g(t) &amp;:= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
+&amp;= \langle \mathbf{x}-\mathbf{y}^*+t\mathbf{v}, \mathbf{x}-\mathbf{y}^*+t\mathbf{v} \rangle \\
+&amp;= \langle \mathbf{x}-\mathbf{y}^*, \mathbf{x}-\mathbf{y}^* \rangle - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\langle \mathbf{v}, \mathbf{v} \rangle \\
+&amp;= \|\mathbf{x}-\mathbf{y}^*\|^2 - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\|\mathbf{v}\|^2
+\end{aligned}\end{split}\]</div>
+<p>must have a minimum at <span class="math notranslate nohighlight">\(t = 0\)</span> as a consequence of this
+assumption. Thus</p>
+<div class="math notranslate nohighlight">
+\[0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle\]</div>
+<p>giving <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}\)</span>. Since <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>
+was arbitrary in <span class="math notranslate nohighlight">\(S\)</span>, we have <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span> as
+claimed.</p>
+<p><span class="math notranslate nohighlight">\((\impliedby)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>. Observe that
+for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*-\mathbf{y} \in S\)</span> because
+<span class="math notranslate nohighlight">\(\mathbf{y}^* \in S\)</span> and <span class="math notranslate nohighlight">\(S\)</span> is closed under subtraction. Under the
+hypothesis, <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{y}^*-\mathbf{y}\)</span>, so
+by the Pythagorean theorem,</p>
+<div class="math notranslate nohighlight">
+\[\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|\]</div>
+<p>and in fact the inequality is strict when <span class="math notranslate nohighlight">\(\mathbf{y} \neq \mathbf{y}^*\)</span>
+since this implies <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\| &gt; 0\)</span>. Thus
+<span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>
+over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. ◻</p>
+</div>
+<p>Since a unique minimizer in <span class="math notranslate nohighlight">\(S\)</span> can be found for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>,
+we can define an operator</p>
+<div class="math notranslate nohighlight">
+\[P\mathbf{x} = \operatorname{argmin}_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\]</div>
+<p>Observe that <span class="math notranslate nohighlight">\(P\mathbf{y} = \mathbf{y}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>,
+since <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> has distance zero from itself and every other point
+in <span class="math notranslate nohighlight">\(S\)</span> has positive distance from <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. Thus
+<span class="math notranslate nohighlight">\(P(P\mathbf{x}) = P\mathbf{x}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> (i.e., <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
+because <span class="math notranslate nohighlight">\(P\mathbf{x} \in S\)</span>. The identity <span class="math notranslate nohighlight">\(P^2 = P\)</span> is actually one of
+the defining properties of a <strong>projection</strong>, the other being linearity.</p>
+<p>An immediate consequence of the previous result is that
+<span class="math notranslate nohighlight">\(\mathbf{x} - P\mathbf{x} \perp S\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, and
+conversely that <span class="math notranslate nohighlight">\(P\)</span> is the unique operator that satisfies this property
+for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. For this reason, <span class="math notranslate nohighlight">\(P\)</span> is known as an
+<strong>orthogonal projection</strong>.</p>
+<p>If we choose an orthonormal basis for the target subspace <span class="math notranslate nohighlight">\(S\)</span>, it is
+possible to write down a more specific expression for <span class="math notranslate nohighlight">\(P\)</span>.</p>
+<div class="proof proposition admonition" id="prop-orthonormal-basis-projection">
+<p class="admonition-title"><span>Proposition </span></p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
+then</p>
+<div class="math notranslate nohighlight">
+\[P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> be an orthonormal basis
+for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\left\langle \mathbf{x}-\sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i, \mathbf{e}_j \right\rangle &amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\underbrace{\langle \mathbf{e}_i, \mathbf{e}_j \rangle}_{\delta_{ij}} \\
+&amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \langle \mathbf{x}, \mathbf{e}_j \rangle \\
+&amp;= 0
+\end{aligned}\end{split}\]</div>
+<p>We have shown that the claimed expression, call it
+<span class="math notranslate nohighlight">\(\tilde{P}\mathbf{x}\)</span>, satisfies
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j\)</span> for every element
+<span class="math notranslate nohighlight">\(\mathbf{e}_j\)</span> of the orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>. It follows (by
+linearity of the inner product) that
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp S\)</span>, so the previous result
+implies <span class="math notranslate nohighlight">\(P = \tilde{P}\)</span>. ◻</p>
+</div>
+<p>The fact that <span class="math notranslate nohighlight">\(P\)</span> is a linear operator (and thus a proper projection, as
+earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>) follows readily from this result.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_decompositions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pseudoinverse.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Moore-Penrose Pseudoinverse</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="big_picture.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The fundamental subspaces of a matrix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1005 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Basics of convex functions &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_convexity/convex_functions';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_convexity/convex_functions.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_decompositions/overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/determinant.html">Determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/trace.html">Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_norms.html">Matrix Norms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/psd_matrices.html">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pca.html">Principal Components Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/svd.html">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_convexity/convex_functions.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_convexity/convex_functions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_convexity/convex_functions.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Basics of convex functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="basics-of-convex-functions">
+<h1>Basics of convex functions<a class="headerlink" href="#basics-of-convex-functions" title="Link to this heading">#</a></h1>
+<p>In the remainder of this section, assume
+<span class="math notranslate nohighlight">\(f : \mathbb{R}^d \to \mathbb{R}\)</span> unless otherwise noted. We’ll start
+with the definitions and then give some results.</p>
+<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>convex</strong> if</p>
+<div class="math notranslate nohighlight">
+\[f(t\mathbf{x} + (1-t)\mathbf{y}) \leq t f(\mathbf{x}) + (1-t)f(\mathbf{y})\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span> and all <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>.</p>
+<p>If the inequality holds strictly (i.e. <span class="math notranslate nohighlight">\(&lt;\)</span> rather than <span class="math notranslate nohighlight">\(\leq\)</span>) for all
+<span class="math notranslate nohighlight">\(t \in (0,1)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>, then we say that <span class="math notranslate nohighlight">\(f\)</span> is
+<strong>strictly convex</strong>.</p>
+<p>A function <span class="math notranslate nohighlight">\(f\)</span> is <strong>strongly convex with parameter <span class="math notranslate nohighlight">\(m\)</span></strong> (or
+<strong><span class="math notranslate nohighlight">\(m\)</span>-strongly convex</strong>) if the function</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\]</div>
+<p>is convex.</p>
+<p>These conditions are given in increasing order of strength; strong
+convexity implies strict convexity which implies convexity.</p>
+<section id="geometric-interpretation">
+<h2>Geometric interpretation<a class="headerlink" href="#geometric-interpretation" title="Link to this heading">#</a></h2>
+<p>The following figure illustrates the three types of convexity:</p>
+<p>Geometrically, convexity means that the line segment between two points
+on the graph of <span class="math notranslate nohighlight">\(f\)</span> lies on or above the graph itself.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define a convex function</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Define x values and compute y</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Choose two points on the graph</span>
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.0</span>
+<span class="n">y1</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="c1"># Compute the line segment between the two points</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">xt</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">x2</span>
+<span class="n">yt_line</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">y1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">y2</span>
+
+<span class="c1"># Plot the function and the line segment</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">yt_line</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Line segment&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="p">[</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>  <span class="c1"># endpoints</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Geometric Interpretation of Convexity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/fdc5df03fa5aab6af40365ea3c916f6ee32e924ba27f053fc2bda2eb93a9f82b.png" src="../_images/fdc5df03fa5aab6af40365ea3c916f6ee32e924ba27f053fc2bda2eb93a9f82b.png" />
+</div>
+</div>
+<p>Strict convexity means that the graph of <span class="math notranslate nohighlight">\(f\)</span> lies strictly above the
+line segment, except at the segment endpoints.
+(So actually the function in the figure appears to be strictly convex.)</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define x values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># Define three functions: convex, strictly convex, and strongly convex</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>              <span class="c1"># convex but not strictly convex</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span>                   <span class="c1"># strictly convex but not strongly convex</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>               <span class="c1"># strongly convex</span>
+
+<span class="c1"># Evaluate functions</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y3</span> <span class="o">=</span> <span class="n">f3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Plot the functions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = |x|$ (Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^4$ (Strictly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2 + 1$ (Strongly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Examples of Convex, Strictly Convex, and Strongly Convex Functions&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/8b281b2c380ae702de68fcb713bd1ec53c129a907cb34202937a3365fdf4f28e.png" src="../_images/8b281b2c380ae702de68fcb713bd1ec53c129a907cb34202937a3365fdf4f28e.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>A <strong>convex but not strictly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = |x|\)</span></p></li>
+<li><p>A <strong>strictly convex but not strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^4\)</span></p></li>
+<li><p>A <strong>strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^2 + 1\)</span></p></li>
+</ul>
+</section>
+<section id="consequences-of-convexity">
+<h2>Consequences of convexity<a class="headerlink" href="#consequences-of-convexity" title="Link to this heading">#</a></h2>
+<p>Why do we care if a function is (strictly/strongly) convex?</p>
+<p>Basically, our various notions of convexity have implications about the
+nature of minima. It should not be surprising that the stronger
+conditions tell us more about the minima.</p>
+<div class="proof proposition admonition" id="prop-convex-minima">
+<p class="admonition-title"><span>Proposition </span> (Minima of convex functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set.</p>
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex, then any local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> is also a global minimum.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex, and let <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> be a local
+minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p>Then for some neighborhood <span class="math notranslate nohighlight">\(N \subseteq \mathcal{X}\)</span> about <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>, we have
+<span class="math notranslate nohighlight">\(f(\mathbf{x}) \geq f(\mathbf{x}^*)\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x} \in N\)</span>.</p>
+<p>Suppose
+towards a contradiction that there exists
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \in \mathcal{X}\)</span> such that
+<span class="math notranslate nohighlight">\(f(\tilde{\mathbf{x}}) &lt; f(\mathbf{x}^*)\)</span>.</p>
+<p>Consider the line segment
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
+noting that <span class="math notranslate nohighlight">\(\mathbf{x}(t) \in \mathcal{X}\)</span> by the convexity of
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) &lt; tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>.</p>
+<p>We can pick <span class="math notranslate nohighlight">\(t\)</span> to be sufficiently close to <span class="math notranslate nohighlight">\(1\)</span> that
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) \in N\)</span>; then <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)\)</span> by
+the definition of <span class="math notranslate nohighlight">\(N\)</span>, but <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; f(\mathbf{x}^*)\)</span> by the
+above inequality, a contradiction.</p>
+<p>It follows that <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) \leq f(\mathbf{x})\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a global minimum of
+<span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-minima-striclty-convex">
+<p class="admonition-title"><span>Proposition </span> (Minima stricly convex functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> be a convex set.</p>
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, then there
+exists at most one local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Consequently,
+if it exists it is the unique global minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. The second sentence follows from the first, so all we must show
+is that if a local minimum exists in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> then it is unique.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a local minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, and
+suppose towards a contradiction that there exists a local minimum
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \in \mathcal{X}\)</span> such that
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} \neq \mathbf{x}^*\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(f\)</span> is strictly convex, it is convex, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> and
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> are both global minima of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> by
+the previous result. Hence <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) = f(\tilde{\mathbf{x}})\)</span>.
+Consider the line segment
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
+which again must lie entirely in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. By the strict convexity
+of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}(t)) &lt; tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>.</p>
+<p>But this contradicts the fact that <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>
+is a global minimum. Therefore if <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> is a local
+minimum of <span class="math notranslate nohighlight">\(f\)</span> in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, then
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x}^*\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is the unique
+minimum in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. ◻</p>
+</div>
+<p>It is worthwhile to examine how the feasible set affects the
+optimization problem. We will see why the assumption that <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>
+is convex is needed in the results above.</p>
+<p>Consider the function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>, which is a strictly convex function.
+The unique global minimum of this function in <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> is <span class="math notranslate nohighlight">\(x = 0\)</span>.</p>
+<p>But let’s see what happens when we change the feasible set
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p>(i) <span class="math notranslate nohighlight">\(\mathcal{X} = \{1\}\)</span>: This set is actually convex, so we still have
+a unique global minimum. But it is not the same as the unconstrained
+minimum!</p>
+<p>(ii) <span class="math notranslate nohighlight">\(\mathcal{X} = \mathbb{R} \setminus \{0\}\)</span>: This set is non-convex,
+and we can see that <span class="math notranslate nohighlight">\(f\)</span> has no minima in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For any
+point <span class="math notranslate nohighlight">\(x \in \mathcal{X}\)</span>, one can find another point
+<span class="math notranslate nohighlight">\(y \in \mathcal{X}\)</span> such that <span class="math notranslate nohighlight">\(f(y) &lt; f(x)\)</span>.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(\mathcal{X} = (-\infty,-1] \cup [0,\infty)\)</span>: This set is
+non-convex, and we can see that there is a local minimum
+(<span class="math notranslate nohighlight">\(x = -1\)</span>) which is distinct from the global minimum (<span class="math notranslate nohighlight">\(x = 0\)</span>).</p>
+<p>(iv) <span class="math notranslate nohighlight">\(\mathcal{X} = (-\infty,-1] \cup [1,\infty)\)</span>: This set is
+non-convex, and we can see that there are two global minima
+(<span class="math notranslate nohighlight">\(x = \pm 1\)</span>).</p>
+</section>
+<section id="showing-that-a-function-is-convex">
+<h2>Showing that a function is convex<a class="headerlink" href="#showing-that-a-function-is-convex" title="Link to this heading">#</a></h2>
+<p>Hopefully the previous section has convinced the reader that convexity
+is an important property. Next we turn to the issue of showing that a
+function is (strictly/strongly) convex. It is of course possible (in
+principle) to directly show that the condition in the definition holds,
+but this is usually not the easiest way.</p>
+<div class="proof proposition admonition" id="prop-norms-convex">
+<p class="admonition-title"><span>Proposition </span> (Norms)</p>
+<section class="proposition-content" id="proof-content">
+<p>Norms are convex.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> be a norm on a vector space <span class="math notranslate nohighlight">\(V\)</span>. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in V\)</span> and <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|\]</div>
+<p>where we have used respectively the triangle inequality, the homogeneity
+of norms, and the fact that <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(1-t\)</span> are nonnegative. Hence
+<span class="math notranslate nohighlight">\(\|\cdot\|\)</span> is convex. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-convex-functions-graph">
+<p class="admonition-title"><span>Proposition </span> (Gradient of Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is differentiable.</p>
+<p>Then <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. To-do. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-Hessian-convex">
+<p class="admonition-title"><span>Proposition </span> (Hessian of Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> is twice differentiable. Then</p>
+<p>(i) <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for
+all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
+<p>(ii) If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succ 0\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>, then <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if and only if
+<span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Omitted. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-scaling-convex-functions">
+<p class="admonition-title"><span>Proposition </span> (Scaling Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>, then <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(\alpha \geq 0\)</span>. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+(\alpha f)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \alpha f(t\mathbf{x} + (1-t)\mathbf{y}) \\
+&amp;\leq \alpha\left(tf(\mathbf{x}) + (1-t)f(\mathbf{y})\right) \\
+&amp;= t(\alpha f(\mathbf{x})) + (1-t)(\alpha f(\mathbf{y})) \\
+&amp;= t(\alpha f)(\mathbf{x}) + (1-t)(\alpha f)(\mathbf{y})
+\end{aligned}\end{split}\]</div>
+<p>so <span class="math notranslate nohighlight">\(\alpha f\)</span> is convex. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-sum-convex-functions">
+<p class="admonition-title"><span>Proposition </span> (Sum of Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is convex.</p>
+<p>Furthermore, if <span class="math notranslate nohighlight">\(g\)</span> is
+strictly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is strictly convex, and if <span class="math notranslate nohighlight">\(g\)</span> is
+<span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex.
+Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+(f+g)(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(t\mathbf{x} + (1-t)\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + g(t\mathbf{x} + (1-t)\mathbf{y}) &amp; \text{convexity of $f$} \\
+&amp;\leq tf(\mathbf{x}) + (1-t)f(\mathbf{y}) + tg(\mathbf{x}) + (1-t)g(\mathbf{y}) &amp; \text{convexity of $g$} \\
+&amp;= t(f(\mathbf{x}) + g(\mathbf{x})) + (1-t)(f(\mathbf{y}) + g(\mathbf{y})) \\
+&amp;= t(f+g)(\mathbf{x}) + (1-t)(f+g)(\mathbf{y})
+\end{aligned}\end{split}\]</div>
+<p>so <span class="math notranslate nohighlight">\(f + g\)</span> is convex.</p>
+<p>If <span class="math notranslate nohighlight">\(g\)</span> is strictly convex, the second inequality above holds strictly
+for <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span> and <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>, so <span class="math notranslate nohighlight">\(f+g\)</span> is strictly
+convex.</p>
+<p>If <span class="math notranslate nohighlight">\(g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex, then the function
+<span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\)</span> is
+convex, so <span class="math notranslate nohighlight">\(f+h\)</span> is convex.</p>
+<p>But</p>
+<div class="math notranslate nohighlight">
+\[(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2\]</div>
+<p>so <span class="math notranslate nohighlight">\(f+g\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-convex-functions-weighted-sum">
+<p class="admonition-title"><span>Proposition </span> (Weighted Sum of Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(f_1, \dots, f_n\)</span> are convex and <span class="math notranslate nohighlight">\(\alpha_1, \dots, \alpha_n \geq 0\)</span>,
+then</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^n \alpha_i f_i\]</div>
+<p>is convex.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Follows from the previous two propositions by induction. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-linear-convex">
+<p class="admonition-title"><span>Proposition </span> (Combination of Affine and Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> is convex, then
+<span class="math notranslate nohighlight">\(g(\mathbf{x}) \equiv f(\mathbf{A}\mathbf{x} + \mathbf{b})\)</span> is convex
+for any appropriately-sized <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and <span class="math notranslate nohighlight">\(g\)</span> is defined like so. Then for all
+<span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} g\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+g(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) + \mathbf{b}) \\
+&amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + \mathbf{b}) \\
+&amp;= f(t\mathbf{A}\mathbf{x} + (1-t)\mathbf{A}\mathbf{y} + t\mathbf{b} + (1-t)\mathbf{b}) \\
+&amp;= f(t(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)(\mathbf{A}\mathbf{y} + \mathbf{b})) \\
+&amp;\leq tf(\mathbf{A}\mathbf{x} + \mathbf{b}) + (1-t)f(\mathbf{A}\mathbf{y} + \mathbf{b}) &amp; \text{convexity of $f$} \\
+&amp;= tg(\mathbf{x}) + (1-t)g(\mathbf{y})
+\end{aligned}\end{split}\]</div>
+<p>Thus <span class="math notranslate nohighlight">\(g\)</span> is convex. ◻</p>
+</div>
+<div class="proof proposition admonition" id="prop-max-convex-functions">
+<p class="admonition-title"><span>Proposition </span> (Maximum of Convex Functions)</p>
+<section class="proposition-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex, then
+<span class="math notranslate nohighlight">\(h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}\)</span> is convex.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are convex and <span class="math notranslate nohighlight">\(h\)</span> is defined like so. Then
+for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} h\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+h(t\mathbf{x} + (1-t)\mathbf{y}) &amp;= \max\{f(t\mathbf{x} + (1-t)\mathbf{y}), g(t\mathbf{x} + (1-t)\mathbf{y})\} \\
+&amp;\leq \max\{tf(\mathbf{x}) + (1-t)f(\mathbf{y}), tg(\mathbf{x}) + (1-t)g(\mathbf{y})\} \\
+&amp;\leq \max\{tf(\mathbf{x}), tg(\mathbf{x})\} + \max\{(1-t)f(\mathbf{y}), (1-t)g(\mathbf{y})\} \\
+&amp;= t\max\{f(\mathbf{x}), g(\mathbf{x})\} + (1-t)\max\{f(\mathbf{y}), g(\mathbf{y})\} \\
+&amp;= th(\mathbf{x}) + (1-t)h(\mathbf{y})
+\end{aligned}\end{split}\]</div>
+<p>Note that in the first inequality we have used convexity
+of <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> plus the fact that <span class="math notranslate nohighlight">\(a \leq c, b \leq d\)</span> implies
+<span class="math notranslate nohighlight">\(\max\{a,b\} \leq \max\{c,d\}\)</span>. In the second inequality we have used
+the fact that <span class="math notranslate nohighlight">\(\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}\)</span>.</p>
+<p>Thus <span class="math notranslate nohighlight">\(h\)</span> is convex. ◻</p>
+</div>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<p>A good way to gain intuition about the distinction between convex,
+strictly convex, and strongly convex functions is to consider examples
+where the stronger property fails to hold.</p>
+<p>Functions that are convex but not strictly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{w}^{\!\top\!}\mathbf{x} + \alpha\)</span> for any
+<span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^d, \alpha \in \mathbb{R}\)</span>. Such a
+function is called an <strong>affine function</strong>, and it is both convex and
+concave.
+(In fact, a function is affine if and only if it is both convex and concave.)
+Note that linear functions and constant
+functions are special cases of affine functions.</p>
+<p>(ii) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \|\mathbf{x}\|_1\)</span></p>
+<p>Functions that are strictly but not strongly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(x) = x^4\)</span>.
+This example is interesting because it is strictly
+convex but you cannot show this fact via a second-order argument
+(since <span class="math notranslate nohighlight">\(f''(0) = 0\)</span>).</p>
+<p>(ii) <span class="math notranslate nohighlight">\(f(x) = \exp(x)\)</span>.
+This example is interesting because it’s bounded
+below but has no local minimum.</p>
+<p>(iii) <span class="math notranslate nohighlight">\(f(x) = -\log x\)</span>.
+This example is interesting because it’s
+strictly convex but not bounded below.</p>
+<p>Functions that are strongly convex:</p>
+<p>(i) <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \|\mathbf{x}\|_2^2\)</span></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_convexity"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric interpretation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

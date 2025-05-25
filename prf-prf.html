@@ -31,9 +31,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -232,10 +232,13 @@
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/symmetric_matrices.html">Symmetric matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/matrix_norms.html">Matrix Norms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/pca.html">Principal Components Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/svd.html">Singular value decomposition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/big_picture.html">The fundamental subspaces of a matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapter_decompositions/big_picture.html">Fundamental Subspaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -411,6 +414,19 @@ document.write(`
    <a href="#cap-chain-rule"><strong>chain-rule</strong></a> | 
    <a href="#cap-chain-rule-scalar"><strong>chain-rule-scalar</strong></a> | 
    <a href="#cap-eigenvalues_eigenvectors_properties"><strong>eigenvalues_eigenvectors_properties</strong></a> | 
+   <a href="#cap-prop-Hessian-convex"><strong>prop-Hessian-convex</strong></a> | 
+   <a href="#cap-prop-convex-functions-graph"><strong>prop-convex-functions-graph</strong></a> | 
+   <a href="#cap-prop-convex-functions-weighted-sum"><strong>prop-convex-functions-weighted-sum</strong></a> | 
+   <a href="#cap-prop-convex-minima"><strong>prop-convex-minima</strong></a> | 
+   <a href="#cap-prop-linear-convex"><strong>prop-linear-convex</strong></a> | 
+   <a href="#cap-prop-max-convex-functions"><strong>prop-max-convex-functions</strong></a> | 
+   <a href="#cap-prop-minima-striclty-convex"><strong>prop-minima-striclty-convex</strong></a> | 
+   <a href="#cap-prop-norms-convex"><strong>prop-norms-convex</strong></a> | 
+   <a href="#cap-prop-orthonormal-basis-projection"><strong>prop-orthonormal-basis-projection</strong></a> | 
+   <a href="#cap-prop-scaling-convex-functions"><strong>prop-scaling-convex-functions</strong></a> | 
+   <a href="#cap-prop-sum-convex-functions"><strong>prop-sum-convex-functions</strong></a> | 
+   <a href="#cap-prop-sum-outer-products"><strong>prop-sum-outer-products</strong></a> | 
+   <a href="#cap-prop-unique-minimizer"><strong>prop-unique-minimizer</strong></a> | 
    <a href="#cap-squeeze_theorem-appendix"><strong>squeeze_theorem-appendix</strong></a> | 
    <a href="#cap-thm-Clairaut"><strong>thm-Clairaut</strong></a> | 
    <a href="#cap-thm-Clairaut-appendix"><strong>thm-Clairaut-appendix</strong></a> | 
@@ -434,6 +450,7 @@ document.write(`
    <a href="#cap-thm-pythagorean-teorem"><strong>thm-pythagorean-teorem</strong></a> | 
    <a href="#cap-thm-range-linear-map"><strong>thm-range-linear-map</strong></a> | 
    <a href="#cap-thm-rank-nullity"><strong>thm-rank-nullity</strong></a> | 
+   <a href="#cap-thm-representer"><strong>thm-representer</strong></a> | 
    <a href="#cap-thm-rolle-appendix"><strong>thm-rolle-appendix</strong></a> | 
    <a href="#cap-thm-scalar-scalar-chain-rule-appendix"><strong>thm-scalar-scalar-chain-rule-appendix</strong></a> | 
    <a href="#cap-thm-taylor-multiple-BigO"><strong>thm-taylor-multiple-BigO</strong></a> | 
@@ -478,6 +495,110 @@ document.write(`
        <td></td>
        <td>
        <a href="chapter_decompositions/eigenvectors.html#eigenvalues_eigenvectors_properties"><code class="xref">eigenvalues_eigenvectors_properties</code></a> <em>(chapter_decompositions/eigenvectors)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-Hessian-convex"><td></td><td>
+       <strong>prop-Hessian-convex</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-Hessian-convex"><code class="xref">prop-Hessian-convex</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-convex-functions-graph"><td></td><td>
+       <strong>prop-convex-functions-graph</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-convex-functions-graph"><code class="xref">prop-convex-functions-graph</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-convex-functions-weighted-sum"><td></td><td>
+       <strong>prop-convex-functions-weighted-sum</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-convex-functions-weighted-sum"><code class="xref">prop-convex-functions-weighted-sum</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-convex-minima"><td></td><td>
+       <strong>prop-convex-minima</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-convex-minima"><code class="xref">prop-convex-minima</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-linear-convex"><td></td><td>
+       <strong>prop-linear-convex</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-linear-convex"><code class="xref">prop-linear-convex</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-max-convex-functions"><td></td><td>
+       <strong>prop-max-convex-functions</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-max-convex-functions"><code class="xref">prop-max-convex-functions</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-minima-striclty-convex"><td></td><td>
+       <strong>prop-minima-striclty-convex</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-minima-striclty-convex"><code class="xref">prop-minima-striclty-convex</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-norms-convex"><td></td><td>
+       <strong>prop-norms-convex</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-norms-convex"><code class="xref">prop-norms-convex</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-orthonormal-basis-projection"><td></td><td>
+       <strong>prop-orthonormal-basis-projection</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/orthogonal_projections.html#prop-orthonormal-basis-projection"><code class="xref">prop-orthonormal-basis-projection</code></a> <em>(chapter_decompositions/orthogonal_projections)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-scaling-convex-functions"><td></td><td>
+       <strong>prop-scaling-convex-functions</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-scaling-convex-functions"><code class="xref">prop-scaling-convex-functions</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-sum-convex-functions"><td></td><td>
+       <strong>prop-sum-convex-functions</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_convexity/convex_functions.html#prop-sum-convex-functions"><code class="xref">prop-sum-convex-functions</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-sum-outer-products"><td></td><td>
+       <strong>prop-sum-outer-products</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/svd.html#prop-sum-outer-products"><code class="xref">prop-sum-outer-products</code></a> <em>(chapter_decompositions/svd)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-unique-minimizer"><td></td><td>
+       <strong>prop-unique-minimizer</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/orthogonal_projections.html#prop-unique-minimizer"><code class="xref">prop-unique-minimizer</code></a> <em>(chapter_decompositions/orthogonal_projections)</em></td><td>
        <em>proposition</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-squeeze_theorem-appendix"><td></td><td>
@@ -662,6 +783,14 @@ document.write(`
        <td></td>
        <td>
        <a href="chapter_spaces/subspaces.html#thm-rank-nullity"><code class="xref">thm-rank-nullity</code></a> <em>(chapter_spaces/subspaces)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-representer"><td></td><td>
+       <strong>thm-representer</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/representer_theorem.html#thm-representer"><code class="xref">thm-representer</code></a> <em>(chapter_decompositions/representer_theorem)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-thm-rolle-appendix"><td></td><td>

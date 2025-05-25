@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -228,10 +228,13 @@
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_matrices.html">Orthogonal matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="symmetric_matrices.html">Symmetric matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix_norms.html">Matrix Norms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Principal Components Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="big_picture.html">The fundamental subspaces of a matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
 </ul>
 </details></li>
 </ul>
@@ -678,23 +681,32 @@ An alternative definition of PCA is based on minimizing the sum-of-sqares of the
 <section id="pca-algorithm-step-by-step">
 <h2>PCA algorithm step by step<a class="headerlink" href="#pca-algorithm-step-by-step" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>Calculate the mean of the data
-$<span class="math notranslate nohighlight">\( \mathbf{\bar{x}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i \)</span>$</p></li>
-<li><p>Calculate the covariance matrix <span class="math notranslate nohighlight">\(\mathbf{S}\)</span> of the data:
-$<span class="math notranslate nohighlight">\( \mathbf{S} = \frac{1}{N-1} \sum_{i=1}^{N} (\mathbf{x}_i - \mathbf{\bar{x}})(\mathbf{x}_i - \mathbf{\bar{x}})^T \)</span>$</p></li>
+<li><p>Calculate the mean of the data</p></li>
 </ol>
+<div class="math notranslate nohighlight">
+\[ \mathbf{\bar{x}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i \]</div>
+<ol class="arabic simple" start="2">
+<li><p>Calculate the covariance matrix <span class="math notranslate nohighlight">\(\mathbf{S}\)</span> of the data:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ \mathbf{S} = \frac{1}{N-1} \sum_{i=1}^{N} (\mathbf{x}_i - \mathbf{\bar{x}})(\mathbf{x}_i - \mathbf{\bar{x}})^T \]</div>
 <p>Both the mean and the covariance matrix are calculated by <code class="docutils literal notranslate"><span class="pre">empirical_covariance</span></code> function.</p>
 <ol class="arabic simple" start="3">
 <li><p>Calculate the eigenvalues <span class="math notranslate nohighlight">\(\lambda_i\)</span> and eigenvectors <span class="math notranslate nohighlight">\(\mathbf{u}_i\)</span> of the covariance matrix <span class="math notranslate nohighlight">\(\mathbf{S}\)</span></p></li>
-<li><p>Sort the eigenvalues in descending order and then sort the eigenvectors accordingly. Create a principal components matrix <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> by taking the first <span class="math notranslate nohighlight">\(k\)</span> eigenvectors, where <span class="math notranslate nohighlight">\(k\)</span> is the number of dimensions we want to keep.
+<li><p>Sort the eigenvalues in descending order and then sort the eigenvectors accordingly.
+Create a principal components matrix <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> by taking the first <span class="math notranslate nohighlight">\(k\)</span> eigenvectors, where <span class="math notranslate nohighlight">\(k\)</span> is the number of dimensions we want to keep.
 This step is implemented in the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> class.</p></li>
-<li><p>To project the data onto the new space, we can use the following formula:
-$<span class="math notranslate nohighlight">\( \mathbf{Y} = \mathbf{X} \cdot \mathbf{U} \)</span>$
-This step is implemented in the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> class.</p></li>
-<li><p>To reconstruct the data, we can use the following formula:
-$<span class="math notranslate nohighlight">\( \mathbf{\tilde{X}} = \mathbf{Y} \cdot \mathbf{U}^T + \mathbf{\bar{x}} \)</span>$
-This step is implemented in the <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> method of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> class.</p></li>
+<li><p>To project the data onto the new space, we can use the following formula:</p></li>
 </ol>
+<div class="math notranslate nohighlight">
+\[ \mathbf{Y} = \mathbf{X} \cdot \mathbf{U} \]</div>
+<p>This step is implemented in the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> class.</p>
+<ol class="arabic simple" start="6">
+<li><p>To reconstruct the data, we can use the following formula:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[ \mathbf{\tilde{X}} = \mathbf{Y} \cdot \mathbf{U}^T + \mathbf{\bar{x}} \]</div>
+<p>This step is implemented in the <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> method of the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> class.</p>
 <p>Note that recontructing the data will not give us the original data: <span class="math notranslate nohighlight">\(\mathbf{X} \neq \mathbf{\tilde{X}}\)</span>.</p>
 </section>
 <section id="implementation">

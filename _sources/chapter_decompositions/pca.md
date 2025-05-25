@@ -205,21 +205,28 @@ This is optimal because trace is maximized by choosing eigenvectors with **large
 ## PCA algorithm step by step
 
 1. Calculate the mean of the data
+
 $$ \mathbf{\bar{x}} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i $$
 
 2. Calculate the covariance matrix $\mathbf{S}$ of the data:
+
 $$ \mathbf{S} = \frac{1}{N-1} \sum_{i=1}^{N} (\mathbf{x}_i - \mathbf{\bar{x}})(\mathbf{x}_i - \mathbf{\bar{x}})^T $$
 
 Both the mean and the covariance matrix are calculated by `empirical_covariance` function. 
 
 3. Calculate the eigenvalues $\lambda_i$ and eigenvectors $\mathbf{u}_i$ of the covariance matrix $\mathbf{S}$
-4. Sort the eigenvalues in descending order and then sort the eigenvectors accordingly. Create a principal components matrix $\mathbf{U}$ by taking the first $k$ eigenvectors, where $k$ is the number of dimensions we want to keep.
- This step is implemented in the `fit` method of the `PCA` class.
- 5. To project the data onto the new space, we can use the following formula:
+
+4. Sort the eigenvalues in descending order and then sort the eigenvectors accordingly. 
+Create a principal components matrix $\mathbf{U}$ by taking the first $k$ eigenvectors, where $k$ is the number of dimensions we want to keep.
+This step is implemented in the `fit` method of the `PCA` class.
+
+5. To project the data onto the new space, we can use the following formula:
+
 $$ \mathbf{Y} = \mathbf{X} \cdot \mathbf{U} $$ 
 This step is implemented in the `transform` method of the `PCA` class.
 
 6. To reconstruct the data, we can use the following formula:
+
 $$ \mathbf{\tilde{X}} = \mathbf{Y} \cdot \mathbf{U}^T + \mathbf{\bar{x}} $$
 This step is implemented in the `inverse_transform` method of the `PCA` class.
 
