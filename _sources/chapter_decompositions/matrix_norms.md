@@ -434,6 +434,8 @@ class MatrixFactorization:
 ```
 
 
+This example demonstrates **collaborative filtering via matrix factorization** using the **Frobenius norm** to minimize reconstruction error:
+
 ```{code-cell} ipython3
 :tags: [hide-input]
 # Re-import necessary packages after kernel reset
@@ -480,3 +482,6 @@ fig.colorbar(im2, ax=axs, orientation='vertical', fraction=0.02, pad=0.04)
 
 plt.show()
 ```
+* **Left panel**: The true user-item rating matrix (low-rank structure).
+* **Middle panel**: The observed entries, with \~50% missing.
+* **Right panel**: The matrix reconstructed via alternating least squares (ALS).
