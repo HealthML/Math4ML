@@ -419,6 +419,7 @@ document.write(`
    <a href="#cap-prop-convex-functions-weighted-sum"><strong>prop-convex-functions-weighted-sum</strong></a> | 
    <a href="#cap-prop-convex-minima"><strong>prop-convex-minima</strong></a> | 
    <a href="#cap-prop-linear-convex"><strong>prop-linear-convex</strong></a> | 
+   <a href="#cap-prop-matrix-vector-product"><strong>prop-matrix-vector-product</strong></a> | 
    <a href="#cap-prop-max-convex-functions"><strong>prop-max-convex-functions</strong></a> | 
    <a href="#cap-prop-minima-striclty-convex"><strong>prop-minima-striclty-convex</strong></a> | 
    <a href="#cap-prop-norms-convex"><strong>prop-norms-convex</strong></a> | 
@@ -446,6 +447,7 @@ document.write(`
    <a href="#cap-thm-mean-value-theorem-appendix"><strong>thm-mean-value-theorem-appendix</strong></a> | 
    <a href="#cap-thm-mean-value-theorem-multivariable"><strong>thm-mean-value-theorem-multivariable</strong></a> | 
    <a href="#cap-thm-nullspace-subspace"><strong>thm-nullspace-subspace</strong></a> | 
+   <a href="#cap-thm-orthogonal-projection-matrix"><strong>thm-orthogonal-projection-matrix</strong></a> | 
    <a href="#cap-thm-polynomial-vector-space"><strong>thm-polynomial-vector-space</strong></a> | 
    <a href="#cap-thm-pythagorean-teorem"><strong>thm-pythagorean-teorem</strong></a> | 
    <a href="#cap-thm-range-linear-map"><strong>thm-range-linear-map</strong></a> | 
@@ -466,8 +468,13 @@ document.write(`
    <a href="#cap-trm-fundamental-equivalences"><strong>trm-fundamental-equivalences</strong></a> | 
    <a href="#cap-trm-gram-matrices"><strong>trm-gram-matrices</strong></a> | 
    <a href="#cap-trm-min-max"><strong>trm-min-max</strong></a> | 
+   <a href="#cap-trm-projection-column-space"><strong>trm-projection-column-space</strong></a> | 
+   <a href="#cap-trm-projection-left-null-space"><strong>trm-projection-left-null-space</strong></a> | 
+   <a href="#cap-trm-projection-null-space"><strong>trm-projection-null-space</strong></a> | 
+   <a href="#cap-trm-projection-row-space"><strong>trm-projection-row-space</strong></a> | 
    <a href="#cap-trm-psd-eigenvalues"><strong>trm-psd-eigenvalues</strong></a> | 
    <a href="#cap-trm-spectral-decomposition"><strong>trm-spectral-decomposition</strong></a> | 
+   <a href="#cap-trm-svd-four-subspaces"><strong>trm-svd-four-subspaces</strong></a> | 
    <a href="#cap-trm-triangular-determinant"><strong>trm-triangular-determinant</strong></a>
    </div>
 
@@ -535,6 +542,14 @@ document.write(`
        <td></td>
        <td>
        <a href="chapter_convexity/convex_functions.html#prop-linear-convex"><code class="xref">prop-linear-convex</code></a> <em>(chapter_convexity/convex_functions)</em></td><td>
+       <em>proposition</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-prop-matrix-vector-product"><td></td><td>
+       <strong>prop-matrix-vector-product</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/svd.html#prop-matrix-vector-product"><code class="xref">prop-matrix-vector-product</code></a> <em>(chapter_decompositions/svd)</em></td><td>
        <em>proposition</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-prop-max-convex-functions"><td></td><td>
@@ -753,6 +768,14 @@ document.write(`
        <a href="chapter_spaces/subspaces.html#thm-nullspace-subspace"><code class="xref">thm-nullspace-subspace</code></a> <em>(chapter_spaces/subspaces)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-thm-orthogonal-projection-matrix"><td></td><td>
+       <strong>thm-orthogonal-projection-matrix</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/orthogonal_projections.html#thm-orthogonal-projection-matrix"><code class="xref">thm-orthogonal-projection-matrix</code></a> <em>(chapter_decompositions/orthogonal_projections)</em></td><td>
+       <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-thm-polynomial-vector-space"><td></td><td>
        <strong>thm-polynomial-vector-space</strong></td><td></td></tr>
      <tr>
@@ -913,6 +936,38 @@ document.write(`
        <a href="chapter_decompositions/Rayleigh_quotients.html#trm-min-max"><code class="xref">trm-min-max</code></a> <em>(chapter_decompositions/Rayleigh_quotients)</em></td><td>
        <em>theorem</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-projection-column-space"><td></td><td>
+       <strong>trm-projection-column-space</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/big_picture.html#trm-projection-column-space"><code class="xref">trm-projection-column-space</code></a> <em>(chapter_decompositions/big_picture)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-projection-left-null-space"><td></td><td>
+       <strong>trm-projection-left-null-space</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/big_picture.html#trm-projection-left-null-space"><code class="xref">trm-projection-left-null-space</code></a> <em>(chapter_decompositions/big_picture)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-projection-null-space"><td></td><td>
+       <strong>trm-projection-null-space</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/big_picture.html#trm-projection-null-space"><code class="xref">trm-projection-null-space</code></a> <em>(chapter_decompositions/big_picture)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-projection-row-space"><td></td><td>
+       <strong>trm-projection-row-space</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/big_picture.html#trm-projection-row-space"><code class="xref">trm-projection-row-space</code></a> <em>(chapter_decompositions/big_picture)</em></td><td>
+       <em>lemma</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-trm-psd-eigenvalues"><td></td><td>
        <strong>trm-psd-eigenvalues</strong></td><td></td></tr>
      <tr>
@@ -928,6 +983,14 @@ document.write(`
        <td>
        <a href="chapter_decompositions/symmetric_matrices.html#trm-spectral-decomposition"><code class="xref">trm-spectral-decomposition</code></a> <em>(chapter_decompositions/symmetric_matrices)</em></td><td>
        <em>theorem</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-trm-svd-four-subspaces"><td></td><td>
+       <strong>trm-svd-four-subspaces</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="chapter_decompositions/big_picture.html#trm-svd-four-subspaces"><code class="xref">trm-svd-four-subspaces</code></a> <em>(chapter_decompositions/big_picture)</em></td><td>
+       <em>lemma</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-trm-triangular-determinant"><td></td><td>
        <strong>trm-triangular-determinant</strong></td><td></td></tr>

@@ -2,10 +2,11 @@
 
 Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that *every matrix*
-$\mathbf{A} \in \mathbb{R}^{m \times n}$ has an SVD (even non-square
+$\mathbf{A}$ has an SVD (even non-square
 matrices)!
 
-The decomposition goes as follows:
+
+The decomposition of $\mathbf{A}\in \mathbb{R}^{m \times n}$ goes as follows:
 
 $$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}$$
 
@@ -52,15 +53,22 @@ In the following, we present a number of important identities for the SVD.
 
 ### Matrix-vector product as linear combination of matrix columns
 
-*Proposition.* 
+:::{prf:proposition} Matrix-vector product as linear combination of columns
+:label: prop-matrix-vector-product
+:nonumber:
+
 Let $\mathbf{x} \in \mathbb{R}^n$ be a vector and
 $\mathbf{A} \in \mathbb{R}^{m \times n}$ a matrix with columns
-$\mathbf{a}_1, \dots, \mathbf{a}_n$. Then
+$\mathbf{a}_1, \dots, \mathbf{a}_n$. 
+
+Then
 
 $$\mathbf{A}\mathbf{x} = \sum_{i=1}^n x_i\mathbf{a}_i$$
+:::
 
 This identity is extremely useful in understanding linear operators in
-terms of their matrices' columns. The proof is very simple (consider
+terms of their matrices' columns. 
+The proof is very simple (consider
 each element of $\mathbf{A}\mathbf{x}$ individually and expand by
 definitions) but it is a good exercise to convince yourself.
 
@@ -104,3 +112,16 @@ equivalently the $j$th column of $\mathbf{B}^{\!\top\!}$. Hence by the
 definition of matrix multiplication, it is equal to
 $[\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}$. ◻
 :::
+
+## Reduced SVD
+The SVD we have presented is the **full SVD**. 
+However, in many
+applications, we are only interested in the **reduced SVD**. This is
+the SVD where we only keep the first $r$ columns of $\mathbf{U}$ and
+the first $r$ columns of $\mathbf{V}$, where $r$ is the rank of
+$\mathbf{A}$. The reduced SVD is given by:
+
+$$\mathbf{A} = \mathbf{U}_r\mathbf{\Sigma}_r\mathbf{V}_r^{\!\top\!}$$
+
+where $\mathbf{U}_r \in \mathbb{R}^{m \times r}$, $\mathbf{\Sigma}_r \in \mathbb{R}^{r \times r}$, and $\mathbf{V}_r \in \mathbb{R}^{n \times r}$.
+

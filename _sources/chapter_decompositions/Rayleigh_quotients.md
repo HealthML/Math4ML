@@ -135,7 +135,7 @@ Let $\mathbf{x}\neq \boldsymbol{0},$ then
 
 $R_\mathbf{A}(\mathbf{x}) = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\mathbf{x}^{\!\top\!}\mathbf{x}} = \frac{\mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}}{\|\mathbf{x}\|^2} = (\frac{\mathbf{x}}{\|\mathbf{x}\|})^{\!\top\!}\mathbf{A}(\frac{\mathbf{x}}{\|\mathbf{x}\|})$
 
-Thus, minimimum and maximum of the Rayleigh quotient are identical to minimum and maximum of the squared form $\mathbf{y}\mathbf{A}\mathbf{y}$ for the unit-norm vector $\mathbf{y}=\mathbf{x}/\|\mathbf{x}\|$:
+Thus, minimimum and maximum of the Rayleigh quotient are identical to minimum and maximum of the squared form $\mathbf{y}^\top\mathbf{A}\mathbf{y}$ for the unit-norm vector $\mathbf{y}=\mathbf{x}/\|\mathbf{x}\|$:
 
 $$\lambda_{\min}(\mathbf{A}) \leq R_\mathbf{A}(\mathbf{x}) \leq \lambda_{\max}(\mathbf{A})$$
 

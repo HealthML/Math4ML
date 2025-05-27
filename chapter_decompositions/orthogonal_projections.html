@@ -443,7 +443,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -459,6 +461,24 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required">Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-consequence"><strong>Geometric Consequence</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">Summary Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression">🎓 <strong>Application Example: Least Squares Regression</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -470,11 +490,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="orthogonal-projections">
 <h1>Orthogonal projections<a class="headerlink" href="#orthogonal-projections" title="Link to this heading">#</a></h1>
-<p>We now consider a particular kind of optimization problem that is
-particularly well-understood and can often be solved in closed form:
-given some point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in an inner product space <span class="math notranslate nohighlight">\(V\)</span>, find the
-closest point to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in a subspace <span class="math notranslate nohighlight">\(S\)</span> of <span class="math notranslate nohighlight">\(V\)</span>. This process is
-referred to as <strong>projection onto a subspace</strong>.</p>
+<p>We now consider a particular kind of optimization problem referred to as <strong>projection onto a subspace</strong>:</p>
+<p>Given some point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in an inner product space <span class="math notranslate nohighlight">\(V\)</span>, find the
+closest point to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in a subspace <span class="math notranslate nohighlight">\(S\)</span> of <span class="math notranslate nohighlight">\(V\)</span>.</p>
 <p>The following diagram should make it geometrically clear that, at least
 in Euclidean space, the solution is intimately related to orthogonality
 and the Pythagorean theorem:</p>
@@ -522,13 +540,13 @@ and the Pythagorean theorem:</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">),</span> <span class="sa">r</span><span class="s1">&#39;$\mathbf</span><span class="si">{y}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
 <span class="c1"># Draw subspace line</span>
-<span class="n">line_extent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">line_extent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">s_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">line_extent</span><span class="p">,</span> <span class="n">e1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s_line</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">s_line</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Subspace $S$&#39;</span><span class="p">)</span>
 
 <span class="c1"># Formatting</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -541,19 +559,20 @@ and the Pythagorean theorem:</p>
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/5eff4ced8bfe1dea951691caf7fa65b22607cdda25815d2112b100855ff74104.png" src="../_images/5eff4ced8bfe1dea951691caf7fa65b22607cdda25815d2112b100855ff74104.png" />
+<img alt="../_images/29a36d114e26ed31d29a05dc75b319872117a87b80fac45cfb7d2e419a64fedb.png" src="../_images/29a36d114e26ed31d29a05dc75b319872117a87b80fac45cfb7d2e419a64fedb.png" />
 </div>
 </div>
 <p>In this diagram, the blue vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is an arbitrary point in the
-inner product space <span class="math notranslate nohighlight">\(V\)</span>, the green vector <span class="math notranslate nohighlight">\(\mathbf{y}^* = P\mathbf{x}\)</span> is
+inner product space <span class="math notranslate nohighlight">\(V\)</span>, the green vector <span class="math notranslate nohighlight">\(\mathbf{y}^* = \mathbf{P}\mathbf{x}\)</span> is
 the projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto the subspace <span class="math notranslate nohighlight">\(S\)</span>, and the gray vector
-<span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary point in <span class="math notranslate nohighlight">\(S\)</span>. The dashed lines form a right
-triangle with <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> as vertices.
+<span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is an arbitrary point in <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>The dashed lines form a right triangle with <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> as vertices.
 The right triangle formed by these three points illustrates the
 relationship between the projection and orthogonality: the line segment
 from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is perpendicular to the subspace <span class="math notranslate nohighlight">\(S\)</span>,
 and the distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the shortest
-distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to any point in <span class="math notranslate nohighlight">\(S\)</span>. This is a direct
+distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to any point in <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>This is a direct
 consequence of the Pythagorean theorem, which states that in a right
 triangle, the square of the length of the hypotenuse (in this case,
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>) is equal to the sum of the squares of the
@@ -570,72 +589,81 @@ and <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>.</p>
 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in <span class="math notranslate nohighlight">\(S\)</span> has the perpendicularity property described above,
 and we now show that this is indeed the case.</p>
 <div class="proof proposition admonition" id="prop-unique-minimizer">
-<p class="admonition-title"><span>Proposition </span></p>
+<p class="admonition-title"><span>Proposition </span> (Ortogonal projection and unique minimizer)</p>
 <section class="proposition-content" id="proof-content">
-<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
+<p>Let <span class="math notranslate nohighlight">\(S\)</span> be a subspace of an inner product space <span class="math notranslate nohighlight">\(V\)</span> and let <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>.</p>
+<p>Then <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span>
 is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over
 <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span> if and only if <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>.</p>
 </section>
 </div><div class="proof admonition" id="proof">
 <p>Proof. <span class="math notranslate nohighlight">\((\implies)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of
-<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. That is,
+<span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span> over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>.</p>
+<p>That is,
 <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}^*\| \leq \|\mathbf{x}-\mathbf{y}\|\)</span> for all
-<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, with equality only if <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{y}^*\)</span>.
-Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that</p>
+<span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, with equality only if <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{y}^*\)</span>.</p>
+<p>Fix <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span> and observe that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-g(t) &amp;:= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
+g(t) :&amp;= \|\mathbf{x}-\mathbf{y}^*+t\mathbf{v}\|^2 \\
 &amp;= \langle \mathbf{x}-\mathbf{y}^*+t\mathbf{v}, \mathbf{x}-\mathbf{y}^*+t\mathbf{v} \rangle \\
 &amp;= \langle \mathbf{x}-\mathbf{y}^*, \mathbf{x}-\mathbf{y}^* \rangle - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\langle \mathbf{v}, \mathbf{v} \rangle \\
 &amp;= \|\mathbf{x}-\mathbf{y}^*\|^2 - 2t\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + t^2\|\mathbf{v}\|^2
 \end{aligned}\end{split}\]</div>
 <p>must have a minimum at <span class="math notranslate nohighlight">\(t = 0\)</span> as a consequence of this
-assumption. Thus</p>
+assumption.</p>
+<p>Thus</p>
 <div class="math notranslate nohighlight">
 \[0 = g'(0) = \left.-2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle + 2t\|\mathbf{v}\|^2\right|_{t=0} = -2\langle \mathbf{x}-\mathbf{y}^*, \mathbf{v} \rangle\]</div>
 <p>giving <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{v}\)</span>. Since <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>
 was arbitrary in <span class="math notranslate nohighlight">\(S\)</span>, we have <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span> as
 claimed.</p>
-<p><span class="math notranslate nohighlight">\((\impliedby)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>. Observe that
+<p><span class="math notranslate nohighlight">\((\impliedby)\)</span> Suppose <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp S\)</span>.</p>
+<p>Observe that
 for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>, <span class="math notranslate nohighlight">\(\mathbf{y}^*-\mathbf{y} \in S\)</span> because
-<span class="math notranslate nohighlight">\(\mathbf{y}^* \in S\)</span> and <span class="math notranslate nohighlight">\(S\)</span> is closed under subtraction. Under the
+<span class="math notranslate nohighlight">\(\mathbf{y}^* \in S\)</span> and <span class="math notranslate nohighlight">\(S\)</span> is closed under subtraction.</p>
+<p>Under the
 hypothesis, <span class="math notranslate nohighlight">\(\mathbf{x}-\mathbf{y}^* \perp \mathbf{y}^*-\mathbf{y}\)</span>, so
 by the Pythagorean theorem,</p>
 <div class="math notranslate nohighlight">
 \[\|\mathbf{x}-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*+\mathbf{y}^*-\mathbf{y}\| = \|\mathbf{x}-\mathbf{y}^*\| + \|\mathbf{y}^*-\mathbf{y}\| \geq \|\mathbf{x} - \mathbf{y}^*\|\]</div>
 <p>and in fact the inequality is strict when <span class="math notranslate nohighlight">\(\mathbf{y} \neq \mathbf{y}^*\)</span>
-since this implies <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\| &gt; 0\)</span>. Thus
+since this implies <span class="math notranslate nohighlight">\(\|\mathbf{y}^*-\mathbf{y}\| &gt; 0\)</span>.</p>
+<p>Thus
 <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> is the unique minimizer of <span class="math notranslate nohighlight">\(\|\mathbf{x}-\mathbf{y}\|\)</span>
 over <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>. ◻</p>
 </div>
 <p>Since a unique minimizer in <span class="math notranslate nohighlight">\(S\)</span> can be found for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>,
 we can define an operator</p>
 <div class="math notranslate nohighlight">
-\[P\mathbf{x} = \operatorname{argmin}_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\]</div>
-<p>Observe that <span class="math notranslate nohighlight">\(P\mathbf{y} = \mathbf{y}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>,
+\[\mathbf{P}\mathbf{x} = \operatorname{argmin}_{\mathbf{y} \in S} \|\mathbf{x}-\mathbf{y}\|\]</div>
+<p>Observe that <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{y} = \mathbf{y}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{y} \in S\)</span>,
 since <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> has distance zero from itself and every other point
-in <span class="math notranslate nohighlight">\(S\)</span> has positive distance from <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. Thus
-<span class="math notranslate nohighlight">\(P(P\mathbf{x}) = P\mathbf{x}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> (i.e., <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
-because <span class="math notranslate nohighlight">\(P\mathbf{x} \in S\)</span>. The identity <span class="math notranslate nohighlight">\(P^2 = P\)</span> is actually one of
+in <span class="math notranslate nohighlight">\(S\)</span> has positive distance from <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<p>Thus
+<span class="math notranslate nohighlight">\(\mathbf{\mathbf{P}}(\mathbf{\mathbf{P}}\mathbf{x}) = \mathbf{P}\mathbf{x}\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> (i.e., <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span>)
+because <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x} \in S\)</span>.</p>
+<p>The identity <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is actually one of
 the defining properties of a <strong>projection</strong>, the other being linearity.</p>
 <p>An immediate consequence of the previous result is that
-<span class="math notranslate nohighlight">\(\mathbf{x} - P\mathbf{x} \perp S\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, and
-conversely that <span class="math notranslate nohighlight">\(P\)</span> is the unique operator that satisfies this property
-for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. For this reason, <span class="math notranslate nohighlight">\(P\)</span> is known as an
+<span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{P}\mathbf{x} \perp S\)</span> for any <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>, and
+conversely that <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is the unique operator that satisfies this property
+for all <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. For this reason, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is known as an
 <strong>orthogonal projection</strong>.</p>
 <p>If we choose an orthonormal basis for the target subspace <span class="math notranslate nohighlight">\(S\)</span>, it is
-possible to write down a more specific expression for <span class="math notranslate nohighlight">\(P\)</span>.</p>
+possible to write down a more specific expression for <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>.</p>
 <div class="proof proposition admonition" id="prop-orthonormal-basis-projection">
 <p class="admonition-title"><span>Proposition </span></p>
 <section class="proposition-content" id="proof-content">
 <p>If <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> is an orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>,
 then</p>
 <div class="math notranslate nohighlight">
-\[P\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\]</div>
+\[\mathbf{P}\mathbf{x} = \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i\]</div>
 </section>
 </div><div class="proof admonition" id="proof">
 <p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m\)</span> be an orthonormal basis
-for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>. Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,</p>
+for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span class="math notranslate nohighlight">\(\mathbf{x} \in V\)</span>.</p>
+<p>Then for all <span class="math notranslate nohighlight">\(j = 1, \dots, m\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \left\langle \mathbf{x}-\sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\mathbf{e}_i, \mathbf{e}_j \right\rangle &amp;= \langle \mathbf{x}, \mathbf{e}_j \rangle - \sum_{i=1}^m \langle \mathbf{x}, \mathbf{e}_i \rangle\underbrace{\langle \mathbf{e}_i, \mathbf{e}_j \rangle}_{\delta_{ij}} \\
@@ -643,15 +671,183 @@ for <span class="math notranslate nohighlight">\(S\)</span>, and suppose <span c
 &amp;= 0
 \end{aligned}\end{split}\]</div>
 <p>We have shown that the claimed expression, call it
-<span class="math notranslate nohighlight">\(\tilde{P}\mathbf{x}\)</span>, satisfies
-<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp \mathbf{e}_j\)</span> for every element
-<span class="math notranslate nohighlight">\(\mathbf{e}_j\)</span> of the orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>. It follows (by
+<span class="math notranslate nohighlight">\(\tilde{\mathbf{P}}\mathbf{x}\)</span>, satisfies
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{\mathbf{P}}\mathbf{x} \perp \mathbf{e}_j\)</span> for every element
+<span class="math notranslate nohighlight">\(\mathbf{e}_j\)</span> of the orthonormal basis for <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>It follows (by
 linearity of the inner product) that
-<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{P}\mathbf{x} \perp S\)</span>, so the previous result
-implies <span class="math notranslate nohighlight">\(P = \tilde{P}\)</span>. ◻</p>
+<span class="math notranslate nohighlight">\(\mathbf{x} - \tilde{\mathbf{P}}\mathbf{x} \perp S\)</span>.</p>
+<p>So the previous result
+implies <span class="math notranslate nohighlight">\(\mathbf{P} = \tilde{\mathbf{P}}\)</span>. ◻</p>
 </div>
-<p>The fact that <span class="math notranslate nohighlight">\(P\)</span> is a linear operator (and thus a proper projection, as
-earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>) follows readily from this result.</p>
+<p>The fact that <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is a linear operator (and thus a proper projection, as
+earlier we showed <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span>) follows readily from this result.</p>
+<section id="matrix-representation-of-projection-operators">
+<h2><strong>Matrix Representation of Projection Operators</strong><a class="headerlink" href="#matrix-representation-of-projection-operators" title="Link to this heading">#</a></h2>
+<p>Given a subspace <span class="math notranslate nohighlight">\(S \subset \mathbb{R}^n\)</span>, the <strong>orthogonal projection</strong> of a vector <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> onto <span class="math notranslate nohighlight">\(S\)</span> is the unique vector <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x} \in S\)</span> such that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{P}\mathbf{x} \perp S\)</span> (residual is orthogonal)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x} \in S\)</span> (lies in the subspace)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\|\mathbf{x} - \mathbf{P}\mathbf{x}\|\)</span> is minimized</p></li>
+</ul>
+<p>This leads us to define the projection operator <span class="math notranslate nohighlight">\(\mathbf{P} \in \mathbb{R}^{n \times n}\)</span> as a <strong>linear map</strong> satisfying key properties — two of which are:</p>
+<ul class="simple">
+<li><p><strong>idempotence</strong> <span class="math notranslate nohighlight">\((\mathbf{P}^2 = \mathbf{P})\)</span></p></li>
+<li><p><strong>symmetry</strong> <span class="math notranslate nohighlight">\((\mathbf{P}^\top = \mathbf{P})\)</span></p></li>
+</ul>
+<p>Let’s now examine <em>why</em> they are essential.</p>
+</section>
+<section id="idempotence-mathbf-p-2-mathbf-p-is-required">
+<h2>Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required<a class="headerlink" href="#idempotence-mathbf-p-2-mathbf-p-is-required" title="Link to this heading">#</a></h2>
+<p>Idempotence ensures that once you’ve projected a vector onto the subspace, projecting it again <strong>does nothing</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}(\mathbf{P}\mathbf{x}) = \mathbf{P}\mathbf{x}
+\]</div>
+</section>
+<section id="why-its-required">
+<h2><strong>Why it’s required:</strong><a class="headerlink" href="#why-its-required" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Geometrically: The image <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x}\)</span> lies in the subspace. If projecting it again changed it, that would mean the subspace is not invariant under the projection — contradicting the notion of projection.</p></li>
+<li><p>Algebraically: If <span class="math notranslate nohighlight">\(\mathbf{P}^2 \neq \mathbf{P}\)</span>, then <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is not consistent — it cannot define a <em>fixed</em> mapping to the subspace.</p></li>
+</ul>
+</section>
+<section id="why-symmetry-mathbf-p-top-mathbf-p-is-required">
+<h2>Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required<a class="headerlink" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required" title="Link to this heading">#</a></h2>
+<p>Symmetry ensures that the projection is <strong>orthogonal</strong>: the difference between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and its projection is orthogonal to the subspace:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{x} - \mathbf{P}\mathbf{x}, \mathbf{P}\mathbf{x} \rangle = 0
+\quad \Leftrightarrow \quad
+\mathbf{P}^\top = \mathbf{P}
+\]</div>
+<section id="id1">
+<h3><strong>Why it’s required:</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Without symmetry, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> could project onto the subspace in a skewed or oblique manner — not orthogonally.</p></li>
+<li><p>Orthogonal projections are characterized by <strong>minimal distance</strong>, and this only occurs when the residual is orthogonal to the subspace.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\mathbf{P} \neq \mathbf{P}^\top\)</span>, the projection may preserve direction, but <strong>not minimize distance</strong>.</p></li>
+</ul>
+</section>
+<section id="geometric-consequence">
+<h3><strong>Geometric Consequence</strong>:<a class="headerlink" href="#geometric-consequence" title="Link to this heading">#</a></h3>
+<p>A non-symmetric idempotent matrix defines an <strong>oblique projection</strong>, which is still a projection but not orthogonal. It does not minimize distance to the subspace.</p>
+</section>
+<section id="summary-table">
+<h3>Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Why Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span></p></td>
+<td><p>Idempotence / Stability</p></td>
+<td><p>Ensures projecting twice gives same result</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span></p></td>
+<td><p>Symmetry / Orthogonality</p></td>
+<td><p>Ensures projection is shortest-distance (orthogonal)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="basis-representation-of-orthogonal-projection-matrices">
+<h3>Basis Representation of Orthogonal Projection Matrices<a class="headerlink" href="#basis-representation-of-orthogonal-projection-matrices" title="Link to this heading">#</a></h3>
+<p>Orthogonal projections can be expressed using matrices when the subspace is defined by a basis:</p>
+<p>If <span class="math notranslate nohighlight">\(S = \operatorname{span}(\mathbf{e}_1, \dots, \mathbf{e}_m)\)</span>, where the <span class="math notranslate nohighlight">\(\mathbf{e}_i\)</span> are <strong>orthonormal</strong>, then the projection matrix is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P} = \sum_{i=1}^m \mathbf{e}_i \mathbf{e}_i^\top
+\]</div>
+<p>In matrix form, if <span class="math notranslate nohighlight">\( E \in \mathbb{R}^{n \times m} \)</span> has columns <span class="math notranslate nohighlight">\(\mathbf{e}_i\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P} = EE^\top \quad \text{and} \quad \mathbf{P}\mathbf{x} = EE^\top \mathbf{x}
+\]</div>
+<div class="proof theorem admonition" id="thm-orthogonal-projection-matrix">
+<p class="admonition-title"><span>Theorem </span> (Basis Representation of the Orthogonal Projection Matrix)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{e}_1, \dots, \mathbf{e}_m \in \mathbb{R}^n\)</span> be orthonormal vectors, and define the matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+E = [\mathbf{e}_1 \,\, \mathbf{e}_2 \,\, \cdots \,\, \mathbf{e}_m] \in \mathbb{R}^{n \times m}
+\]</div>
+<p>Then the matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P} = EE^\top \in \mathbb{R}^{n \times n}
+\]</div>
+<p>is the <strong>orthogonal projection</strong> onto the subspace <span class="math notranslate nohighlight">\(S = \operatorname{Col}(E) = \operatorname{span}(\mathbf{e}_1, \dots, \mathbf{e}_m)\)</span>.</p>
+<p>That is, for any <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>, <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x} \in S\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{P}\mathbf{x} \perp S\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let’s verify the three key properties of orthogonal projections.</p>
+<hr class="docutils" />
+<h3 class="rubric" id="mathbf-p-is-symmetric">1. <strong><span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is symmetric:</strong></h3>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}^\top = (EE^\top)^\top = EE^\top = \mathbf{P} \quad \text{✓}
+\]</div>
+<hr class="docutils" />
+<h3 class="rubric" id="mathbf-p-is-idempotent">2. <strong><span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is idempotent:</strong></h3>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}^2 = (EE^\top)(EE^\top) = E(E^\top E)E^\top
+\]</div>
+<p>But since <span class="math notranslate nohighlight">\(\{\mathbf{e}_i\}\)</span> are orthonormal, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+E^\top E = I_m \Rightarrow \mathbf{P}^2 = E I E^\top = EE^\top = \mathbf{P} \quad \text{✓}
+\]</div>
+<hr class="docutils" />
+<h3 class="rubric" id="mathbf-p-mathbf-x-in-s-and-mathbf-x-mathbf-p-mathbf-x-perp-s">3. <strong><span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x} \in S\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{P}\mathbf{x} \perp S\)</span>:</strong></h3>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>. Then:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}\mathbf{x} = EE^\top \mathbf{x} \in \operatorname{Col}(E) = S
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{v} \in S\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{v} = E\mathbf{a}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{a} \in \mathbb{R}^m\)</span>. Then:</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{x} - \mathbf{P}\mathbf{x}, \mathbf{v} \rangle
+= \langle \mathbf{x} - EE^\top \mathbf{x}, E\mathbf{a} \rangle
+= \langle \mathbf{x}, E\mathbf{a} \rangle - \langle EE^\top \mathbf{x}, E\mathbf{a} \rangle
+\]</div>
+<p>Use <span class="math notranslate nohighlight">\(\langle \mathbf{x}, E\mathbf{a} \rangle = \langle E^\top \mathbf{x}, \mathbf{a} \rangle\)</span>, and similarly for the second term:</p>
+<div class="math notranslate nohighlight">
+\[
+= \langle E^\top \mathbf{x}, \mathbf{a} \rangle - \langle E^\top EE^\top \mathbf{x}, \mathbf{a} \rangle
+= \langle E^\top \mathbf{x}, \mathbf{a} \rangle - \langle E^\top \mathbf{x}, \mathbf{a} \rangle = 0
+\]</div>
+<p>So:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} - \mathbf{P}\mathbf{x} \perp S \quad \text{✓}
+\]</div>
+<p>We conclude that <span class="math notranslate nohighlight">\(\mathbf{P} = EE^\top = \sum_{i=1}^m \mathbf{e}_i \mathbf{e}_i^\top\)</span> is indeed the orthogonal projection onto the subspace spanned by <span class="math notranslate nohighlight">\(\{\mathbf{e}_1, \dots, \mathbf{e}_m\}\)</span>.</p>
+</div>
+</section>
+<section id="application-example-least-squares-regression">
+<h3>🎓 <strong>Application Example: Least Squares Regression</strong><a class="headerlink" href="#application-example-least-squares-regression" title="Link to this heading">#</a></h3>
+<p>In least squares regression, we want to find the best-fitting line (or hyperplane) through a set of points.</p>
+<p>This can be framed as an orthogonal projection problem:</p>
+<p>Given a design matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span> and target vector <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^n\)</span>, the goal is to find coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\beta} \in \mathbb{R}^d\)</span> such that:
+$<span class="math notranslate nohighlight">\(
+\hat{\boldsymbol{\beta}} = \operatorname{argmin}_{\boldsymbol{\beta}} \|\mathbf{y} - \mathbf{X}\boldsymbol{\beta}\|^2
+\)</span>$</p>
+<p>This is equivalent to projecting <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> onto the column space of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, which can be expressed using the projection matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P} = \mathbf{X}(\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top = \mathbf{X}\mathbf{X}^+
+\]</div>
+<p>This projection minimizes the distance between <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> and the subspace spanned by the columns of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, yielding the least squares solution.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -708,6 +904,31 @@ earlier we showed <span class="math notranslate nohighlight">\(P^2 = P\)</span>)
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required">Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-consequence"><strong>Geometric Consequence</strong>:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">Summary Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression">🎓 <strong>Application Example: Least Squares Regression</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

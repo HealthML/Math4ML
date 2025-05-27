@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Singular value decomposition &#8212; Mathematics for Machine Learning</title>
+    <title>🔧 What Is a Linear Operator? &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/svd';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/svd.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/linear_operators';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/linear_operators.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Moore-Penrose Pseudoinverse" href="pseudoinverse.html" />
-    <link rel="prev" title="Principal Components Analysis" href="pca.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -218,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
@@ -231,7 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="matrix_norms.html">Matrix Norms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
@@ -325,7 +325,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/svd.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/linear_operators.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -342,7 +342,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/svd.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/linear_operators.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +372,7 @@
       
       
       
-      <li><a href="../_sources/chapter_decompositions/svd.md" target="_blank"
+      <li><a href="../_sources/chapter_decompositions/linear_operators.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -456,7 +456,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Singular value decomposition</h1>
+    <h1>🔧 What Is a Linear Operator?</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -466,12 +466,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">🧠 Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-definition">✍️ Formal Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-linear-operators">🧪 Examples of Linear Operators</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation-operator">1. <strong>Differentiation operator</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-operator">2. <strong>Multiplication operator</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integral-operator-important-in-kernels">3. <strong>Integral operator (important in kernels)</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-svd">Reduced SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-analogy">📐 Matrix Analogy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-linear-operators-useful">🎯 Why Are Linear Operators Useful?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧩 Summary</a></li>
 </ul>
             </nav>
         </div>
@@ -483,113 +488,119 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="singular-value-decomposition">
-<h1>Singular value decomposition<a class="headerlink" href="#singular-value-decomposition" title="Link to this heading">#</a></h1>
-<p>Singular value decomposition (SVD) is a widely applicable tool in linear
-algebra. Its strength stems partially from the fact that <em>every matrix</em>
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> has an SVD (even non-square
-matrices)!</p>
-<p>The decomposition of <span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m \times n}\)</span> goes as follows:</p>
+  <p>Certainly! Here’s a self-contained section introducing <strong>linear operators</strong> for students who know linear algebra and calculus in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, but are new to function spaces.</p>
+<hr class="docutils" />
+<section id="what-is-a-linear-operator">
+<h1>🔧 What Is a Linear Operator?<a class="headerlink" href="#what-is-a-linear-operator" title="Link to this heading">#</a></h1>
+<p>In linear algebra, a <strong>linear transformation</strong> or matrix <span class="math notranslate nohighlight">\(A : \mathbb{R}^n \to \mathbb{R}^n\)</span> acts on <strong>vectors</strong>.</p>
+<p>In function spaces, a <strong>linear operator</strong> acts on <strong>functions</strong>.</p>
+<p>Just as matrices map vectors to new vectors, operators map functions to new functions.</p>
+<hr class="docutils" />
+<section id="intuition">
+<h2>🧠 Intuition<a class="headerlink" href="#intuition" title="Link to this heading">#</a></h2>
+<p>Think of a function <span class="math notranslate nohighlight">\(f : \mathbb{R} \to \mathbb{R}\)</span> as a point in an infinite-dimensional vector space.</p>
+<p>A <strong>linear operator</strong> <span class="math notranslate nohighlight">\(T\)</span> is like a matrix — but instead of mapping finite-dimensional vectors, it maps functions:</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\]</div>
-<p>where
-<span class="math notranslate nohighlight">\(\mathbf{U} \in \mathbb{R}^{m \times m}\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{V} \in \mathbb{R}^{n \times n}\)</span> are orthogonal matrices and
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{m \times n}\)</span> is a diagonal matrix with
-the <strong>singular values</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (denoted <span class="math notranslate nohighlight">\(\sigma_i\)</span>) on its
-diagonal.</p>
-<p>By convention, the singular values are given in non-increasing order,
-i.e.</p>
-<div class="math notranslate nohighlight">
-\[\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{\min(m,n)} \geq 0\]</div>
-<p>Only the first <span class="math notranslate nohighlight">\(r\)</span> singular values are nonzero, where <span class="math notranslate nohighlight">\(r\)</span> is the rank of
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>Observe that the SVD factors provide eigendecompositions for
-<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\mathbf{A}^{\!\top\!}\mathbf{A} &amp;= (\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} \\
-\mathbf{A}\mathbf{A}^{\!\top\!} &amp;= \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}
-\end{aligned}\end{split}\]</div>
-<p>It follows immediately that the columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>
-(the <strong>right-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
-<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span>, and the columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> (the
-<strong>left-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
-<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>.</p>
-<p>The matrices <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\)</span> are not necessarily the same
-size, but both are diagonal with the squared singular values
-<span class="math notranslate nohighlight">\(\sigma_i^2\)</span> on the diagonal (plus possibly some zeros). Thus the
-singular values of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the square roots of the eigenvalues
-of <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> (or equivalently, of
-<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>)[^5].</p>
-<section id="some-useful-matrix-identities">
-<h2>Some useful matrix identities<a class="headerlink" href="#some-useful-matrix-identities" title="Link to this heading">#</a></h2>
-<p>In the following, we present a number of important identities for the SVD.</p>
-<section id="matrix-vector-product-as-linear-combination-of-matrix-columns">
-<h3>Matrix-vector product as linear combination of matrix columns<a class="headerlink" href="#matrix-vector-product-as-linear-combination-of-matrix-columns" title="Link to this heading">#</a></h3>
-<div class="proof proposition admonition" id="prop-matrix-vector-product">
-<p class="admonition-title"><span>Proposition </span> (Matrix-vector product as linear combination of columns)</p>
-<section class="proposition-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> be a vector and
-<span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> a matrix with columns
-<span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_n\)</span>.</p>
-<p>Then</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A}\mathbf{x} = \sum_{i=1}^n x_i\mathbf{a}_i\]</div>
+\[
+T : \mathcal{F} \to \mathcal{F}
+\quad \text{where } \mathcal{F} \text{ is a space of functions}
+\]</div>
+<p>For example, <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> could be <span class="math notranslate nohighlight">\(C^1([0,1])\)</span> (continuously differentiable functions) or <span class="math notranslate nohighlight">\(L^2([0,1])\)</span> (square-integrable functions).</p>
 </section>
-</div><p>This identity is extremely useful in understanding linear operators in
-terms of their matrices’ columns.
-The proof is very simple (consider
-each element of <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}\)</span> individually and expand by
-definitions) but it is a good exercise to convince yourself.</p>
+<hr class="docutils" />
+<section id="formal-definition">
+<h2>✍️ Formal Definition<a class="headerlink" href="#formal-definition" title="Link to this heading">#</a></h2>
+<p>A map <span class="math notranslate nohighlight">\(T : \mathcal{F} \to \mathcal{F}\)</span> is a <strong>linear operator</strong> if:</p>
+<ol class="arabic simple">
+<li><p><strong>Additivity</strong>: <span class="math notranslate nohighlight">\(T(f + g) = Tf + Tg\)</span></p></li>
+<li><p><strong>Homogeneity</strong>: <span class="math notranslate nohighlight">\(T(\alpha f) = \alpha Tf\)</span></p></li>
+</ol>
+<p>for all functions <span class="math notranslate nohighlight">\(f, g \in \mathcal{F}\)</span> and scalars <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>.</p>
+<p>These are exactly the same properties you know from linear algebra.</p>
 </section>
-<section id="sum-of-outer-products-as-matrix-matrix-product">
-<h3>Sum of outer products as matrix-matrix product<a class="headerlink" href="#sum-of-outer-products-as-matrix-matrix-product" title="Link to this heading">#</a></h3>
-<p>An <strong>outer product</strong> is an expression of the form
-<span class="math notranslate nohighlight">\(\mathbf{a}\mathbf{b}^{\!\top\!}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{a} \in \mathbb{R}^m\)</span>
-and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. By inspection it is not hard to see
-that such an expression yields an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix such that</p>
+<hr class="docutils" />
+<section id="examples-of-linear-operators">
+<h2>🧪 Examples of Linear Operators<a class="headerlink" href="#examples-of-linear-operators" title="Link to this heading">#</a></h2>
+<section id="differentiation-operator">
+<h3>1. <strong>Differentiation operator</strong><a class="headerlink" href="#differentiation-operator" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
-\[[\mathbf{a}\mathbf{b}^{\!\top\!}]_{ij} = a_ib_j\]</div>
-<p>It is not
-immediately obvious, but the sum of outer products is actually
-equivalent to an appropriate matrix-matrix product! We formalize this
-statement as</p>
-<div class="proof proposition admonition" id="prop-sum-outer-products">
-<p class="admonition-title"><span>Proposition </span></p>
-<section class="proposition-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n\)</span>. Then</p>
+\[
+(Tf)(x) = \frac{d}{dx} f(x)
+\quad \text{with domain } \mathcal{F} = C^1(\mathbb{R})
+\]</div>
+<p>This maps a function to its derivative: linear, because</p>
 <div class="math notranslate nohighlight">
-\[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}\]</div>
-<p>where</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 &amp; \cdots &amp; \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 &amp; \cdots &amp; \mathbf{b}_k\end{bmatrix}\]</div>
+\[
+\frac{d}{dx}(\alpha f + \beta g) = \alpha f' + \beta g'
+\]</div>
 </section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. For each <span class="math notranslate nohighlight">\((i,j)\)</span>, we have</p>
+<hr class="docutils" />
+<section id="multiplication-operator">
+<h3>2. <strong>Multiplication operator</strong><a class="headerlink" href="#multiplication-operator" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
-\[\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}\]</div>
-<p>This last expression should be recognized as an inner product between
-the <span class="math notranslate nohighlight">\(i\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and the <span class="math notranslate nohighlight">\(j\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>, or
-equivalently the <span class="math notranslate nohighlight">\(j\)</span>th column of <span class="math notranslate nohighlight">\(\mathbf{B}^{\!\top\!}\)</span>. Hence by the
-definition of matrix multiplication, it is equal to
-<span class="math notranslate nohighlight">\([\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}\)</span>. ◻</p>
+\[
+(Tf)(x) = x \cdot f(x)
+\]</div>
+<p>Still linear — scalar multiplication and addition work pointwise.</p>
+</section>
+<hr class="docutils" />
+<section id="integral-operator-important-in-kernels">
+<h3>3. <strong>Integral operator (important in kernels)</strong><a class="headerlink" href="#integral-operator-important-in-kernels" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(k(x, x')\)</span> be a fixed kernel function. Define:</p>
+<div class="math notranslate nohighlight">
+\[
+(Tf)(x) = \int_{\mathcal{X}} k(x, x') f(x') \, dx'
+\]</div>
+<p>This operator:</p>
+<ul class="simple">
+<li><p>Takes a function <span class="math notranslate nohighlight">\(f\)</span>,</p></li>
+<li><p>Computes a weighted average around each <span class="math notranslate nohighlight">\(x\)</span>, using <span class="math notranslate nohighlight">\(k(x, x')\)</span>,</p></li>
+<li><p>Produces a <strong>new function</strong> <span class="math notranslate nohighlight">\(Tf\)</span>.</p></li>
+</ul>
+<p>This is the type of operator used in <strong>Mercer’s theorem</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="matrix-analogy">
+<h2>📐 Matrix Analogy<a class="headerlink" href="#matrix-analogy" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Matrix <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span></p></th>
+<th class="head"><p>Operator <span class="math notranslate nohighlight">\(T : \mathcal{F} \to \mathcal{F}\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Acts on vectors <span class="math notranslate nohighlight">\(\mathbf{v} \in \mathbb{R}^n\)</span></p></td>
+<td><p>Acts on functions <span class="math notranslate nohighlight">\(f \in \mathcal{F}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(A\mathbf{v} = \sum_j A_{ij} v_j\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(Tf = \int k(x,x') f(x') dx'\)</span> or <span class="math notranslate nohighlight">\(Tf = f'\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Linear (additive + homogeneous)</p></td>
+<td><p>Linear (same properties for functions)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
+<hr class="docutils" />
+<section id="why-are-linear-operators-useful">
+<h2>🎯 Why Are Linear Operators Useful?<a class="headerlink" href="#why-are-linear-operators-useful" title="Link to this heading">#</a></h2>
+<p>Because they allow us to do all the things we’re used to with matrices — <strong>eigenvalue decomposition</strong>, <strong>spectral theory</strong>, <strong>projection</strong>, and more — but for <strong>functions</strong> instead of finite-dimensional vectors.</p>
+<p>In particular:</p>
+<ul class="simple">
+<li><p>Mercer’s theorem decomposes <strong>integral operators</strong> into eigenfunctions and eigenvalues.</p></li>
+<li><p>The <strong>kernel trick</strong> depends on defining inner products via such operators.</p></li>
+<li><p>Kernel PCA, Gaussian Processes, and Support Vector Machines all rely on these ideas.</p></li>
+</ul>
 </section>
-<section id="reduced-svd">
-<h2>Reduced SVD<a class="headerlink" href="#reduced-svd" title="Link to this heading">#</a></h2>
-<p>The SVD we have presented is the <strong>full SVD</strong>.
-However, in many
-applications, we are only interested in the <strong>reduced SVD</strong>. This is
-the SVD where we only keep the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> and
-the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is the rank of
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. The reduced SVD is given by:</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A} = \mathbf{U}_r\mathbf{\Sigma}_r\mathbf{V}_r^{\!\top\!}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{U}_r \in \mathbb{R}^{m \times r}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_r \in \mathbb{R}^{r \times r}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{V}_r \in \mathbb{R}^{n \times r}\)</span>.</p>
+<hr class="docutils" />
+<section id="summary">
+<h2>🧩 Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>A <strong>linear operator</strong> is just a “function version” of a matrix: it takes one function as input and gives you another function as output, while respecting linearity.</p>
+<p>It lets us extend linear algebra to <strong>infinite-dimensional spaces</strong> — and that’s the backbone of kernel methods in ML.</p>
+<hr class="docutils" />
+<p>Let me know if you’d like this complemented with a diagram showing the analogy “Matrix ↔ Operator, Vector ↔ Function”, or a short numerical example (e.g. a discretized integral operator).</p>
 </section>
 </section>
 
@@ -623,24 +634,6 @@ the first <span class="math notranslate nohighlight">\(r\)</span> columns of <sp
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="pca.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Principal Components Analysis</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="pseudoinverse.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Moore-Penrose Pseudoinverse</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -657,12 +650,17 @@ the first <span class="math notranslate nohighlight">\(r\)</span> columns of <sp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition">🧠 Intuition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-definition">✍️ Formal Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-linear-operators">🧪 Examples of Linear Operators</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiation-operator">1. <strong>Differentiation operator</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplication-operator">2. <strong>Multiplication operator</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integral-operator-important-in-kernels">3. <strong>Integral operator (important in kernels)</strong></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-svd">Reduced SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-analogy">📐 Matrix Analogy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-linear-operators-useful">🎯 Why Are Linear Operators Useful?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">🧩 Summary</a></li>
 </ul>
   </nav></div>
 

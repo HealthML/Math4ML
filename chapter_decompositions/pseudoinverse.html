@@ -443,7 +443,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -459,6 +461,28 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pseudoinverse-in-linear-regression">The Pseudoinverse in Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinary-least-squares-ols-problem">1. <strong>Ordinary Least Squares (OLS) Problem</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observe-this-has-the-structure-of-a-pseudoinverse">2. <strong>Observe: This Has the Structure of a Pseudoinverse</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-the-general-case-unique-pseudoinverse-always-exists">3. <strong>State the General Case: Unique Pseudoinverse Always Exists</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-example-using-numpys-pinv">4. <strong>Numerical Example Using NumPy’s <code class="docutils literal notranslate"><span class="pre">pinv</span></code></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-np-linalg-pinv-works-internally">How <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code> Works Internally</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-perform-reduced-svd"><strong>Step 1: Perform reduced SVD</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-invert-the-non-zero-singular-values"><strong>Step 2: Invert the Non-Zero Singular Values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-recompose-the-pseudoinverse"><strong>Step 3: Recompose the Pseudoinverse</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-svd-based-pseudoinverse">✅ Advantages of SVD-Based Pseudoinverse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-with-numpy">🧪 Check with NumPy</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -470,37 +494,216 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="moore-penrose-pseudoinverse">
 <h1>Moore-Penrose Pseudoinverse<a class="headerlink" href="#moore-penrose-pseudoinverse" title="Link to this heading">#</a></h1>
-<p>The Moore-Penrose pseudoinverse is a generalization of the matrix inverse that can be applied to non-square or singular matrices. It is denoted as <span class="math notranslate nohighlight">\( \mathbf{A}^+ \)</span> for a matrix <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>. The pseudoinverse satisfies the following properties:</p>
-<ol class="arabic">
-<li><p><strong>Existence</strong>: The pseudoinverse exists for any matrix <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.</p></li>
-<li><p><strong>Uniqueness</strong>: The pseudoinverse is unique.</p></li>
-<li><p><strong>Properties</strong>:</p>
+<p>The Moore-Penrose pseudoinverse is a generalization of the matrix inverse that can be applied to non-square or singular matrices. It is denoted as <span class="math notranslate nohighlight">\( \mathbf{A}^+ \)</span> for a matrix <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.</p>
+<p>The pseudoinverse satisfies the following defining properties:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( \mathbf{A} \mathbf{A}^+ \mathbf{A} = \mathbf{A} \)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\( \mathbf{A}^+ \mathbf{A} \mathbf{A}^+ = \mathbf{A}^+ \)</span></p></li>
+</ul>
+<p>From these properties, we can derive the following additional properties:</p>
+<ul class="simple">
 <li><p><span class="math notranslate nohighlight">\( (\mathbf{A} \mathbf{A}^+)^\top = \mathbf{A} \mathbf{A}^+ \)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\( (\mathbf{A}^+ \mathbf{A})^\top = \mathbf{A}^+ \mathbf{A} \)</span></p></li>
-</ul>
-</li>
+<li><p><strong>Existence</strong>: The pseudoinverse exists for any matrix <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.</p></li>
+<li><p><strong>Uniqueness</strong>: The pseudoinverse is unique.</p></li>
 <li><p><strong>Rank</strong>: The rank of <span class="math notranslate nohighlight">\( \mathbf{A}^+ \)</span> is equal to the rank of <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.</p></li>
-<li><p><strong>Singular Value Decomposition (SVD)</strong>: The pseudoinverse can be computed using the singular value decomposition of <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>. If <span class="math notranslate nohighlight">\( \mathbf{A} = \mathbf{U} \boldsymbol{\Sigma} \mathbf{V}^\top \)</span>, where <span class="math notranslate nohighlight">\( \mathbf{U} \)</span> and <span class="math notranslate nohighlight">\( \mathbf{V} \)</span> are orthogonal matrices and <span class="math notranslate nohighlight">\( \boldsymbol{\Sigma} \)</span> is a diagonal matrix with singular values, then:</p>
-<div class="math notranslate nohighlight">
-\[
-   \mathbf{A}^+ = \mathbf{V} \boldsymbol{\Sigma}^+ \mathbf{U}^\top
-   \]</div>
-<p>where <span class="math notranslate nohighlight">\( \boldsymbol{\Sigma}^+ \)</span> is obtained by taking the reciprocal of the non-zero singular values in <span class="math notranslate nohighlight">\( \boldsymbol{\Sigma} \)</span> and transposing the resulting matrix.</p>
-</li>
-<li><p><strong>Applications</strong>: The pseudoinverse is used in various applications, including solving linear systems, least squares problems, and in machine learning algorithms such as linear regression.</p></li>
-<li><p><strong>Least Squares Solution</strong>: The pseudoinverse provides a least squares solution to the equation <span class="math notranslate nohighlight">\( \mathbf{A}\mathbf{x} = \mathbf{b} \)</span> when <span class="math notranslate nohighlight">\( \mathbf{A} \)</span> is not square or has no unique solution. The least squares solution is given by:</p>
+</ul>
+<p><strong>Least Squares Solution</strong>: The pseudoinverse provides a least squares solution to the equation <span class="math notranslate nohighlight">\( \mathbf{A}\mathbf{x} = \mathbf{b} \)</span> when <span class="math notranslate nohighlight">\( \mathbf{A} \)</span> is not square or has no unique solution. The least squares solution is given by:</p>
 <div class="math notranslate nohighlight">
 \[
    \mathbf{x} = \mathbf{A}^+ \mathbf{b}
    \]</div>
-</li>
-<li><p><strong>Geometric Interpretation</strong>: The pseudoinverse can be interpreted geometrically as the projection of a vector onto the column space of <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.</p></li>
-<li><p><strong>Computational Considerations</strong>: The computation of the pseudoinverse can be done efficiently using numerical methods, such as the SVD, especially for large matrices.</p></li>
-<li><p><strong>Limitations</strong>: The pseudoinverse may not be suitable for all applications, especially when the matrix is ill-conditioned or has a high condition number.</p></li>
+<p><strong>Geometric Interpretation</strong>: The pseudoinverse can be interpreted geometrically as the projection of a vector onto the column space of <span class="math notranslate nohighlight">\( \mathbf{A} \)</span>.
+<strong>Computational Considerations</strong>: The computation of the pseudoinverse can be done efficiently using numerical methods, such as the SVD, especially for large matrices.
+<strong>Limitations</strong>: The pseudoinverse may not be suitable for all applications, especially when the matrix is ill-conditioned or has a high condition number.</p>
+<section id="the-pseudoinverse-in-linear-regression">
+<h2>The Pseudoinverse in Linear Regression<a class="headerlink" href="#the-pseudoinverse-in-linear-regression" title="Link to this heading">#</a></h2>
+<p>In linear regression, we often encounter the problem of finding the best-fitting line (or hyperplane) through a set of data points. The Moore-Penrose pseudoinverse provides a tool for solving this problem, especially when the design matrix is not square or is singular.</p>
+<section id="ordinary-least-squares-ols-problem">
+<h3>1. <strong>Ordinary Least Squares (OLS) Problem</strong><a class="headerlink" href="#ordinary-least-squares-ols-problem" title="Link to this heading">#</a></h3>
+<p>Given data matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span>, and target <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^{n}\)</span>, the OLS problem is:</p>
+<p><strong>Objective</strong>: Minimize the squared error between predictions and targets:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}} |\mathbf{X}\boldsymbol{\beta} - \mathbf{y}|^2
+\]</div>
+<p>This is a quadratic problem with a closed-form solution if <span class="math notranslate nohighlight">\( \mathbf{X}^\top \mathbf{X} \)</span> is invertible:</p>
+<p><strong>OLS solution</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="observe-this-has-the-structure-of-a-pseudoinverse">
+<h3>2. <strong>Observe: This Has the Structure of a Pseudoinverse</strong><a class="headerlink" href="#observe-this-has-the-structure-of-a-pseudoinverse" title="Link to this heading">#</a></h3>
+<p>We now define:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{X}^+ := (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top
+\]</div>
+<p>We claim that <span class="math notranslate nohighlight">\( \mathbf{X}^+ \)</span> is the <strong>Moore–Penrose pseudoinverse of <span class="math notranslate nohighlight">\( \mathbf{X} \)</span></strong>, and it satisfies the four defining properties — <strong>if <span class="math notranslate nohighlight">\( \mathbf{X} \)</span> has full column rank</strong>:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\( \mathbf{X}\mathbf{X}^+\mathbf{X} = \mathbf{X} \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( \mathbf{X}^+\mathbf{X}\mathbf{X}^+ = \mathbf{X}^+ \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( (\mathbf{X}\mathbf{X}^+)^\top = \mathbf{X}\mathbf{X}^+ \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( (\mathbf{X}^+\mathbf{X})^\top = \mathbf{X}^+\mathbf{X} \)</span></p></li>
 </ol>
+</section>
+<hr class="docutils" />
+<section id="state-the-general-case-unique-pseudoinverse-always-exists">
+<h3>3. <strong>State the General Case: Unique Pseudoinverse Always Exists</strong><a class="headerlink" href="#state-the-general-case-unique-pseudoinverse-always-exists" title="Link to this heading">#</a></h3>
+<p>Regardless of whether <span class="math notranslate nohighlight">\( \mathbf{X} \)</span> has full column rank or not, there is a <strong>unique</strong> matrix <span class="math notranslate nohighlight">\( \mathbf{X}^+ \in \mathbb{R}^{d \times n} \)</span> satisfying all four Moore–Penrose conditions.</p>
+<p>This is the <strong>Moore–Penrose pseudoinverse</strong>, and:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}} = \mathbf{X}^+ \mathbf{y}
+\]</div>
+<p>still gives the <strong>minimum-norm least squares solution</strong>, even if <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is not full rank.</p>
+</section>
+<hr class="docutils" />
+<section id="numerical-example-using-numpys-pinv">
+<h3>4. <strong>Numerical Example Using NumPy’s <code class="docutils literal notranslate"><span class="pre">pinv</span></code></strong><a class="headerlink" href="#numerical-example-using-numpys-pinv" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Simulate linear data with collinearity</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="n">X</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="c1"># make column 3 nearly linearly dependent on column 1</span>
+<span class="n">beta_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta_true</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="c1"># Compute OLS via pseudoinverse</span>
+<span class="n">X_pinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># Moore–Penrose pseudoinverse</span>
+<span class="n">beta_hat</span> <span class="o">=</span> <span class="n">X_pinv</span> <span class="o">@</span> <span class="n">y</span>
+
+<span class="c1"># Compare with np.linalg.lstsq (which uses SVD internally)</span>
+<span class="n">beta_lstsq</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True coefficients:     &quot;</span><span class="p">,</span> <span class="n">beta_true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated (pinv):      &quot;</span><span class="p">,</span> <span class="n">beta_hat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated (lstsq):     &quot;</span><span class="p">,</span> <span class="n">beta_lstsq</span><span class="p">)</span>
+
+<span class="c1"># Prediction</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta_hat</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;True y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Predicted $\hat</span><span class="si">{y}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Regression via Pseudoinverse&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True coefficients:      [ 2.  -1.   0.   0.5  3. ]
+Estimated (pinv):       [ 1.94709549 -5.19769638 -0.04013046  4.70635095  2.98224449]
+Estimated (lstsq):      [ 1.94709549 -5.19769638 -0.04013046  4.70635095  2.98224449]
+</pre></div>
+</div>
+<img alt="../_images/8c28cf964c04fa959c8ce5707e2f23fb6e41773ee76f5f43c8004dcbdfe7b7ce.png" src="../_images/8c28cf964c04fa959c8ce5707e2f23fb6e41773ee76f5f43c8004dcbdfe7b7ce.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>The <strong>OLS formula</strong> is a special case of the <strong>pseudoinverse</strong>, valid under full column rank.
+The <strong>pseudoinverse is unique</strong> and always provides a <strong>least-squares solution</strong>.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">numpy.linalg.pinv</span></code> computes the <strong>Moore–Penrose pseudoinverse</strong> using the <strong>Singular Value Decomposition (SVD)</strong>. This method is both <strong>general</strong> and <strong>numerically stable</strong>, making it well-suited for pseudoinverse computation even when the matrix is not full rank.</p>
+</section>
+</section>
+<section id="how-np-linalg-pinv-works-internally">
+<h2>How <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code> Works Internally<a class="headerlink" href="#how-np-linalg-pinv-works-internally" title="Link to this heading">#</a></h2>
+<p>Suppose you have a matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span>.</p>
+<p>The pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{X}^+ \in \mathbb{R}^{d \times n}\)</span> is computed as follows:</p>
+<section id="step-1-perform-reduced-svd">
+<h3><strong>Step 1: Perform reduced SVD</strong><a class="headerlink" href="#step-1-perform-reduced-svd" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This gives:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{X} = \mathbf{U}_r \boldsymbol{\Sigma}_r \mathbf{V}_r^\top
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}_r \in \mathbb{R}^{n \times r}\)</span>, with orthonormal columns</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_r \in \mathbb{R}^{r \times r}\)</span>, diagonal matrix with singular values <span class="math notranslate nohighlight">\(\sigma_1, \dots, \sigma_r\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{V}_r \in \mathbb{R}^{d \times r}\)</span>, with orthonormal columns</p></li>
+<li><p><span class="math notranslate nohighlight">\(r = \text{rank}(\mathbf{X})\)</span></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="step-2-invert-the-non-zero-singular-values">
+<h3><strong>Step 2: Invert the Non-Zero Singular Values</strong><a class="headerlink" href="#step-2-invert-the-non-zero-singular-values" title="Link to this heading">#</a></h3>
+<p>You construct the diagonal matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_r^+ \in \mathbb{R}^{r \times r}\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Sigma^+_{ii} = \begin{cases}
+1/\sigma_i &amp; \text{if } \sigma_i &gt; \text{rcond} \cdot \sigma_{\max} \\
+0 &amp; \text{otherwise}
+\end{cases}
+\end{split}\]</div>
+<p>This step <strong>thresholds small singular values</strong> using the <code class="docutils literal notranslate"><span class="pre">rcond</span></code> parameter (default: machine epsilon).</p>
+</section>
+<hr class="docutils" />
+<section id="step-3-recompose-the-pseudoinverse">
+<h3><strong>Step 3: Recompose the Pseudoinverse</strong><a class="headerlink" href="#step-3-recompose-the-pseudoinverse" title="Link to this heading">#</a></h3>
+<p>The pseudoinverse is then:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{X}^+ = \mathbf{V}_r \boldsymbol{\Sigma}_r^+ \mathbf{U}_r^\top
+\]</div>
+<p>In code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pinv_manual</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="mf">1e-15</span><span class="p">):</span>
+    <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">S_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">s</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="n">rcond</span> <span class="o">*</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">Vt</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S_inv</span><span class="p">)</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="advantages-of-svd-based-pseudoinverse">
+<h3>✅ Advantages of SVD-Based Pseudoinverse<a class="headerlink" href="#advantages-of-svd-based-pseudoinverse" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Numerically stable</strong>: even if <span class="math notranslate nohighlight">\(\mathbf{X}^\top \mathbf{X}\)</span> is ill-conditioned</p></li>
+<li><p><strong>General</strong>: works for rank-deficient or rectangular matrices</p></li>
+<li><p><strong>Gives minimum-norm solution</strong> to <span class="math notranslate nohighlight">\(\mathbf{X}\boldsymbol{\beta} = \mathbf{y}\)</span></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="check-with-numpy">
+<h3>🧪 Check with NumPy<a class="headerlink" href="#check-with-numpy" title="Link to this heading">#</a></h3>
+<p>You can verify this approach:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">X_pinv_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_pinv_manual</span> <span class="o">=</span> <span class="n">pinv_manual</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_pinv_np</span><span class="p">,</span> <span class="n">X_pinv_manual</span><span class="p">)</span>  <span class="c1"># Should be True</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -557,6 +760,35 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pseudoinverse-in-linear-regression">The Pseudoinverse in Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinary-least-squares-ols-problem">1. <strong>Ordinary Least Squares (OLS) Problem</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observe-this-has-the-structure-of-a-pseudoinverse">2. <strong>Observe: This Has the Structure of a Pseudoinverse</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-the-general-case-unique-pseudoinverse-always-exists">3. <strong>State the General Case: Unique Pseudoinverse Always Exists</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-example-using-numpys-pinv">4. <strong>Numerical Example Using NumPy’s <code class="docutils literal notranslate"><span class="pre">pinv</span></code></strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-np-linalg-pinv-works-internally">How <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code> Works Internally</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-perform-reduced-svd"><strong>Step 1: Perform reduced SVD</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-invert-the-non-zero-singular-values"><strong>Step 2: Invert the Non-Zero Singular Values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-recompose-the-pseudoinverse"><strong>Step 3: Recompose the Pseudoinverse</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-svd-based-pseudoinverse">✅ Advantages of SVD-Based Pseudoinverse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-with-numpy">🧪 Check with NumPy</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

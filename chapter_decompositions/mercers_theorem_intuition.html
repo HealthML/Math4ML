@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Singular value decomposition &#8212; Mathematics for Machine Learning</title>
+    <title>Mercer’s Theorem Intuition &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,12 +60,10 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/svd';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/svd.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_decompositions/mercers_theorem_intuition';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/mercers_theorem_intuition.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Moore-Penrose Pseudoinverse" href="pseudoinverse.html" />
-    <link rel="prev" title="Principal Components Analysis" href="pca.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +126,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -218,7 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix_rank.html">Rank of a Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="determinant.html">Determinant</a></li>
 <li class="toctree-l2"><a class="reference internal" href="row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
@@ -231,7 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="matrix_norms.html">Matrix Norms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="psd_matrices.html">Positive (semi-)definite matrices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pca.html">Principal Components Analysis</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svd.html">Singular value decomposition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
@@ -325,7 +325,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/svd.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_decompositions/mercers_theorem_intuition.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -342,7 +342,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/svd.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_decompositions/mercers_theorem_intuition.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +372,7 @@
       
       
       
-      <li><a href="../_sources/chapter_decompositions/svd.md" target="_blank"
+      <li><a href="../_sources/chapter_decompositions/mercers_theorem_intuition.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -456,7 +456,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Singular value decomposition</h1>
+    <h1>Mercer’s Theorem Intuition</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -466,12 +466,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-sanity-check-live-coding">1. <strong>Numerical sanity check</strong> (live coding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-pixels-to-features-finite-vs-infinite">2. <strong>From pixels to features</strong> (finite vs. infinite)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#induction-proof-as-a-lego-tower">3. <strong>Induction proof as a Lego tower</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-pca-demo">4. <strong>Kernel PCA demo</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mercer-vs-non-mercer-jump-scare">5. <strong>Mercer vs. non-Mercer “jump scare”</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-space-view-bochners-theorem">6. <strong>Fourier-space view (Bochner’s theorem)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-analogy">7. <strong>Physical analogy</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cheat-sheet-to-hand-out">Cheat-sheet to hand out</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-to-go-next">Where to go next</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-svd">Reduced SVD</a></li>
 </ul>
             </nav>
         </div>
@@ -483,113 +488,176 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="singular-value-decomposition">
-<h1>Singular value decomposition<a class="headerlink" href="#singular-value-decomposition" title="Link to this heading">#</a></h1>
-<p>Singular value decomposition (SVD) is a widely applicable tool in linear
-algebra. Its strength stems partially from the fact that <em>every matrix</em>
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> has an SVD (even non-square
-matrices)!</p>
-<p>The decomposition of <span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m \times n}\)</span> goes as follows:</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\]</div>
-<p>where
-<span class="math notranslate nohighlight">\(\mathbf{U} \in \mathbb{R}^{m \times m}\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{V} \in \mathbb{R}^{n \times n}\)</span> are orthogonal matrices and
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{m \times n}\)</span> is a diagonal matrix with
-the <strong>singular values</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> (denoted <span class="math notranslate nohighlight">\(\sigma_i\)</span>) on its
-diagonal.</p>
-<p>By convention, the singular values are given in non-increasing order,
-i.e.</p>
-<div class="math notranslate nohighlight">
-\[\sigma_1 \geq \sigma_2 \geq \dots \geq \sigma_{\min(m,n)} \geq 0\]</div>
-<p>Only the first <span class="math notranslate nohighlight">\(r\)</span> singular values are nonzero, where <span class="math notranslate nohighlight">\(r\)</span> is the rank of
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>Observe that the SVD factors provide eigendecompositions for
-<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\mathbf{A}^{\!\top\!}\mathbf{A} &amp;= (\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} = \mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\mathbf{V}^{\!\top\!} \\
-\mathbf{A}\mathbf{A}^{\!\top\!} &amp;= \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}(\mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!})^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}\mathbf{V}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!} = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\mathbf{U}^{\!\top\!}
-\end{aligned}\end{split}\]</div>
-<p>It follows immediately that the columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>
-(the <strong>right-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
-<span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span>, and the columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> (the
-<strong>left-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
-<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>.</p>
-<p>The matrices <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\)</span> are not necessarily the same
-size, but both are diagonal with the squared singular values
-<span class="math notranslate nohighlight">\(\sigma_i^2\)</span> on the diagonal (plus possibly some zeros). Thus the
-singular values of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the square roots of the eigenvalues
-of <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> (or equivalently, of
-<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>)[^5].</p>
-<section id="some-useful-matrix-identities">
-<h2>Some useful matrix identities<a class="headerlink" href="#some-useful-matrix-identities" title="Link to this heading">#</a></h2>
-<p>In the following, we present a number of important identities for the SVD.</p>
-<section id="matrix-vector-product-as-linear-combination-of-matrix-columns">
-<h3>Matrix-vector product as linear combination of matrix columns<a class="headerlink" href="#matrix-vector-product-as-linear-combination-of-matrix-columns" title="Link to this heading">#</a></h3>
-<div class="proof proposition admonition" id="prop-matrix-vector-product">
-<p class="admonition-title"><span>Proposition </span> (Matrix-vector product as linear combination of columns)</p>
-<section class="proposition-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> be a vector and
-<span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> a matrix with columns
-<span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_n\)</span>.</p>
-<p>Then</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A}\mathbf{x} = \sum_{i=1}^n x_i\mathbf{a}_i\]</div>
-</section>
-</div><p>This identity is extremely useful in understanding linear operators in
-terms of their matrices’ columns.
-The proof is very simple (consider
-each element of <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}\)</span> individually and expand by
-definitions) but it is a good exercise to convince yourself.</p>
-</section>
-<section id="sum-of-outer-products-as-matrix-matrix-product">
-<h3>Sum of outer products as matrix-matrix product<a class="headerlink" href="#sum-of-outer-products-as-matrix-matrix-product" title="Link to this heading">#</a></h3>
-<p>An <strong>outer product</strong> is an expression of the form
-<span class="math notranslate nohighlight">\(\mathbf{a}\mathbf{b}^{\!\top\!}\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{a} \in \mathbb{R}^m\)</span>
-and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. By inspection it is not hard to see
-that such an expression yields an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix such that</p>
-<div class="math notranslate nohighlight">
-\[[\mathbf{a}\mathbf{b}^{\!\top\!}]_{ij} = a_ib_j\]</div>
-<p>It is not
-immediately obvious, but the sum of outer products is actually
-equivalent to an appropriate matrix-matrix product! We formalize this
-statement as</p>
-<div class="proof proposition admonition" id="prop-sum-outer-products">
-<p class="admonition-title"><span>Proposition </span></p>
-<section class="proposition-content" id="proof-content">
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m\)</span> and
-<span class="math notranslate nohighlight">\(\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n\)</span>. Then</p>
-<div class="math notranslate nohighlight">
-\[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{B}^{\!\top\!}\]</div>
-<p>where</p>
-<div class="math notranslate nohighlight">
-\[\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 &amp; \cdots &amp; \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 &amp; \cdots &amp; \mathbf{b}_k\end{bmatrix}\]</div>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. For each <span class="math notranslate nohighlight">\((i,j)\)</span>, we have</p>
-<div class="math notranslate nohighlight">
-\[\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}\]</div>
-<p>This last expression should be recognized as an inner product between
-the <span class="math notranslate nohighlight">\(i\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and the <span class="math notranslate nohighlight">\(j\)</span>th row of <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>, or
-equivalently the <span class="math notranslate nohighlight">\(j\)</span>th column of <span class="math notranslate nohighlight">\(\mathbf{B}^{\!\top\!}\)</span>. Hence by the
-definition of matrix multiplication, it is equal to
-<span class="math notranslate nohighlight">\([\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}\)</span>. ◻</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="mercers-theorem-intuition">
+<h1>Mercer’s Theorem Intuition<a class="headerlink" href="#mercers-theorem-intuition" title="Link to this heading">#</a></h1>
+<section id="numerical-sanity-check-live-coding">
+<h2>1. <strong>Numerical sanity check</strong> (live coding)<a class="headerlink" href="#numerical-sanity-check-live-coding" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Generate random 2-D points</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Compute squared Euclidean distance matrix</span>
+<span class="n">sq_dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># RBF kernel (Gram matrix)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">sq_dists</span><span class="p">)</span>
+
+<span class="c1"># Eigenvalues of the Gram matrix</span>
+<span class="n">eigvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>  <span class="c1"># already sorted ascending</span>
+<span class="n">eigvals_desc</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;First 10 eigenvalues (descending):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigvals_desc</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Smallest eigenvalue: </span><span class="si">{</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plot the eigenvalue spectrum</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">eigvals_desc</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Eigenvalue index (descending)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Eigenvalue magnitude (log scale)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Eigenvalue spectrum of RBF Gram matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
+<p>Run the short notebook cell above with your own γ or data.
+Students immediately <strong>see</strong> that every eigenvalue of the Gram matrix is ≥ 0 and how the spectrum decays.
+<em>Talking points</em>:</p>
+<ul class="simple">
+<li><p>Why <code class="docutils literal notranslate"><span class="pre">eigvalsh</span></code> (symmetric) never shows negative values for a Mercer kernel.</p></li>
+<li><p>How the spectrum’s tail hints at <em>effective</em> dimensionality of the RKHS.</p></li>
+<li><p>What changes as you slide γ (broad vs. narrow kernels).</p></li>
+</ul>
+<p>Feel free to add a slider for γ so they can watch eigenvalues move in real time.</p>
+<hr class="docutils" />
 </section>
-</section>
-<section id="reduced-svd">
-<h2>Reduced SVD<a class="headerlink" href="#reduced-svd" title="Link to this heading">#</a></h2>
-<p>The SVD we have presented is the <strong>full SVD</strong>.
-However, in many
-applications, we are only interested in the <strong>reduced SVD</strong>. This is
-the SVD where we only keep the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> and
-the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is the rank of
-<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. The reduced SVD is given by:</p>
+<section id="from-pixels-to-features-finite-vs-infinite">
+<h2>2. <strong>From pixels to features</strong> (finite vs. infinite)<a class="headerlink" href="#from-pixels-to-features-finite-vs-infinite" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Draw two 1-D signals on the board (e.g. two little “mountains”).</p></li>
+<li><p>Show how a <em>finite</em> polynomial kernel maps them into a handful of monomials (draw a short arrow diagram).</p></li>
+<li><p>Contrast with the RBF: the “feature arrow” explodes into a <em>continuum</em> of Gaussians centered everywhere.</p></li>
+<li><p>Now reveal the Mercer expansion formula</p></li>
+</ol>
 <div class="math notranslate nohighlight">
-\[\mathbf{A} = \mathbf{U}_r\mathbf{\Sigma}_r\mathbf{V}_r^{\!\top\!}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{U}_r \in \mathbb{R}^{m \times r}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_r \in \mathbb{R}^{r \times r}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{V}_r \in \mathbb{R}^{n \times r}\)</span>.</p>
+\[
+k(x,x')=\sum_{i=1}^\infty \lambda_i \,\phi_i(x)\phi_i(x')
+\]</div>
+<p>and ask: <em>“Where are those Gaussians hiding in this series?”</em>
+This opens the door to Bochner’s theorem and random Fourier features if you like.</p>
+<hr class="docutils" />
+</section>
+<section id="induction-proof-as-a-lego-tower">
+<h2>3. <strong>Induction proof as a Lego tower</strong><a class="headerlink" href="#induction-proof-as-a-lego-tower" title="Link to this heading">#</a></h2>
+<p>Print the block-matrix form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+K_{n+1}=
+\begin{bmatrix}
+K_n &amp; \mathbf k\\
+\mathbf k^\top &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<p>on a slide, but bring <strong>LEGO® bricks</strong> (or colored sticky notes):</p>
+<ul class="simple">
+<li><p>top-left brick = old PSD block,</p></li>
+<li><p>right column / bottom row = new similarities,</p></li>
+<li><p>1 × 1 brick = self-similarity.
+Stack bricks as you add points; the quadratic-form ≥0 argument becomes “no matter how you press on the tower, it won’t collapse.”</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="kernel-pca-demo">
+<h2>4. <strong>Kernel PCA demo</strong><a class="headerlink" href="#kernel-pca-demo" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Take 2-D moons data.</p></li>
+<li><p>Run kernel PCA with RBF γ you choose.</p></li>
+<li><p>Plot first two kernel-PCA components; students see the nonlinear <em>unfolding</em>.
+Then point to the eigen-decomposition <span class="math notranslate nohighlight">\(K = V\Lambda V^\top\)</span> and say: <em>“Those eigenvectors are the discrete cousins of Mercer’s eigenfunctions.”</em></p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="mercer-vs-non-mercer-jump-scare">
+<h2>5. <strong>Mercer vs. non-Mercer “jump scare”</strong><a class="headerlink" href="#mercer-vs-non-mercer-jump-scare" title="Link to this heading">#</a></h2>
+<p>Show the cosine kernel <span class="math notranslate nohighlight">\(k(x,x')=\cos(x-x')\)</span> on <span class="math notranslate nohighlight">\(\mathbb R\)</span>.
+Sample 30 random points; compute its Gram matrix and eigenvalues — you get negatives!
+Flip to RBF: no negatives.
+Students grasp <em>why</em> the compact-operator assumption (or Bochner’s positive spectral density) matters.</p>
+<hr class="docutils" />
+</section>
+<section id="fourier-space-view-bochners-theorem">
+<h2>6. <strong>Fourier-space view (Bochner’s theorem)</strong><a class="headerlink" href="#fourier-space-view-bochners-theorem" title="Link to this heading">#</a></h2>
+<p>Derive quickly that the RBF’s Fourier transform is another Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x') = \int_{\mathbb R^d} e^{i\omega^\top(x-x')} e^{-\|\omega\|^2/4\gamma}\,d\omega .
+\]</div>
+<p>Hand-wave: “positive weight everywhere ⇒ PSD.”
+Then draw random Fourier features:</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi_\omega(x)=\sqrt{2}\cos(\omega^\top x+b),\quad
+\omega\sim\mathcal N(0,2\gamma I),\;b\sim\mathcal U(0,2\pi)
+\]</div>
+<p>and let students approximate the kernel with finitely many such features to <em>see</em> convergence.</p>
+<hr class="docutils" />
+</section>
+<section id="physical-analogy">
+<h2>7. <strong>Physical analogy</strong><a class="headerlink" href="#physical-analogy" title="Link to this heading">#</a></h2>
+<p>Compare Mercer’s expansion to a vibrating drum:</p>
+<ul class="simple">
+<li><p>Drumhead ↔ compact operator.</p></li>
+<li><p>Normal modes ↔ eigenfunctions <span class="math notranslate nohighlight">\(\phi_i\)</span>.</p></li>
+<li><p>Energy in each mode ↔ eigenvalue <span class="math notranslate nohighlight">\(\lambda_i\)</span>.
+Just as any strike excites a combination of modes, every data pair’s similarity is a weighted sum of modes.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="cheat-sheet-to-hand-out">
+<h2>Cheat-sheet to hand out<a class="headerlink" href="#cheat-sheet-to-hand-out" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concept</p></th>
+<th class="head"><p>1-Sentence Student Takeaway</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Mercer kernel</strong></p></td>
+<td><p>Any continuous symmetric PSD kernel on a compact set behaves like an <em>infinite Gram matrix</em> with an orthonormal eigen-basis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Integral operator</strong></p></td>
+<td><p>“Multiply-then-integrate” turns your kernel into a self-adjoint <em>matrix on functions</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Eigenfunctions</strong></p></td>
+<td><p>The kernel is literally its own feature map: <span class="math notranslate nohighlight">\(k=\sum \lambda_i\phi_i\otimes\phi_i\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>RBF PSD</strong></p></td>
+<td><p>Because its Fourier spectrum is non-negative everywhere.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Gram-matrix test</strong></p></td>
+<td><p>Sample points → compute <span class="math notranslate nohighlight">\(K\)</span> → <em>all</em> eigenvalues ≥ 0 ⇔ kernel is Mercer.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<section id="where-to-go-next">
+<h3>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Random Fourier Features</strong> (Rahimi &amp; Recht, 2007) — shows you can <em>sample</em> Mercer’s infinite series.</p></li>
+<li><p><strong>Nyström method</strong> — connects kernel sub-sampling to integral-operator approximation.</p></li>
+<li><p><strong>Deep-kernel GP view</strong> — Mercerian story continues in Gaussian-process land.</p></li>
+</ul>
+<p>Use whichever of these slices matches your class’s background and time budget.
+Pair two or three and you’ll give students both the rigorous spine <strong>and</strong> the visceral “aha!” Mercer moment.</p>
+</section>
 </section>
 </section>
 
@@ -623,24 +691,6 @@ the first <span class="math notranslate nohighlight">\(r\)</span> columns of <sp
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="pca.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Principal Components Analysis</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="pseudoinverse.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Moore-Penrose Pseudoinverse</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -657,12 +707,17 @@ the first <span class="math notranslate nohighlight">\(r\)</span> columns of <sp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-useful-matrix-identities">Some useful matrix identities</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-vector-product-as-linear-combination-of-matrix-columns">Matrix-vector product as linear combination of matrix columns</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-outer-products-as-matrix-matrix-product">Sum of outer products as matrix-matrix product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-sanity-check-live-coding">1. <strong>Numerical sanity check</strong> (live coding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-pixels-to-features-finite-vs-infinite">2. <strong>From pixels to features</strong> (finite vs. infinite)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#induction-proof-as-a-lego-tower">3. <strong>Induction proof as a Lego tower</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-pca-demo">4. <strong>Kernel PCA demo</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mercer-vs-non-mercer-jump-scare">5. <strong>Mercer vs. non-Mercer “jump scare”</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fourier-space-view-bochners-theorem">6. <strong>Fourier-space view (Bochner’s theorem)</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physical-analogy">7. <strong>Physical analogy</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cheat-sheet-to-hand-out">Cheat-sheet to hand out</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#where-to-go-next">Where to go next</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-svd">Reduced SVD</a></li>
 </ul>
   </nav></div>
 
