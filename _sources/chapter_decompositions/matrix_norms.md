@@ -344,8 +344,6 @@ QED.
 - In **spectral methods**, matrix norms bound approximation error (e.g., spectral norm bounds for generalization).
 
 
-Certainly! Here's a concise and precise introduction paragraph for your textbook or lecture notes:
-
 ---
 
 ## Collaborative Filtering and Matrix Factorization
