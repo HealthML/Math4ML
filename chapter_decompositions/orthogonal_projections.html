@@ -466,15 +466,19 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required">Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Why it’s required:</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-consequence"><strong>Geometric Consequence</strong>:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">Summary Table</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression">🎓 <strong>Application Example: Least Squares Regression</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression"><strong>Application Example: Least Squares Regression</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -696,9 +700,8 @@ earlier we showed <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \m
 <li><p><strong>symmetry</strong> <span class="math notranslate nohighlight">\((\mathbf{P}^\top = \mathbf{P})\)</span></p></li>
 </ul>
 <p>Let’s now examine <em>why</em> they are essential.</p>
-</section>
 <section id="idempotence-mathbf-p-2-mathbf-p-is-required">
-<h2>Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required<a class="headerlink" href="#idempotence-mathbf-p-2-mathbf-p-is-required" title="Link to this heading">#</a></h2>
+<h3>Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required<a class="headerlink" href="#idempotence-mathbf-p-2-mathbf-p-is-required" title="Link to this heading">#</a></h3>
 <p>Idempotence ensures that once you’ve projected a vector onto the subspace, projecting it again <strong>does nothing</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -706,11 +709,12 @@ earlier we showed <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \m
 \]</div>
 </section>
 <section id="why-its-required">
-<h2><strong>Why it’s required:</strong><a class="headerlink" href="#why-its-required" title="Link to this heading">#</a></h2>
+<h3><strong>Why it’s required:</strong><a class="headerlink" href="#why-its-required" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Geometrically: The image <span class="math notranslate nohighlight">\(\mathbf{P}\mathbf{x}\)</span> lies in the subspace. If projecting it again changed it, that would mean the subspace is not invariant under the projection — contradicting the notion of projection.</p></li>
 <li><p>Algebraically: If <span class="math notranslate nohighlight">\(\mathbf{P}^2 \neq \mathbf{P}\)</span>, then <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> is not consistent — it cannot define a <em>fixed</em> mapping to the subspace.</p></li>
 </ul>
+</section>
 </section>
 <section id="why-symmetry-mathbf-p-top-mathbf-p-is-required">
 <h2>Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required<a class="headerlink" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required" title="Link to this heading">#</a></h2>
@@ -755,9 +759,10 @@ earlier we showed <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \m
 </table>
 </div>
 </section>
+</section>
 <hr class="docutils" />
 <section id="basis-representation-of-orthogonal-projection-matrices">
-<h3>Basis Representation of Orthogonal Projection Matrices<a class="headerlink" href="#basis-representation-of-orthogonal-projection-matrices" title="Link to this heading">#</a></h3>
+<h2>Basis Representation of Orthogonal Projection Matrices<a class="headerlink" href="#basis-representation-of-orthogonal-projection-matrices" title="Link to this heading">#</a></h2>
 <p>Orthogonal projections can be expressed using matrices when the subspace is defined by a basis:</p>
 <p>If <span class="math notranslate nohighlight">\(S = \operatorname{span}(\mathbf{e}_1, \dots, \mathbf{e}_m)\)</span>, where the <span class="math notranslate nohighlight">\(\mathbf{e}_i\)</span> are <strong>orthonormal</strong>, then the projection matrix is:</p>
 <div class="math notranslate nohighlight">
@@ -831,9 +836,8 @@ E^\top E = I_m \Rightarrow \mathbf{P}^2 = E I E^\top = EE^\top = \mathbf{P} \qua
 \]</div>
 <p>We conclude that <span class="math notranslate nohighlight">\(\mathbf{P} = EE^\top = \sum_{i=1}^m \mathbf{e}_i \mathbf{e}_i^\top\)</span> is indeed the orthogonal projection onto the subspace spanned by <span class="math notranslate nohighlight">\(\{\mathbf{e}_1, \dots, \mathbf{e}_m\}\)</span>.</p>
 </div>
-</section>
 <section id="application-example-least-squares-regression">
-<h3>🎓 <strong>Application Example: Least Squares Regression</strong><a class="headerlink" href="#application-example-least-squares-regression" title="Link to this heading">#</a></h3>
+<h3><strong>Application Example: Least Squares Regression</strong><a class="headerlink" href="#application-example-least-squares-regression" title="Link to this heading">#</a></h3>
 <p>In least squares regression, we want to find the best-fitting line (or hyperplane) through a set of points.</p>
 <p>This can be framed as an orthogonal projection problem:</p>
 <p>Given a design matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span> and target vector <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^n\)</span>, the goal is to find coefficients <span class="math notranslate nohighlight">\(\boldsymbol{\beta} \in \mathbb{R}^d\)</span> such that:
@@ -914,15 +918,19 @@ $<span class="math notranslate nohighlight">\(
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-representation-of-projection-operators"><strong>Matrix Representation of Projection Operators</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idempotence-mathbf-p-2-mathbf-p-is-required">Idempotence <span class="math notranslate nohighlight">\(\mathbf{P}^2 = \mathbf{P}\)</span> is Required</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-its-required"><strong>Why it’s required:</strong></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-symmetry-mathbf-p-top-mathbf-p-is-required">Why Symmetry <span class="math notranslate nohighlight">\(\mathbf{P}^\top = \mathbf{P}\)</span> is Required</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Why it’s required:</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-consequence"><strong>Geometric Consequence</strong>:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">Summary Table</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression">🎓 <strong>Application Example: Least Squares Regression</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-representation-of-orthogonal-projection-matrices">Basis Representation of Orthogonal Projection Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-example-least-squares-regression"><strong>Application Example: Least Squares Regression</strong></a></li>
 </ul>
 </li>
 </ul>

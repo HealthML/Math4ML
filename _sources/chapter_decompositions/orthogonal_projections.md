@@ -231,7 +231,7 @@ The fact that $\mathbf{P}$ is a linear operator (and thus a proper projection, a
 earlier we showed $\mathbf{P}^2 = \mathbf{P}$) follows readily from this result.
 
 
-### **Matrix Representation of Projection Operators**
+## **Matrix Representation of Projection Operators**
 
 Given a subspace $S \subset \mathbb{R}^n$, the **orthogonal projection** of a vector $\mathbf{x} \in \mathbb{R}^n$ onto $S$ is the unique vector $\mathbf{P}\mathbf{x} \in S$ such that:
 
@@ -291,7 +291,7 @@ A non-symmetric idempotent matrix defines an **oblique projection**, which is st
 ---
 
 
-### Basis Representation of Orthogonal Projection Matrices
+## Basis Representation of Orthogonal Projection Matrices
 Orthogonal projections can be expressed using matrices when the subspace is defined by a basis:
 
 If $S = \operatorname{span}(\mathbf{e}_1, \dots, \mathbf{e}_m)$, where the $\mathbf{e}_i$ are **orthonormal**, then the projection matrix is:
@@ -389,7 +389,7 @@ We conclude that $\mathbf{P} = EE^\top = \sum_{i=1}^m \mathbf{e}_i \mathbf{e}_i^
 :::
 
 
-### 🎓 **Application Example: Least Squares Regression**
+### **Application Example: Least Squares Regression**
 In least squares regression, we want to find the best-fitting line (or hyperplane) through a set of points. 
 
 This can be framed as an orthogonal projection problem:
