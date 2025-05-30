@@ -13,7 +13,7 @@ parts:
     chapters:
     # week 1
       - file: chapter_ml_basics/intro
-        title: Machine Learning Basics
+        title: Machine Learning Problems
         sections:
         - file: chapter_ml_basics/classification
           title: Classification
@@ -66,25 +66,45 @@ parts:
         - file: chapter_calculus/minima_first_order_condition
           title: First Order Condition
         - file: chapter_calculus/analytical_solution_ridge
-          title: Ridge Regression
+          title: Quadratic Optimization
         - file: chapter_calculus/line_search
           title: Line Search
         - file: chapter_calculus/hessian
           title: Hessian
+        - file: chapter_calculus/taylors_theorem
+#        - file: chapter_calculus/irls
+#          title: Iteratively Re-Weighted Least Squares
 # study the properties of matrices
-#  - file: chapter_decompositions/overview_decompositions # chapter_linear_algebra/linear_algebra
-#    sections:
-#    - file: chapter_decompositions/eigenvectors
-#    - file: chapter_decompositions/trace_determinant
-#    - file: chapter_decompositions/orthogonal_matrices
-#    - file: chapter_decompositions/symmetric_matrices
-#    - file: chapter_decompositions/psd_matrices
-#    - file: chapter_decompositions/svd
-#    - file: chapter_decompositions/big_picture
-#    - file: chapter_decompositions/pseudoinverse
-#    - file: chapter_decompositions/low_rank_approximation
-#    - file: chapter_decompositions/matrix_norms
+      - file: chapter_decompositions/overview_decompositions
+        title: Matrix Analysis   
+        sections:
+        - file: chapter_decompositions/matrix_rank
+        - file: chapter_decompositions/determinant
+        - file: chapter_decompositions/row_equivalence
+        - file: chapter_decompositions/square_matrices
+        - file: chapter_decompositions/trace
+        - file: chapter_decompositions/eigenvectors # end week 05
+        - file: chapter_decompositions/orthogonal_matrices
+        - file: chapter_decompositions/symmetric_matrices
+        - file: chapter_decompositions/Rayleigh_quotients 
+        - file: chapter_decompositions/matrix_norms
+        - file: chapter_decompositions/psd_matrices
+        - file: chapter_decompositions/pca  # PCA as example for the eigenvalue decomposition of a psd matrix
+          title: Principal Components Analysis
+        - file: chapter_decompositions/svd # 
+#        - file: chapter_decompositions/RBF_kernel_Positive_Definite
+        - file: chapter_decompositions/pseudoinverse
+        - file: chapter_decompositions/orthogonal_projections
+        - file: chapter_decompositions/big_picture
+          title: Fundamental Subspaces
+#        - file: chapter_decompositions/representer_theorem
+#      - file: chapter_convexity/overview_convexity
+#        title: Convexity
+#        sections:
+#        - file: chapter_convexity/convex_sets
+#        - file: chapter_convexity/convex_functions
 # continue with second order optimization
+#      title: Second-Order Optimization
 #        - file: chapter_calculus/newtons_method
 #          title: Newton's Method
 #        - file: chapter_taylor/minima_second_order_condition
@@ -93,16 +113,13 @@ parts:
 #        - file: chapter_calculus/orthogonal_projections
 #      - file: chapter_taylor/overview_taylor
 #        sections:
-#  - file: chapter_convexity/overview_convexity
-#    sections:
-#    - file: chapter_convexity/convexity
 #  - file: chapter_optimization/overview_optimization
 #    sections:
 #    - file: chapter_optimization/optimization
 #    - file: chapter_optimization/optimization_second_order
 #    - file: chapter_optimization/bfgs
-#    - file: chapter_optimization/orthogonal_projection
 #  - file: chapter_probability/overview_probability
+#    title: Probability and Random Variables
 #    sections:
 #    - file: chapter_probability/probability_basics
 #    - file: chapter_probability/random_variables
@@ -149,8 +166,21 @@ parts:
             title: First Fundamental Theorem of Calculus
           - file: appendix/second_fundamental_theorem_calculus
             title: Second Fundamental Theorem of Calculus
+          - file: appendix/Clairauts_theorem
+            title: Clairaut's Theorem
       - file: appendix/differentiation_rules
         title: Differentiation Rules
+      - file: appendix/Exercise Sheet Solutions.md
+        title: Exercise Sheet Solutions
+        sections:
+          - file: appendix/Exercise Sheet 1 Solutions.md
+            title: Exercise Sheet 1 Solutions
+          - file: appendix/Exercise Sheet 2 Solutions.md
+            title: Exercise Sheet 2 Solutions
+          - file: appendix/Exercise Sheet 3 Solutions.md
+            title: Exercise Sheet 3 Solutions
+          - file: appendix/Exercise Sheet 4 Solutions.md
+            title: Exercise Sheet 4 Solutions
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces

@@ -37,7 +37,6 @@ An alternative definition of PCA is based on minimizing the sum-of-sqares of the
 For the PCA algorithm we implement `empirical_covariance` method that would be usef do calculating the covariance of the data. We also impmlement `PCA` class with `fit`, `transform` and `reverse_transform` methods.
 
 ```{code-cell} ipython3
-
 def empirical_covariance(X):
     """
     Calculates the empirical covariance matrix for a given dataset.
@@ -56,11 +55,8 @@ def empirical_covariance(X):
 ```
 
 
-+++ {"slideshow": {"slide_type": "subslide"}}
-
 
 ```{code-cell} ipython3
-
 class PCA:
     def __init__(self, k=None):
         """
@@ -83,9 +79,8 @@ class PCA:
         """
         self.mean, covariance = empirical_covariance(X=X)
         eig_values, eig_vectors = np.linalg.eigh(covariance)  # Compute eigenvalues and eigenvectors
-        order = np.argsort(eig_values)[::-1]  # Get indices of eigenvalues in descending order
-        self.pc_variances = eig_values[order]  # Sort the eigenvalues
-        self.principal_components = eig_vectors[:, order]  # Sort the eigenvectors
+        self.pc_variances = eig_values[::-1]  # the eigenvalues are returned by eigh in ascending order. We want them in descending order (largest first)
+        self.principal_components = eig_vectors[:, ::-1]  # the eigenvectors in same order as eingevalues
         if self.k is not None:
             self.pc_variances = self.pc_variances[:self.k]
             self.principal_components = self.principal_components[:,:self.k]
@@ -125,8 +120,6 @@ class PCA:
         return self.pc_variances
 ```
 
-+++ {"slideshow": {"slide_type": "slide"}}
-
 In the example below, we will use the PCA algorithm to reduce the dimensionality of a genetic dataset from the 1000 genomes project [1,2].
 
 [1] Auton, A. et al. A global reference for human genetic variation. Nature 526, 68–74 (2015)
@@ -143,11 +136,8 @@ We consider five ancestries in the dataset:
 - **SAS** - South Asian  
 - **AMR** - Native American  
 
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-
 ```{code-cell} ipython3
+:tags: [hide-input]
 snpreader = Bed('./genetic_data/example2.bed', count_A1=True)
 data = snpreader.read()
 print(data.shape)
@@ -157,14 +147,6 @@ list1 = data.iid[:,1].tolist()  #list with the Sample numbers present in genetic
 labels = labels[labels.index.isin(list1)]  #filter labels DataFrame so it only contains the sampleIDs present in genetic data
 y = labels.SuperPopulation  # EUR, AFR, AMR, EAS, SAS
 X = data.val[:, ~np.isnan(data.val).any(axis=0)]  #load genetic data to X, removing NaN values
-```
-
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-
-```{code-cell} ipython3
-
 pca = PCA()
 pca.fit(X=X)
 
@@ -178,13 +160,6 @@ for rank in range(5):    #more correct: X_pc.shape[1]+1
     X_lowrank = pca_lowrank.transform(X)
     X_reconstruction = pca_lowrank.reverse_transform(X_lowrank)
     print("L1 reconstruction error for rank %i PCA : %.4E " % (rank, np.absolute(X - X_reconstruction).sum()))
-```
-
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-
-```{code-cell} ipython3
 
 fig = plt.figure()
 plt.plot(X_pc[y=="EUR"][:,0], X_pc[y=="EUR"][:,1],'.', alpha = 0.3)
@@ -228,4 +203,3 @@ plt.xlabel("PC dimension")
 plt.ylabel("cumulative fraction of variance explained")
 plt.show()
 ```
-
