@@ -2,8 +2,11 @@
 
 Singular value decomposition (SVD) is a widely applicable tool in linear
 algebra. Its strength stems partially from the fact that *every matrix*
-$\mathbf{A} \in \mathbb{R}^{m \times n}$ has an SVD (even non-square
-matrices)! The decomposition goes as follows:
+$\mathbf{A}$ has an SVD (even non-square
+matrices)!
+
+
+The decomposition of $\mathbf{A}\in \mathbb{R}^{m \times n}$ goes as follows:
 
 $$\mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}$$
 
@@ -36,13 +39,13 @@ $\mathbf{A}^{\!\top\!}\mathbf{A}$, and the columns of $\mathbf{U}$ (the
 **left-singular vectors** of $\mathbf{A}$) are eigenvectors of
 $\mathbf{A}\mathbf{A}^{\!\top\!}$.
 
-The matrices $\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}$ and
+The matrices $\mathbf{\Sigma}^{\top}\mathbf{\Sigma}$ and
 $\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}$ are not necessarily the same
 size, but both are diagonal with the squared singular values
 $\sigma_i^2$ on the diagonal (plus possibly some zeros). Thus the
 singular values of $\mathbf{A}$ are the square roots of the eigenvalues
 of $\mathbf{A}^{\!\top\!}\mathbf{A}$ (or equivalently, of
-$\mathbf{A}\mathbf{A}^{\!\top\!}$)[^5].
+$\mathbf{A}\mathbf{A}^{\!\top\!}$).
 
 ## Some useful matrix identities
 
@@ -50,15 +53,22 @@ In the following, we present a number of important identities for the SVD.
 
 ### Matrix-vector product as linear combination of matrix columns
 
-*Proposition.* 
+:::{prf:proposition} Matrix-vector product as linear combination of columns
+:label: prop-matrix-vector-product
+:nonumber:
+
 Let $\mathbf{x} \in \mathbb{R}^n$ be a vector and
 $\mathbf{A} \in \mathbb{R}^{m \times n}$ a matrix with columns
-$\mathbf{a}_1, \dots, \mathbf{a}_n$. Then
+$\mathbf{a}_1, \dots, \mathbf{a}_n$. 
+
+Then
 
 $$\mathbf{A}\mathbf{x} = \sum_{i=1}^n x_i\mathbf{a}_i$$
+:::
 
 This identity is extremely useful in understanding linear operators in
-terms of their matrices' columns. The proof is very simple (consider
+terms of their matrices' columns. 
+The proof is very simple (consider
 each element of $\mathbf{A}\mathbf{x}$ individually and expand by
 definitions) but it is a good exercise to convince yourself.
 
@@ -76,7 +86,10 @@ immediately obvious, but the sum of outer products is actually
 equivalent to an appropriate matrix-matrix product! We formalize this
 statement as
 
-*Proposition.* 
+:::{prf:proposition}
+:label: prop-sum-outer-products
+:nonumber:
+
 Let $\mathbf{a}_1, \dots, \mathbf{a}_k \in \mathbb{R}^m$ and
 $\mathbf{b}_1, \dots, \mathbf{b}_k \in \mathbb{R}^n$. Then
 
@@ -85,8 +98,11 @@ $$\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!} = \mathbf{A}\mathbf{
 where
 
 $$\mathbf{A} = \begin{bmatrix}\mathbf{a}_1 & \cdots & \mathbf{a}_k\end{bmatrix}, \hspace{0.5cm} \mathbf{B} = \begin{bmatrix}\mathbf{b}_1 & \cdots & \mathbf{b}_k\end{bmatrix}$$
+:::
 
-*Proof.* For each $(i,j)$, we have
+:::{prf:proof}
+
+For each $(i,j)$, we have
 
 $$\left[\sum_{\ell=1}^k \mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}\right]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell\mathbf{b}_\ell^{\!\top\!}]_{ij} = \sum_{\ell=1}^k [\mathbf{a}_\ell]_i[\mathbf{b}_\ell]_j = \sum_{\ell=1}^k A_{i\ell}B_{j\ell}$$
 
@@ -95,4 +111,17 @@ the $i$th row of $\mathbf{A}$ and the $j$th row of $\mathbf{B}$, or
 equivalently the $j$th column of $\mathbf{B}^{\!\top\!}$. Hence by the
 definition of matrix multiplication, it is equal to
 $[\mathbf{A}\mathbf{B}^{\!\top\!}]_{ij}$. ◻
+:::
+
+## Reduced SVD
+The SVD we have presented is the **full SVD**. 
+However, in many
+applications, we are only interested in the **reduced SVD**. This is
+the SVD where we only keep the first $r$ columns of $\mathbf{U}$ and
+the first $r$ columns of $\mathbf{V}$, where $r$ is the rank of
+$\mathbf{A}$. The reduced SVD is given by:
+
+$$\mathbf{A} = \mathbf{U}_r\mathbf{\Sigma}_r\mathbf{V}_r^{\!\top\!}$$
+
+where $\mathbf{U}_r \in \mathbb{R}^{m \times r}$, $\mathbf{\Sigma}_r \in \mathbb{R}^{r \times r}$, and $\mathbf{V}_r \in \mathbb{R}^{n \times r}$.
 
