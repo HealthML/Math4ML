@@ -172,6 +172,8 @@ parts:
             title: Exercise Sheet 2 Solutions
           - file: appendix/Exercise Sheet 3 Solutions.md
             title: Exercise Sheet 3 Solutions
+          - file: appendix/Exercise Sheet 4 Solutions.md
+            title: Exercise Sheet 4 Solutions
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces
