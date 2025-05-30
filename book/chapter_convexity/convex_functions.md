@@ -1,44 +1,16 @@
-## Convexity
-
-**Convexity** is a term that pertains to both sets and functions. For
-functions, there are different degrees of convexity, and how convex a
-function is tells us a lot about its minima: do they exist, are they
-unique, how quickly can we find them using optimization algorithms, etc.
-In this section, we present basic results regarding convexity, strict
-convexity, and strong convexity.
-
-### Convex sets
-
-::: center
-![image](../figures/convex-set.png)
-A convex set
-:::
-
-::: center
-![image](../figures/nonconvex-set.png)
-A non-convex set
-:::
-
-A set $\mathcal{X} \subseteq \mathbb{R}^d$ is **convex** if
-
-$$t\mathbf{x} + (1-t)\mathbf{y} \in \mathcal{X}$$
-
-for all
-$\mathbf{x}, \mathbf{y} \in \mathcal{X}$ and all $t \in [0,1]$.
-
-Geometrically, this means that all the points on the line segment
-between any two points in $\mathcal{X}$ are also in $\mathcal{X}$. See
-Figure [1](#fig:convexset){reference-type="ref"
-reference="fig:convexset"} for a visual.
-
-Why do we care whether or not a set is convex? We will see later that
-the nature of minima can depend greatly on whether or not the feasible
-set is convex. Undesirable pathological results can occur when we allow
-the feasible set to be arbitrary, so for proofs we will need to assume
-that it is convex. Fortunately, we often want to minimize over all of
-$\mathbb{R}^d$, which is easily seen to be a convex set.
-
-### Basics of convex functions
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: math4ml
+  language: python
+  name: python3
+---
+# Basics of convex functions
 
 In the remainder of this section, assume
 $f : \mathbb{R}^d \to \mathbb{R}$ unless otherwise noted. We'll start
@@ -59,27 +31,96 @@ A function $f$ is **strongly convex with parameter $m$** (or
 
 $$\mathbf{x} \mapsto f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$ 
 
-is
-convex.
+is convex.
 
 These conditions are given in increasing order of strength; strong
 convexity implies strict convexity which implies convexity.
 
- ::: center
-![What convex functions look like](../figures/convex-function.png)
-What convex functions look like
-:::
+
+
+## Geometric interpretation
+The following figure illustrates the three types of convexity:
 
 Geometrically, convexity means that the line segment between two points
-on the graph of $f$ lies on or above the graph itself. See Figure
-[2](#fig:convexfunction){reference-type="ref"
-reference="fig:convexfunction"} for a visual.
+on the graph of $f$ lies on or above the graph itself.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define a convex function
+f = lambda x: x**2
+
+# Define x values and compute y
+x = np.linspace(-2, 2, 400)
+y = f(x)
+
+# Choose two points on the graph
+x1, x2 = -1.5, 1.0
+y1, y2 = f(x1), f(x2)
+
+# Compute the line segment between the two points
+t = np.linspace(0, 1, 100)
+xt = t * x1 + (1 - t) * x2
+yt_line = t * y1 + (1 - t) * y2
+
+# Plot the function and the line segment
+plt.figure(figsize=(8, 6))
+plt.plot(x, y, label=r'$f(x) = x^2$', color='blue')
+plt.plot(xt, yt_line, 'r--', label='Line segment')
+plt.plot([x1, x2], [y1, y2], 'ro')  # endpoints
+plt.title("Geometric Interpretation of Convexity")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
 
 Strict convexity means that the graph of $f$ lies strictly above the
-line segment, except at the segment endpoints. (So actually the function
-in the figure appears to be strictly convex.)
+line segment, except at the segment endpoints. 
+(So actually the function in the figure appears to be strictly convex.)
 
-### Consequences of convexity
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define x values
+x = np.linspace(-2, 2, 400)
+
+# Define three functions: convex, strictly convex, and strongly convex
+f1 = lambda x: np.abs(x)              # convex but not strictly convex
+f2 = lambda x: x**4                   # strictly convex but not strongly convex
+f3 = lambda x: x**2 + 1               # strongly convex
+
+# Evaluate functions
+y1 = f1(x)
+y2 = f2(x)
+y3 = f3(x)
+
+# Plot the functions
+plt.figure(figsize=(10, 6))
+plt.plot(x, y1, label=r'$f(x) = |x|$ (Convex)', linestyle='--')
+plt.plot(x, y2, label=r'$f(x) = x^4$ (Strictly Convex)', linestyle='-.')
+plt.plot(x, y3, label=r'$f(x) = x^2 + 1$ (Strongly Convex)', linestyle='-')
+plt.title("Examples of Convex, Strictly Convex, and Strongly Convex Functions")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+* A **convex but not strictly convex** function $f(x) = |x|$
+* A **strictly convex but not strongly convex** function $f(x) = x^4$
+* A **strongly convex** function $f(x) = x^2 + 1$
+
+
+## Consequences of convexity
 
 Why do we care if a function is (strictly/strongly) convex?
 
@@ -87,16 +128,23 @@ Basically, our various notions of convexity have implications about the
 nature of minima. It should not be surprising that the stronger
 conditions tell us more about the minima.
 
-*Proposition.*
-Let $\mathcal{X}$ be a convex set. If $f$ is convex, then any local
-minimum of $f$ in $\mathcal{X}$ is also a global minimum.
+:::{prf:proposition} Minima of convex functions
+:label: prop-convex-minima
+:nonumber:
+Let $\mathcal{X}$ be a convex set.
 
+If $f$ is convex, then any local minimum of $f$ in $\mathcal{X}$ is also a global minimum.
+:::
 
+:::{prf:proof}
 
-*Proof.* Suppose $f$ is convex, and let $\mathbf{x}^*$ be a local
-minimum of $f$ in $\mathcal{X}$. Then for some neighborhood
-$N \subseteq \mathcal{X}$ about $\mathbf{x}^*$, we have
-$f(\mathbf{x}) \geq f(\mathbf{x}^*)$ for all $\mathbf{x} \in N$. Suppose
+Suppose $f$ is convex, and let $\mathbf{x}^*$ be a local
+minimum of $f$ in $\mathcal{X}$.
+
+Then for some neighborhood $N \subseteq \mathcal{X}$ about $\mathbf{x}^*$, we have
+$f(\mathbf{x}) \geq f(\mathbf{x}^*)$ for all $\mathbf{x} \in N$. 
+
+Suppose
 towards a contradiction that there exists
 $\tilde{\mathbf{x}} \in \mathcal{X}$ such that
 $f(\tilde{\mathbf{x}}) < f(\mathbf{x}^*)$.
@@ -118,16 +166,22 @@ above inequality, a contradiction.
 It follows that $f(\mathbf{x}^*) \leq f(\mathbf{x})$ for all
 $\mathbf{x} \in \mathcal{X}$, so $\mathbf{x}^*$ is a global minimum of
 $f$ in $\mathcal{X}$. ◻
+:::
 
+:::{prf:proposition} Minima stricly convex functions
+:label: prop-minima-striclty-convex
+:nonumber:
 
-*Proposition.*
-Let $\mathcal{X}$ be a convex set. If $f$ is strictly convex, then there
+Let $\mathcal{X}$ be a convex set.
+
+If $f$ is strictly convex, then there
 exists at most one local minimum of $f$ in $\mathcal{X}$. Consequently,
 if it exists it is the unique global minimum of $f$ in $\mathcal{X}$.
+:::
 
+:::{prf:proof}
 
-
-*Proof.* The second sentence follows from the first, so all we must show
+The second sentence follows from the first, so all we must show
 is that if a local minimum exists in $\mathcal{X}$ then it is unique.
 
 Suppose $\mathbf{x}^*$ is a local minimum of $f$ in $\mathcal{X}$, and
@@ -145,12 +199,14 @@ of $f$,
 
 $$f(\mathbf{x}(t)) < tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) = tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)$$
 
-for all $t \in (0,1)$. But this contradicts the fact that $\mathbf{x}^*$
+for all $t \in (0,1)$. 
+
+But this contradicts the fact that $\mathbf{x}^*$
 is a global minimum. Therefore if $\tilde{\mathbf{x}}$ is a local
 minimum of $f$ in $\mathcal{X}$, then
 $\tilde{\mathbf{x}} = \mathbf{x}^*$, so $\mathbf{x}^*$ is the unique
 minimum in $\mathcal{X}$. ◻
-
+:::
 
 It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that $\mathcal{X}$
@@ -158,6 +214,7 @@ is convex is needed in the results above.
 
 Consider the function $f(x) = x^2$, which is a strictly convex function.
 The unique global minimum of this function in $\mathbb{R}$ is $x = 0$.
+
 But let's see what happens when we change the feasible set
 $\mathcal{X}$.
 
@@ -178,7 +235,7 @@ $\mathcal{X}$.
      non-convex, and we can see that there are two global minima
      ($x = \pm 1$).
 
-### Showing that a function is convex
+## Showing that a function is convex
 
 Hopefully the previous section has convinced the reader that convexity
 is an important property. Next we turn to the issue of showing that a
@@ -186,12 +243,17 @@ function is (strictly/strongly) convex. It is of course possible (in
 principle) to directly show that the condition in the definition holds,
 but this is usually not the easiest way.
 
-*Proposition.*
+:::{prf:proposition} Norms
+:label: prop-norms-convex
+:nonumber:
+
 Norms are convex.
+:::
 
 
+:::{prf:proof}
 
-*Proof.* Let $\|\cdot\|$ be a norm on a vector space $V$. Then for all
+Let $\|\cdot\|$ be a norm on a vector space $V$. Then for all
 $\mathbf{x}, \mathbf{y} \in V$ and $t \in [0,1]$,
 
 $$\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| = |t|\|\mathbf{x}\| + |1-t|\|\mathbf{y}\| = t\|\mathbf{x}\| + (1-t)\|\mathbf{y}\|$$
@@ -199,21 +261,31 @@ $$\|t\mathbf{x} + (1-t)\mathbf{y}\| \leq \|t\mathbf{x}\| + \|(1-t)\mathbf{y}\| =
 where we have used respectively the triangle inequality, the homogeneity
 of norms, and the fact that $t$ and $1-t$ are nonnegative. Hence
 $\|\cdot\|$ is convex. ◻
+:::
 
+:::{prf:proposition} Gradient of Convex Functions
+:label: prop-convex-functions-graph
+:nonumber:
 
-*Proposition.*
-Suppose $f$ is differentiable. Then $f$ is convex if and only if
+Suppose $f$ is differentiable.
+
+Then $f$ is convex if and only if
 
 $$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle$$
 
 for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
+:::
 
 
+:::{prf:proof}
 
-*Proof.* To-do. ◻
+To-do. ◻
+:::
 
+:::{prf:proposition} Hessian of Convex Functions
+:label: prop-Hessian-convex
+:nonumber:
 
-*Proposition.*
 Suppose $f$ is twice differentiable. Then
 
 (i) $f$ is convex if and only if $\nabla^2 f(\mathbf{x}) \succeq 0$ for
@@ -225,18 +297,24 @@ Suppose $f$ is twice differentiable. Then
 (iii) $f$ is $m$-strongly convex if and only if
       $\nabla^2 f(\mathbf{x}) \succeq mI$ for all
       $\mathbf{x} \in \operatorname{dom} f$.
+:::
 
 
+:::{prf:proof}
+Omitted. ◻
+:::
 
-*Proof.* Omitted. ◻
+:::{prf:proposition} Scaling Convex Functions
+:label: prop-scaling-convex-functions
+:nonumber:
 
-
-*Proposition.*
 If $f$ is convex and $\alpha \geq 0$, then $\alpha f$ is convex.
+:::
 
 
+:::{prf:proof}
 
-*Proof.* Suppose $f$ is convex and $\alpha \geq 0$. Then for all
+Suppose $f$ is convex and $\alpha \geq 0$. Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom}(\alpha f) = \operatorname{dom} f$, 
 
 $$\begin{aligned}
@@ -247,15 +325,24 @@ $$\begin{aligned}
 \end{aligned}$$ 
 
 so $\alpha f$ is convex. ◻
+:::
 
-*Proposition.*
-If $f$ and $g$ are convex, then $f+g$ is convex. Furthermore, if $g$ is
+:::{prf:proposition} Sum of Convex Functions
+:label: prop-sum-convex-functions
+:nonumber:
+
+If $f$ and $g$ are convex, then $f+g$ is convex. 
+
+Furthermore, if $g$ is
 strictly convex, then $f+g$ is strictly convex, and if $g$ is
 $m$-strongly convex, then $f+g$ is $m$-strongly convex.
+:::
 
 
+:::{prf:proof}
 
-*Proof.* Suppose $f$ and $g$ are convex. Then for all
+Suppose $f$ and $g$ are convex.
+Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom} (f+g) = \operatorname{dom} f \cap \operatorname{dom} g$,
 
 $$\begin{aligned}
@@ -274,34 +361,44 @@ convex.
 
 If $g$ is $m$-strongly convex, then the function
 $h(\mathbf{x}) \equiv g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$ is
-convex, so $f+h$ is convex. But
+convex, so $f+h$ is convex. 
+
+But
 
 $$(f+h)(\mathbf{x}) \equiv f(\mathbf{x}) + h(\mathbf{x}) \equiv f(\mathbf{x}) + g(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2 \equiv (f+g)(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|_2^2$$
 
 so $f+g$ is $m$-strongly convex. ◻
+:::
 
+:::{prf:proposition} Weighted Sum of Convex Functions
+:label: prop-convex-functions-weighted-sum
+:nonumber:
 
-*Proposition.*
 If $f_1, \dots, f_n$ are convex and $\alpha_1, \dots, \alpha_n \geq 0$,
 then 
 
 $$\sum_{i=1}^n \alpha_i f_i$$ 
 
 is convex.
+:::
 
+:::{prf:proof}
+Follows from the previous two propositions by induction. ◻
+:::
 
+:::{prf:proposition} Combination of Affine and Convex Functions
+:label: prop-linear-convex
+:nonumber:
 
-*Proof.* Follows from the previous two propositions by induction. ◻
-
-
-*Proposition.*
 If $f$ is convex, then
 $g(\mathbf{x}) \equiv f(\mathbf{A}\mathbf{x} + \mathbf{b})$ is convex
 for any appropriately-sized $\mathbf{A}$ and $\mathbf{b}$.
+:::
 
 
+:::{prf:proof}
 
-*Proof.* Suppose $f$ is convex and $g$ is defined like so. Then for all
+Suppose $f$ is convex and $g$ is defined like so. Then for all
 $\mathbf{x}, \mathbf{y} \in \operatorname{dom} g$, 
 
 $$\begin{aligned}
@@ -314,15 +411,20 @@ g(t\mathbf{x} + (1-t)\mathbf{y}) &= f(\mathbf{A}(t\mathbf{x} + (1-t)\mathbf{y}) 
 \end{aligned}$$ 
 
 Thus $g$ is convex. ◻
+:::
 
+:::{prf:proposition} Maximum of Convex Functions
+:label: prop-max-convex-functions
+:nonumber:
 
-*Proposition.*
 If $f$ and $g$ are convex, then
 $h(\mathbf{x}) \equiv \max\{f(\mathbf{x}), g(\mathbf{x})\}$ is convex.
 
+:::
 
+:::{prf:proof}
 
-*Proof.* Suppose $f$ and $g$ are convex and $h$ is defined like so. Then
+Suppose $f$ and $g$ are convex and $h$ is defined like so. Then
 for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} h$, 
 
 $$\begin{aligned}
@@ -339,7 +441,7 @@ $\max\{a,b\} \leq \max\{c,d\}$. In the second inequality we have used
 the fact that $\max\{a+b, c+d\} \leq \max\{a,c\} + \max\{b,d\}$.
 
 Thus $h$ is convex. ◻
-
+:::
 
 ### Examples
 
@@ -352,22 +454,26 @@ Functions that are convex but not strictly convex:
 (i) $f(\mathbf{x}) = \mathbf{w}^{\!\top\!}\mathbf{x} + \alpha$ for any
     $\mathbf{w} \in \mathbb{R}^d, \alpha \in \mathbb{R}$. Such a
     function is called an **affine function**, and it is both convex and
-    concave. (In fact, a function is affine if and only if it is both
-    convex and concave.) Note that linear functions and constant
+    concave.
+    (In fact, a function is affine if and only if it is both convex and concave.)
+    Note that linear functions and constant
     functions are special cases of affine functions.
 
 (ii) $f(\mathbf{x}) = \|\mathbf{x}\|_1$
 
 Functions that are strictly but not strongly convex:
 
-(i) $f(x) = x^4$. This example is interesting because it is strictly
+(i) $f(x) = x^4$. 
+This example is interesting because it is strictly
     convex but you cannot show this fact via a second-order argument
     (since $f''(0) = 0$).
 
-(ii) $f(x) = \exp(x)$. This example is interesting because it's bounded
+(ii) $f(x) = \exp(x)$. 
+This example is interesting because it's bounded
      below but has no local minimum.
 
-(iii) $f(x) = -\log x$. This example is interesting because it's
+(iii) $f(x) = -\log x$. 
+This example is interesting because it's
       strictly convex but not bounded below.
 
 Functions that are strongly convex:

@@ -86,19 +86,23 @@ parts:
         - file: chapter_decompositions/eigenvectors # end week 05
         - file: chapter_decompositions/orthogonal_matrices
         - file: chapter_decompositions/symmetric_matrices
-        - file: chapter_decompositions/Rayleigh_quotients # skip for now
+        - file: chapter_decompositions/Rayleigh_quotients 
+        - file: chapter_decompositions/matrix_norms
         - file: chapter_decompositions/psd_matrices
         - file: chapter_decompositions/pca  # PCA as example for the eigenvalue decomposition of a psd matrix
           title: Principal Components Analysis
         - file: chapter_decompositions/svd # 
-        - file: chapter_decompositions/big_picture
 #        - file: chapter_decompositions/RBF_kernel_Positive_Definite
-#        - file: chapter_decompositions/pseudoinverse
-#        - file: chapter_decompositions/matrix_norms
-#  - file: chapter_convexity/overview_convexity
-#    title: Convexity
-#    sections:
-#    - file: chapter_convexity/convexity
+        - file: chapter_decompositions/pseudoinverse
+        - file: chapter_decompositions/orthogonal_projections
+        - file: chapter_decompositions/big_picture
+          title: Fundamental Subspaces
+#        - file: chapter_decompositions/representer_theorem
+#      - file: chapter_convexity/overview_convexity
+#        title: Convexity
+#        sections:
+#        - file: chapter_convexity/convex_sets
+#        - file: chapter_convexity/convex_functions
 # continue with second order optimization
 #      title: Second-Order Optimization
 #        - file: chapter_calculus/newtons_method
