@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,7 +64,7 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_decompositions/big_picture.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
+    <link rel="next" title="Convexity" href="../chapter_convexity/overview_convexity.html" />
     <link rel="prev" title="Orthogonal projections" href="orthogonal_projections.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -235,6 +235,11 @@
 <li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_convexity/overview_convexity.html">Convexity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_sets.html">Convex sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_functions.html">Basics of convex functions</a></li>
 </ul>
 </details></li>
 </ul>
@@ -486,13 +491,16 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="the-fundamental-subspaces-of-a-matrix">
 <h1>The fundamental subspaces of a matrix<a class="headerlink" href="#the-fundamental-subspaces-of-a-matrix" title="Link to this heading">#</a></h1>
 <p>The fundamental subspaces of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the four subspaces associated with the matrix and its transpose.
-These subspaces are important in linear algebra and numerical analysis, particularly in the context of solving linear systems and eigenvalue problems.
-We also provide the projections onto these subspaces, which are useful for various applications such as least squares problems and dimensionality reduction. The proof of these projection formulas relies on the properties of the Moore-Penrose pseudoinverse and the orthogonal projections onto subspaces.</p>
+These subspaces are important in linear algebra and numerical analysis, particularly in the context of solving linear systems and eigenvalue problems.</p>
+<p>We also provide the projections onto these subspaces, which are useful for various applications such as least squares problems and dimensionality reduction.
+The proof of these projection formulas relies on the properties of the Moore-Penrose pseudoinverse and the orthogonal projections onto subspaces.</p>
 <p>We denote the matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> as an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix, where <span class="math notranslate nohighlight">\(m\)</span> is the number of rows and <span class="math notranslate nohighlight">\(n\)</span> is the number of columns.</p>
 <p>The four fundamental subspaces are:</p>
 <section id="column-space-range-of-mathbf-a">
 <h2>1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#column-space-range-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its columns. It represents the span of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Range}(\mathbf{A})\)</span>.</p>
+<p>The column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its columns.
+It represents the span of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Range}(\mathbf{A})\)</span>.
+Intuitively, the column space is the set of all vectors that you can reach by taking weighted sums of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 <div class="proof lemma admonition" id="trm-projection-column-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Column Space)</p>
 <section class="lemma-content" id="proof-content">
@@ -502,10 +510,29 @@ We also provide the projections onto these subspaces, which are useful for vario
 \mathbf{P}_{\text{Col}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}\mathbf{A}^+ \mathbf{b}
 \]</div>
 </section>
-</div></section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^m\)</span>. The Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{A}^+\)</span> satisfies the property that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{A}^+ = \mathbf{A}^+\)</span>.</p>
+<p>The vector <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is in the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> because it is a linear combination of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. We claim that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> closest to <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> (i.e., the orthogonal projection).</p>
+<p>To see this, recall that the orthogonal projection <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span>.
+That is,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}^\top (\mathbf{b} - \mathbf{p}) = 0.
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}\mathbf{x}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}^\top (\mathbf{b} - \mathbf{A}\mathbf{x}) = 0 \implies \mathbf{A}^\top \mathbf{A} \mathbf{x} = \mathbf{A}^\top \mathbf{b}.
+\]</div>
+<p>If <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> has full column rank, the solution is <span class="math notranslate nohighlight">\(\mathbf{x} = (\mathbf{A}^\top \mathbf{A})^{-1} \mathbf{A}^\top \mathbf{b}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}(\mathbf{A}^\top \mathbf{A})^{-1} \mathbf{A}^\top \mathbf{b}\)</span>. For arbitrary <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, the unique minimum-norm solution is <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^+ \mathbf{b}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}\mathbf{A}^+ \mathbf{b}\)</span>.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span>.</p>
+</div>
+</section>
 <section id="null-space-kernel-of-mathbf-a">
 <h2>2. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span>. It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A})\)</span>.</p>
+<p>The null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span>.
+It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A})\)</span>.
+Intuitively, the null space consists of all input vectors that are “annihilated” by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are mapped to the zero vector.</p>
 <div class="proof lemma admonition" id="trm-projection-null-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Null Space)</p>
 <section class="lemma-content" id="proof-content">
@@ -515,10 +542,23 @@ We also provide the projections onto these subspaces, which are useful for vario
 \mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Col}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+ \mathbf{b}
 \]</div>
 </section>
-</div></section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the null space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
+<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span>. The projection onto the orthogonal complement (i.e., the null space) is then given by subtracting this projection from <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}.
+\]</div>
+<p>To see that this is indeed a projection onto the null space, note that for any <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}(\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}\mathbf{A}^+\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0\)</span>, since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{n} = 0\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{n} = 0\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{n}\)</span> is some vector, but <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> applied to it is zero). Thus, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{n}) = \mathbf{n} - 0 = \mathbf{n}\)</span>, so the operator acts as the identity on the null space.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}\mathbf{A}^+\)</span> is the orthogonal projection onto the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+</div>
+</section>
 <section id="row-space-of-mathbf-a">
 <h2>3. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#row-space-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its rows. It is equivalent to the column space of its transpose, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>, and is denoted as <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A}^\top)\)</span>.</p>
+<p>The row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its rows.
+It is equivalent to the column space of its transpose, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>, and is denoted as <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A}^\top)\)</span>.
+Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, describing all possible outputs you can get by multiplying <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> on the right by a column vector.</p>
 <div class="proof lemma admonition" id="trm-projection-row-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Row Space)</p>
 <section class="lemma-content" id="proof-content">
@@ -528,10 +568,24 @@ We also provide the projections onto these subspaces, which are useful for vario
 \mathbf{P}_{\text{Row}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}^+\mathbf{A}\mathbf{b}
 \]</div>
 </section>
-</div></section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the column space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
+<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the unique vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> in <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to the row space. That is, for all <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in the row space, <span class="math notranslate nohighlight">\(\langle \mathbf{b} - \mathbf{p}, \mathbf{y} \rangle = 0\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span>. We want to show that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. Any vector in the row space can be written as <span class="math notranslate nohighlight">\(\mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^m\)</span>. Then,</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}, \mathbf{A}^\top \mathbf{w} \rangle = \mathbf{w}^\top \mathbf{A} (\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b}) = 0
+\]</div>
+<p>since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is orthogonal to the row space, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> in the row space, <span class="math notranslate nohighlight">\(\mathbf{r} = \mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{r} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{r}\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\)</span> acts as the identity on the row space). Thus, the operator acts as the identity on the row space.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Row}(\mathbf{A})} = \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+</div>
+</section>
 <section id="left-null-space-kernel-of-mathbf-a">
 <h2>4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#left-null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = \mathbf{0}\)</span>. It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top)\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A}^\top)\)</span>.</p>
+<p>The left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = \mathbf{0}\)</span>.
+It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top)\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A}^\top)\)</span>.
+Intuitively, the left null space consists of all vectors that are orthogonal to every row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are “killed” by the transpose of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 <div class="proof lemma admonition" id="trm-projection-left-null-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Left Null Space)</p>
 <section class="lemma-content" id="proof-content">
@@ -541,11 +595,153 @@ We also provide the projections onto these subspaces, which are useful for vario
 \mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Row}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}
 \]</div>
 </section>
-</div></section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors orthogonal to the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, i.e., <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top) = (\text{Row}(\mathbf{A}))^\perp\)</span>.</p>
+<p>Recall from above that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{b}\)</span>. Therefore, the projection onto the orthogonal complement (the left null space) is given by subtracting this projection from <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}.
+\]</div>
+<p>To see that this is indeed a projection onto the left null space, note that for any <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, the vector <span class="math notranslate nohighlight">\(\mathbf{A}(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0\)</span>, since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is in the left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in the left null space, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = 0\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{y} = 0\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{y} = 0\)</span>), and thus <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{y}) = \mathbf{y} - 0 = \mathbf{y}\)</span>, so the operator acts as the identity on the left null space.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A}^\top)} = \mathbf{I} - \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+</div>
+</section>
 <section id="singular-value-decomposition-and-the-four-fundamental-subspaces">
 <h2>Singular Value Decomposition and the four fundamental subspaces<a class="headerlink" href="#singular-value-decomposition-and-the-four-fundamental-subspaces" title="Link to this heading">#</a></h2>
-<p>The SVD provides a powerful way to understand the four fundamental
-subspaces of a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span>.</p>
+<p>The Singular Value Decomposition (SVD) provides a powerful way to understand the four fundamental subspaces of a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> because it expresses <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> in terms of orthogonal bases that directly reveal the structure of these subspaces. Intuitively, the SVD rotates and scales the input space so that the action of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> becomes transparent: the nonzero singular values indicate directions (and their magnitudes) along which <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> stretches or compresses, while the zero singular values correspond to directions that are “flattened” to zero. The columns of the SVD matrices <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{V}\)</span> thus provide natural bases for the column space, row space, null space, and left null space, making the relationships between these subspaces explicit.</p>
+<p><strong>Python Visualization Example</strong></p>
+<p>Below is a visual demonstration of how the SVD of a <span class="math notranslate nohighlight">\(3 \times 3\)</span> matrix reveals its fundamental subspaces. We show how a vector is transformed by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and how the SVD components relate to the column space, row space, and null space.</p>
+<p>The Matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and Vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  used in the visualization are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A} = \begin{bmatrix}
+2 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0
+\end{bmatrix}
+\quad \quad 
+\mathbf{x} = \begin{bmatrix}
+1 \\
+1 \\
+1
+\end{bmatrix}
+\end{split}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># Define a 3x3 matrix of rank 2</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">Vt</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Column space: span of first 2 columns of U</span>
+<span class="n">col_space</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="c1"># Left null space: last column of U</span>
+<span class="n">left_null_space</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># Row space: span of first 2 columns of V</span>
+<span class="n">row_space</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="c1"># Null space: last column of V</span>
+<span class="n">null_space</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># --- Domain (input space) ---</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Domain: $</span><span class="se">\\</span><span class="s2">mathbb</span><span class="si">{R}</span><span class="s2">^3$ (Input Space)&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Plot row space (plane)</span>
+<span class="c1"># Create a grid of points for the plane</span>
+<span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">row_space</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">row_space</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">grid_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">grid_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x</span><span class="p">,</span> <span class="n">grid_y</span><span class="p">)</span>
+<span class="n">plane_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">xx</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="n">yy</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+<span class="n">plane_x</span> <span class="o">=</span> <span class="n">plane_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plane_y</span> <span class="o">=</span> <span class="n">plane_points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">yy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plane_z</span> <span class="o">=</span> <span class="n">plane_points</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">plane_x</span><span class="p">,</span> <span class="n">plane_y</span><span class="p">,</span> <span class="n">plane_z</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Row space plane&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot row space basis vectors</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">row_space</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Row space basis&#39;</span> <span class="k">if</span> <span class="s1">&#39;Row space basis&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ax1</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="c1"># Plot null space</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">null_space</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">null_space</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">null_space</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Null space&#39;</span><span class="p">)</span>
+
+<span class="c1"># Example vector in domain</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">mathbf</span><span class="si">{x}</span><span class="s1">$ (input)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Projection of x onto the row space</span>
+<span class="c1"># The projection is V_r V_r^T x, where V_r are the first two columns of V</span>
+<span class="n">V_r</span> <span class="o">=</span> <span class="n">row_space</span>
+<span class="n">x_row_proj</span> <span class="o">=</span> <span class="n">V_r</span> <span class="o">@</span> <span class="p">(</span><span class="n">V_r</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x_row_proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_row_proj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_row_proj</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Proj. onto row space&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- Codomain (output space) ---</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Codomain: $</span><span class="se">\\</span><span class="s2">mathbb</span><span class="si">{R}</span><span class="s2">^3$ (Output Space)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Plot column space (plane)</span>
+<span class="c1"># Create a grid of points for the plane</span>
+<span class="n">u1</span><span class="p">,</span> <span class="n">u2</span> <span class="o">=</span> <span class="n">col_space</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">col_space</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">grid_x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">grid_y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">xx2</span><span class="p">,</span> <span class="n">yy2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid_x2</span><span class="p">,</span> <span class="n">grid_y2</span><span class="p">)</span>
+<span class="n">plane_points2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">u1</span><span class="p">,</span> <span class="n">xx2</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">u2</span><span class="p">,</span> <span class="n">yy2</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+<span class="n">plane_x2</span> <span class="o">=</span> <span class="n">plane_points2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plane_y2</span> <span class="o">=</span> <span class="n">plane_points2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">yy2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plane_z2</span> <span class="o">=</span> <span class="n">plane_points2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">plane_x2</span><span class="p">,</span> <span class="n">plane_y2</span><span class="p">,</span> <span class="n">plane_z2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Column space plane&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot column space basis vectors</span>
+<span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">col_space</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Column space basis&#39;</span> <span class="k">if</span> <span class="s1">&#39;Column space basis&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ax2</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="c1"># Plot left null space</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">left_null_space</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">left_null_space</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">left_null_space</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Left null space&#39;</span><span class="p">)</span>
+
+<span class="c1"># Show image of x under A</span>
+<span class="n">Ax</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">x</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">mathbf</span><span class="si">{A}</span><span class="se">\\</span><span class="s1">mathbf</span><span class="si">{x}</span><span class="s1">$ (output)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/ef7ed300eb98e0923195378fb1c069eacf1381c1fa8ff273f45a3f6630e110a3.png" src="../_images/ef7ed300eb98e0923195378fb1c069eacf1381c1fa8ff273f45a3f6630e110a3.png" />
+</div>
+</div>
 <p>The SVD of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -563,7 +759,59 @@ subspaces of a matrix <span class="math notranslate nohighlight">\(\mathbf{A} \i
 <li><p><strong>Left Null Space</strong>: <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top) = \text{span}(\mathbf{U}_{m-r})\)</span>, where <span class="math notranslate nohighlight">\(\mathbf{U}_{m-r}\)</span> consists of the last <span class="math notranslate nohighlight">\(m-r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> corresponding to zero singular values.</p></li>
 </ol>
 </section>
-</div></section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> have the singular value decomposition (SVD)</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^{\!\top\!}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{U} \in \mathbb{R}^{m \times m}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{V} \in \mathbb{R}^{n \times n}\)</span> are orthogonal matrices, and <span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{m \times n}\)</span> is diagonal with non-negative entries (the singular values) on the diagonal.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> has rank <span class="math notranslate nohighlight">\(r\)</span>, so that the first <span class="math notranslate nohighlight">\(r\)</span> singular values <span class="math notranslate nohighlight">\(\sigma_1, \ldots, \sigma_r\)</span> are positive, and the rest are zero. We can write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{\Sigma} = \begin{bmatrix}
+\mathbf{D}_r &amp; \mathbf{0} \\
+\mathbf{0} &amp; \mathbf{0}
+\end{bmatrix}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{D}_r = \operatorname{diag}(\sigma_1, \ldots, \sigma_r)\)</span> is <span class="math notranslate nohighlight">\(r \times r\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{U}_r\)</span> denote the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{U}_{m-r}\)</span> the last <span class="math notranslate nohighlight">\(m-r\)</span> columns. Similarly, let <span class="math notranslate nohighlight">\(\mathbf{V}_r\)</span> denote the first <span class="math notranslate nohighlight">\(r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{V}_{n-r}\)</span> the last <span class="math notranslate nohighlight">\(n-r\)</span> columns.</p>
+<p><strong>1. Column Space:</strong><br />
+<span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{U}_r \mathbf{D}_r \mathbf{V}_r^\top\)</span> (since the rest of the singular values are zero). Thus, the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are linear combinations of the columns of <span class="math notranslate nohighlight">\(\mathbf{U}_r\)</span>. Therefore,</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Col}(\mathbf{A}) = \text{span}(\mathbf{U}_r).
+\]</div>
+<p><strong>2. Row Space:</strong><br />
+The row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the column space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>. The SVD of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}^\top = \mathbf{V} \mathbf{\Sigma}^\top \mathbf{U}^\top\)</span>. By the same reasoning as above, the row space is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Row}(\mathbf{A}) = \text{Col}(\mathbf{A}^\top) = \text{span}(\mathbf{V}_r).
+\]</div>
+<p><strong>3. Null Space:</strong><br />
+A vector <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span> is in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> if <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span>. Write <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in the basis of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>: <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{V} \mathbf{y}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^n\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}\mathbf{x} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top \mathbf{V} \mathbf{y} = \mathbf{U} \mathbf{\Sigma} \mathbf{y}.
+\]</div>
+<p>This is zero if and only if the first <span class="math notranslate nohighlight">\(r\)</span> entries of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are zero (since the corresponding singular values are nonzero), i.e., <span class="math notranslate nohighlight">\(\mathbf{y} = \begin{bmatrix} 0 \\ \mathbf{y}_2 \end{bmatrix}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{y}_2 \in \mathbb{R}^{n-r}\)</span>. Thus, the null space is spanned by the last <span class="math notranslate nohighlight">\(n-r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Null}(\mathbf{A}) = \text{span}(\mathbf{V}_{n-r}).
+\]</div>
+<p><strong>4. Left Null Space:</strong><br />
+A vector <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^m\)</span> is in the left null space if <span class="math notranslate nohighlight">\(\mathbf{A}^\top \mathbf{y} = \mathbf{0}\)</span>. Write <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{U} \mathbf{z}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{z} \in \mathbb{R}^m\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}^\top \mathbf{y} = \mathbf{V} \mathbf{\Sigma}^\top \mathbf{U}^\top \mathbf{U} \mathbf{z} = \mathbf{V} \mathbf{\Sigma}^\top \mathbf{z}.
+\]</div>
+<p>This is zero if and only if the first <span class="math notranslate nohighlight">\(r\)</span> entries of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> are zero (since the corresponding singular values are nonzero), i.e., <span class="math notranslate nohighlight">\(\mathbf{z} = \begin{bmatrix} 0 \\ \mathbf{z}_2 \end{bmatrix}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{z}_2 \in \mathbb{R}^{m-r}\)</span>. Thus, the left null space is spanned by the last <span class="math notranslate nohighlight">\(m-r\)</span> columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Null}(\mathbf{A}^\top) = \text{span}(\mathbf{U}_{m-r}).
+\]</div>
+</div>
+</section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>The four fundamental subspaces of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are essential in understanding the structure of the matrix and its properties.
@@ -612,11 +860,11 @@ The SVD further enhances our understanding by revealing the relationships betwee
       </div>
     </a>
     <a class="right-next"
-       href="../appendix/proofs.html"
+       href="../chapter_convexity/overview_convexity.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Detailed Proofs</p>
+        <p class="prev-next-title">Convexity</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

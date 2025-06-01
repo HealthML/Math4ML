@@ -28,13 +28,13 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_convexity/convex_functions.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
+    <link rel="prev" title="Convex sets" href="convex_sets.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -235,6 +235,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_projections.html">Orthogonal projections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_convexity.html">Convexity</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="convex_sets.html">Convex sets</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Basics of convex functions</a></li>
 </ul>
 </details></li>
 </ul>
@@ -468,6 +473,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric interpretation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-of-changing-the-feasible-set">Effects of Changing the Feasible Set</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 </ul>
@@ -514,8 +520,8 @@ on the graph of <span class="math notranslate nohighlight">\(f\)</span> lies on 
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Define a convex function</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
@@ -550,7 +556,7 @@ on the graph of <span class="math notranslate nohighlight">\(f\)</span> lies on 
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/fdc5df03fa5aab6af40365ea3c916f6ee32e924ba27f053fc2bda2eb93a9f82b.png" src="../_images/fdc5df03fa5aab6af40365ea3c916f6ee32e924ba27f053fc2bda2eb93a9f82b.png" />
+<img alt="../_images/0d047f2eca9d0507d4ddae3b984159d8ec13daa6fb1e461bf5913eccdddc8fef.png" src="../_images/0d047f2eca9d0507d4ddae3b984159d8ec13daa6fb1e461bf5913eccdddc8fef.png" />
 </div>
 </div>
 <p>Strict convexity means that the graph of <span class="math notranslate nohighlight">\(f\)</span> lies strictly above the
@@ -563,8 +569,8 @@ line segment, except at the segment endpoints.
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Define x values</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
@@ -572,7 +578,7 @@ line segment, except at the segment endpoints.
 <span class="c1"># Define three functions: convex, strictly convex, and strongly convex</span>
 <span class="n">f1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>              <span class="c1"># convex but not strictly convex</span>
 <span class="n">f2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span>                   <span class="c1"># strictly convex but not strongly convex</span>
-<span class="n">f3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>               <span class="c1"># strongly convex</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>               <span class="c1"># strongly convex</span>
 
 <span class="c1"># Evaluate functions</span>
 <span class="n">y1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -583,26 +589,29 @@ line segment, except at the segment endpoints.
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = |x|$ (Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^4$ (Strictly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2 + 1$ (Strongly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2$ (Strongly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Examples of Convex, Strictly Convex, and Strongly Convex Functions&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;f(x)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/8b281b2c380ae702de68fcb713bd1ec53c129a907cb34202937a3365fdf4f28e.png" src="../_images/8b281b2c380ae702de68fcb713bd1ec53c129a907cb34202937a3365fdf4f28e.png" />
+<img alt="../_images/cf5ebbb83f92a781637d4f0112ded83f7f3116586a2beb4e4108013739c7b02a.png" src="../_images/cf5ebbb83f92a781637d4f0112ded83f7f3116586a2beb4e4108013739c7b02a.png" />
 </div>
 </div>
 <ul class="simple">
 <li><p>A <strong>convex but not strictly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = |x|\)</span></p></li>
 <li><p>A <strong>strictly convex but not strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^4\)</span></p></li>
-<li><p>A <strong>strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^2 + 1\)</span></p></li>
+<li><p>A <strong>strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span></p></li>
 </ul>
 </section>
 <section id="consequences-of-convexity">
@@ -629,13 +638,15 @@ towards a contradiction that there exists
 <p>Consider the line segment
 <span class="math notranslate nohighlight">\(\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]\)</span>,
 noting that <span class="math notranslate nohighlight">\(\mathbf{x}(t) \in \mathcal{X}\)</span> by the convexity of
-<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p>Then by the convexity of <span class="math notranslate nohighlight">\(f\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) &lt; tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)\]</div>
 <p>for all <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>.</p>
 <p>We can pick <span class="math notranslate nohighlight">\(t\)</span> to be sufficiently close to <span class="math notranslate nohighlight">\(1\)</span> that
-<span class="math notranslate nohighlight">\(\mathbf{x}(t) \in N\)</span>; then <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)\)</span> by
-the definition of <span class="math notranslate nohighlight">\(N\)</span>, but <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; f(\mathbf{x}^*)\)</span> by the
+<span class="math notranslate nohighlight">\(\mathbf{x}(t) \in N\)</span>;
+then <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)\)</span> by
+the definition of <span class="math notranslate nohighlight">\(N,\)</span> but <span class="math notranslate nohighlight">\(f(\mathbf{x}(t)) &lt; f(\mathbf{x}^*)\)</span> by the
 above inequality, a contradiction.</p>
 <p>It follows that <span class="math notranslate nohighlight">\(f(\mathbf{x}^*) \leq f(\mathbf{x})\)</span> for all
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span> is a global minimum of
@@ -675,10 +686,70 @@ minimum in <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. �
 <p>It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>
 is convex is needed in the results above.</p>
+</section>
+<section id="effects-of-changing-the-feasible-set">
+<h2>Effects of Changing the Feasible Set<a class="headerlink" href="#effects-of-changing-the-feasible-set" title="Link to this heading">#</a></h2>
 <p>Consider the function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>, which is a strictly convex function.
 The unique global minimum of this function in <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> is <span class="math notranslate nohighlight">\(x = 0\)</span>.</p>
 <p>But let’s see what happens when we change the feasible set
 <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">cases</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;(i) $\mathcal</span><span class="si">{X}</span><span class="s2"> = \{1\}$&quot;</span><span class="p">,</span> <span class="s2">&quot;feasible&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;(ii) $\mathcal</span><span class="si">{X}</span><span class="s2"> = \mathbb</span><span class="si">{R}</span><span class="s2"> \setminus \{0\}$&quot;</span><span class="p">,</span> <span class="s2">&quot;feasible&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]]),</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;(iii) $\mathcal</span><span class="si">{X}</span><span class="s2"> = (-\infty,-1] \cup [0,\infty)$&quot;</span><span class="p">,</span> <span class="s2">&quot;feasible&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]]),</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;(iv) $\mathcal</span><span class="si">{X}</span><span class="s2"> = (-\infty,-1] \cup [1,\infty)$&quot;</span><span class="p">,</span> <span class="s2">&quot;feasible&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">]]),</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">case</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">cases</span><span class="p">):</span>
+    <span class="c1"># Plot the function</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2$&#39;</span><span class="p">)</span>
+    <span class="c1"># Highlight feasible set</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">case</span><span class="p">[</span><span class="s2">&quot;feasible&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;feasible&quot;</span><span class="p">]:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">pt</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">case</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;feasible set&quot;</span> <span class="k">if</span> <span class="n">pt</span> <span class="o">==</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;feasible&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">case</span><span class="p">[</span><span class="s2">&quot;feasible&quot;</span><span class="p">],</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;feasible&quot;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">case</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;feasible set&quot;</span><span class="p">)</span>
+    <span class="c1"># Mark minima</span>
+    <span class="k">if</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;(i)&quot;</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;minimum&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;(ii)&quot;</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;No minimum&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;(iii)&quot;</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;local min&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;global min&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">case</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;(iv)&quot;</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;global min&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">case</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/e85eaf769f2592fb17dbfeef407bac2cce3b78cabee44e266e575ab4e7132fe9.png" src="../_images/e85eaf769f2592fb17dbfeef407bac2cce3b78cabee44e266e575ab4e7132fe9.png" />
+</div>
+</div>
 <p>(i) <span class="math notranslate nohighlight">\(\mathcal{X} = \{1\}\)</span>: This set is actually convex, so we still have
 a unique global minimum. But it is not the same as the unconstrained
 minimum!</p>
@@ -724,7 +795,69 @@ of norms, and the fact that <span class="math notranslate nohighlight">\(t\)</sp
 <p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>.</p>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. To-do. ◻</p>
+<p>Proof. (<strong>“Only if” direction</strong>)<br />
+Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex and differentiable. By the definition of convexity, for any <span class="math notranslate nohighlight">\(t \in [0,1]\)</span> and any <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+f(t\mathbf{y} + (1-t)\mathbf{x}) \leq t f(\mathbf{y}) + (1-t) f(\mathbf{x}).
+\]</div>
+<p>Define <span class="math notranslate nohighlight">\(\varphi(t) = f(\mathbf{x} + t(\mathbf{y} - \mathbf{x}))\)</span> for <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>. Then <span class="math notranslate nohighlight">\(\varphi\)</span> is convex as a function of <span class="math notranslate nohighlight">\(t\)</span>, and differentiable. The convexity of <span class="math notranslate nohighlight">\(\varphi\)</span> implies</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi(1) \geq \varphi(0) + \varphi'(0)(1-0) = f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+\]</div>
+<p>But <span class="math notranslate nohighlight">\(\varphi(1) = f(\mathbf{y})\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+\]</div>
+<p>(<strong>“If” direction</strong>)<br />
+Suppose the inequality</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle
+\]</div>
+<p>holds for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \operatorname{dom} f\)</span>. We want to show that <span class="math notranslate nohighlight">\(f\)</span> is convex, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[
+f(t\mathbf{y} + (1-t)\mathbf{x}) \leq t f(\mathbf{y}) + (1-t) f(\mathbf{x})
+\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t \in [0,1]\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(t \in (0,1)\)</span> and define <span class="math notranslate nohighlight">\(\mathbf{z} = t\mathbf{y} + (1-t)\mathbf{x}\)</span>.</p>
+<p>By the assumption, applied at <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+f(\mathbf{y}) &amp;\geq f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), \mathbf{y} - \mathbf{z} \rangle \\
+f(\mathbf{x}) &amp;\geq f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), \mathbf{x} - \mathbf{z} \rangle
+\end{aligned}
+\end{split}\]</div>
+<p>Multiply the first inequality by <span class="math notranslate nohighlight">\(t\)</span> and the second by <span class="math notranslate nohighlight">\(1-t\)</span>, then add:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+t f(\mathbf{y}) + (1-t) f(\mathbf{x}) &amp;\geq t f(\mathbf{z}) + t \langle \nabla f(\mathbf{z}), \mathbf{y} - \mathbf{z} \rangle \\
+&amp;\quad + (1-t) f(\mathbf{z}) + (1-t) \langle \nabla f(\mathbf{z}), \mathbf{x} - \mathbf{z} \rangle \\
+&amp;= f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), t(\mathbf{y} - \mathbf{z}) + (1-t)(\mathbf{x} - \mathbf{z}) \rangle
+\end{aligned}
+\end{split}\]</div>
+<p>But</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+t(\mathbf{y} - \mathbf{z}) + (1-t)(\mathbf{x} - \mathbf{z}) &amp;= t(\mathbf{y} - (t\mathbf{y} + (1-t)\mathbf{x})) + (1-t)(\mathbf{x} - (t\mathbf{y} + (1-t)\mathbf{x})) \\
+&amp;= t((1-t)(\mathbf{y} - \mathbf{x})) + (1-t)(-t(\mathbf{y} - \mathbf{x})) \\
+&amp;= t(1-t)(\mathbf{y} - \mathbf{x}) - t(1-t)(\mathbf{y} - \mathbf{x}) \\
+&amp;= 0
+\end{aligned}
+\end{split}\]</div>
+<p>So the inner product term vanishes, and we have</p>
+<div class="math notranslate nohighlight">
+\[
+t f(\mathbf{y}) + (1-t) f(\mathbf{x}) \geq f(\mathbf{z}) = f(t\mathbf{y} + (1-t)\mathbf{x})
+\]</div>
+<p>which is the definition of convexity.</p>
+<p>◻</p>
 </div>
 <div class="proof proposition admonition" id="prop-Hessian-convex">
 <p class="admonition-title"><span>Proposition </span> (Hessian of Convex Functions)</p>
@@ -739,7 +872,37 @@ all <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{do
 <span class="math notranslate nohighlight">\(\mathbf{x} \in \operatorname{dom} f\)</span>.</p>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. Omitted. ◻</p>
+<p>Proof. We prove each part in turn.</p>
+<p><strong>(i) <span class="math notranslate nohighlight">\(f\)</span> is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</strong></p>
+<p>Recall that for a twice differentiable function <span class="math notranslate nohighlight">\(f\)</span>, the second-order Taylor expansion at <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> gives</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}) = f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle + \frac{1}{2} (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x})
+\]</div>
+<p>for some <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> on the line segment between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<ul class="simple">
+<li><p><strong>(<span class="math notranslate nohighlight">\(\implies\)</span>)</strong> Suppose <span class="math notranslate nohighlight">\(f\)</span> is convex. Then, by the first-order condition for convexity, for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}\)</span>,</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+\]</div>
+<p>Subtracting the right-hand side from the Taylor expansion, we get</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}) - f(\mathbf{x}) - \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle = \frac{1}{2} (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x}) \geq 0
+\]</div>
+<p>for all <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}\)</span> and some <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> between them. This is only possible if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{z})\)</span> is positive semidefinite for all <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>, and thus for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<ul class="simple">
+<li><p><strong>(<span class="math notranslate nohighlight">\(\impliedby\)</span>)</strong> Conversely, suppose <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq 0\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. Then, for any <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y}\)</span>, the function <span class="math notranslate nohighlight">\(g(t) = f(\mathbf{x} + t(\mathbf{y} - \mathbf{x}))\)</span> is convex in <span class="math notranslate nohighlight">\(t\)</span> because <span class="math notranslate nohighlight">\(g''(t) = (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{x} + t(\mathbf{y} - \mathbf{x})) (\mathbf{y} - \mathbf{x}) \geq 0\)</span>. Therefore, <span class="math notranslate nohighlight">\(f\)</span> is convex.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>(ii) If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succ 0\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, then <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</strong></p>
+<p>If <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x})\)</span> is positive definite for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, then for any <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>, the quadratic form <span class="math notranslate nohighlight">\((\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x}) &gt; 0\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. Thus, the Taylor expansion above is strictly greater than zero for <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>, so the convexity inequality is strict for <span class="math notranslate nohighlight">\(t \in (0,1)\)</span>, i.e., <span class="math notranslate nohighlight">\(f\)</span> is strictly convex.</p>
+<hr class="docutils" />
+<p><strong>(iii) <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</strong></p>
+<p>Recall that <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(m\)</span>-strongly convex if <span class="math notranslate nohighlight">\(f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|^2\)</span> is convex. The Hessian of this function is <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) - mI\)</span>. By part (i), this is convex if and only if <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) - mI \succeq 0\)</span>, i.e., <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}) \succeq mI\)</span> for all <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>◻</p>
 </div>
 <div class="proof proposition admonition" id="prop-scaling-convex-functions">
 <p class="admonition-title"><span>Proposition </span> (Scaling Convex Functions)</p>
@@ -907,6 +1070,24 @@ strictly convex but not bounded below.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="convex_sets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Convex sets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../appendix/proofs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Detailed Proofs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -925,6 +1106,7 @@ strictly convex but not bounded below.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric interpretation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#consequences-of-convexity">Consequences of convexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effects-of-changing-the-feasible-set">Effects of Changing the Feasible Set</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#showing-that-a-function-is-convex">Showing that a function is convex</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 </ul>

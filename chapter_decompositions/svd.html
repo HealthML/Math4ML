@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -235,6 +235,11 @@
 <li class="toctree-l2"><a class="reference internal" href="pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="orthogonal_projections.html">Orthogonal projections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_convexity/overview_convexity.html">Convexity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_sets.html">Convex sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_functions.html">Basics of convex functions</a></li>
 </ul>
 </details></li>
 </ul>
@@ -516,13 +521,13 @@ i.e.</p>
 <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span>, and the columns of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> (the
 <strong>left-singular vectors</strong> of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>) are eigenvectors of
 <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>.</p>
-<p>The matrices <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}\)</span> and
+<p>The matrices <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{\top}\mathbf{\Sigma}\)</span> and
 <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}\)</span> are not necessarily the same
 size, but both are diagonal with the squared singular values
 <span class="math notranslate nohighlight">\(\sigma_i^2\)</span> on the diagonal (plus possibly some zeros). Thus the
 singular values of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are the square roots of the eigenvalues
 of <span class="math notranslate nohighlight">\(\mathbf{A}^{\!\top\!}\mathbf{A}\)</span> (or equivalently, of
-<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>)[^5].</p>
+<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^{\!\top\!}\)</span>).</p>
 <section id="some-useful-matrix-identities">
 <h2>Some useful matrix identities<a class="headerlink" href="#some-useful-matrix-identities" title="Link to this heading">#</a></h2>
 <p>In the following, we present a number of important identities for the SVD.</p>

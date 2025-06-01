@@ -95,7 +95,7 @@ x = np.linspace(-2, 2, 400)
 # Define three functions: convex, strictly convex, and strongly convex
 f1 = lambda x: np.abs(x)              # convex but not strictly convex
 f2 = lambda x: x**4                   # strictly convex but not strongly convex
-f3 = lambda x: x**2 + 1               # strongly convex
+f3 = lambda x: x**2               # strongly convex
 
 # Evaluate functions
 y1 = f1(x)
@@ -106,18 +106,21 @@ y3 = f3(x)
 plt.figure(figsize=(10, 6))
 plt.plot(x, y1, label=r'$f(x) = |x|$ (Convex)', linestyle='--')
 plt.plot(x, y2, label=r'$f(x) = x^4$ (Strictly Convex)', linestyle='-.')
-plt.plot(x, y3, label=r'$f(x) = x^2 + 1$ (Strongly Convex)', linestyle='-')
+plt.plot(x, y3, label=r'$f(x) = x^2$ (Strongly Convex)', linestyle='-')
 plt.title("Examples of Convex, Strictly Convex, and Strongly Convex Functions")
 plt.xlabel("x")
 plt.ylabel("f(x)")
+plt.xlim(-0.6, 0.6)
+plt.ylim(-0.02, 0.5)
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
+
 plt.show()
 ```
 * A **convex but not strictly convex** function $f(x) = |x|$
 * A **strictly convex but not strongly convex** function $f(x) = x^4$
-* A **strongly convex** function $f(x) = x^2 + 1$
+* A **strongly convex** function $f(x) = x^2$
 
 
 ## Consequences of convexity
@@ -152,15 +155,18 @@ $f(\tilde{\mathbf{x}}) < f(\mathbf{x}^*)$.
 Consider the line segment
 $\mathbf{x}(t) = t\mathbf{x}^* + (1-t)\tilde{\mathbf{x}}, ~ t \in [0,1]$,
 noting that $\mathbf{x}(t) \in \mathcal{X}$ by the convexity of
-$\mathcal{X}$. Then by the convexity of $f$,
+$\mathcal{X}$. 
+
+Then by the convexity of $f$,
 
 $$f(\mathbf{x}(t)) \leq tf(\mathbf{x}^*) + (1-t)f(\tilde{\mathbf{x}}) < tf(\mathbf{x}^*) + (1-t)f(\mathbf{x}^*) = f(\mathbf{x}^*)$$
 
 for all $t \in (0,1)$.
 
 We can pick $t$ to be sufficiently close to $1$ that
-$\mathbf{x}(t) \in N$; then $f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)$ by
-the definition of $N$, but $f(\mathbf{x}(t)) < f(\mathbf{x}^*)$ by the
+$\mathbf{x}(t) \in N$; 
+then $f(\mathbf{x}(t)) \geq f(\mathbf{x}^*)$ by
+the definition of $N,$ but $f(\mathbf{x}(t)) < f(\mathbf{x}^*)$ by the
 above inequality, a contradiction.
 
 It follows that $f(\mathbf{x}^*) \leq f(\mathbf{x})$ for all
@@ -212,11 +218,60 @@ It is worthwhile to examine how the feasible set affects the
 optimization problem. We will see why the assumption that $\mathcal{X}$
 is convex is needed in the results above.
 
+## Effects of Changing the Feasible Set
+
 Consider the function $f(x) = x^2$, which is a strictly convex function.
 The unique global minimum of this function in $\mathbb{R}$ is $x = 0$.
 
 But let's see what happens when we change the feasible set
 $\mathcal{X}$.
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-3, 3, 400)
+f = x**2
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+cases = [
+    {"title": r"(i) $\mathcal{X} = \{1\}$", "feasible": [1], "color": "orange"},
+    {"title": r"(ii) $\mathcal{X} = \mathbb{R} \setminus \{0\}$", "feasible": np.concatenate([x[x < 0], x[x > 0]]), "color": "orange"},
+    {"title": r"(iii) $\mathcal{X} = (-\infty,-1] \cup [0,\infty)$", "feasible": np.concatenate([x[x <= -1], x[x >= 0]]), "color": "orange"},
+    {"title": r"(iv) $\mathcal{X} = (-\infty,-1] \cup [1,\infty)$", "feasible": np.concatenate([x[x <= -1], x[x >= 1]]), "color": "orange"},
+]
+
+for ax, case in zip(axes.flat, cases):
+    # Plot the function
+    ax.plot(x, f, 'b-', label=r'$f(x) = x^2$')
+    # Highlight feasible set
+    if isinstance(case["feasible"], list):
+        for pt in case["feasible"]:
+            ax.plot(pt, pt**2, 'o', color=case["color"], markersize=10, label="feasible set" if pt == case["feasible"][0] else "")
+    else:
+        ax.plot(case["feasible"], case["feasible"]**2, color=case["color"], linewidth=6, alpha=0.3, label="feasible set")
+    # Mark minima
+    if case["title"].startswith("(i)"):
+        ax.plot(1, 1, 'ro', label="minimum")
+    elif case["title"].startswith("(ii)"):
+        ax.text(0, 0.5, "No minimum", color="red", ha="center", fontsize=12)
+    elif case["title"].startswith("(iii)"):
+        ax.plot(-1, 1, 'ro', label="local min")
+        ax.plot(0, 0, 'go', label="global min")
+    elif case["title"].startswith("(iv)"):
+        ax.plot(-1, 1, 'ro', label="global min")
+        ax.plot(1, 1, 'ro')
+    ax.set_title(case["title"], fontsize=14)
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-0.5, 9)
+    ax.legend(loc="upper left")
+    ax.grid(True)
+
+plt.tight_layout()
+plt.show()
+```
+
 
 (i) $\mathcal{X} = \{1\}$: This set is actually convex, so we still have
     a unique global minimum. But it is not the same as the unconstrained
@@ -234,6 +289,7 @@ $\mathcal{X}$.
 (iv) $\mathcal{X} = (-\infty,-1] \cup [1,\infty)$: This set is
      non-convex, and we can see that there are two global minima
      ($x = \pm 1$).
+
 
 ## Showing that a function is convex
 
@@ -279,7 +335,76 @@ for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
 
 :::{prf:proof}
 
-To-do. ◻
+(**"Only if" direction**)  
+Suppose $f$ is convex and differentiable. By the definition of convexity, for any $t \in [0,1]$ and any $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$,
+
+$$
+f(t\mathbf{y} + (1-t)\mathbf{x}) \leq t f(\mathbf{y}) + (1-t) f(\mathbf{x}).
+$$
+Define $\varphi(t) = f(\mathbf{x} + t(\mathbf{y} - \mathbf{x}))$ for $t \in [0,1]$. Then $\varphi$ is convex as a function of $t$, and differentiable. The convexity of $\varphi$ implies
+
+$$
+\varphi(1) \geq \varphi(0) + \varphi'(0)(1-0) = f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+$$
+But $\varphi(1) = f(\mathbf{y})$, so
+
+$$
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+$$
+
+(**"If" direction**)  
+Suppose the inequality
+
+$$
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle
+$$
+holds for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$. We want to show that $f$ is convex, i.e.,
+
+$$
+f(t\mathbf{y} + (1-t)\mathbf{x}) \leq t f(\mathbf{y}) + (1-t) f(\mathbf{x})
+$$
+for all $t \in [0,1]$.
+
+Let $t \in (0,1)$ and define $\mathbf{z} = t\mathbf{y} + (1-t)\mathbf{x}$. 
+
+By the assumption, applied at $\mathbf{x}$ and $\mathbf{y}$:
+
+$$
+\begin{aligned}
+f(\mathbf{y}) &\geq f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), \mathbf{y} - \mathbf{z} \rangle \\
+f(\mathbf{x}) &\geq f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), \mathbf{x} - \mathbf{z} \rangle
+\end{aligned}
+$$
+
+Multiply the first inequality by $t$ and the second by $1-t$, then add:
+
+$$
+\begin{aligned}
+t f(\mathbf{y}) + (1-t) f(\mathbf{x}) &\geq t f(\mathbf{z}) + t \langle \nabla f(\mathbf{z}), \mathbf{y} - \mathbf{z} \rangle \\
+&\quad + (1-t) f(\mathbf{z}) + (1-t) \langle \nabla f(\mathbf{z}), \mathbf{x} - \mathbf{z} \rangle \\
+&= f(\mathbf{z}) + \langle \nabla f(\mathbf{z}), t(\mathbf{y} - \mathbf{z}) + (1-t)(\mathbf{x} - \mathbf{z}) \rangle
+\end{aligned}
+$$
+
+But
+
+$$
+\begin{aligned}
+t(\mathbf{y} - \mathbf{z}) + (1-t)(\mathbf{x} - \mathbf{z}) &= t(\mathbf{y} - (t\mathbf{y} + (1-t)\mathbf{x})) + (1-t)(\mathbf{x} - (t\mathbf{y} + (1-t)\mathbf{x})) \\
+&= t((1-t)(\mathbf{y} - \mathbf{x})) + (1-t)(-t(\mathbf{y} - \mathbf{x})) \\
+&= t(1-t)(\mathbf{y} - \mathbf{x}) - t(1-t)(\mathbf{y} - \mathbf{x}) \\
+&= 0
+\end{aligned}
+$$
+
+So the inner product term vanishes, and we have
+
+$$
+t f(\mathbf{y}) + (1-t) f(\mathbf{x}) \geq f(\mathbf{z}) = f(t\mathbf{y} + (1-t)\mathbf{x})
+$$
+which is the definition of convexity.
+
+◻
 :::
 
 :::{prf:proposition} Hessian of Convex Functions
@@ -301,7 +426,45 @@ Suppose $f$ is twice differentiable. Then
 
 
 :::{prf:proof}
-Omitted. ◻
+
+We prove each part in turn.
+
+**(i) $f$ is convex if and only if $\nabla^2 f(\mathbf{x}) \succeq 0$ for all $\mathbf{x}$.**
+
+Recall that for a twice differentiable function $f$, the second-order Taylor expansion at $\mathbf{x}$ gives
+
+$$
+f(\mathbf{y}) = f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle + \frac{1}{2} (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x})
+$$
+for some $\mathbf{z}$ on the line segment between $\mathbf{x}$ and $\mathbf{y}$.
+
+- **($\implies$)** Suppose $f$ is convex. Then, by the first-order condition for convexity, for all $\mathbf{x}, \mathbf{y}$,
+
+$$
+f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle.
+$$
+Subtracting the right-hand side from the Taylor expansion, we get
+
+$$
+f(\mathbf{y}) - f(\mathbf{x}) - \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle = \frac{1}{2} (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x}) \geq 0
+$$
+for all $\mathbf{x}, \mathbf{y}$ and some $\mathbf{z}$ between them. This is only possible if $\nabla^2 f(\mathbf{z})$ is positive semidefinite for all $\mathbf{z}$, and thus for all $\mathbf{x}$.
+
+- **($\impliedby$)** Conversely, suppose $\nabla^2 f(\mathbf{x}) \succeq 0$ for all $\mathbf{x}$. Then, for any $\mathbf{x}, \mathbf{y}$, the function $g(t) = f(\mathbf{x} + t(\mathbf{y} - \mathbf{x}))$ is convex in $t$ because $g''(t) = (\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{x} + t(\mathbf{y} - \mathbf{x})) (\mathbf{y} - \mathbf{x}) \geq 0$. Therefore, $f$ is convex.
+
+---
+
+**(ii) If $\nabla^2 f(\mathbf{x}) \succ 0$ for all $\mathbf{x}$, then $f$ is strictly convex.**
+
+If $\nabla^2 f(\mathbf{x})$ is positive definite for all $\mathbf{x}$, then for any $\mathbf{x} \neq \mathbf{y}$, the quadratic form $(\mathbf{y} - \mathbf{x})^\top \nabla^2 f(\mathbf{z}) (\mathbf{y} - \mathbf{x}) > 0$ for all $\mathbf{z}$ between $\mathbf{x}$ and $\mathbf{y}$. Thus, the Taylor expansion above is strictly greater than zero for $\mathbf{x} \neq \mathbf{y}$, so the convexity inequality is strict for $t \in (0,1)$, i.e., $f$ is strictly convex.
+
+---
+
+**(iii) $f$ is $m$-strongly convex if and only if $\nabla^2 f(\mathbf{x}) \succeq mI$ for all $\mathbf{x}$.**
+
+Recall that $f$ is $m$-strongly convex if $f(\mathbf{x}) - \frac{m}{2}\|\mathbf{x}\|^2$ is convex. The Hessian of this function is $\nabla^2 f(\mathbf{x}) - mI$. By part (i), this is convex if and only if $\nabla^2 f(\mathbf{x}) - mI \succeq 0$, i.e., $\nabla^2 f(\mathbf{x}) \succeq mI$ for all $\mathbf{x}$.
+
+◻
 :::
 
 :::{prf:proposition} Scaling Convex Functions

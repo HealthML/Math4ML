@@ -39,13 +39,13 @@ $\mathbf{A}^{\!\top\!}\mathbf{A}$, and the columns of $\mathbf{U}$ (the
 **left-singular vectors** of $\mathbf{A}$) are eigenvectors of
 $\mathbf{A}\mathbf{A}^{\!\top\!}$.
 
-The matrices $\mathbf{\Sigma}^{\!\top\!}\mathbf{\Sigma}$ and
+The matrices $\mathbf{\Sigma}^{\top}\mathbf{\Sigma}$ and
 $\mathbf{\Sigma}\mathbf{\Sigma}^{\!\top\!}$ are not necessarily the same
 size, but both are diagonal with the squared singular values
 $\sigma_i^2$ on the diagonal (plus possibly some zeros). Thus the
 singular values of $\mathbf{A}$ are the square roots of the eigenvalues
 of $\mathbf{A}^{\!\top\!}\mathbf{A}$ (or equivalently, of
-$\mathbf{A}\mathbf{A}^{\!\top\!}$)[^5].
+$\mathbf{A}\mathbf{A}^{\!\top\!}$).
 
 ## Some useful matrix identities
 
