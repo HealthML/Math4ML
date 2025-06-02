@@ -575,10 +575,16 @@ line segment, except at the segment endpoints.
 <span class="c1"># Define x values</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
 
-<span class="c1"># Define three functions: convex, strictly convex, and strongly convex</span>
-<span class="n">f1</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>              <span class="c1"># convex but not strictly convex</span>
-<span class="n">f2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span>                   <span class="c1"># strictly convex but not strongly convex</span>
-<span class="n">f3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>               <span class="c1"># strongly convex</span>
+<span class="c1"># Define three functions:</span>
+<span class="c1"># 1. Convex with a flat part: piecewise constant in the center</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># 2. Strictly convex but not strongly convex</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span>
+
+<span class="c1"># 3. Strongly convex</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 
 <span class="c1"># Evaluate functions</span>
 <span class="n">y1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -587,7 +593,7 @@ line segment, except at the segment endpoints.
 
 <span class="c1"># Plot the functions</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = |x|$ (Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = \max(|x|, 0.2)$ (Convex, not strictly)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^4$ (Strictly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-.&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(x) = x^2$ (Strongly Convex)&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Examples of Convex, Strictly Convex, and Strongly Convex Functions&quot;</span><span class="p">)</span>
@@ -605,13 +611,13 @@ line segment, except at the segment endpoints.
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/cf5ebbb83f92a781637d4f0112ded83f7f3116586a2beb4e4108013739c7b02a.png" src="../_images/cf5ebbb83f92a781637d4f0112ded83f7f3116586a2beb4e4108013739c7b02a.png" />
+<img alt="../_images/172a54e4fbc018a3eebc671dcab8197f07b60d39f257bc29e914ec60e0f902ae.png" src="../_images/172a54e4fbc018a3eebc671dcab8197f07b60d39f257bc29e914ec60e0f902ae.png" />
 </div>
 </div>
 <ul class="simple">
-<li><p>A <strong>convex but not strictly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = |x|\)</span></p></li>
-<li><p>A <strong>strictly convex but not strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^4\)</span></p></li>
-<li><p>A <strong>strongly convex</strong> function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span></p></li>
+<li><p><strong>Dashed line</strong>: <span class="math notranslate nohighlight">\(f(x) = \max(|x|, 0.2)\)</span> — convex with a flat region near 0, so not strictly convex.</p></li>
+<li><p><strong>Dash-dotted line</strong>: <span class="math notranslate nohighlight">\(f(x) = x^4\)</span> — strictly convex but with vanishing curvature at 0 (not strongly convex).</p></li>
+<li><p><strong>Solid line</strong>: <span class="math notranslate nohighlight">\(f(x) = x^2\)</span> — strongly convex everywhere with constant positive curvature.</p></li>
 </ul>
 </section>
 <section id="consequences-of-convexity">

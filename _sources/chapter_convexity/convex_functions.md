@@ -92,10 +92,16 @@ import matplotlib.pyplot as plt
 # Define x values
 x = np.linspace(-2, 2, 400)
 
-# Define three functions: convex, strictly convex, and strongly convex
-f1 = lambda x: np.abs(x)              # convex but not strictly convex
-f2 = lambda x: x**4                   # strictly convex but not strongly convex
-f3 = lambda x: x**2               # strongly convex
+# Define three functions:
+# 1. Convex with a flat part: piecewise constant in the center
+def f1(x):
+    return np.where(np.abs(x) < 0.2, 0.2, np.abs(x))
+
+# 2. Strictly convex but not strongly convex
+f2 = lambda x: x**4
+
+# 3. Strongly convex
+f3 = lambda x: x**2
 
 # Evaluate functions
 y1 = f1(x)
@@ -104,7 +110,7 @@ y3 = f3(x)
 
 # Plot the functions
 plt.figure(figsize=(10, 6))
-plt.plot(x, y1, label=r'$f(x) = |x|$ (Convex)', linestyle='--')
+plt.plot(x, y1, label=r'$f(x) = \max(|x|, 0.2)$ (Convex, not strictly)', linestyle='--')
 plt.plot(x, y2, label=r'$f(x) = x^4$ (Strictly Convex)', linestyle='-.')
 plt.plot(x, y3, label=r'$f(x) = x^2$ (Strongly Convex)', linestyle='-')
 plt.title("Examples of Convex, Strictly Convex, and Strongly Convex Functions")
@@ -117,10 +123,13 @@ plt.grid(True)
 plt.tight_layout()
 
 plt.show()
+
 ```
-* A **convex but not strictly convex** function $f(x) = |x|$
-* A **strictly convex but not strongly convex** function $f(x) = x^4$
-* A **strongly convex** function $f(x) = x^2$
+
+* **Dashed line**: $f(x) = \max(|x|, 0.2)$ — convex with a flat region near 0, so not strictly convex.
+* **Dash-dotted line**: $f(x) = x^4$ — strictly convex but with vanishing curvature at 0 (not strongly convex).
+* **Solid line**: $f(x) = x^2$ — strongly convex everywhere with constant positive curvature.
+
 
 
 ## Consequences of convexity
