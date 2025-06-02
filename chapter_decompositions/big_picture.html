@@ -471,10 +471,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a">1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-kernel-of-mathbf-a">4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a"><strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a"><strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a"><strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-of-mathbf-a"><strong>Left Null Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition-and-the-four-fundamental-subspaces">Singular Value Decomposition and the four fundamental subspaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
@@ -497,7 +497,7 @@ The proof of these projection formulas relies on the properties of the Moore-Pen
 <p>We denote the matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> as an <span class="math notranslate nohighlight">\(m \times n\)</span> matrix, where <span class="math notranslate nohighlight">\(m\)</span> is the number of rows and <span class="math notranslate nohighlight">\(n\)</span> is the number of columns.</p>
 <p>The four fundamental subspaces are:</p>
 <section id="column-space-range-of-mathbf-a">
-<h2>1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#column-space-range-of-mathbf-a" title="Link to this heading">#</a></h2>
+<h2><strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#column-space-range-of-mathbf-a" title="Link to this heading">#</a></h2>
 <p>The column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its columns.
 It represents the span of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Range}(\mathbf{A})\)</span>.
 Intuitively, the column space is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{b}_{\text{Col}}\)</span> that you can reach by taking weighted sums of the columns of <span class="math notranslate nohighlight">\(\mathbf{A},\)</span> or the set of all vectors that produce a solvable linear equation system <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}=\mathbf{b}_{\text{Col}}\)</span>.</p>
@@ -532,7 +532,7 @@ The Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\ma
 </div>
 </section>
 <section id="row-space-of-mathbf-a">
-<h2>2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#row-space-of-mathbf-a" title="Link to this heading">#</a></h2>
+<h2><strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#row-space-of-mathbf-a" title="Link to this heading">#</a></h2>
 <p>The row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its rows.</p>
 <p>It is equivalent to the column space of its transpose, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>, and is denoted as <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A}^\top)\)</span>.</p>
 <p>Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
@@ -566,7 +566,7 @@ Thus, the operator acts as the identity on the row space.</p>
 </div>
 </section>
 <section id="null-space-kernel-of-mathbf-a">
-<h2>3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
+<h2><strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
 <p>The null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{n}\in\mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{n} = \mathbf{0}\)</span>.</p>
 <p>It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A})\)</span>.</p>
 <p>Intuitively, the null space consists of all input vectors that are “annihilated” by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are mapped to the zero vector.</p>
@@ -595,8 +595,8 @@ Thus, the operator acts as the identity on the row space.</p>
 <p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 </div>
 </section>
-<section id="left-null-space-kernel-of-mathbf-a">
-<h2>4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#left-null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
+<section id="left-null-space-of-mathbf-a">
+<h2><strong>Left Null Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#left-null-space-of-mathbf-a" title="Link to this heading">#</a></h2>
 <p>The left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = \mathbf{0}\)</span>.</p>
 <p>It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top)\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A}^\top)\)</span>.
 Intuitively, the left null space consists of all vectors that are orthogonal to every row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are “killed” by the transpose of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
@@ -888,10 +888,10 @@ The SVD further enhances our understanding by revealing the relationships betwee
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a">1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-kernel-of-mathbf-a">4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a"><strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a"><strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a"><strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-of-mathbf-a"><strong>Left Null Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition-and-the-four-fundamental-subspaces">Singular Value Decomposition and the four fundamental subspaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>

@@ -24,7 +24,7 @@ We denote the matrix $\mathbf{A}$ as an $m \times n$ matrix, where $m$ is the nu
 
 The four fundamental subspaces are:
 
-## 1. **Column Space (Range) of $\mathbf{A}$**: 
+## **Column Space (Range) of $\mathbf{A}$**: 
 The column space of a matrix $\mathbf{A}$ is the set of all possible linear combinations of its columns. 
 It represents the span of the columns of $\mathbf{A}$ and is denoted as $\text{Col}(\mathbf{A})$ or $\text{Range}(\mathbf{A})$. 
 Intuitively, the column space is the set of all vectors $\mathbf{b}_{\text{Col}}$ that you can reach by taking weighted sums of the columns of $\mathbf{A},$ or the set of all vectors that produce a solvable linear equation system $\mathbf{A}\mathbf{x}=\mathbf{b}_{\text{Col}}$.
@@ -70,7 +70,7 @@ Therefore, $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is the orthogonal projection of $\
 :::
 
 
-## 2. **Row Space of $\mathbf{A}$**: 
+## **Row Space of $\mathbf{A}$**: 
 The row space of a matrix $\mathbf{A}$ is the set of all possible linear combinations of its rows. 
 
 It is equivalent to the column space of its transpose, $\mathbf{A}^\top$, and is denoted as $\text{Row}(\mathbf{A})$ or $\text{Col}(\mathbf{A}^\top)$.
@@ -117,7 +117,7 @@ Thus, the operator acts as the identity on the row space.
 Therefore, $\mathbf{P}_{\text{Row}(\mathbf{A})} = \mathbf{A}^+\mathbf{A}$ is the orthogonal projection onto the row space of $\mathbf{A}$.
 :::
 
-## 3. **Null Space (Kernel) of $\mathbf{A}$**: 
+## **Null Space (Kernel) of $\mathbf{A}$**: 
 The null space of a matrix $\mathbf{A}$ is the set of all vectors $\mathbf{n}\in\mathbb{R}^n$ such that $\mathbf{A}\mathbf{n} = \mathbf{0}$. 
 
 It represents the solutions to the homogeneous equation associated with $\mathbf{A}$ and is denoted as $\text{Null}(\mathbf{A})$ or $\text{Ker}(\mathbf{A})$. 
@@ -161,7 +161,7 @@ Therefore, $\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}^+\mat
 
 
 
-## 4. **Left Null Space (Kernel) of $\mathbf{A}$**:
+## **Left Null Space of $\mathbf{A}$**:
 The left null space of a matrix $\mathbf{A}$ is the set of all vectors $\mathbf{y}$ such that $\mathbf{A}^\top\mathbf{y} = \mathbf{0}$. 
 
 It represents the solutions to the homogeneous equation associated with $\mathbf{A}^\top$ and is denoted as $\text{Null}(\mathbf{A}^\top)$ or $\text{Ker}(\mathbf{A}^\top)$. 
