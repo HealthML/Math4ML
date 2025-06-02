@@ -27,13 +27,13 @@ The four fundamental subspaces are:
 ## 1. **Column Space (Range) of $\mathbf{A}$**: 
 The column space of a matrix $\mathbf{A}$ is the set of all possible linear combinations of its columns. 
 It represents the span of the columns of $\mathbf{A}$ and is denoted as $\text{Col}(\mathbf{A})$ or $\text{Range}(\mathbf{A})$. 
-Intuitively, the column space is the set of all vectors that you can reach by taking weighted sums of the columns of $\mathbf{A}$.
+Intuitively, the column space is the set of all vectors $\mathbf{b}_{\text{Col}}$ that you can reach by taking weighted sums of the columns of $\mathbf{A},$ or the set of all vectors that produce a solvable linear equation system $\mathbf{A}\mathbf{x}=\mathbf{b}_{\text{Col}}$.
 
 :::{prf:lemma} Projection onto the Column Space
 :label: trm-projection-column-space
 :nonumber:
 
-The projection of a vector $\mathbf{b}$ onto the column space of a matrix $\mathbf{A}$ is given by:
+The projection of a vector $\mathbf{b}\in\mathbb{R}^m$ onto the column space of a matrix $\mathbf{A}$ is given by:
 
 $$
 \mathbf{P}_{\text{Col}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}\mathbf{A}^+ \mathbf{b}
@@ -41,18 +41,24 @@ $$
 :::
 
 :::{prf:proof}
-Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^m$. The Moore-Penrose pseudoinverse $\mathbf{A}^+$ satisfies the property that $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$ and $\mathbf{A}^+\mathbf{A}\mathbf{A}^+ = \mathbf{A}^+$. 
+Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^m$. 
+The Moore-Penrose pseudoinverse $\mathbf{A}^+$ satisfies the property that $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$ and $\mathbf{A}^+\mathbf{A}\mathbf{A}^+ = \mathbf{A}^+$. 
 
-The vector $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is in the column space of $\mathbf{A}$ because it is a linear combination of the columns of $\mathbf{A}$. We claim that $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is the unique vector in $\text{Col}(\mathbf{A})$ closest to $\mathbf{b}$ (i.e., the orthogonal projection).
+The vector $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is in the column space of $\mathbf{A}$ because it is a linear combination of the columns of $\mathbf{A}$. 
+
+We claim that $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is the unique vector in $\text{Col}(\mathbf{A})$ closest to $\mathbf{b}$ (i.e., the orthogonal projection).
 
 To see this, recall that the orthogonal projection $\mathbf{p}$ of $\mathbf{b}$ onto $\text{Col}(\mathbf{A})$ is the unique vector in $\text{Col}(\mathbf{A})$ such that $\mathbf{b} - \mathbf{p}$ is orthogonal to $\text{Col}(\mathbf{A})$. 
+
 That is,
 
 $$
 \mathbf{A}^\top (\mathbf{b} - \mathbf{p}) = 0.
 $$
 
-Let $\mathbf{p} = \mathbf{A}\mathbf{x}$ for some $\mathbf{x} \in \mathbb{R}^n$. Then
+Let $\mathbf{p} = \mathbf{A}\mathbf{x}$ for some $\mathbf{x} \in \mathbb{R}^n$. 
+
+Then
 
 $$
 \mathbf{A}^\top (\mathbf{b} - \mathbf{A}\mathbf{x}) = 0 \implies \mathbf{A}^\top \mathbf{A} \mathbf{x} = \mathbf{A}^\top \mathbf{b}.
@@ -63,77 +69,101 @@ If $\mathbf{A}$ has full column rank, the solution is $\mathbf{x} = (\mathbf{A}^
 Therefore, $\mathbf{A}\mathbf{A}^+\mathbf{b}$ is the orthogonal projection of $\mathbf{b}$ onto $\text{Col}(\mathbf{A})$.
 :::
 
-## 2. **Null Space (Kernel) of $\mathbf{A}$**: 
-The null space of a matrix $\mathbf{A}$ is the set of all vectors $\mathbf{x}$ such that $\mathbf{A}\mathbf{x} = \mathbf{0}$. 
+
+## 2. **Row Space of $\mathbf{A}$**: 
+The row space of a matrix $\mathbf{A}$ is the set of all possible linear combinations of its rows. 
+
+It is equivalent to the column space of its transpose, $\mathbf{A}^\top$, and is denoted as $\text{Row}(\mathbf{A})$ or $\text{Col}(\mathbf{A}^\top)$.
+
+Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of $\mathbf{A}$.
+
+:::{prf:lemma} Projection onto the Row Space
+:label: trm-projection-row-space
+:nonumber:
+
+The projection of a vector $\mathbf{x}\in\mathbb{R}^n$ onto the row space of a matrix $\mathbf{A}$ is given by:
+
+$$
+\mathbf{P}_{\text{Row}(\mathbf{A})}(\mathbf{x}) = \mathbf{A}^+\mathbf{A}\mathbf{x}
+$$
+:::
+
+:::{prf:proof}
+Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{x} \in \mathbb{R}^n$. 
+
+The row space of $\mathbf{A}$ is the column space of $\mathbf{A}^\top$. 
+
+Recall that the orthogonal projection of $\mathbf{x}$ onto the row space of $\mathbf{A}$ is the unique vector $\mathbf{p}$ in $\text{Row}(\mathbf{A})$ such that $\mathbf{x} - \mathbf{p}$ is orthogonal to the row space. 
+
+That is, for all $\mathbf{y}$ in the row space, $\langle \mathbf{x} - \mathbf{p}, \mathbf{y} \rangle = 0$.
+
+Let $\mathbf{p} = \mathbf{A}^+\mathbf{A}\mathbf{x}$. 
+
+We want to show that $\mathbf{x} - \mathbf{p}$ is orthogonal to the row space of $\mathbf{A}$. 
+
+Any vector in the row space can be written as $\mathbf{A}^\top \mathbf{w}$ for some $\mathbf{w} \in \mathbb{R}^m$. 
+Then,
+
+$$
+\langle \mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}, \mathbf{A}^\top \mathbf{w} \rangle = \mathbf{w}^\top \mathbf{A} (\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{w}^\top (\mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{w}^\top (\mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{x}) = 0
+$$
+since $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$. 
+
+Thus, $\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}$ is orthogonal to the row space, so $\mathbf{A}^+\mathbf{A}\mathbf{x}$ is the orthogonal projection of $\mathbf{x}$ onto the row space of $\mathbf{A}$.
+
+Furthermore, for any $\mathbf{r}$ in the row space, $\mathbf{r} = \mathbf{A}^\top \mathbf{w}$ for some $\mathbf{w}$, and $\mathbf{A}^+\mathbf{A}\mathbf{r} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{r}$ (since $\mathbf{A}^+\mathbf{A}$ acts as the identity on the row space). 
+Thus, the operator acts as the identity on the row space.
+
+Therefore, $\mathbf{P}_{\text{Row}(\mathbf{A})} = \mathbf{A}^+\mathbf{A}$ is the orthogonal projection onto the row space of $\mathbf{A}$.
+:::
+
+## 3. **Null Space (Kernel) of $\mathbf{A}$**: 
+The null space of a matrix $\mathbf{A}$ is the set of all vectors $\mathbf{n}\in\mathbb{R}^n$ such that $\mathbf{A}\mathbf{n} = \mathbf{0}$. 
+
 It represents the solutions to the homogeneous equation associated with $\mathbf{A}$ and is denoted as $\text{Null}(\mathbf{A})$ or $\text{Ker}(\mathbf{A})$. 
+
 Intuitively, the null space consists of all input vectors that are "annihilated" by $\mathbf{A}$, meaning they are mapped to the zero vector.
 
 :::{prf:lemma} Projection onto the Null Space
 :label: trm-projection-null-space
 :nonumber:
 
-The projection of a vector $\mathbf{b}$ onto the null space of a matrix $\mathbf{A}$ is given by:
+The projection of a vector $\mathbf{x}\in\mathbb{R}^n$ onto the null space of a matrix $\mathbf{A}$ is given by:
 
 $$
-\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Col}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+ \mathbf{b}
-$$
-:::
-
-:::{prf:proof}
-Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^n$. The null space of $\mathbf{A}$ is the orthogonal complement of the row space of $\mathbf{A}$, and the column space of $\mathbf{A}$ is the orthogonal complement of the null space of $\mathbf{A}^\top$.
-
-Recall that the orthogonal projection of $\mathbf{b}$ onto the column space of $\mathbf{A}$ is $\mathbf{A}\mathbf{A}^+\mathbf{b}$. The projection onto the orthogonal complement (i.e., the null space) is then given by subtracting this projection from $\mathbf{b}$:
-
-$$
-\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}.
-$$
-
-To see that this is indeed a projection onto the null space, note that for any $\mathbf{b}$, $\mathbf{A}(\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}\mathbf{A}^+\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0$, since $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$. Thus, $\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}$ is in the null space of $\mathbf{A}$.
-
-Furthermore, for any $\mathbf{n}$ in the null space of $\mathbf{A}$, $\mathbf{A}\mathbf{n} = 0$, so $\mathbf{A}\mathbf{A}^+\mathbf{n} = 0$ (since $\mathbf{A}^+\mathbf{n}$ is some vector, but $\mathbf{A}$ applied to it is zero). Thus, $\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{n}) = \mathbf{n} - 0 = \mathbf{n}$, so the operator acts as the identity on the null space.
-
-Therefore, $\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}\mathbf{A}^+$ is the orthogonal projection onto the null space of $\mathbf{A}$.
-:::
-
-## 3. **Row Space of $\mathbf{A}$**: 
-The row space of a matrix $\mathbf{A}$ is the set of all possible linear combinations of its rows. 
-It is equivalent to the column space of its transpose, $\mathbf{A}^\top$, and is denoted as $\text{Row}(\mathbf{A})$ or $\text{Col}(\mathbf{A}^\top)$. 
-Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of $\mathbf{A}$, describing all possible outputs you can get by multiplying $\mathbf{A}$ on the right by a column vector.
-
-:::{prf:lemma} Projection onto the Row Space
-:label: trm-projection-row-space
-:nonumber:
-
-The projection of a vector $\mathbf{b}$ onto the row space of a matrix $\mathbf{A}$ is given by:
-
-$$
-\mathbf{P}_{\text{Row}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}^+\mathbf{A}\mathbf{b}
+\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{x}) = \left(\mathbf{I} - \mathbf{P}_{\text{Row}(\mathbf{A})}\right)(\mathbf{x}) = \mathbf{x} - \mathbf{A}^+\mathbf{A} \mathbf{x}
 $$
 :::
 
 :::{prf:proof}
-Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^n$. The row space of $\mathbf{A}$ is the column space of $\mathbf{A}^\top$. 
+Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{x} \in \mathbb{R}^n$. 
 
-Recall that the orthogonal projection of $\mathbf{b}$ onto the row space of $\mathbf{A}$ is the unique vector $\mathbf{p}$ in $\text{Row}(\mathbf{A})$ such that $\mathbf{b} - \mathbf{p}$ is orthogonal to the row space. That is, for all $\mathbf{y}$ in the row space, $\langle \mathbf{b} - \mathbf{p}, \mathbf{y} \rangle = 0$.
+The null space of $\mathbf{A}$ is the orthogonal complement of the row space of $\mathbf{A}$, and the column space of $\mathbf{A}$ is the orthogonal complement of the null space of $\mathbf{A}^\top$.
 
-Let $\mathbf{p} = \mathbf{A}^+\mathbf{A}\mathbf{b}$. We want to show that $\mathbf{b} - \mathbf{p}$ is orthogonal to the row space of $\mathbf{A}$. Any vector in the row space can be written as $\mathbf{A}^\top \mathbf{w}$ for some $\mathbf{w} \in \mathbb{R}^m$. Then,
+Recall that the orthogonal projection of $\mathbf{x}$ onto the row space of $\mathbf{A}$ is $\mathbf{A}^+\mathbf{A}\mathbf{x}$. 
+
+The projection onto the orthogonal complement (i.e., the null space) is then given by subtracting this projection from $\mathbf{b}$:
 
 $$
-\langle \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}, \mathbf{A}^\top \mathbf{w} \rangle = \mathbf{w}^\top \mathbf{A} (\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b}) = 0
+\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{x}) = \mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}.
 $$
-since $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$. Thus, $\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}$ is orthogonal to the row space, so $\mathbf{A}^+\mathbf{A}\mathbf{b}$ is the orthogonal projection of $\mathbf{b}$ onto the row space of $\mathbf{A}$.
 
-Furthermore, for any $\mathbf{r}$ in the row space, $\mathbf{r} = \mathbf{A}^\top \mathbf{w}$ for some $\mathbf{w}$, and $\mathbf{A}^+\mathbf{A}\mathbf{r} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{r}$ (since $\mathbf{A}^+\mathbf{A}$ acts as the identity on the row space). Thus, the operator acts as the identity on the row space.
+To see that this is indeed a projection onto the null space, note that for any $\mathbf{x}$, $\mathbf{A}(\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{x} = \mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{x} = 0$, since $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$. 
 
-Therefore, $\mathbf{P}_{\text{Row}(\mathbf{A})} = \mathbf{A}^+\mathbf{A}$ is the orthogonal projection onto the row space of $\mathbf{A}$.
+Thus, $\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}$ is in the null space of $\mathbf{A}$.
+
+Furthermore, for any $\mathbf{n}$ in the null space of $\mathbf{A}$, $\mathbf{A}\mathbf{n} = 0$, so $\mathbf{A}^+\mathbf{A}\mathbf{n} = 0$. 
+
+Thus, $\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{n}) = \mathbf{n} - 0 = \mathbf{n}$, so the operator acts as the identity on the null space.
+
+Therefore, $\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}^+\mathbf{A}$ is the orthogonal projection onto the null space of $\mathbf{A}$.
 :::
-
-
 
 
 
 ## 4. **Left Null Space (Kernel) of $\mathbf{A}$**:
 The left null space of a matrix $\mathbf{A}$ is the set of all vectors $\mathbf{y}$ such that $\mathbf{A}^\top\mathbf{y} = \mathbf{0}$. 
+
 It represents the solutions to the homogeneous equation associated with $\mathbf{A}^\top$ and is denoted as $\text{Null}(\mathbf{A}^\top)$ or $\text{Ker}(\mathbf{A}^\top)$. 
 Intuitively, the left null space consists of all vectors that are orthogonal to every row of $\mathbf{A}$, meaning they are "killed" by the transpose of $\mathbf{A}$.
 
@@ -144,25 +174,11 @@ Intuitively, the left null space consists of all vectors that are orthogonal to 
 The projection of a vector $\mathbf{b}$ onto the left null space of a matrix $\mathbf{A}$ is given by:
 
 $$
-\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Row}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}
+\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Col}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}
 $$
 :::
 
-:::{prf:proof}
-Let $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^n$. The left null space of $\mathbf{A}$ is the set of all vectors orthogonal to the row space of $\mathbf{A}$, i.e., $\text{Null}(\mathbf{A}^\top) = (\text{Row}(\mathbf{A}))^\perp$.
-
-Recall from above that the orthogonal projection of $\mathbf{b}$ onto the row space of $\mathbf{A}$ is $\mathbf{A}^+\mathbf{A}\mathbf{b}$. Therefore, the projection onto the orthogonal complement (the left null space) is given by subtracting this projection from $\mathbf{b}$:
-
-$$
-\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}.
-$$
-
-To see that this is indeed a projection onto the left null space, note that for any $\mathbf{b}$, the vector $\mathbf{A}(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0$, since $\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}$. Thus, $\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}$ is in the left null space of $\mathbf{A}$.
-
-Furthermore, for any $\mathbf{y}$ in the left null space, $\mathbf{A}^\top\mathbf{y} = 0$, so $\mathbf{A}^+\mathbf{A}\mathbf{y} = 0$ (since $\mathbf{A}\mathbf{y} = 0$), and thus $\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{y}) = \mathbf{y} - 0 = \mathbf{y}$, so the operator acts as the identity on the left null space.
-
-Therefore, $\mathbf{P}_{\text{Null}(\mathbf{A}^\top)} = \mathbf{I} - \mathbf{A}^+\mathbf{A}$ is the orthogonal projection onto the left null space of $\mathbf{A}$.
-:::
+The proof is analogous to the one for the previous one.
 
 
 ## Singular Value Decomposition and the four fundamental subspaces
@@ -292,7 +308,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The SVD of $\mathbf{A}$ is given by:
+Let the SVD of $\mathbf{A}$ be:
 
 $$
 \mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}

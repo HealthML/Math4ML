@@ -472,8 +472,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a">1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">2. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">3. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-kernel-of-mathbf-a">4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition-and-the-four-fundamental-subspaces">Singular Value Decomposition and the four fundamental subspaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
@@ -500,26 +500,29 @@ The proof of these projection formulas relies on the properties of the Moore-Pen
 <h2>1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#column-space-range-of-mathbf-a" title="Link to this heading">#</a></h2>
 <p>The column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its columns.
 It represents the span of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Range}(\mathbf{A})\)</span>.
-Intuitively, the column space is the set of all vectors that you can reach by taking weighted sums of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+Intuitively, the column space is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{b}_{\text{Col}}\)</span> that you can reach by taking weighted sums of the columns of <span class="math notranslate nohighlight">\(\mathbf{A},\)</span> or the set of all vectors that produce a solvable linear equation system <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x}=\mathbf{b}_{\text{Col}}\)</span>.</p>
 <div class="proof lemma admonition" id="trm-projection-column-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Column Space)</p>
 <section class="lemma-content" id="proof-content">
-<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
+<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{b}\in\mathbb{R}^m\)</span> onto the column space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{P}_{\text{Col}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}\mathbf{A}^+ \mathbf{b}
 \]</div>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^m\)</span>. The Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{A}^+\)</span> satisfies the property that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{A}^+ = \mathbf{A}^+\)</span>.</p>
-<p>The vector <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is in the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> because it is a linear combination of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. We claim that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> closest to <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> (i.e., the orthogonal projection).</p>
-<p>To see this, recall that the orthogonal projection <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span>.
-That is,</p>
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^m\)</span>.
+The Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{A}^+\)</span> satisfies the property that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{A}^+ = \mathbf{A}^+\)</span>.</p>
+<p>The vector <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is in the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> because it is a linear combination of the columns of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>We claim that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> closest to <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> (i.e., the orthogonal projection).</p>
+<p>To see this, recall that the orthogonal projection <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> is the unique vector in <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span>.</p>
+<p>That is,</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{A}^\top (\mathbf{b} - \mathbf{p}) = 0.
 \]</div>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}\mathbf{x}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>. Then</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}\mathbf{x}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>.</p>
+<p>Then</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{A}^\top (\mathbf{b} - \mathbf{A}\mathbf{x}) = 0 \implies \mathbf{A}^\top \mathbf{A} \mathbf{x} = \mathbf{A}^\top \mathbf{b}.
@@ -528,63 +531,74 @@ That is,</p>
 <p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A})\)</span>.</p>
 </div>
 </section>
-<section id="null-space-kernel-of-mathbf-a">
-<h2>2. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{x} = \mathbf{0}\)</span>.
-It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A})\)</span>.
-Intuitively, the null space consists of all input vectors that are “annihilated” by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are mapped to the zero vector.</p>
-<div class="proof lemma admonition" id="trm-projection-null-space">
-<p class="admonition-title"><span>Lemma </span> (Projection onto the Null Space)</p>
-<section class="lemma-content" id="proof-content">
-<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Col}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+ \mathbf{b}
-\]</div>
-</section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the null space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
-<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{b}\)</span>. The projection onto the orthogonal complement (i.e., the null space) is then given by subtracting this projection from <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}.
-\]</div>
-<p>To see that this is indeed a projection onto the null space, note that for any <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}(\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}\mathbf{A}^+\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0\)</span>, since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}\)</span> is in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{n} = 0\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{n} = 0\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{n}\)</span> is some vector, but <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> applied to it is zero). Thus, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{n}) = \mathbf{n} - 0 = \mathbf{n}\)</span>, so the operator acts as the identity on the null space.</p>
-<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}\mathbf{A}^+\)</span> is the orthogonal projection onto the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-</div>
-</section>
 <section id="row-space-of-mathbf-a">
-<h2>3. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#row-space-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its rows.
-It is equivalent to the column space of its transpose, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>, and is denoted as <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A}^\top)\)</span>.
-Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, describing all possible outputs you can get by multiplying <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> on the right by a column vector.</p>
+<h2>2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#row-space-of-mathbf-a" title="Link to this heading">#</a></h2>
+<p>The row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all possible linear combinations of its rows.</p>
+<p>It is equivalent to the column space of its transpose, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>, and is denoted as <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Col}(\mathbf{A}^\top)\)</span>.</p>
+<p>Intuitively, the row space consists of all vectors you can reach by taking weighted sums of the rows of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 <div class="proof lemma admonition" id="trm-projection-row-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Row Space)</p>
 <section class="lemma-content" id="proof-content">
-<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
+<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span> onto the row space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{P}_{\text{Row}(\mathbf{A})}(\mathbf{b}) = \mathbf{A}^+\mathbf{A}\mathbf{b}
+\mathbf{P}_{\text{Row}(\mathbf{A})}(\mathbf{x}) = \mathbf{A}^+\mathbf{A}\mathbf{x}
 \]</div>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the column space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
-<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the unique vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> in <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to the row space. That is, for all <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in the row space, <span class="math notranslate nohighlight">\(\langle \mathbf{b} - \mathbf{p}, \mathbf{y} \rangle = 0\)</span>.</p>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span>. We want to show that <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{p}\)</span> is orthogonal to the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>. Any vector in the row space can be written as <span class="math notranslate nohighlight">\(\mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^m\)</span>. Then,</p>
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>.</p>
+<p>The row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the column space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
+<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the unique vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> in <span class="math notranslate nohighlight">\(\text{Row}(\mathbf{A})\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{p}\)</span> is orthogonal to the row space.</p>
+<p>That is, for all <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in the row space, <span class="math notranslate nohighlight">\(\langle \mathbf{x} - \mathbf{p}, \mathbf{y} \rangle = 0\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} = \mathbf{A}^+\mathbf{A}\mathbf{x}\)</span>.</p>
+<p>We want to show that <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{p}\)</span> is orthogonal to the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Any vector in the row space can be written as <span class="math notranslate nohighlight">\(\mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w} \in \mathbb{R}^m\)</span>.
+Then,</p>
 <div class="math notranslate nohighlight">
 \[
-\langle \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}, \mathbf{A}^\top \mathbf{w} \rangle = \mathbf{w}^\top \mathbf{A} (\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{w}^\top (\mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b}) = 0
+\langle \mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}, \mathbf{A}^\top \mathbf{w} \rangle = \mathbf{w}^\top \mathbf{A} (\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{w}^\top (\mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{w}^\top (\mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{x}) = 0
 \]</div>
-<p>since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is orthogonal to the row space, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> in the row space, <span class="math notranslate nohighlight">\(\mathbf{r} = \mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{r} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{r}\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\)</span> acts as the identity on the row space). Thus, the operator acts as the identity on the row space.</p>
+<p>since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>.</p>
+<p>Thus, <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}\)</span> is orthogonal to the row space, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{x}\)</span> is the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> in the row space, <span class="math notranslate nohighlight">\(\mathbf{r} = \mathbf{A}^\top \mathbf{w}\)</span> for some <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{r} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{A}^+\mathbf{A}\mathbf{A}^\top \mathbf{w} = \mathbf{r}\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\)</span> acts as the identity on the row space).
+Thus, the operator acts as the identity on the row space.</p>
 <p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Row}(\mathbf{A})} = \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+</div>
+</section>
+<section id="null-space-kernel-of-mathbf-a">
+<h2>3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
+<p>The null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{n}\in\mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{n} = \mathbf{0}\)</span>.</p>
+<p>It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A})\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A})\)</span>.</p>
+<p>Intuitively, the null space consists of all input vectors that are “annihilated” by <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are mapped to the zero vector.</p>
+<div class="proof lemma admonition" id="trm-projection-null-space">
+<p class="admonition-title"><span>Lemma </span> (Projection onto the Null Space)</p>
+<section class="lemma-content" id="proof-content">
+<p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span> onto the null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{x}) = \left(\mathbf{I} - \mathbf{P}_{\text{Row}(\mathbf{A})}\right)(\mathbf{x}) = \mathbf{x} - \mathbf{A}^+\mathbf{A} \mathbf{x}
+\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^n\)</span>.</p>
+<p>The null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the column space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the orthogonal complement of the null space of <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span>.</p>
+<p>Recall that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{x}\)</span>.</p>
+<p>The projection onto the orthogonal complement (i.e., the null space) is then given by subtracting this projection from <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{x}) = \mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}.
+\]</div>
+<p>To see that this is indeed a projection onto the null space, note that for any <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}(\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}) = \mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{x} = \mathbf{A}\mathbf{x} - \mathbf{A}\mathbf{x} = 0\)</span>, since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>.</p>
+<p>Thus, <span class="math notranslate nohighlight">\(\mathbf{x} - \mathbf{A}^+\mathbf{A}\mathbf{x}\)</span> is in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> in the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{n} = 0\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{n} = 0\)</span>.</p>
+<p>Thus, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})}(\mathbf{n}) = \mathbf{n} - 0 = \mathbf{n}\)</span>, so the operator acts as the identity on the null space.</p>
+<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A})} = \mathbf{I} - \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 </div>
 </section>
 <section id="left-null-space-kernel-of-mathbf-a">
 <h2>4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:<a class="headerlink" href="#left-null-space-kernel-of-mathbf-a" title="Link to this heading">#</a></h2>
-<p>The left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = \mathbf{0}\)</span>.
-It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top)\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A}^\top)\)</span>.
+<p>The left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> such that <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = \mathbf{0}\)</span>.</p>
+<p>It represents the solutions to the homogeneous equation associated with <span class="math notranslate nohighlight">\(\mathbf{A}^\top\)</span> and is denoted as <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top)\)</span> or <span class="math notranslate nohighlight">\(\text{Ker}(\mathbf{A}^\top)\)</span>.
 Intuitively, the left null space consists of all vectors that are orthogonal to every row of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, meaning they are “killed” by the transpose of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
 <div class="proof lemma admonition" id="trm-projection-left-null-space">
 <p class="admonition-title"><span>Lemma </span> (Projection onto the Left Null Space)</p>
@@ -592,20 +606,10 @@ Intuitively, the left null space consists of all vectors that are orthogonal to 
 <p>The projection of a vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the left null space of a matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Row}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}
+\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \left(\mathbf{I} - \mathbf{P}_{\text{Col}(\mathbf{A})}\right)(\mathbf{b}) = \mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{b}
 \]</div>
 </section>
-</div><div class="proof admonition" id="proof">
-<p>Proof. Let <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{m \times n}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b} \in \mathbb{R}^n\)</span>. The left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is the set of all vectors orthogonal to the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, i.e., <span class="math notranslate nohighlight">\(\text{Null}(\mathbf{A}^\top) = (\text{Row}(\mathbf{A}))^\perp\)</span>.</p>
-<p>Recall from above that the orthogonal projection of <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> onto the row space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{b}\)</span>. Therefore, the projection onto the orthogonal complement (the left null space) is given by subtracting this projection from <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{b}) = \mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}.
-\]</div>
-<p>To see that this is indeed a projection onto the left null space, note that for any <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>, the vector <span class="math notranslate nohighlight">\(\mathbf{A}(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}) = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{A}^+\mathbf{A}\mathbf{b} = \mathbf{A}\mathbf{b} - \mathbf{A}\mathbf{b} = 0\)</span>, since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{A}^+\mathbf{A} = \mathbf{A}\)</span>. Thus, <span class="math notranslate nohighlight">\(\mathbf{b} - \mathbf{A}^+\mathbf{A}\mathbf{b}\)</span> is in the left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-<p>Furthermore, for any <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> in the left null space, <span class="math notranslate nohighlight">\(\mathbf{A}^\top\mathbf{y} = 0\)</span>, so <span class="math notranslate nohighlight">\(\mathbf{A}^+\mathbf{A}\mathbf{y} = 0\)</span> (since <span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{y} = 0\)</span>), and thus <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A}^\top)}(\mathbf{y}) = \mathbf{y} - 0 = \mathbf{y}\)</span>, so the operator acts as the identity on the left null space.</p>
-<p>Therefore, <span class="math notranslate nohighlight">\(\mathbf{P}_{\text{Null}(\mathbf{A}^\top)} = \mathbf{I} - \mathbf{A}^+\mathbf{A}\)</span> is the orthogonal projection onto the left null space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
-</div>
+</div><p>The proof is analogous to the one for the previous one.</p>
 </section>
 <section id="singular-value-decomposition-and-the-four-fundamental-subspaces">
 <h2>Singular Value Decomposition and the four fundamental subspaces<a class="headerlink" href="#singular-value-decomposition-and-the-four-fundamental-subspaces" title="Link to this heading">#</a></h2>
@@ -742,7 +746,7 @@ Intuitively, the left null space consists of all vectors that are orthogonal to 
 <img alt="../_images/ef7ed300eb98e0923195378fb1c069eacf1381c1fa8ff273f45a3f6630e110a3.png" src="../_images/ef7ed300eb98e0923195378fb1c069eacf1381c1fa8ff273f45a3f6630e110a3.png" />
 </div>
 </div>
-<p>The SVD of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is given by:</p>
+<p>Let the SVD of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> be:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{A} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^{\!\top\!}
@@ -885,8 +889,8 @@ The SVD further enhances our understanding by revealing the relationships betwee
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#column-space-range-of-mathbf-a">1. <strong>Column Space (Range) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">2. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">3. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#row-space-of-mathbf-a">2. <strong>Row Space of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#null-space-kernel-of-mathbf-a">3. <strong>Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#left-null-space-kernel-of-mathbf-a">4. <strong>Left Null Space (Kernel) of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></strong>:</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition-and-the-four-fundamental-subspaces">Singular Value Decomposition and the four fundamental subspaces</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
