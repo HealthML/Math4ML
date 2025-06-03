@@ -1,0 +1,116 @@
+Traceback (most recent call last):
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/christoph/miniconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Simulate simple 1D regression data
+np.random.seed(0)
+n = 50
+x = np.linspace(-2, 2, n).reshape(-1, 1)
+y = 2 * np.sin(1.5 * x) + 0.3 * np.random.randn(n, 1)
+
+# Define a 2-layer neural network model manually
+def two_layer_nn(x, w):
+    W1 = w[0]
+    b1 = w[1]
+    W2 = w[2]
+    b2 = w[3]
+    h = np.tanh(W1 * x + b1)
+    return W2 * h + b2
+
+# Loss function for a grid of parameters (varying W1 and W2, fixing biases)
+w1_range = np.linspace(-5, 5, 100)
+w2_range = np.linspace(-5, 5, 100)
+loss_grid = np.zeros((len(w1_range), len(w2_range)))
+
+for i, w1 in enumerate(w1_range):
+    for j, w2 in enumerate(w2_range):
+        preds = two_layer_nn(x, [w1, 0.0, w2, 0.0])
+        loss_grid[j, i] = np.mean((preds - y)**2)
+
+
+
+# Initialize gradient descent at a random point
+w1_gd, w2_gd = [4.5], [4.5]
+eta = 0.05  # learning rate
+
+# Approximate gradient via finite differences
+def compute_loss(w1, w2):
+    preds = two_layer_nn(x, [w1, 0.0, w2, 0.0])
+    return np.mean((preds - y)**2)
+
+for _ in range(30):
+    w1, w2 = w1_gd[-1], w2_gd[-1]
+    eps = 1e-4
+    grad_w1 = (compute_loss(w1 + eps, w2) - compute_loss(w1 - eps, w2)) / (2 * eps)
+    grad_w2 = (compute_loss(w1, w2 + eps) - compute_loss(w1, w2 - eps)) / (2 * eps)
+    w1_gd.append(w1 - eta * grad_w1)
+    w2_gd.append(w2 - eta * grad_w2)
+
+# Compute loss values along the path
+loss_gd = [compute_loss(w1, w2) for w1, w2 in zip(w1_gd, w2_gd)]
+
+# Overlay gradient descent path on 3D surface
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(W1, W2, loss_grid, cmap="viridis", edgecolor='none', alpha=0.9)
+ax.plot(w1_gd, w2_gd, loss_gd, 'ro-', label='Gradient Descent Path')
+ax.set_title("Gradient Descent Path on 3D Loss Surface")
+ax.set_xlabel("Weight W1")
+ax.set_ylabel("Weight W2")
+ax.set_zlabel("Loss")
+ax.set_zlim([0,15])
+ax.legend()
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mNameError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[9][39m[32m, line 55[39m
+[32m     53[39m fig = plt.figure(figsize=([32m10[39m, [32m7[39m))
+[32m     54[39m ax = fig.add_subplot([32m111[39m, projection=[33m'[39m[33m3d[39m[33m'[39m)
+[32m---> [39m[32m55[39m ax.plot_surface([43mW1[49m, W2, loss_grid, cmap=[33m"[39m[33mviridis[39m[33m"[39m, edgecolor=[33m'[39m[33mnone[39m[33m'[39m, alpha=[32m0.9[39m)
+[32m     56[39m ax.plot(w1_gd, w2_gd, loss_gd, [33m'[39m[33mro-[39m[33m'[39m, label=[33m'[39m[33mGradient Descent Path[39m[33m'[39m)
+[32m     57[39m ax.set_title([33m"[39m[33mGradient Descent Path on 3D Loss Surface[39m[33m"[39m)
+
+[31mNameError[39m: name 'W1' is not defined
+
