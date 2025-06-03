@@ -98,16 +98,19 @@ parts:
         - file: chapter_decompositions/big_picture
           title: Fundamental Subspaces
 #        - file: chapter_decompositions/representer_theorem
-#      - file: chapter_convexity/overview_convexity
-#        title: Convexity
-#        sections:
-#        - file: chapter_convexity/convex_sets
-#        - file: chapter_convexity/convex_functions
+      - file: chapter_convexity/overview_convexity
+        title: Convexity
+        sections:
+        - file: chapter_convexity/convex_sets
+        - file: chapter_convexity/convex_functions
 # continue with second order optimization
-#      title: Second-Order Optimization
-#        - file: chapter_calculus/newtons_method
-#          title: Newton's Method
-#        - file: chapter_taylor/minima_second_order_condition
+      - file: chapter_second_order/overview_second_order
+        title: Second-Order Optimization
+        sections:
+        - file: chapter_second_order/minima_second_order_condition
+      #   - file: chapter_second_order/newtons_method
+      #   - file: chapter_second_order/optimization_second_order
+      #     title: Newton's Method
 #        - file: chapter_taylor/optima
 #        - file: chapter_spaces/representer_theorem
 #        - file: chapter_calculus/orthogonal_projections
