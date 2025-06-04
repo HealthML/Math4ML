@@ -1,8 +1,8 @@
 # Exercise Sheet 1 Solutions
 
 
-### 1.
-#### (a)
+## 1.
+### (a)
 Take any $v_1=(a,b)$ and $v_2=(c,d)$ in $V$; then $b=3a+1$ and $d=3c+1$.  
 Their sum is  
 
@@ -12,7 +12,7 @@ $$
 which **does not** satisfy $b+d=3(a+c)+1$. Hence $V$ is *not* closed under addition ⇒ **not a vector space**.  
 (Equivalently, the additive identity $(0,0)\notin V$, violating axiom V1.)
 
-#### (b)
+### (b)
 All axioms except **distributivity over scalar addition** fail:
 
 Take $v=(a,b)$ and scalars $\alpha,\beta\in\mathbb R$.
@@ -27,8 +27,8 @@ $(\alpha+\beta)v\neq\alpha v+\beta v$.
 Therefore $V$ is **not** a vector space.
 
 
-### 2.
-#### (a)
+## 2.
+### (a)
 *Zero vector:* $(0,0)$ satisfies $0=2\cdot0$.  
 *Closure (addition):* if $y_1=2x_1$ and $y_2=2x_2$, then
 
@@ -42,7 +42,7 @@ $$
 $$
 All three conditions hold ⇒ $W$ **is a subspace**.
 
-#### (b)
+### (b)
 Pick $(x,y)\in W$ with $x>0$ and any negative scalar $\alpha<0$.  
 Then
 
@@ -53,7 +53,7 @@ and $\alpha x<0$. Thus $\alpha(x,y)\notin W$.
 Not closed under scalar multiplication ⇒ **not a subspace**.
 
 
-### 3.
+## 3.
 For $x=(a,b)$, $y=(c,d)$ and scalars $\alpha,\beta$:
 
 $$

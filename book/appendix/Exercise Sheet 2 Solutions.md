@@ -1,8 +1,8 @@
 # Exercise Sheet 2 Solutions
 
 
-### 1.
-#### (a)
+## 1.
+### (a)
 Let 
 
 $$
@@ -16,7 +16,7 @@ $$
 We are asked to examine the **continuity of $ f $ in $ \mathbb{R}^2 $**.
 
 *Remark*
-We say that a single-variable function $ f : \mathbb{R} \rightarrow \mathbb{R} $ is **continuous at a point** $ a \in \mathbb{R} $ if
+We say that a single-variable function $ f : \$$bb{R} \rightarrow \$$bb{R} $ is **continuous at a point** $ a \in \$$bb{R} $ if
 
 $$
 \lim_{x \to a} f(x) = f(a)
@@ -80,7 +80,7 @@ $$
 $$
 **does not exist**, and hence $ f(x, y) $ is **not continuous** at the point $ (0, 0) $.
 
-#### (b)
+### (b)
 *Partial derivatives of $ f $ at point $ (0, 0) $*
 If we have a function of two variables  
 
@@ -114,7 +114,7 @@ f_y(0, 0) = \lim_{h \to 0} \frac{f(0, h) - f(0, 0)}{h}
 = \lim_{h \to 0} \frac{0 - 0}{h} = 0
 $$
 
-#### (c)
+### (c)
 *At which points is $ f $ differentiable?*
 To determine where the function $ f $ is differentiable, we use the following **theorem**:
 
@@ -148,8 +148,8 @@ Thus, the partial derivatives are continuous **everywhere in $ U $**.
 So, based on the theorem, function $ f $ is **differentiable at all points except** the origin, that is, point $ (0, 0) $.
 
 
-### 2.
-#### (a)  
+## 2.
+### (a)  
 Let the function $ f(z) = \exp\left(-\dfrac{1}{2} z\right) $,  
 where $ z = g(y) = y^\top S^{-1} y $,  
 and $ y = h(x) = x - u $,  
@@ -215,7 +215,7 @@ $$
 \quad \in \mathbb{R}^{1 \times D}
 $$
 
-#### (b)
+### (b)
 Let
 
 $$
@@ -268,7 +268,8 @@ $$
 $$
 
 *Final Result*
-```math
+
+$$
 \frac{df}{dx}
 = 
 \operatorname{diag}\left(
@@ -279,108 +280,111 @@ $$
 \right)
 \cdot A
 \quad \in \mathbb{R}^{M \times N}
-```
+$$
 
-### 3.
-#### (a)
+## 3.
+### (a)
 Let  
-```math
+
+$$
 x^{(0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}, \quad \eta = 1
-```  
+$$  
 and perform two steps of **gradient descent**.
 
 The update rule for gradient descent is:
 
-```math
+$$
 x^{(i+1)} = x^{(i)} - \eta \nabla f(x^{(i)})
-```
+$$
 
 So two steps of the gradient descent algorithm are:
 
-```math
+$$
 \text{Step 1:} \quad x^{(1)} = x^{(0)} - \eta \nabla f(x^{(0)})  
-```
+$$
 
-```math
+$$
 \text{Step 2:} \quad x^{(2)} = x^{(1)} - \eta \nabla f(x^{(1)})
-```
+$$
 
 Given the gradient:
 
-```math
+$$
 \nabla f = \begin{bmatrix}
 x_1 + 2 \\
 2x_2 + 1
 \end{bmatrix}
-```
+$$
 
 We compute:
 
-```math
+$$
 x^{(0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
 \quad \Rightarrow \quad
 \nabla f(x^{(0)}) = \begin{bmatrix} 2 \\ 1 \end{bmatrix}
-```
+$$
 
 *Step 1:*
-```math
+
+$$
 x^{(1)} = x^{(0)} - 1 \cdot \nabla f(x^{(0)}) = 
 \begin{bmatrix} 0 \\ 0 \end{bmatrix}
 - \begin{bmatrix} 2 \\ 1 \end{bmatrix}
 = \begin{bmatrix} -2 \\ -1 \end{bmatrix}
-```
+$$
 
-```math
+$$
 \nabla f(x^{(1)}) = 
 \begin{bmatrix} -2 + 2 \\ -2 + 1 \end{bmatrix}
 = \begin{bmatrix} 0 \\ -1 \end{bmatrix}
-```
+$$
 
 *Step 2:*
-```math
+
+$$
 x^{(2)} = x^{(1)} - 1 \cdot \nabla f(x^{(1)}) =
 \begin{bmatrix} -2 \\ -1 \end{bmatrix}
 - \begin{bmatrix} 0 \\ -1 \end{bmatrix}
 = \begin{bmatrix} -2 \\ 0 \end{bmatrix}
-```
+$$
 
-#### (b)
+### (b)
 Will the gradient descent procedure from part (b) converge to the minimizer $ x^* $? Why or why not? How can we fix it?
 
 Let’s look at the values over iterations:
 
-```math
+$$
 x^{(0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}, \quad
 x^{(1)} = \begin{bmatrix} -2 \\ -1 \end{bmatrix}, \quad
 x^{(2)} = \begin{bmatrix} -2 \\ 0 \end{bmatrix}, \quad
 x^* = \begin{bmatrix} -2 \\ -0.5 \end{bmatrix}
-```
+$$
 
 And:
 
-```math
+$$
 \nabla f(x^{(0)}) = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad
 \nabla f(x^{(1)}) = \begin{bmatrix} 0 \\ -1 \end{bmatrix}, \quad
 \nabla f(x^{(2)}) = \begin{bmatrix} 0 \\ 1 \end{bmatrix}, \quad
 \nabla f(x^*) = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
-```
+$$
 
 We observe that **gradient descent does not converge** to $ x^* $. Why?
 
 Because the gradients do **not decrease constantly**.  
 Let’s examine the **partial derivatives**:
 
-```math
+$$
 \frac{\partial f}{\partial x_1} \big|_{x^{(0)}} = 2, \quad
 \frac{\partial f}{\partial x_1} \big|_{x^{(1)}} = 0, \quad
 \frac{\partial f}{\partial x_1} \big|_{x^{(2)}} = 0
-```
+$$
 
-```math
+$$
 \frac{\partial f}{\partial x_2} \big|_{x^{(0)}} = 1, \quad
 \frac{\partial f}{\partial x_2} \big|_{x^{(1)}} = -1, \quad
 \frac{\partial f}{\partial x_2} \big|_{x^{(2)}} = 1
-```
+$$
 
 Since $ x^* $ is a minimum and $ \nabla f(x^*) = 0 $, we expect the GD algorithm to converge to $ x^* $ **if the partial derivatives reduce toward zero**.
 
@@ -389,44 +393,46 @@ But here, GD **jumps over the minimum** due to a **too high learning rate** $ \e
 *Trying smaller learning rates:*
 Let’s try $ \eta = 0.5 $:
 
-```math
+$$
 x^{(0)} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}, \quad 
 \nabla f(x^{(0)}) = \begin{bmatrix} 2 \\ 1 \end{bmatrix}
-```
+$$
 
 *Step 1:*
-```math
+
+$$
 x^{(1)} = x^{(0)} - 0.5 \cdot \nabla f(x^{(0)}) 
 = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
 - 0.5 \cdot \begin{bmatrix} 2 \\ 1 \end{bmatrix}
 = \begin{bmatrix} -1 \\ -0.5 \end{bmatrix}
-```
+$$
 
-```math
+$$
 \nabla f(x^{(1)}) = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
-```
+$$
 
 *Step 2:*
-```math
+
+$$
 x^{(2)} = x^{(1)} - 0.5 \cdot \nabla f(x^{(1)}) 
 = \begin{bmatrix} -1 \\ -0.5 \end{bmatrix}
 - 0.5 \cdot \begin{bmatrix} 1 \\ 0 \end{bmatrix}
 = \begin{bmatrix} -1.5 \\ -0.5 \end{bmatrix}
-```
+$$
 
 Now we see that the GD algorithm converges towards:
 
-```math
+$$
 x^* = \begin{bmatrix} -2 \\ -0.5 \end{bmatrix}
-```
+$$
 
 with gradients:
 
-```math
+$$
 \nabla f(x^{(0)}) = \begin{bmatrix} 2 \\ 1 \end{bmatrix}, \quad
 \nabla f(x^{(1)}) = \begin{bmatrix} 1 \\ 0 \end{bmatrix}, \quad
 \nabla f(x^{(2)}) = \begin{bmatrix} 0.5 \\ 0 \end{bmatrix}, \quad
 \nabla f(x^*) = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
-```
+$$
 
 ✔️ So a smaller $ \eta $ leads to proper convergence!
