@@ -369,22 +369,26 @@ of norms, and the fact that $t$ and $1-t$ are nonnegative.
 Hence $\|\cdot\|$ is convex. ◻
 :::
 
-:::{prf:proposition} Gradient of Convex Functions
-:label: prop-convex-functions-graph
+:::{prf:theorem} First Order Condition for Convex Functions (1D case)
+:label: prf-first-order-convex
 :nonumber:
 
-Suppose $f$ is differentiable.
+Let $f : \mathbb{R} \to \mathbb{R}$ be differentiable on an open interval $I \subseteq \mathbb{R}$. Then:
 
-Then $f$ is convex if and only if
+ $f$ is **convex** on $I$ if and only if for all $x, y \in I$:
 
-$$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle$$
+$$
+f(y) \geq f(x) + f'(x)(y - x)
+$$
 
-for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
+This means that the graph of $f$ lies **above its tangent lines**.
+
 :::
 
-The proposition says that for a convex, differentiable function 
-$f$, the graph of $f$ always lies above its tangent at any point. In other words, the tangent line at any point 
-$x$ is a global underestimator of the function.
+### 🧠 Intuition
+
+- The inequality says: *the function at any point $ y $ is at least as large as the linear approximation at $ x $*.
+- This ensures the function is **bending upwards** — a hallmark of convexity.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -423,6 +427,85 @@ plt.title('Convexity: $f(x)$ lies above its tangent at $x_0$')
 plt.grid(True)
 plt.show()
 ```
+
+:::{prf:proof}
+
+(⇒) If $ f $ is convex, then the inequality holds:
+
+Let $ f $ be convex on $ I $. 
+
+Fix any $ x, y \in I $, and define the function:
+
+$$
+\phi(t) := f((1 - t)x + t y), \quad t \in [0,1].
+$$
+
+Since $ f $ is convex, $ \phi $ is convex as a function of $ t $, and differentiable.
+
+By the definition of convexity of a differentiable function on an interval, we have:
+
+$$
+\phi(1) \geq \phi(0) + \phi'(0)(1)
+$$
+
+Compute:
+
+- $ \phi(0) = f(x) $
+- $ \phi(1) = f(y) $
+- $ \phi'(t) = f'((1 - t)x + t y) \cdot (y - x) \Rightarrow \phi'(0) = f'(x)(y - x) $
+
+Substituting gives:
+
+$$
+f(y) \geq f(x) + f'(x)(y - x)
+$$
+
+---
+
+#### (⇐) Conversely, if the inequality holds, then $ f $ is convex:
+
+Let $ x < y $ and $ t \in [0,1] $. Define $ z = (1 - t)x + t y \in [x, y] $. By the hypothesis:
+
+- From point $ x $, we have:
+
+$$
+f(z) \geq f(x) + f'(x)(z - x)
+$$
+- From point $ y $, we also have:
+
+$$
+f(z) \geq f(y) + f'(y)(z - y)
+$$
+
+Now combine this with the **mean value theorem** and use the inequality on both sides to derive:
+
+$$
+f((1 - t)x + t y) \leq (1 - t)f(x) + t f(y)
+$$
+
+This proves the convexity of $ f $.
+
+:::
+
+
+
+:::{prf:proposition} First Order Condition for Convex Functions
+:label: prop-convex-functions-graph
+:nonumber:
+
+Suppose $f$ is differentiable.
+
+Then $f$ is convex if and only if
+
+$$f(\mathbf{y}) \geq f(\mathbf{x}) + \langle \nabla f(\mathbf{x}), \mathbf{y} - \mathbf{x} \rangle$$
+
+for all $\mathbf{x}, \mathbf{y} \in \operatorname{dom} f$.
+:::
+
+The proposition says that for a convex, differentiable function 
+$f$, the graph of $f$ always lies above its tangent at any point. In other words, the tangent line at any point 
+$x$ is a global underestimator of the function.
+
 
 :::{prf:proof}
 
