@@ -2,73 +2,76 @@
 
 ### 1.
  
-\[
+$$
 A = \begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}
-\]
+$$
 
 **Characteristic Polynomial:**
 
 We compute the characteristic polynomial:
 
-\[
+$$
 p(\lambda) = \det(A - \lambda I) 
 = \det \begin{pmatrix} 3 - \lambda & 2 \\ -2 & -1 - \lambda \end{pmatrix}
-\]
+$$
 
-\[
+$$
 = (3 - \lambda)(-1 - \lambda) - (-2)(2)
 = \lambda^2 - 2\lambda + 1 = (\lambda - 1)^2
-\]
+$$
 
 **Eigenvalues:**
 
 Solving the characteristic polynomial:
 
-\[
+$$
 (\lambda - 1)^2 = 0 \Rightarrow \lambda_1 = \lambda_2 = 1
-\]
+$$
 
 **Eigenvectors:**
 
 We solve:
-\[
+
+$$
 (A - \lambda I)\vec{x} = 0 \Rightarrow
 \begin{pmatrix} 2 & 2 \\ -2 & -2 \end{pmatrix} \vec{x} = \vec{0}
-\]
+$$
 
 This reduces to:
-\[
+
+$$
 x_1 + x_2 = 0 \Rightarrow \vec{x} = \alpha \begin{pmatrix} 1 \\ -1 \end{pmatrix}
-\]
+$$
 
 So, the eigenvector is any scalar multiple of:
 
-\[
+$$
 \vec{x} = \begin{pmatrix} 1 \\ -1 \end{pmatrix}
-\]
+$$
 
 
 **Now, we solve them for B:**
-\[
+
+$$
 B = \begin{pmatrix}
 0 & 1 & 0 \\
 1 & 0 & 1 \\
 1 & 1 & 0
 \end{pmatrix}
-\]
+$$
 
 **Characteristic Polynomial:**
 
 We compute the characteristic polynomial:
 
-\[
+$$
 p(\lambda) = \det(B - \lambda I) = 
 \det \begin{pmatrix}
 -\lambda & 1 & 0 \\
 1 & -\lambda & 1 \\
 1 & 1 & -\lambda
 \end{pmatrix}
-\]
+$$
 
 Expanding along the first row:
 
@@ -84,25 +87,25 @@ Expanding along the first row:
 + 0
 ```
 
-\[
+$$
 = -\lambda(\lambda^2 - 1) - (-\lambda - 1)
 = -\lambda^3 + \lambda + \lambda + 1
 = -\lambda^3 + 2\lambda + 1
-\]
+$$
 
 So the characteristic polynomial is:
 
-\[
+$$
 p(\lambda) = -\lambda^3 + 2\lambda + 1
-\]
+$$
 
 **Eigenvalues:**
 
 Solving the characteristic polynomial:
 
-\[
+$$
 -\lambda^3 + 2\lambda + 1 = 0
-\]
+$$
 
 ```math
 -\left( \lambda + 1 \right)\left( \lambda - \frac{1 + \sqrt{5}}{2} \right)\left( \lambda - \frac{1 - \sqrt{5}}{2} \right) = 0
@@ -110,76 +113,76 @@ Solving the characteristic polynomial:
 
 so:
 
-\[
+$$
 \lambda_1 \approx -0.62, \quad
 \lambda_2 = -1, \quad
 \lambda_3 \approx 1.62
-\]
+$$
 
 **Eigenvectors:**
 
 To find the eigenvectors, we solve:
 
-\[
+$$
 (B - \lambda I)\vec{x} = 0
-\]
+$$
 
-**For** \( \lambda_1 \approx -0.62 \):
+**For** $$ \lambda_1 \approx -0.62 $$:
 
-\[
+$$
 \vec{v}_1 = \begin{pmatrix}
 1 \\
 -0.62 \\
 -0.62
 \end{pmatrix}
-\]
+$$
 
-**For** \( \lambda_2 = -1 \):
+**For** $$ \lambda_2 = -1 $$:
 
-\[
+$$
 \vec{v}_2 = \begin{pmatrix}
 -1 \\
 1 \\
 0
 \end{pmatrix}
-\]
+$$
 
-**For** \( \lambda_3 \approx 1.62 \):
+**For** $$ \lambda_3 \approx 1.62 $$:
 
-\[
+$$
 \vec{v}_3 = \begin{pmatrix}
 1 \\
 1.62 \\
 1.62
 \end{pmatrix}
-\]
+$$
 
-\(\blacksquare\)
+$$\blacksquare$$
 
 ### 2.
-We start by expressing the trace of \( ABC \):
+We start by expressing the trace of $$ ABC $$:
 
 ```math
 \mathrm{tr}(ABC) = \sum_{i=1}^{n} (ABC)_{ii}
 ```
 
-**Computing \( (ABC)_{ii} \):**
+**Computing $$ (ABC)_{ii} $$:**
 
-We want to compute the entry in the \( i \)-th row and \( i \)-th column of the matrix product \( ABC \).
+We want to compute the entry in the $$ i $$-th row and $$ i $$-th column of the matrix product $$ ABC $$.
 
-1. First, compute the product \( AB \), which gives:
+1. First, compute the product $$ AB $$, which gives:
 
 ```math
 (AB)_{il} = \sum_{j=1}^{m} A_{ij} B_{jl}
 ```
 
-2. Then compute \( ABC = (AB)C \). The \( (i, i) \)-th element of \( ABC \) is:
+2. Then compute $$ ABC = (AB)C $$. The $$ (i, i) $$-th element of $$ ABC $$ is:
 
 ```math
 (ABC)_{ii} = \sum_{l=1}^{k} (AB)_{il} C_{li}
 ```
 
-3. Substitute the expression for \( (AB)_{il} \):
+3. Substitute the expression for $$ (AB)_{il} $$:
 
 ```math
 (ABC)_{ii} = \sum_{l=1}^{k} \left( \sum_{j=1}^{m} A_{ij} B_{jl} \right) C_{li}
@@ -198,7 +201,7 @@ So, the trace becomes:
 ```
 
 
-**Computing the trace of \( BCA \):**
+**Computing the trace of $$ BCA $$:**
 
 ```math
 \mathrm{tr}(BCA) = \sum_{j=1}^{m} (BCA)_{jj}
@@ -206,7 +209,7 @@ So, the trace becomes:
 
 Expand the product:
 
-1. First compute \( BC \):
+1. First compute $$ BC $$:
 
 ```math
 (BC)_{ji} = \sum_{k=1}^{k} B_{jk} C_{ki}
@@ -240,13 +243,13 @@ Therefore:
 \mathrm{tr}(ABC) = \mathrm{tr}(BCA)
 ```
 
-\(\blacksquare\)
+$$\blacksquare$$
 
 ### 3.
 
 **Eigenvalues are the same**
 
-Let \( p(\lambda) \) be the characteristic polynomial of \( A \). By definition:
+Let $$ p(\lambda) $$ be the characteristic polynomial of $$ A $$. By definition:
 
 ```math
 p(\lambda) = \det(A - \lambda I)
@@ -261,11 +264,11 @@ Now consider the transpose:
 = p(\lambda)
 ```
 
-So both \( A \) and \( A^\top \) have the **same characteristic polynomial**, which means they have the **same eigenvalues**, including their algebraic multiplicities.
+So both $$ A $$ and $$ A^\top $$ have the **same characteristic polynomial**, which means they have the **same eigenvalues**, including their algebraic multiplicities.
 
 
 **Eigenvectors may differ**
-Although \( A \) and \( A^\top \) have the same eigenvalues, their eigenvectors **need not** be the same.
+Although $$ A $$ and $$ A^\top $$ have the same eigenvalues, their eigenvectors **need not** be the same.
 
 To see this, consider a concrete example:
 
@@ -293,11 +296,11 @@ The characteristic polynomial of both is:
 \det(A - \lambda I) = (1 - \lambda)^2
 ```
 
-So they both have a **repeated eigenvalue** \( \lambda = 1 \).
+So they both have a **repeated eigenvalue** $$ \lambda = 1 $$.
 
 Now compute eigenvectors:
 
-- For \( A \), we solve:
+- For $$ A $$, we solve:
 
 ```math
 (A - I)\vec{x} = \begin{pmatrix}
@@ -310,7 +313,7 @@ Now compute eigenvectors:
 \end{pmatrix}
 ```
 
-- For \( A^\top \), we solve:
+- For $$ A^\top $$, we solve:
 
 ```math
 (A^\top - I)\vec{x} = \begin{pmatrix}
@@ -327,15 +330,15 @@ Thus, the **eigenvectors are different**, even though the eigenvalues are the sa
 
 **So:**
 
-- \( A \) and \( A^\top \) always have the **same eigenvalues**, including multiplicities.
+- $$ A $$ and $$ A^\top $$ always have the **same eigenvalues**, including multiplicities.
 - However, they may have **different eigenvectors**, especially when the matrix is **not symmetric**.
 
-\(\blacksquare\)
+$$\blacksquare$$
 
 ### 4.
-#### (a) The rank of \( B \)
+#### (a) The rank of $$ B $$
 
-We observe that each row (and column) of \( B \) is a linear combination of the others:
+We observe that each row (and column) of $$ B $$ is a linear combination of the others:
 
 - The second row is:  
   ```math
@@ -366,13 +369,13 @@ Let’s do row reduction to confirm:
 
 Only one non-zero row remains after Gaussian elimination.
 
-Therefore, the rank of \( B \) is:
+Therefore, the rank of $$ B $$ is:
 
 ```math
 \mathrm{rank}(B) = 1
 ```
 
-#### (b) Are the columns of \( B \) linearly independent?
+#### (b) Are the columns of $$ B $$ linearly independent?
 
 Recall that the number of linearly independent columns is equal to the rank of the matrix.
 
@@ -390,4 +393,4 @@ In fact:
 \text{Col}_2 = 2 \cdot \text{Col}_1 \\
 \text{Col}_3 = 3 \cdot \text{Col}_1
 ```
-\(\blacksquare\)
+$$\blacksquare$$
