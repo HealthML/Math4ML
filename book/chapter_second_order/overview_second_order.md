@@ -1,6 +1,6 @@
-# Taylor series and their applications
-Taylor series are a powerful tool in mathematics and engineering, allowing us to approximate functions using polynomials. They are particularly useful for analyzing the behavior of functions near a specific point, known as the expansion point.
-We will use Taylors theorem to analyze stationary points of functions and to derive the Taylor series expansion of a function.
+# Second-Order Calculus and Optimization
+
+Second-order derivatives provide crucial information about function curvature and local behavior. We develop the mathematical framework for second-order analysis, derive necessary and sufficient conditions for local minima using the Hessian matrix, and then leverage this foundation to build powerful second-order optimization algorithms.
 
 ```{tableofcontents}
 ```

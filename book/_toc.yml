@@ -108,7 +108,7 @@ parts:
         title: Second-Order Optimization
         sections:
         - file: chapter_second_order/minima_second_order_condition
-      #   - file: chapter_second_order/newtons_method
+        - file: chapter_second_order/newtons_method
       #   - file: chapter_second_order/optimization_second_order
       #     title: Newton's Method
 #        - file: chapter_taylor/optima
