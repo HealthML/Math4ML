@@ -1,0 +1,111 @@
+Traceback (most recent call last):
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/christoph/miniconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/christoph/miniconda3/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Define the function, gradient, and Hessian
+def f(x):
+    return np.log(1 + np.sum(x**2))
+
+def grad_f(x):
+    return 2 * x / (1 + np.sum(x**2))
+
+def hess_f(x):
+    r2 = np.sum(x**2)
+    I = np.eye(len(x))
+    outer = np.outer(x, x)
+    return (2 / (1 + r2)) * I - (4 / (1 + r2)**2) * outer
+
+# Run the method
+x0 = np.array([1.5, 1.5])
+newton = Newton(f, grad_f, hess_f, x0)
+path, etas = newton.run()
+
+# Create grid for visualization
+x_vals = np.linspace(-2, 2, 100)
+y_vals = np.linspace(-2, 2, 100)
+X, Y = np.meshgrid(x_vals, y_vals)
+Z = np.log(1 + X**2 + Y**2)
+
+# Compute the Taylor expansion around x0
+f0 = f(x0)
+grad0 = grad_f(x0)
+hess0 = hess_f(x0)
+
+# Taylor expansion: f(x) ≈ f(x0) + grad_f(x0) * (x - x0) + 0.5 * (x - x0)^T * hess_f(x0) * (x - x0)
+def taylor_approx(x, y):
+    xy = np.array([x, y])
+    delta = xy - x0
+    return f0 + grad0 @ delta + 0.5 * delta @ hess0 @ delta
+
+# Compute the Taylor approximation surface
+Z_taylor = np.array([[taylor_approx(x, y) for x, y in zip(x_row, y_row)] for x_row, y_row in zip(X, Y)])
+
+# Plot
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.6, label='Original Function')
+ax.plot_surface(X, Y, Z_taylor, cmap='autumn', alpha=0.4, label='Taylor Expansion')
+
+# Overlay path
+ax.plot(path[:, 0], path[:, 1], [f(p) for p in path], color='red', marker='o', label="Newton steps")
+ax.scatter(*x0, f(x0), color='blue', label=r'Initial point $\mathbf{x}_0$', s=60)
+ax.scatter(*path[-1], f(path[-1]), color='green', label='Final point', s=60)
+
+ax.set_title(r"Newton's Method with Taylor Expansion on $f(x, y) = \log(1 + x^2 + y^2)$")
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.legend()
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mIndexError[39m                                Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[5][39m[32m, line 50[39m
+[32m     47[39m ax.plot_surface(X, Y, Z_taylor, cmap=[33m'[39m[33mautumn[39m[33m'[39m, alpha=[32m0.4[39m, label=[33m'[39m[33mTaylor Expansion[39m[33m'[39m)
+[32m     49[39m [38;5;66;03m# Overlay path[39;00m
+[32m---> [39m[32m50[39m ax.plot([43mpath[49m[43m[[49m[43m:[49m[43m,[49m[43m [49m[32;43m0[39;49m[43m][49m, path[:, [32m1[39m], [f(p) [38;5;28;01mfor[39;00m p [38;5;129;01min[39;00m path], color=[33m'[39m[33mred[39m[33m'[39m, marker=[33m'[39m[33mo[39m[33m'[39m, label=[33m"[39m[33mNewton steps[39m[33m"[39m)
+[32m     51[39m ax.scatter(*x0, f(x0), color=[33m'[39m[33mblue[39m[33m'[39m, label=[33mr[39m[33m'[39m[33mInitial point $[39m[33m\[39m[33mmathbf[39m[38;5;132;01m{x}[39;00m[33m_0$[39m[33m'[39m, s=[32m60[39m)
+[32m     52[39m ax.scatter(*path[-[32m1[39m], f(path[-[32m1[39m]), color=[33m'[39m[33mgreen[39m[33m'[39m, label=[33m'[39m[33mFinal point[39m[33m'[39m, s=[32m60[39m)
+
+[31mIndexError[39m: too many indices for array: array is 1-dimensional, but 2 were indexed
+

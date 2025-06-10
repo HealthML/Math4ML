@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_second_order/newtons_method.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
+    <link rel="prev" title="Second Order Condition for Minima" href="minima_second_order_condition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -242,8 +242,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_functions.html">Basics of convex functions</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_second_order.html">Second-Order Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_second_order.html">Second-Order Optimization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="minima_second_order_condition.html">Second Order Condition for Minima</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Newton’s Method</a></li>
 </ul>
 </details></li>
 </ul>
@@ -263,6 +264,13 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -477,19 +485,17 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-from-second-order-taylor-expansion"><strong>Motivation from Second-Order Taylor Expansion</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-iterative-algorithm">Newton’s Method: Iterative Algorithm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat">⚠️ Caveat</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-newtons-method-alone-can-fail">⚠️ Why Newton’s Method Alone Can Fail</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-search-to-the-rescue">✅ Line Search to the Rescue</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-line-search-pseudocode">🔄 Newton’s Method with Line Search: Pseudocode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages">✅ Advantages</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#would-you-like">👉 Would You Like:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-of-newtons-method">Convergence of Newton’s Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-for-convex-functions">Convergence for Convex Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-for-non-convex-functions">Convergence for Non-convex functions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-armijo-backtracking">✅ Newton’s Method with Armijo Backtracking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">🔧 Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">🧠 Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-newtons-method-alone-can-fail">Why Newton’s Method Alone Can Fail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-search-to-the-rescue">Line Search to the Rescue</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-line-search-pseudocode">Newton’s Method with Line Search: Pseudocode</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-armijo-backtracking">Newton’s Method with Armijo Backtracking</a></li>
 </ul>
             </nav>
         </div>
@@ -503,7 +509,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="newtons-method">
 <h1>Newton’s Method<a class="headerlink" href="#newtons-method" title="Link to this heading">#</a></h1>
-<p>An advantage of the <strong>second-order Taylor expansion</strong> is that it provides a <strong>local quadratic approximation</strong> of a function. Quadratic functions are simple to minimize analytically — and this idea is the foundation of <strong>Newton’s method</strong>.</p>
+<p>Newton’s method is a powerful optimization algorithm that leverages both the gradient and the Hessian (second derivative) of a function to find its local minima or maxima.
+Unlike first-order methods such as gradient descent, which use only slope information, Newton’s method uses curvature information to make more informed and often much faster progress toward a solution.</p>
+<p>In this section, we’ll introduce the intuition behind Newton’s method, derive its update rule from the second-order Taylor expansion, and discuss its strengths and limitations.
+We’ll also see how Newton’s method can be improved in practice, for example by incorporating line search techniques to ensure robust convergence.</p>
+<p>Many functions are challenging to minimize directly, but quadratic functions have a simple, closed-form solution for their minimum. Newton’s method leverages this by constructing a <strong>local quadratic approximation</strong> of the objective function at the current point using the <strong>second-order Taylor expansion</strong>. Instead of minimizing the original (potentially complicated) function, Newton’s method minimizes this quadratic surrogate at each step. Although the minimum of the quadratic approximation will generally not be the true minimum of the original function, iteratively updating the approximation and repeating the process can rapidly lead us toward a local minimum.</p>
 <hr class="docutils" />
 <section id="motivation-from-second-order-taylor-expansion">
 <h2><strong>Motivation from Second-Order Taylor Expansion</strong><a class="headerlink" href="#motivation-from-second-order-taylor-expansion" title="Link to this heading">#</a></h2>
@@ -512,7 +522,8 @@ document.write(`
 \[
 f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} - \mathbf{x}_0) + \frac{1}{2}(\mathbf{x} - \mathbf{x}_0)^\top \nabla^2 f(\mathbf{x}_0)(\mathbf{x} - \mathbf{x}_0).
 \]</div>
-<p>We now minimize this quadratic approximation with respect to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. The minimum occurs where the gradient vanishes:</p>
+<p>We now minimize this quadratic approximation with respect to <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.
+The minimum occurs where the gradient vanishes:</p>
 <div class="math notranslate nohighlight">
 \[
 \nabla f(\mathbf{x}_0) + \nabla^2 f(\mathbf{x}_0)(\mathbf{x} - \mathbf{x}_0) = 0
@@ -533,93 +544,152 @@ f(\mathbf{x}) \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^\top (\mathbf{x} 
 \[
 \mathbf{x}_{k+1} = \mathbf{x}_k - \left[\nabla^2 f(\mathbf{x}_k)\right]^{-1} \nabla f(\mathbf{x}_k)
 \]</div>
-<p>until convergence. Unlike gradient descent, which moves in the direction of steepest descent, Newton’s method uses <strong>second-order curvature information</strong> to take a more direct path toward the minimum.</p>
+<p>until convergence.</p>
+<p>Note, that we assume that the Hessian is invertible. In practice, we can avoid computing the inverse of the Hessian by solving the linear system <span class="math notranslate nohighlight">\(\nabla^2 f(\mathbf{x}_k) \mathbf{d}_k = -\nabla f(\mathbf{x}_k)\)</span> for the Newton step <span class="math notranslate nohighlight">\(\mathbf{d}_k\)</span>.</p>
+<p>Unlike gradient descent, which moves in the direction of steepest descent, Newton’s method uses <strong>second-order curvature information</strong> to take a more direct path toward the minimum.</p>
+<p>Let’s implement a class for Newton’s method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Newton</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span> <span class="o">=</span> <span class="n">grad_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hess_f</span> <span class="o">=</span> <span class="n">hess_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">):</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">hess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="c1"># Compute the Newton step by solving the linear system</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span> 
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">d</span> <span class="c1"># Update the iterate</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s test it on a simple function <span class="math notranslate nohighlight">\(f(x) = e^{x} + x^2\)</span> and plot the path taken by Newton’s method:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">newton</span> <span class="o">=</span> <span class="n">Newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]))</span>
+<span class="n">x_star</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x_vals</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">newton</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">newton</span><span class="o">.</span><span class="n">path</span><span class="p">],</span> <span class="s1">&#39;ro-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/91f26281470cab30bce98245727675ef2a31b331c841062268e499af4b12f1d4.png" src="../_images/91f26281470cab30bce98245727675ef2a31b331c841062268e499af4b12f1d4.png" />
+</div>
+</div>
+<p>We see that Newton’s method rapidly converges to the minimum.</p>
 </section>
-<hr class="docutils" />
-<section id="caveat">
-<h2>⚠️ Caveat<a class="headerlink" href="#caveat" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>If the Hessian is not <strong>positive definite</strong>, the update may not be a descent direction.</p></li>
-</ul>
-<p>Excellent point! 👏</p>
-<p>You’re absolutely right — <strong>adding a line search</strong> to Newton’s method is a <strong>very common and practical enhancement</strong>. Here’s why it helps:</p>
-</section>
-<hr class="docutils" />
-<section id="why-newtons-method-alone-can-fail">
-<h2>⚠️ Why Newton’s Method Alone Can Fail<a class="headerlink" href="#why-newtons-method-alone-can-fail" title="Link to this heading">#</a></h2>
-<p>The Newton update:</p>
+<section id="convergence-of-newtons-method">
+<h2>Convergence of Newton’s Method<a class="headerlink" href="#convergence-of-newtons-method" title="Link to this heading">#</a></h2>
+<p>It turns out that convergence of Newton’s method is not guaranteed for all functions.
+We will see that for convex functions, Newton’s method converges quadratically to the minimum.
+However, for non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite.</p>
+<p>In fact, if the Hessian is not positive definite, the update may not be a descent direction.</p>
+<p>To see this, let’s consider the following non-convex function:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{x}_{k+1} = \mathbf{x}_k - [\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)
+f(x, y) = -x^2 - y^2
 \]</div>
-<p>assumes that the <strong>Hessian is positive definite</strong>, which ensures a descent direction and local convexity. But in practice:</p>
-<ul class="simple">
-<li><p>The <strong>Hessian may be indefinite</strong> (especially far from the minimum).</p></li>
-<li><p>The step <span class="math notranslate nohighlight">\(\Delta \mathbf{x}\)</span> can be <strong>too large</strong>, causing divergence.</p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="line-search-to-the-rescue">
-<h2>✅ Line Search to the Rescue<a class="headerlink" href="#line-search-to-the-rescue" title="Link to this heading">#</a></h2>
-<p>To improve robustness, we combine Newton’s direction with a <strong>line search</strong>:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{x}_{k+1} = \mathbf{x}_k + \eta_k \mathbf{d}_k,
-\quad \text{where} \quad \mathbf{d}_k = -[\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)
-\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(\eta_k\)</span> is chosen using a <strong>backtracking line search</strong>, typically satisfying the <strong>Armijo condition</strong> (just like in gradient descent).</p>
-<hr class="docutils" />
-<section id="newtons-method-with-line-search-pseudocode">
-<h3>🔄 Newton’s Method with Line Search: Pseudocode<a class="headerlink" href="#newtons-method-with-line-search-pseudocode" title="Link to this heading">#</a></h3>
-<ol class="arabic">
-<li><p>Compute Newton direction:
-<span class="math notranslate nohighlight">\(\mathbf{d}_k = -[\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)\)</span></p></li>
-<li><p>Perform line search:
-Find <span class="math notranslate nohighlight">\(\eta_k \in (0, 1]\)</span> such that</p>
-<div class="math notranslate nohighlight">
-\[
-   f(\mathbf{x}_k + \eta_k \mathbf{d}_k) \leq f(\mathbf{x}_k) + c_1 \eta_k \nabla f(\mathbf{x}_k)^\top \mathbf{d}_k
-   \]</div>
-</li>
-<li><p>Update:
-<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = \mathbf{x}_k + \eta_k \mathbf{d}_k\)</span></p></li>
-</ol>
-</section>
-<hr class="docutils" />
-<section id="advantages">
-<h3>✅ Advantages<a class="headerlink" href="#advantages" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Handles <strong>indefinite or ill-conditioned Hessians</strong></p></li>
-<li><p>Prevents overshooting</p></li>
-<li><p>Preserves <strong>fast convergence</strong> near the minimum</p></li>
-<li><p>Makes Newton’s method practical for real optimization problems</p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="would-you-like">
-<h3>👉 Would You Like:<a class="headerlink" href="#would-you-like" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>A <strong>modified Newton implementation</strong> that includes Armijo backtracking?</p></li>
-<li><p>A <strong>visualization</strong> of the line search steps along the Newton direction?</p></li>
-</ul>
-<p>I’d be happy to generate that for you next!</p>
-<hr class="docutils" />
-<p>Let’s visualize Newton’s method on the same function as before:</p>
+<p>Let’s plot the function and the path taken by Newton’s method, starting from the point <span class="math notranslate nohighlight">\((0, -1)\)</span>:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">newton</span> <span class="o">=</span> <span class="n">Newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">]))</span>
+<span class="n">newton</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">]))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># Plot the path taken by Newton&#39;s method</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">newton</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x, y)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/a479a5c2a3597f84fb1d9cca4fe4b061566aa009c5fca23a3199e7da5b8de7b7.png" src="../_images/a479a5c2a3597f84fb1d9cca4fe4b061566aa009c5fca23a3199e7da5b8de7b7.png" />
+</div>
+</div>
+<p>We see that Newton’s method does not converge to a minimum but rather to the saddle point at <span class="math notranslate nohighlight">\((0, 0)\)</span>.
+In fact, we observe that the function increases in the direction of the Newton step.</p>
+<p>Let’s look at another non-convex example:</p>
 <div class="math notranslate nohighlight">
 \[
 f(x, y) = \log(1 + x^2 + y^2)
 \]</div>
-<p>We’ll start at a point <span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>, compute the Newton step, and plot both the function and the path taken by Newton’s method.</p>
-<hr class="docutils" />
-<p>Here’s a modified version of your previous <strong>Newton’s method implementation</strong>, now with <strong>Armijo backtracking line search</strong> added. This ensures that the method is robust even when the Hessian is not positive definite or when steps are too aggressive.</p>
-</section>
-</section>
-<hr class="docutils" />
-<section id="newtons-method-with-armijo-backtracking">
-<h2>✅ Newton’s Method with Armijo Backtracking<a class="headerlink" href="#newtons-method-with-armijo-backtracking" title="Link to this heading">#</a></h2>
-<section id="code">
-<h3>🔧 Code<a class="headerlink" href="#code" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
+<p>The function has a single minimum close to the initial point <span class="math notranslate nohighlight">\((1.5, 1.5)\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -638,42 +708,319 @@ f(x, y) = \log(1 + x^2 + y^2)
     <span class="n">outer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">))</span> <span class="o">*</span> <span class="n">I</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">outer</span>
 
-<span class="c1"># Backtracking line search (Armijo)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">armijo_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c1</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
-    <span class="n">f_x</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">grad_dot_d</span> <span class="o">=</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">f_x</span> <span class="o">+</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">grad_dot_d</span><span class="p">:</span>
-        <span class="n">alpha</span> <span class="o">*=</span> <span class="n">beta</span>
-    <span class="k">return</span> <span class="n">alpha</span>
-
-<span class="c1"># Newton&#39;s method with line search</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">newton_with_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
-    <span class="n">etas</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
-        <span class="n">grad</span> <span class="o">=</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">H</span> <span class="o">=</span> <span class="n">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hessian is singular or ill-conditioned. Stopping.&quot;</span><span class="p">)</span>
-            <span class="k">break</span>
-
-        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
-            <span class="k">break</span>
-
-        <span class="n">eta</span> <span class="o">=</span> <span class="n">armijo_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">d</span>
-        <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-        <span class="n">etas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">etas</span>
-
-<span class="c1"># Run method</span>
+<span class="c1"># Run the method</span>
 <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-<span class="n">path</span><span class="p">,</span> <span class="n">etas</span> <span class="o">=</span> <span class="n">newton_with_backtracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span>
+<span class="n">newton</span> <span class="o">=</span> <span class="n">Newton</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span>
+<span class="n">x_star</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="c1"># Create grid for visualization</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">X</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Compute the Taylor expansion around x0</span>
+<span class="n">f0</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<span class="n">grad0</span> <span class="o">=</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<span class="n">hess0</span> <span class="o">=</span> <span class="n">hess_f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<span class="c1"># print(hess0)</span>
+<span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">hess0</span><span class="p">)</span>
+
+<span class="c1"># Taylor expansion: f(x) ≈ f(x0) + grad_f(x0) * (x - x0) + 0.5 * (x - x0)^T * hess_f(x0) * (x - x0)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">taylor_approx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">xy</span> <span class="o">-</span> <span class="n">x0</span>
+    <span class="k">return</span> <span class="n">f0</span> <span class="o">+</span> <span class="n">grad0</span> <span class="o">@</span> <span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">delta</span> <span class="o">@</span> <span class="n">hess0</span> <span class="o">@</span> <span class="n">delta</span>
+
+<span class="c1"># Compute the Taylor approximation surface</span>
+<span class="n">Z_taylor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">taylor_approx</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_row</span><span class="p">,</span> <span class="n">y_row</span><span class="p">)]</span> <span class="k">for</span> <span class="n">x_row</span><span class="p">,</span> <span class="n">y_row</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)])</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> <span class="c1"># , label=&#39;Original Function&#39;</span>
+<span class="c1"># ax.plot_surface(X, Y, Z_taylor, cmap=&#39;autumn&#39;, alpha=0.4, label=&#39;Taylor Expansion&#39;)</span>
+
+<span class="c1"># Overlay path</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">path</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">path</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[:</span><span class="mi">3</span><span class="p">,:]],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Newton steps&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Initial point $\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="c1"># ax.scatter(*path[-1], f(path[-1]), color=&#39;green&#39;, label=&#39;Final point&#39;, s=60)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Newton&#39;s Method on $f(x, y) = \log(1 + x^2 + y^2)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/a09284b0d6e7a32937a3ca5091569baa8bc50b65791de04ddaee1f29c31d0eaf.png" src="../_images/a09284b0d6e7a32937a3ca5091569baa8bc50b65791de04ddaee1f29c31d0eaf.png" />
+</div>
+</div>
+<p>We observe that the Newton step is not a descent direction at the initial point, and Newton’s method diverges.
+If we look at the Hessian at the initial point, we see that it is not positive definite:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Hessian at the initial point (1.5, 1.5):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hess0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalues: &quot;</span><span class="p">,</span> <span class="n">eigvals</span><span class="p">)</span>
+<span class="c1"># print(eigvals)</span>
+<span class="c1"># print(&quot;Eigenvectors:&quot;)</span>
+<span class="c1"># print(eigvecs)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hessian at the initial point (1.5, 1.5):
+[[ 0.0661157  -0.29752066]
+ [-0.29752066  0.0661157 ]]
+Eigenvalues:  [-0.23140496  0.36363636]
+</pre></div>
+</div>
+</div>
+</div>
+<p>To better understand why Newton’s method diverges and how this relates to the eigenvalues of the Hessian, let’s look at the directional derivative of <span class="math notranslate nohighlight">\(f\)</span> in the direction of the Newton step.</p>
+<p>To do so, let’s introduce a one-dimensional function <span class="math notranslate nohighlight">\(g(t) = f(x_k + t \left[\nabla^2 f(\mathbf{x}_k)\right]^{-1} \nabla f(\mathbf{x}_k))\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+g(t) = f(x_k + t \left[\nabla^2 f(\mathbf{x}_k)\right]^{-1} \nabla f(\mathbf{x}_k))
+\]</div>
+<p>Then the first derivative of <span class="math notranslate nohighlight">\(g(t)\)</span> is equal to the directional derivative of <span class="math notranslate nohighlight">\(f\)</span> in the direction of the Newton step:</p>
+<div class="math notranslate nohighlight">
+\[
+g'(t) = \nabla f(x_k + t \left[\nabla^2 f(\mathbf{x}_k)\right]^{-1} \nabla f(\mathbf{x}_k))^\top \left[\nabla^2 f(\mathbf{x}_k)\right]^{-1} \nabla f(\mathbf{x}_k)
+\]</div>
+<p>To see, what happens if the Hessian is not positive definite as in the example above, let’s replace it with its eigendecomposition:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla^2 f(\mathbf{x}_k) = Q \Lambda Q^\top = \sum_{i=1}^n \lambda_i q_i q_i^\top
+\]</div>
+<p>For <span class="math notranslate nohighlight">\(t = 0\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+g'(0) = \nabla f(x_k)^\top Q \Lambda^{-1} Q^\top \nabla f(\mathbf{x}_k)
+\]</div>
+<p>We can rewrite the derivative as a sum of the directional derivatives in the directions of the eigenvectors <span class="math notranslate nohighlight">\(q_i\)</span> of the Hessian:</p>
+<div class="math notranslate nohighlight">
+\[
+g'(0) = \sum_{i=1}^n \frac{1}{\lambda_i} \left(q_i^\top\nabla f(x_k)\right)^\top  \left(q_i^\top\nabla f(x_k)\right) = \sum_{i=1}^n \frac{1}{\lambda_i} \|q_i^\top\nabla f(x_k)\|^2_2
+\]</div>
+<p>If the Hessian is positive definite, then all of the terms are positive and the sum is guaranteed to be positive. However, if the Hessian is not positive definite, then not all eigenvalues <span class="math notranslate nohighlight">\(\lambda_i\)</span> are positive.
+Thus, for non-convex functions the sum is not guaranteed to be positive.
+In that case, the Newton step is not guaranteed to be a descent direction, and may even be a direction of ascent as in the example above.</p>
+<section id="convergence-for-convex-functions">
+<h3>Convergence for Convex Functions<a class="headerlink" href="#convergence-for-convex-functions" title="Link to this heading">#</a></h3>
+<p>As we have just shown, for striclty convex functions, where the Hessian is guaranteed to be positive definite everywhere, the Newton step is a descent direction.
+Additionally, we can show that Newton’s method is guaranteed to get to a minimum rapidly.</p>
+<div class="proof theorem admonition" id="quadratic-convergence-convex">
+<p class="admonition-title"><span>Theorem </span> (Quadratic Convergence for Convex Functions)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f(x)\)</span> be a convex function.
+Then</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(L\)</span> is the Lipschitz constant of the Hessian.</p>
+</section>
+</div><p>This means that the error between <span class="math notranslate nohighlight">\(x_k\)</span> and the optimal solution <span class="math notranslate nohighlight">\(x^*\)</span> decreases quadratically.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. Let <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span> be a twice continuously differentiable convex function, and suppose the Hessian <span class="math notranslate nohighlight">\(\nabla^2 f(x)\)</span> is Lipschitz continuous with constant <span class="math notranslate nohighlight">\(L\)</span> in a neighborhood of the minimizer <span class="math notranslate nohighlight">\(x^*\)</span>.</p>
+<p>Assume also that <span class="math notranslate nohighlight">\(\nabla^2 f(x^*)\)</span> is positive definite (i.e., <span class="math notranslate nohighlight">\(f\)</span> is strictly convex).</p>
+<p>Let <span class="math notranslate nohighlight">\(x_k\)</span> be the current iterate, and define the Newton step:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{k+1} = x_k - [\nabla^2 f(x_k)]^{-1} \nabla f(x_k)
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(e_k = x_k - x^*\)</span>.</p>
+<p>By Taylor’s theorem,</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla f(x_k) = \nabla^2 f(x^*) e_k + r_k,
+\]</div>
+<p>where the remainder <span class="math notranslate nohighlight">\(r_k\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[
+\|r_k\| \leq \frac{L}{2} \|e_k\|^2.
+\]</div>
+<p>The Newton update gives:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+x_{k+1} - x^* &amp;= x_k - [\nabla^2 f(x_k)]^{-1} \nabla f(x_k) - x^* \\
+&amp;= e_k - [\nabla^2 f(x_k)]^{-1} \left( \nabla^2 f(x^*) e_k + r_k \right) \\
+&amp;= \left( I - [\nabla^2 f(x_k)]^{-1} \nabla^2 f(x^*) \right) e_k - [\nabla^2 f(x_k)]^{-1} r_k
+\end{align*}
+\end{split}\]</div>
+<p>If <span class="math notranslate nohighlight">\(x_k\)</span> is close to <span class="math notranslate nohighlight">\(x^*\)</span>, then <span class="math notranslate nohighlight">\(\nabla^2 f(x_k) \approx \nabla^2 f(x^*)\)</span>, so the first term is small (of order <span class="math notranslate nohighlight">\(\|e_k\|^2\)</span>), and the second term is also of order <span class="math notranslate nohighlight">\(\|e_k\|^2\)</span> due to the bound on <span class="math notranslate nohighlight">\(r_k\)</span>.</p>
+<p>Therefore, there exists a constant <span class="math notranslate nohighlight">\(C &gt; 0\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+\|x_{k+1} - x^*\| \leq C \|x_k - x^*\|^2
+\]</div>
+<p>for all <span class="math notranslate nohighlight">\(x_k\)</span> sufficiently close to <span class="math notranslate nohighlight">\(x^*\)</span>. This is <strong>quadratic convergence</strong>.</p>
+<p>Finally, since <span class="math notranslate nohighlight">\(f\)</span> is convex and the Hessian is Lipschitz, we also have</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2,
+\]</div>
+<p>as stated.</p>
+</div>
+<p><strong>Conclusion:</strong> Under the stated conditions, Newton’s method converges quadratically to the minimizer <span class="math notranslate nohighlight">\(x^*\)</span>, and the function value error decreases at least as fast as <span class="math notranslate nohighlight">\(\|x_k - x^*\|^2\)</span>.</p>
+</section>
+<section id="convergence-for-non-convex-functions">
+<h3>Convergence for Non-convex functions<a class="headerlink" href="#convergence-for-non-convex-functions" title="Link to this heading">#</a></h3>
+<p>For non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite.</p>
+<div class="proof theorem admonition" id="local-convergence-non-convex">
+<p class="admonition-title"><span>Theorem </span> (Local Convergence for Non-convex Functions)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f(x)\)</span> be a twice continuously differentiable function, and assume that the Hessian <span class="math notranslate nohighlight">\(\nabla^2 f(x)\)</span> is Lipschitz continuous with constant <span class="math notranslate nohighlight">\(L\)</span> in a neighborhood of a local minimum <span class="math notranslate nohighlight">\(x^*\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(x_k\)</span> is sufficiently close to <span class="math notranslate nohighlight">\(x^*\)</span> and the Hessian is positive definite at <span class="math notranslate nohighlight">\(x^*\)</span>, then Newton’s method exhibits quadratic convergence.</p>
+<p>Specifically, the following inequality holds:</p>
+<div class="math notranslate nohighlight">
+\[
+f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2
+\]</div>
+</section>
+</div><p>This result is particularly relevant for convex functions, where global convergence can be more readily assured. However, for non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="why-newtons-method-alone-can-fail">
+<h2>Why Newton’s Method Alone Can Fail<a class="headerlink" href="#why-newtons-method-alone-can-fail" title="Link to this heading">#</a></h2>
+<p>The Newton update:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{k+1} = \mathbf{x}_k - [\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)
+\]</div>
+<p>assumes that the <strong>Hessian is positive definite</strong>, which ensures a descent direction and local convexity.
+But in practice:</p>
+<ul class="simple">
+<li><p>The <strong>Hessian may be indefinite</strong> (especially far from the minimum).</p></li>
+<li><p>The step <span class="math notranslate nohighlight">\(\Delta \mathbf{x}\)</span> can be <strong>too large</strong>, causing divergence.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="line-search-to-the-rescue">
+<h2>Line Search to the Rescue<a class="headerlink" href="#line-search-to-the-rescue" title="Link to this heading">#</a></h2>
+<p>To improve robustness, we combine Newton’s direction with a <strong>line search</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{k+1} = \mathbf{x}_k + \eta_k \mathbf{d}_k,
+\quad \text{where} \quad \mathbf{d}_k = -[\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\eta_k\)</span> is chosen using a <strong>backtracking line search</strong>, typically satisfying the <strong>Armijo condition</strong> (just like in gradient descent).</p>
+<hr class="docutils" />
+<section id="newtons-method-with-line-search-pseudocode">
+<h3>Newton’s Method with Line Search: Pseudocode<a class="headerlink" href="#newtons-method-with-line-search-pseudocode" title="Link to this heading">#</a></h3>
+<ol class="arabic">
+<li><p>Compute Newton direction:
+<span class="math notranslate nohighlight">\(\mathbf{d}_k = -[\nabla^2 f(\mathbf{x}_k)]^{-1} \nabla f(\mathbf{x}_k)\)</span></p></li>
+<li><p>Perform line search:
+Find <span class="math notranslate nohighlight">\(\eta_k \in (0, 1]\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+   f(\mathbf{x}_k + \eta_k \mathbf{d}_k) \leq f(\mathbf{x}_k) + c_1 \eta_k \nabla f(\mathbf{x}_k)^\top \mathbf{d}_k
+   \]</div>
+</li>
+<li><p>Update:
+<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1} = \mathbf{x}_k + \eta_k \mathbf{d}_k\)</span></p></li>
+</ol>
+<hr class="docutils" />
+<ul class="simple">
+<li><p>Handles <strong>indefinite or ill-conditioned Hessians</strong></p></li>
+<li><p>Prevents overshooting</p></li>
+<li><p>Preserves <strong>fast convergence</strong> near the minimum</p></li>
+<li><p>Makes Newton’s method practical for real optimization problems</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="newtons-method-with-armijo-backtracking">
+<h2>Newton’s Method with Armijo Backtracking<a class="headerlink" href="#newtons-method-with-armijo-backtracking" title="Link to this heading">#</a></h2>
+<p>Here’s a modified version of our <strong>Newton’s method implementation</strong>, now with several tricks added to keep Newton’s method fast <strong>and stable</strong>.</p>
+<ul class="simple">
+<li><p><strong>Armijo backtracking line search</strong> ensures each step <strong>decreases the objective</strong>.
+It can reduce the step size in cases where full Newton steps are too aggressive.</p></li>
+<li><p><strong>Spectral decomposition</strong> of the Hessian allows us to detect cases where the <strong>Hessian is ill-conditioned</strong> and modify the eigenvalues to enforce positive definiteness.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">NewtonWithBacktracking</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span> <span class="o">=</span> <span class="n">grad_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hess_f</span> <span class="o">=</span> <span class="n">hess_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">etas</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">armijo_backtracking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c1</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+        <span class="n">f_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">grad_dot_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">f_x</span> <span class="o">+</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">grad_dot_d</span><span class="p">:</span>
+            <span class="n">alpha</span> <span class="o">*=</span> <span class="n">beta</span>
+        <span class="k">return</span> <span class="n">alpha</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">):</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+            <span class="n">eigvals</span><span class="p">[</span><span class="n">eigvals</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>  <span class="c1"># Ensure positive definiteness</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="o">-</span> <span class="n">eigvecs</span> <span class="o">@</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">eigvals</span> <span class="o">*</span> <span class="p">(</span><span class="n">eigvecs</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">grad</span><span class="p">))</span>  <span class="c1"># Compute the Newton step</span>
+            <span class="n">eta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">armijo_backtracking</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">d</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">etas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">etas</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="c1"># Define the function, gradient, and Hessian</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">outer</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">))</span> <span class="o">*</span> <span class="n">I</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">outer</span>
+
+<span class="c1"># Run the method</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">newton</span> <span class="o">=</span> <span class="n">NewtonWithBacktracking</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">hess_f</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span>
+<span class="n">x_star</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">etas</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="c1"># Create grid for visualization</span>
 <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -691,7 +1038,7 @@ f(x, y) = \log(1 + x^2 + y^2)
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Initial point $\mathbf</span><span class="si">{x}</span><span class="s1">_0$&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Final point&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Newton&#39;s Method with Line Search on $f(x, y) = \log(1 + x^2 + y^2)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Newton&#39;s Method with Line Search on $f(x, y) = \log(1 + x^2 + y^2)$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -700,27 +1047,11 @@ f(x, y) = \log(1 + x^2 + y^2)
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:71: SyntaxWarning: invalid escape sequence &#39;\l&#39;
-&lt;&gt;:71: SyntaxWarning: invalid escape sequence &#39;\l&#39;
-/var/folders/bw/7wvb07ss3h57p5s47w2rr3080000gn/T/ipykernel_70806/460634518.py:71: SyntaxWarning: invalid escape sequence &#39;\l&#39;
-  ax.set_title(&quot;Newton&#39;s Method with Line Search on $f(x, y) = \log(1 + x^2 + y^2)$&quot;)
-</pre></div>
-</div>
-<img alt="../_images/d8e9b5697c22ed983225935d6d4d4c48474b8da34eaf7011070723580fd861ac.png" src="../_images/d8e9b5697c22ed983225935d6d4d4c48474b8da34eaf7011070723580fd861ac.png" />
+<img alt="../_images/4aba8f79c5a1eb41d580f660b0ab43474559b03a4222b24fcd330630f7a8267a.png" src="../_images/4aba8f79c5a1eb41d580f660b0ab43474559b03a4222b24fcd330630f7a8267a.png" />
 </div>
 </div>
-</section>
-<hr class="docutils" />
-<section id="notes">
-<h3>🧠 Notes<a class="headerlink" href="#notes" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Backtracking ensures each step <strong>decreases the objective</strong>.</p></li>
-<li><p>Useful when the <strong>Hessian is ill-conditioned</strong> or <strong>far from the minimum</strong>.</p></li>
-<li><p>Keeps Newton’s method fast <strong>and stable</strong>.</p></li>
-</ul>
-<p>Would you like to visualize the step sizes (etas) or apply this to a non-convex function next?</p>
-</section>
 </section>
 </section>
 
@@ -754,6 +1085,24 @@ f(x, y) = \log(1 + x^2 + y^2)
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="minima_second_order_condition.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Second Order Condition for Minima</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../appendix/proofs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Detailed Proofs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -772,19 +1121,17 @@ f(x, y) = \log(1 + x^2 + y^2)
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-from-second-order-taylor-expansion"><strong>Motivation from Second-Order Taylor Expansion</strong></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-iterative-algorithm">Newton’s Method: Iterative Algorithm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat">⚠️ Caveat</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-newtons-method-alone-can-fail">⚠️ Why Newton’s Method Alone Can Fail</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-search-to-the-rescue">✅ Line Search to the Rescue</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-line-search-pseudocode">🔄 Newton’s Method with Line Search: Pseudocode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages">✅ Advantages</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#would-you-like">👉 Would You Like:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-of-newtons-method">Convergence of Newton’s Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-for-convex-functions">Convergence for Convex Functions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convergence-for-non-convex-functions">Convergence for Non-convex functions</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-armijo-backtracking">✅ Newton’s Method with Armijo Backtracking</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">🔧 Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">🧠 Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-newtons-method-alone-can-fail">Why Newton’s Method Alone Can Fail</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-search-to-the-rescue">Line Search to the Rescue</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-line-search-pseudocode">Newton’s Method with Line Search: Pseudocode</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-with-armijo-backtracking">Newton’s Method with Armijo Backtracking</a></li>
 </ul>
   </nav></div>
 
