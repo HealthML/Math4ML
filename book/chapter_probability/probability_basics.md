@@ -1,4 +1,4 @@
-## Basics
+# Probability Basics
 
 Suppose we have some sort of randomized experiment (e.g. a coin toss,
 die roll) that has a fixed set of possible outcomes. This set is called
@@ -28,8 +28,13 @@ $\mathbb{P}(A) = 0$.
 
 From these axioms, a number of useful rules can be derived.
 
-*Proposition.*
-Let $A$ be an event. Then
+:::{prf:proposition} Probability axioms
+:label: probability-axioms
+:nonumber:
+
+Let $A$ be an event. 
+
+Then
 
 (i) $\mathbb{P}(A^\text{c}) = 1 - \mathbb{P}(A)$.
 
@@ -37,10 +42,12 @@ Let $A$ be an event. Then
      $\mathbb{P}(B) \leq \mathbb{P}(A)$.
 
 (iii) $0 = \mathbb{P}(\varnothing) \leq \mathbb{P}(A) \leq \mathbb{P}(\Omega) = 1$
+:::
 
 
+:::{prf:proof}
 
-*Proof.* (i) Using the countable additivity of $\mathbb{P}$, we have
+ (i) Using the countable additivity of $\mathbb{P}$, we have
 
 $$\mathbb{P}(A) + \mathbb{P}(A^\text{c}) = \mathbb{P}(A \mathbin{\dot{\cup}} A^\text{c}) = \mathbb{P}(\Omega) = 1$$
 
@@ -55,16 +62,24 @@ $\varnothing \subseteq A \subseteq \Omega$. We also have
 
 $$\mathbb{P}(\varnothing) = \mathbb{P}(\varnothing \mathbin{\dot{\cup}} \varnothing) = \mathbb{P}(\varnothing) + \mathbb{P}(\varnothing)$$
 
-by countable additivity, which shows $\mathbb{P}(\varnothing) = 0$. ◻
+by countable additivity, which shows $\mathbb{P}(\varnothing) = 0$.
+
+:::
 
 
-*Proposition.*
+:::{prf:proposition}
+:label: probability-union
+:nonumber:
+
 If $A$ and $B$ are events, then
 $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$.
 
+:::
 
 
-*Proof.* The key is to break the events up into their various
+:::{prf:proof}
+
+The key is to break the events up into their various
 overlapping and non-overlapping parts. 
 
 $$\begin{aligned}
@@ -75,21 +90,26 @@ $$\begin{aligned}
 \end{aligned}$$
 
  ◻
+:::
 
+:::{prf:proposition} Union bound
+:label: probability-union
+:nonumber:
 
-*Proposition.*
 If $\{A_i\} \subseteq \mathcal{F}$ is a countable set of events,
 disjoint or not, then
 
 $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) \leq \sum_i \mathbb{P}(A_i)$$
 
-
+:::
 
 This inequality is sometimes referred to as **Boole's inequality** or
 the **union bound**.
 
 
-*Proof.* Define $B_1 = A_1$ and
+:::{prf:proof}
+
+Define $B_1 = A_1$ and
 $B_i = A_i \setminus (\bigcup_{j < i} A_j)$ for $i > 1$, noting that
 $\bigcup_{j \leq i} B_j = \bigcup_{j \leq i} A_j$ for all $i$ and the
 $B_i$ are disjoint. Then
@@ -97,10 +117,12 @@ $B_i$ are disjoint. Then
 $$\mathbb{P}\bigg(\bigcup_i A_i\bigg) = \mathbb{P}\bigg(\bigcup_i B_i\bigg) = \sum_i \mathbb{P}(B_i) \leq \sum_i \mathbb{P}(A_i)$$
 
 where the last inequality follows by monotonicity since
-$B_i \subseteq A_i$ for all $i$. ◻
+$B_i \subseteq A_i$ for all $i$.
+
+:::
 
 
-### Conditional probability
+## Conditional probability
 
 The **conditional probability** of event $A$ given that event $B$ has
 occurred is written $\mathbb{P}(A | B)$ and defined as
@@ -109,14 +131,14 @@ $$\mathbb{P}(A | B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}$$
 
 assuming $\mathbb{P}(B) > 0$.[^10]
 
-### Chain rule
+## Chain rule of probability
 
 Another very useful tool, the **chain rule**, follows immediately from
 this definition:
 
 $$\mathbb{P}(A \cap B) = \mathbb{P}(A | B)\mathbb{P}(B) = \mathbb{P}(B | A)\mathbb{P}(A)$$
 
-### Bayes' rule
+## Bayes' rule
 
 Taking the equality from above one step further, we arrive at the simple
 but crucial **Bayes' rule**:
@@ -125,7 +147,9 @@ $$\mathbb{P}(A | B) = \frac{\mathbb{P}(B | A)\mathbb{P}(A)}{\mathbb{P}(B)}$$
 
 It is sometimes beneficial to omit the normalizing constant and write
 
-$$\mathbb{P}(A | B) \propto \mathbb{P}(A)\mathbb{P}(B | A)$$ 
+$$
+\mathbb{P}(A | B) \propto \mathbb{P}(A)\mathbb{P}(B | A)
+$$ 
 
 Under this
 formulation, $\mathbb{P}(A)$ is often referred to as the **prior**,

@@ -1,4 +1,4 @@
-## Joint distributions
+# Joint distributions
 
 Often we have several random variables and we would like to get a
 distribution over some combination of them. A **joint distribution** is
@@ -6,7 +6,7 @@ exactly this. For some random variables $X_1, \dots, X_n$, the joint
 distribution is written $p(X_1, \dots, X_n)$ and gives probabilities
 over entire assignments to all the $X_i$ simultaneously.
 
-### Independence of random variables
+## Independence of random variables
 
 We say that two variables $X$ and $Y$ are **independent** if their joint
 distribution factors into their respective distributions, i.e.
@@ -36,7 +36,7 @@ $$p(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)$$
 where
 $X_1, \dots, X_n$ all share the same p.m.f./p.d.f.
 
-### Marginal distributions
+## Marginal distributions
 
 If we have a joint distribution over some set of random variables, it is
 possible to obtain a distribution for a subset of them by "summing out"

@@ -1,4 +1,4 @@
-## Covariance
+# Covariance
 
 Covariance is a measure of the linear relationship between two random
 variables. We denote the covariance between $X$ and $Y$ as
@@ -23,7 +23,7 @@ $$\begin{aligned}
 \operatorname{Cov}(X, \alpha Y + \beta Z) &= \alpha\operatorname{Cov}(X, Y) + \beta\operatorname{Cov}(X, Z)
 \end{aligned}$$
 
-### Correlation
+## Correlation
 
 Normalizing the covariance gives the **correlation**:
 

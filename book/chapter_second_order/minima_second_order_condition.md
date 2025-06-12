@@ -125,6 +125,7 @@ matrix $\begin{bmatrix}0\end{bmatrix}$, is positive semi-definite).
 However,
 $f$ has a saddle point at $x = 0$:
 
+
 ```{code-cell} ipython3
 :tags: [hide-input]
 import numpy as np

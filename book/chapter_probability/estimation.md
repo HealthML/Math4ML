@@ -1,4 +1,4 @@
-## Estimation of Parameters
+# Estimation of Parameters
 
 Now we get into some basic topics from statistics. We make some
 assumptions about our problem by prescribing a **parametric** model
@@ -6,19 +6,23 @@ assumptions about our problem by prescribing a **parametric** model
 we fit the parameters of the model to the data. How do we choose the
 values of the parameters?
 
-### Maximum likelihood estimation
+## Maximum likelihood estimation
 
 A common way to fit parameters is **maximum likelihood estimation**
-(MLE). The basic principle of MLE is to choose values that "explain" the
+(MLE). The basic principle of MLE is to choose values that  "explain" the
 data best by maximizing the probability/density of the data we've seen
 as a function of the parameters. Suppose we have random variables
 $X_1, \dots, X_n$ and corresponding observations $x_1, \dots, x_n$. Then
 
-$$\hat{\mathbf{\theta}}_\text{mle} = \operatorname{argmax}_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})$$
+$$
+\hat{\mathbf{\theta}}_\text{mle} = \operatorname{argmax}_\mathbf{\theta} \mathcal{L}(\mathbf{\theta})
+$$
 
 where $\mathcal{L}$ is the **likelihood function**
 
-$$\mathcal{L}(\mathbf{\theta}) = p(x_1, \dots, x_n; \mathbf{\theta})$$
+$$
+\mathcal{L}(\mathbf{\theta}) = p(x_1, \dots, x_n; \mathbf{\theta})
+$$
 
 Often, we assume that $X_1, \dots, X_n$ are i.i.d. Then we can write
 
@@ -39,7 +43,7 @@ maximum likelihood estimator. If $\log\mathcal{L}$ is differentiable,
 setting the derivatives to zero and trying to solve for
 $\mathbf{\theta}$ is a good place to start.
 
-### Maximum a posteriori estimation
+## Maximum a posteriori estimation
 
 A more Bayesian way to fit parameters is through **maximum a posteriori
 estimation** (MAP). In this technique we assume that the parameters are

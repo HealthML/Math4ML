@@ -1,4 +1,4 @@
-## Random variables
+# Random variables
 
 A **random variable** is some uncertain quantity with an associated
 probability distribution over the values it can assume.
@@ -40,7 +40,7 @@ $p(X; \mathbf{\theta})$ or $p(x; \mathbf{\theta})$, unless we are in a
 Bayesian setting where the parameters are considered a random variable,
 in which case we condition on the parameters.
 
-### The cumulative distribution function
+## The cumulative distribution function
 
 The **cumulative distribution function** (c.d.f.) gives the probability
 that a random variable is at most a certain value:
@@ -52,7 +52,7 @@ probability that a variable lies within a certain range:
 
 $$\mathbb{P}(a < X \leq b) = F(b) - F(a)$$
 
-### Discrete random variables
+## Discrete random variables
 
 A **discrete random variable** is a random variable that has a countable
 range and assumes each value in this range with positive probability.
@@ -67,7 +67,7 @@ probability of a particular value is given exactly by its p.m.f.:
 
 $$\mathbb{P}(X = x) = p(x)$$
 
-### Continuous random variables
+## Continuous random variables
 
 A **continuous random variable** is a random variable that has an
 uncountable range and assumes each value in this range with probability
@@ -106,7 +106,7 @@ $$\begin{aligned}
 p(x) &= F'(x)
 \end{aligned}$$
 
-### Other kinds of random variables
+## Other kinds of random variables
 
 There are random variables that are neither discrete nor continuous. For
 example, consider a random variable determined as follows: flip a fair

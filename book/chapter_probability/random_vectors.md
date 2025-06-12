@@ -1,4 +1,4 @@
-## Random vectors
+# Random vectors
 
 So far we have been talking about **univariate distributions**, that is,
 distributions of single variables. But we can also talk about
