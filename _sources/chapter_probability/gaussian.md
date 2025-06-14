@@ -1,4 +1,16 @@
-## The Gaussian distribution
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.7
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+# The Gaussian distribution
 
 There are many distributions, but one of particular importance is the
 **Gaussian distribution**, also known as the **normal distribution**. It
@@ -17,7 +29,7 @@ We write $\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})$ to
 denote that $\mathbf{X}$ is normally distributed with mean $\boldsymbol\mu$ and
 variance $\mathbf{\Sigma}$.
 
-### The geometry of multivariate Gaussians
+## The geometry of multivariate Gaussians
 
 The geometry of the multivariate Gaussian density is intimately related
 to the geometry of positive definite quadratic forms, so make sure the
@@ -64,51 +76,3 @@ ellipsoids (centered at $\boldsymbol\mu$) with axis lengths proportional to the
 inverse square roots of the eigenvalues of $\mathbf{\Sigma}^{-1}$, or
 equivalently, the square roots of the eigenvalues of $\mathbf{\Sigma}$.
 
-[^1]: More generally, vector spaces can be defined over any **field**
-    $\mathbb{F}$. We take $\mathbb{F} = \mathbb{R}$ in this document to
-    avoid an unnecessary diversion into abstract algebra.
-
-[^2]: It is sometimes called the **kernel** by algebraists, but we
-    eschew this terminology because the word "kernel" has another
-    meaning in machine learning.
-
-[^3]: If a normed space is complete with respect to the distance metric
-    induced by its norm, we say that it is a **Banach space**.
-
-[^4]: If an inner product space is complete with respect to the distance
-    metric induced by its inner product, we say that it is a **Hilbert
-    space**.
-
-[^5]: Recall that $\mathbf{A}^{\!\top\!}\mathbf{A}$ and
-    $\mathbf{A}\mathbf{A}^{\!\top\!}$ are positive semi-definite, so
-    their eigenvalues are nonnegative, and thus taking square roots is
-    always well-defined.
-
-[^6]: A **neighborhood** about $\mathbf{x}$ is an open set which
-    contains $\mathbf{x}$.
-
-[^7]: $\mathcal{F}$ is required to be a $\sigma$-algebra for technical
-    reasons; see [@rigorousprob].
-
-[^8]: Note that a probability space is simply a measure space in which
-    the measure of the whole space equals 1.
-
-[^9]: This is a probabilist's version of the measure-theoretic term
-    *almost everywhere*.
-
-[^10]: In some cases it is possible to define conditional probability on
-    events of probability zero, but this is significantly more technical
-    so we omit it.
-
-[^11]: The function must be measurable.
-
-[^12]: More generally, the codomain can be any measurable space, but
-    $\mathbb{R}$ is the most common case by far and sufficient for our
-    purposes.
-
-[^13]: Random variables that are continuous but not absolutely
-    continuous are called **singular random variables**. We will not
-    discuss them, assuming rather that all continuous random variables
-    admit a density function.
-
-[^14]: We haven't defined this yet; see the Correlation section below

@@ -510,37 +510,45 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="variance">
 <h1>Variance<a class="headerlink" href="#variance" title="Link to this heading">#</a></h1>
-<p>Expectation provides a measure of the “center” of a distribution, but
-frequently we are also interested in what the “spread” is about that
-center. We define the variance <span class="math notranslate nohighlight">\(\operatorname{Var}(X)\)</span> of a random
-variable <span class="math notranslate nohighlight">\(X\)</span> by</p>
+<p>Expectation provides a measure of the “center” of a distribution, but frequently we are also interested in what the “spread” is about that center.
+We define the variance <span class="math notranslate nohighlight">\(\operatorname{Var}(X)\)</span> of a random variable <span class="math notranslate nohighlight">\(X\)</span> by</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Var}(X) = \mathbb{E}\left[\left(X - \mathbb{E}[X]\right)^2\right]\]</div>
-<p>In words, this is the average squared deviation of the values of <span class="math notranslate nohighlight">\(X\)</span>
-from the mean of <span class="math notranslate nohighlight">\(X\)</span>. Using a little algebra and the linearity of
-expectation, it is straightforward to show that</p>
+<p>In words, this is the average squared deviation of the values of <span class="math notranslate nohighlight">\(X\)</span> from the mean of <span class="math notranslate nohighlight">\(X\)</span>.
+Using a little algebra and the linearity of expectation, it is straightforward to show that</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2\]</div>
+<hr class="docutils" />
+<p>So the <strong>variance</strong> of a random variable <span class="math notranslate nohighlight">\(X\)</span> is the expected value of the squared deviation of <span class="math notranslate nohighlight">\(X\)</span> from its mean.</p>
+<p>So, the variance of the number of heads in a single toss of a fair coin is</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Var}(X) = \mathbb{E}[X^2] - \left( \mathbb{E}[X] \right)^2 = \sum_x x^2 \cdot \mathbb{P}(X = x) - 0.5^2 = 0\cdot 0.5 + 1^2\cdot 0.5 - 0.5^2 = 0.25
+\]</div>
 <section id="properties-of-variance">
 <h2>Properties of variance<a class="headerlink" href="#properties-of-variance" title="Link to this heading">#</a></h2>
-<p>Variance is not linear (because of the squaring in the definition), but
-one can show the following:</p>
+<p>Variance is not linear (because of the squaring in the definition), but one can show the following:</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Var}(\alpha X + \beta) = \alpha^2 \operatorname{Var}(X)\]</div>
-<p>Basically, multiplicative constants become squared when they are pulled
-out, and additive constants disappear (since the variance contributed by
-a constant is zero).</p>
-<p>Furthermore, if <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> are uncorrelated[^14], then</p>
+<p>Basically, multiplicative constants become squared when they are pulled out, and additive constants disappear (since the variance contributed by a constant is zero).</p>
+<hr class="docutils" />
+<p>It follows that in our example of two tosses of a fair coin, the variance of the total number of heads can be computed from the variance of the individual tosses:</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{Var}(X_1 + X_2) = \operatorname{Var}(X_1) + \operatorname{Var}(X_2) = 0.25 + 0.25 = 1.0\]</div>
+<hr class="docutils" />
+<p>Furthermore, if <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> are uncorrelated, then</p>
 <div class="math notranslate nohighlight">
 \[\operatorname{Var}(X_1 + \dots + X_n) = \operatorname{Var}(X_1) + \dots + \operatorname{Var}(X_n)\]</div>
+<hr class="docutils" />
+<p>So for example, the variance of the total number of heads in <span class="math notranslate nohighlight">\(n\)</span> tosses of a fair coin is <span class="math notranslate nohighlight">\(n\)</span> times the variance of the number of heads in a single toss, i.e. <span class="math notranslate nohighlight">\(n \cdot 0.25\)</span>.</p>
 </section>
 <section id="standard-deviation">
 <h2>Standard deviation<a class="headerlink" href="#standard-deviation" title="Link to this heading">#</a></h2>
-<p>Variance is a useful notion, but it suffers from that fact the units of
-variance are not the same as the units of the random variable (again
-because of the squaring). To overcome this problem we can use <strong>standard
-deviation</strong>, which is defined as <span class="math notranslate nohighlight">\(\sqrt{\operatorname{Var}(X)}\)</span>. The
-standard deviation of <span class="math notranslate nohighlight">\(X\)</span> has the same units as <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<p>Variance is a useful notion, but it suffers from that fact the units of variance are not the same as the units of the random variable (again because of the squaring).</p>
+<p>To overcome this problem we can use <strong>standard deviation</strong>, which is defined as <span class="math notranslate nohighlight">\(\sqrt{\operatorname{Var}(X)}\)</span>.
+The standard deviation of <span class="math notranslate nohighlight">\(X\)</span> has the same units as <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<hr class="docutils" />
+<p>The standard deviation of the total number of heads in <span class="math notranslate nohighlight">\(n\)</span> tosses of a fair coin is <span class="math notranslate nohighlight">\(\sqrt{n \cdot 0.25}\)</span>.</p>
 </section>
 </section>
 

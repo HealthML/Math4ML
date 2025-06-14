@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The Gaussian distribution &#8212; Mathematics for Machine Learning</title>
+    <title>3. Simulation of Many Tosses &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -58,14 +58,10 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_probability/gaussian';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/gaussian.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_probability/cut_random_variables';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/cut_random_variables.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
-    <link rel="prev" title="Random vectors" href="random_vectors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +124,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +182,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -247,7 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
@@ -256,7 +254,7 @@
 <li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimation of Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">The Gaussian distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
 </ul>
 </details></li>
 </ul>
@@ -354,7 +352,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_probability/gaussian.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_probability/cut_random_variables.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -371,7 +369,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_probability/gaussian.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_probability/cut_random_variables.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -401,7 +399,7 @@
       
       
       
-      <li><a href="../_sources/chapter_probability/gaussian.md" target="_blank"
+      <li><a href="../_sources/chapter_probability/cut_random_variables.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -472,9 +470,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -485,19 +481,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>The Gaussian distribution</h1>
+    <h1>3. Simulation of Many Tosses</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-multivariate-gaussians">The geometry of multivariate Gaussians</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -507,64 +495,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-gaussian-distribution">
-<h1>The Gaussian distribution<a class="headerlink" href="#the-gaussian-distribution" title="Link to this heading">#</a></h1>
-<p>There are many distributions, but one of particular importance is the
-<strong>Gaussian distribution</strong>, also known as the <strong>normal distribution</strong>. It
-is a continuous distribution, parameterized by its mean
-<span class="math notranslate nohighlight">\(\boldsymbol\mu \in \mathbb{R}^d\)</span> and positive-definite covariance matrix
-<span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, with density</p>
-<div class="math notranslate nohighlight">
-\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = \frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol\mu)^{\!\top\!}\mathbf{\Sigma}^{-1}(\mathbf{x} - \boldsymbol\mu)\right)\]</div>
-<p>Note that in the special case <span class="math notranslate nohighlight">\(d = 1\)</span>, the density is written in the
-more recognizable form</p>
-<div class="math notranslate nohighlight">
-\[p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</div>
-<p>We write <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span> to
-denote that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is normally distributed with mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and
-variance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
-<section id="the-geometry-of-multivariate-gaussians">
-<h2>The geometry of multivariate Gaussians<a class="headerlink" href="#the-geometry-of-multivariate-gaussians" title="Link to this heading">#</a></h2>
-<p>The geometry of the multivariate Gaussian density is intimately related
-to the geometry of positive definite quadratic forms, so make sure the
-material in that section is well-understood before tackling this
-section.</p>
-<p>First observe that the p.d.f. of the multivariate Gaussian can be
-rewritten as</p>
-<div class="math notranslate nohighlight">
-\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\]</div>
-<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x} - \boldsymbol\mu\)</span> and
-<span class="math notranslate nohighlight">\(g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)\)</span>.
-Writing the density in this way, we see that after shifting by the mean
-<span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>, the density is really just a simple function of its precision
-matrix’s quadratic form.</p>
-<p>Here is a key observation: this function <span class="math notranslate nohighlight">\(g\)</span> is <strong>strictly monotonically
-decreasing</strong> in its argument. That is, <span class="math notranslate nohighlight">\(g(a) &gt; g(b)\)</span> whenever <span class="math notranslate nohighlight">\(a &lt; b\)</span>.
-Therefore, small values of
-<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>
-(which generally correspond to points where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> is
-closer to <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \approx \boldsymbol\mu\)</span>) have
-relatively high probability densities, and vice-versa. Furthermore,
-because <span class="math notranslate nohighlight">\(g\)</span> is <em>strictly</em> monotonic, it is injective, so the
-<span class="math notranslate nohighlight">\(c\)</span>-isocontours of <span class="math notranslate nohighlight">\(p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma})\)</span> are the
-<span class="math notranslate nohighlight">\(g^{-1}(c)\)</span>-isocontours of the function
-<span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>.
-That is, for any <span class="math notranslate nohighlight">\(c\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\]</div>
-<p>In words, these functions have the same isocontours but different
-isovalues.</p>
-<p>Recall the executive summary of the geometry of positive definite
-quadratic forms: the isocontours of
-<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> are
-ellipsoids such that the axes point in the directions of the
-eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the lengths of these axes are
-proportional to the inverse square roots of the corresponding
-eigenvalues. Therefore in this case, the isocontours of the density are
-ellipsoids (centered at <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>) with axis lengths proportional to the
-inverse square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>, or
-equivalently, the square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
-</section>
+  <hr class="docutils" />
+<section id="simulation-of-many-tosses">
+<h1>3. <strong>Simulation of Many Tosses</strong><a class="headerlink" href="#simulation-of-many-tosses" title="Link to this heading">#</a></h1>
+<ul class="simple">
+<li><p>Empirically approximate the PMF via simulation.</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -597,45 +533,12 @@ equivalently, the square roots of the eigenvalues of <span class="math notransla
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="random_vectors.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Random vectors</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../appendix/proofs.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Detailed Proofs</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-multivariate-gaussians">The geometry of multivariate Gaussians</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

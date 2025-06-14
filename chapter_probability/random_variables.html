@@ -515,42 +515,189 @@ document.write(`
 <p>A <strong>random variable</strong> is some uncertain quantity with an associated
 probability distribution over the values it can assume.</p>
 <p>Formally, a random variable on a probability space
-<span class="math notranslate nohighlight">\((\Omega, \mathcal{F}, \mathbb{P})\)</span> is a function[^11]
+<span class="math notranslate nohighlight">\((\Omega, \mathcal{F}, \mathbb{P})\)</span> is a function
 <span class="math notranslate nohighlight">\(X: \Omega \to \mathbb{R}\)</span>.[^12]</p>
 <p>We denote the range of <span class="math notranslate nohighlight">\(X\)</span> by
-<span class="math notranslate nohighlight">\(X(\Omega) = \{X(\omega) : \omega \in \Omega\}\)</span>. To give a concrete
-example (taken from [&#64;pitman]), suppose <span class="math notranslate nohighlight">\(X\)</span> is the number of heads in
-two tosses of a fair coin. The sample space is</p>
+<span class="math notranslate nohighlight">\(X(\Omega) = \{X(\omega) : \omega \in \Omega\}\)</span>.</p>
+<p>To give a concrete
+example, suppose <span class="math notranslate nohighlight">\(X\)</span> is the number of heads in
+two tosses of a fair coin.</p>
+<p>The sample space is</p>
 <div class="math notranslate nohighlight">
 \[\Omega = \{hh, tt, ht, th\}\]</div>
 <p>and <span class="math notranslate nohighlight">\(X\)</span> is determined completely by the
-outcome <span class="math notranslate nohighlight">\(\omega\)</span>, i.e. <span class="math notranslate nohighlight">\(X = X(\omega)\)</span>. For example, the event <span class="math notranslate nohighlight">\(X = 1\)</span>
+outcome <span class="math notranslate nohighlight">\(\omega\)</span>, i.e. <span class="math notranslate nohighlight">\(X = X(\omega)\)</span>.</p>
+<p>For example, the event <span class="math notranslate nohighlight">\(X = 1\)</span>
 is the set of outcomes <span class="math notranslate nohighlight">\(\{ht, th\}\)</span>.</p>
-<p>It is common to talk about the values of a random variable without
-directly referencing its sample space. The two are related by the
-following definition: the event that the value of <span class="math notranslate nohighlight">\(X\)</span> lies in some set
-<span class="math notranslate nohighlight">\(S \subseteq \mathbb{R}\)</span> is</p>
+<p>Below is a visualization of the random variable <span class="math notranslate nohighlight">\(X\)</span> mapping the sample space <span class="math notranslate nohighlight">\(\Omega\)</span> to the real numbers <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Digraph</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_random_variable_graphviz</span><span class="p">():</span>
+    <span class="n">dot</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Random Variable Mapping X: Ω → ℝ&#39;</span><span class="p">)</span>
+
+    <span class="n">omega</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;ht&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;tt&#39;</span><span class="p">]</span>
+    <span class="n">X_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;hh&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ht&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;th&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;tt&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span>
+    <span class="p">}</span>
+
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_omega&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">c1</span><span class="p">:</span>
+        <span class="n">c1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sample Space Ω&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">omega</span><span class="p">:</span>
+            <span class="n">c1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_real&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">c2</span><span class="p">:</span>
+        <span class="n">c2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;ℝ (range of X)&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">X_map</span><span class="o">.</span><span class="n">values</span><span class="p">())):</span>
+            <span class="n">c2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;X=</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;X=</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dot</span>
+
+<span class="n">dot</span> <span class="o">=</span> <span class="n">plot_random_variable_graphviz</span><span class="p">()</span>
+<span class="c1"># dot.render(&#39;random_variable_mapping&#39;, view=True, format=&#39;png&#39;)  # Creates PNG and opens it</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">dot</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;png&#39;</span>
+<span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;random_variable_mapping&#39;</span><span class="p">)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;random_variable_mapping.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/a6cd5133ece88adc0a3f5950d62edfea3370a1afcad7e8cd49d42faa55f33494.png" src="../_images/a6cd5133ece88adc0a3f5950d62edfea3370a1afcad7e8cd49d42faa55f33494.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>It is possible to define <strong>multiple random variables</strong> on the same probability space.</p>
+<p>For example, we can define the random variable <span class="math notranslate nohighlight">\(Y\)</span> to be the number of tails in two tosses of a fair coin.</p>
+<p>The sample space is still</p>
+<div class="math notranslate nohighlight">
+\[\Omega = \{hh, ht, th, tt\}\]</div>
+<p>and <span class="math notranslate nohighlight">\(Y\)</span> is determined completely by the
+outcome <span class="math notranslate nohighlight">\(\omega\)</span>, i.e. <span class="math notranslate nohighlight">\(Y = Y(\omega)\)</span>.</p>
+<p>Below is a visualization of the joint random variable <span class="math notranslate nohighlight">\((X, Y)\)</span> mapping the sample space <span class="math notranslate nohighlight">\(\Omega\)</span> to the real numbers <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Digraph</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_joint_variable_graphviz</span><span class="p">():</span>
+    <span class="n">dot</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Joint Random Variable Mapping: ω ↦ (X(ω), Y(ω))&#39;</span><span class="p">)</span>
+
+    <span class="n">omega</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;ht&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;tt&#39;</span><span class="p">]</span>
+    <span class="n">joint_values</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;hh&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="s1">&#39;ht&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;th&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="s1">&#39;tt&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Subgraph for Ω</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_omega&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">c1</span><span class="p">:</span>
+        <span class="n">c1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sample Space Ω&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">omega</span><span class="p">:</span>
+            <span class="n">c1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Subgraph for ℝ² (range of (X,Y))</span>
+    <span class="k">with</span> <span class="n">dot</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;cluster_range&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">c2</span><span class="p">:</span>
+        <span class="n">c2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Range of (X,Y)&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+        <span class="n">unique_pairs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">joint_values</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">unique_pairs</span><span class="p">:</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="n">c2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Edges: ω → (X(ω), Y(ω))</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">omega</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">joint_values</span><span class="p">[</span><span class="n">o</span><span class="p">]</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">dot</span>
+
+<span class="n">dot</span> <span class="o">=</span> <span class="n">plot_joint_variable_graphviz</span><span class="p">()</span>
+<span class="c1"># dot.render(&#39;joint_random_variable_mapping&#39;, view=True, format=&#39;png&#39;)  # Creates PNG and opens it</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="n">dot</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;png&#39;</span>
+<span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;joint_random_variable_mapping&#39;</span><span class="p">)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;joint_random_variable_mapping.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/ba3a31ed9dc906fc3c2baf3d262a8ff28c32215fa14792b36b46d05eead334ab.png" src="../_images/ba3a31ed9dc906fc3c2baf3d262a8ff28c32215fa14792b36b46d05eead334ab.png" />
+</div>
+</div>
+<hr class="docutils" />
+<p>It is common to talk about the values of a random variable without directly referencing its sample space.
+The two are related by the following definition: the event that the value of <span class="math notranslate nohighlight">\(X\)</span> lies in some set <span class="math notranslate nohighlight">\(S \subseteq \mathbb{R}\)</span> is</p>
 <div class="math notranslate nohighlight">
 \[X \in S = \{\omega \in \Omega : X(\omega) \in S\}\]</div>
-<p>Note that special
-cases of this definition include <span class="math notranslate nohighlight">\(X\)</span> being equal to, less than, or
-greater than some specified value. For example</p>
+<p>Note that special cases of this definition include <span class="math notranslate nohighlight">\(X\)</span> being equal to, less than, or greater than some specified value.</p>
+<p>For example,</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{P}(X = x) = \mathbb{P}(\{\omega \in \Omega : X(\omega) = x\})\]</div>
-<p>A word on notation: we write <span class="math notranslate nohighlight">\(p(X)\)</span> to denote the entire probability
-distribution of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(p(x)\)</span> for the evaluation of the function <span class="math notranslate nohighlight">\(p\)</span> at
-a particular value <span class="math notranslate nohighlight">\(x \in X(\Omega)\)</span>. Hopefully this (reasonably
-standard) abuse of notation is not too distracting. If <span class="math notranslate nohighlight">\(p\)</span> is
-parameterized by some parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we write
-<span class="math notranslate nohighlight">\(p(X; \mathbf{\theta})\)</span> or <span class="math notranslate nohighlight">\(p(x; \mathbf{\theta})\)</span>, unless we are in a
-Bayesian setting where the parameters are considered a random variable,
-in which case we condition on the parameters.</p>
+<p>A word on notation: we write <span class="math notranslate nohighlight">\(p(X)\)</span> to denote the entire probability distribution of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(p(x)\)</span> for the evaluation of the function <span class="math notranslate nohighlight">\(p\)</span> at a particular value <span class="math notranslate nohighlight">\(x \in X(\Omega)\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(p\)</span> is parameterized by some parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we write <span class="math notranslate nohighlight">\(p(X; \mathbf{\theta})\)</span> or <span class="math notranslate nohighlight">\(p(x; \mathbf{\theta})\)</span>, unless we are in a Bayesian setting where the parameters are considered a random variable, in which case we condition on the parameters.</p>
 <section id="the-cumulative-distribution-function">
 <h2>The cumulative distribution function<a class="headerlink" href="#the-cumulative-distribution-function" title="Link to this heading">#</a></h2>
-<p>The <strong>cumulative distribution function</strong> (c.d.f.) gives the probability
-that a random variable is at most a certain value:</p>
+<p>The <strong>cumulative distribution function</strong> (c.d.f.) gives the probability that a random variable is at most a certain value:</p>
 <div class="math notranslate nohighlight">
 \[F(x) = \mathbb{P}(X \leq x)\]</div>
+<p>The c.d.f. is a non-decreasing function that is right-continuous.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Discrete outcomes of X = number of heads in two tosses</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">pmf_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">])</span>  <span class="c1"># From outcomes: tt, ht/th, hh</span>
+<span class="n">cdf_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pmf_vals</span><span class="p">)</span>
+
+<span class="c1"># CDF step plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">cdf_vals</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$F(x) = \mathbb</span><span class="si">{P}</span><span class="s1">(X \leq x)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">cdf_vals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;F(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CDF of $X$ = Number of Heads in Two Tosses&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/54ddf1a4f0e4985cc7ad469c6ca63a23ad9d4c747ec6bfd3336781dd2e5a3d4f.png" src="../_images/54ddf1a4f0e4985cc7ad469c6ca63a23ad9d4c747ec6bfd3336781dd2e5a3d4f.png" />
+</div>
+</div>
 <p>The c.d.f. can be used to give the
 probability that a variable lies within a certain range:</p>
 <div class="math notranslate nohighlight">
@@ -558,8 +705,7 @@ probability that a variable lies within a certain range:</p>
 </section>
 <section id="discrete-random-variables">
 <h2>Discrete random variables<a class="headerlink" href="#discrete-random-variables" title="Link to this heading">#</a></h2>
-<p>A <strong>discrete random variable</strong> is a random variable that has a countable
-range and assumes each value in this range with positive probability.
+<p>A <strong>discrete random variable</strong> is a random variable that has a countable range and assumes each value in this range with positive probability.
 Discrete random variables are completely specified by their
 <strong>probability mass function</strong> (p.m.f.) <span class="math notranslate nohighlight">\(p : X(\Omega) \to [0,1]\)</span> which
 satisfies</p>
@@ -569,50 +715,324 @@ satisfies</p>
 probability of a particular value is given exactly by its p.m.f.:</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{P}(X = x) = p(x)\]</div>
+<p>Going back to our example. Below, we visualize the probability mass function (PMF) of <span class="math notranslate nohighlight">\(X\)</span>, which gives the probability of each value of <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_pmf</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+    <span class="n">omega</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hh&#39;</span><span class="p">,</span> <span class="s1">&#39;ht&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">,</span> <span class="s1">&#39;tt&#39;</span><span class="p">]</span>
+    <span class="n">X_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="k">if</span> <span class="n">o</span> <span class="o">==</span> <span class="s1">&#39;hh&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ht&#39;</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">omega</span><span class="p">]</span>
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">X_values</span><span class="p">)</span>
+
+    <span class="c1"># Normalize</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">probs</span><span class="p">:</span>
+        <span class="n">probs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">probs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Value of X&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PMF of Random Variable X: Number of Heads in Two Tosses&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot_pmf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/c25d0eff914c327287eedd7f0097a512ea7bb9b83a19a53ac0dda3cc825fea25.png" src="../_images/c25d0eff914c327287eedd7f0097a512ea7bb9b83a19a53ac0dda3cc825fea25.png" />
+</div>
+</div>
 </section>
 <section id="continuous-random-variables">
 <h2>Continuous random variables<a class="headerlink" href="#continuous-random-variables" title="Link to this heading">#</a></h2>
-<p>A <strong>continuous random variable</strong> is a random variable that has an
-uncountable range and assumes each value in this range with probability
-zero. Most of the continuous random variables that one would encounter
-in practice are <strong>absolutely continuous random variables</strong>[^13], which
-means that there exists a function <span class="math notranslate nohighlight">\(p : \mathbb{R} \to [0,\infty)\)</span> that
-satisfies</p>
+<p>A <strong>continuous random variable</strong> is a random variable that has an uncountable range and assumes each value in this range with probability
+zero.</p>
+<p>Most of the continuous random variables that one would encounter in practice are <strong>absolutely continuous random variables</strong>, which means that there exists a function <span class="math notranslate nohighlight">\(p : \mathbb{R} \to [0,\infty)\)</span> that satisfies</p>
 <div class="math notranslate nohighlight">
 \[F(x) \equiv \int_{-\infty}^x p(z)\operatorname{d}{z}\]</div>
-<p>The function <span class="math notranslate nohighlight">\(p\)</span>
-is called a <strong>probability density function</strong> (abbreviated p.d.f.) and
-must satisfy</p>
+<p>The function <span class="math notranslate nohighlight">\(p\)</span> is called a <strong>probability density function</strong> (abbreviated p.d.f.) and must satisfy</p>
 <div class="math notranslate nohighlight">
 \[\int_{-\infty}^\infty p(x)\operatorname{d}{x} = 1\]</div>
-<p>The values of this
-function are not themselves probabilities, since they could exceed 1.
-However, they do have a couple of reasonable interpretations. One is as
-relative probabilities; even though the probability of each particular
-value being picked is technically zero, some points are still in a sense
+<p>As an example for a continuous random variable, consider
+patient body temperature in a hospital.</p>
+<p>Let</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\Omega\)</span>: all possible physiological states of a patient at a point in time (heart rate, immune response, infection status, etc.)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{F}\)</span>: a <span class="math notranslate nohighlight">\(\sigma\)</span>-algebra over measurable subsets of these states</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{P}\)</span>: probability measure capturing likelihoods over patient states</p></li>
+</ul>
+<p>Define the <strong>random variable</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+T : \Omega \to \mathbb{R}
+\]</div>
+<p>that maps each state <span class="math notranslate nohighlight">\(\omega \in \Omega\)</span> to a <strong>measured body temperature</strong>, e.g.,</p>
+<div class="math notranslate nohighlight">
+\[
+T(\omega) = \text{body temperature (in °C) in state } \omega
+\]</div>
+<hr class="docutils" />
+<p>Typical human temperatures range roughly between:</p>
+<div class="math notranslate nohighlight">
+\[
+T(\Omega) \subseteq [34.0, 42.0] \subset \mathbb{R}
+\]</div>
+<p>The average temperature in the United States is around 36.6°C, but there is some spread around this value and the distribution is not symmetric.
+Below is a visualization of the probability density function of the body temperature distribution (modelled as a gamma distribution).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">gamma</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="mf">36.6</span><span class="p">,</span> <span class="mf">0.8</span>  <span class="c1"># Mean and std dev of normal </span>
+<span class="n">min_temp</span> <span class="o">=</span> <span class="mf">34.0</span>
+<span class="n">max_temp</span> <span class="o">=</span> <span class="mf">42.0</span>
+<span class="n">loc</span> <span class="o">=</span> <span class="n">min_temp</span>
+<span class="n">var</span> <span class="o">=</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">var</span> <span class="o">/</span> <span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">loc</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">theta</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">mean</span> <span class="o">-</span> <span class="n">loc</span><span class="p">)</span> <span class="o">/</span> <span class="n">theta</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_body_temperature_pdf</span><span class="p">():</span>
+
+
+    <span class="c1"># mean = alpha * theta + loc</span>
+    <span class="c1"># var = alpha * theta**2 </span>
+
+    <span class="c1"># alpha * theta  = (mean - loc)</span>
+    <span class="c1"># alpha = (mean - loc) / theta</span>
+    <span class="c1"># alpha * theta**2 = var</span>
+    <span class="c1"># (mean - loc) / theta * theta**2 = var</span>
+    <span class="c1"># (mean - loc) * theta = var</span>
+
+    <span class="c1"># print(alpha * theta + loc)</span>
+    <span class="c1"># print(alpha * theta**2)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span> 
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbb</span><span class="si">{P}</span><span class="s1">(T=t)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Temp&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Continuous Random Variable: Body Temperature $T$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_body_temperature_cdf</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbb</span><span class="si">{P}</span><span class="s1">(T\leq t)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Temp&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Cumulative Distribution Function of Body Temperature $T$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cumulative Probability&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_body_temperature_pdf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/a3802d5c6e90ee2428b81d116b60d4a3cf4d1f9f04aa8eb865dd6951adf7b316.png" src="../_images/a3802d5c6e90ee2428b81d116b60d4a3cf4d1f9f04aa8eb865dd6951adf7b316.png" />
+</div>
+</div>
+<p>Below is a visualization of the cumulative distribution function of the body temperature distribution.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_body_temperature_cdf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/bf79238d445670a490a39d1851ff65e125fb4789b3ecdf36a8a9de217d022dda.png" src="../_images/bf79238d445670a490a39d1851ff65e125fb4789b3ecdf36a8a9de217d022dda.png" />
+</div>
+</div>
+<p>The values of the probability density function are not themselves probabilities, since they could exceed 1.</p>
+<p>However, they do have a couple of reasonable interpretations.</p>
+<p>One is as <strong>relative probabilities</strong>;
+even though the probability of each particular value being picked is technically zero, some points are still in a sense
 more likely than others.</p>
-<p>One can also think of the density as determining the probability that
-the variable will lie in a small range about a given value. This is
-because, for small <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>,</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_relative_likelihood</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">peak</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PDF: Relative Likelihood Interpretation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Highlight three points</span>
+    <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">35.5</span><span class="p">,</span> <span class="mf">36.6</span><span class="p">,</span> <span class="mf">38.0</span><span class="p">]:</span>
+        <span class="n">fx</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">temp</span><span class="p">],</span> <span class="p">[</span><span class="n">fx</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">fx</span> <span class="o">+</span> <span class="mf">0.015</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;p(</span><span class="si">{</span><span class="n">temp</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">peak</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mode&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_relative_likelihood</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/32714cb119836fbb75fa47dea81b424a771849567d4bc4af39e3749227c205e4.png" src="../_images/32714cb119836fbb75fa47dea81b424a771849567d4bc4af39e3749227c205e4.png" />
+</div>
+</div>
+<p>One can also think of the density as determining the probability that the variable will lie in a small range about a given value.
+This is because, for small <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{P}(x-\epsilon \leq X \leq x+\epsilon) = \int_{x-\epsilon}^{x+\epsilon} p(z)\operatorname{d}{z} \approx 2\epsilon p(x)\]</div>
 <p>using a midpoint approximation to the integral.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_density_as_probability</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+    <span class="n">center</span> <span class="o">=</span> <span class="mf">37.0</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">center</span> <span class="o">-</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">center</span> <span class="o">+</span> <span class="n">epsilon</span>
+
+    <span class="c1"># True probability via integration</span>
+    <span class="n">prob_true</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">gamma</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">approx</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDF&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;~P(x ∈ [x−ε, x+ε])&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;x = </span><span class="si">{</span><span class="n">center</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\mathbb{{P}}(x-\epsilon \leq X \leq x+\epsilon) \approx 2\epsilon \cdot p(x)$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True probability ≈ </span><span class="si">{</span><span class="n">prob_true</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, Midpoint approx ≈ </span><span class="si">{</span><span class="n">approx</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plot_density_as_probability</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/1d886aff2690feb9343f67836ff8bf37a62e02c7f95c3f2d017084308b39a28b.png" src="../_images/1d886aff2690feb9343f67836ff8bf37a62e02c7f95c3f2d017084308b39a28b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True probability ≈ 0.1528, Midpoint approx ≈ 0.1531
+</pre></div>
+</div>
+</div>
+</div>
 <p>Here are some useful identities that follow from the definitions above:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \mathbb{P}(a \leq X \leq b) &amp;= \int_a^b p(x)\operatorname{d}{x} \\
 p(x) &amp;= F'(x)
 \end{aligned}\end{split}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_area_probability</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_temp</span><span class="p">,</span> <span class="n">max_temp</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">36.0</span><span class="p">,</span> <span class="mf">37.5</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span> <span class="o">-</span> <span class="n">gamma</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDF&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+                     <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$\mathbb</span><span class="se">{{</span><span class="s1">P</span><span class="se">}}</span><span class="s1">(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1"> \leq X \leq </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">) \approx </span><span class="si">{</span><span class="n">prob</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Probability as Area Under the PDF&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">34</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_area_probability</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/046e8ac0206a7a44a8905b1d2524a922f636c8e5eb70b5e33670bcf2665bf77e.png" src="../_images/046e8ac0206a7a44a8905b1d2524a922f636c8e5eb70b5e33670bcf2665bf77e.png" />
+</div>
+</div>
 </section>
 <section id="other-kinds-of-random-variables">
 <h2>Other kinds of random variables<a class="headerlink" href="#other-kinds-of-random-variables" title="Link to this heading">#</a></h2>
-<p>There are random variables that are neither discrete nor continuous. For
-example, consider a random variable determined as follows: flip a fair
-coin, then the value is zero if it comes up heads, otherwise draw a
-number uniformly at random from <span class="math notranslate nohighlight">\([1,2]\)</span>. Such a random variable can take
-on uncountably many values, but only finitely many of these with
-positive probability. We will not discuss such random variables because
-they are rather pathological and require measure theory to analyze.</p>
+<p>There are random variables that are neither discrete nor continuous.
+For example, consider a random variable determined as follows: flip a fair coin, then the value is zero if it comes up heads, otherwise draw a
+number uniformly at random from <span class="math notranslate nohighlight">\([1,2]\)</span>.
+Such a random variable can take on uncountably many values, but only finitely many of these with positive probability.</p>
+<p>We will not discuss such random variables because they are rather pathological and require measure theory to analyze.</p>
 </section>
 </section>
 
