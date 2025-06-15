@@ -256,9 +256,9 @@ def plot_subset_events():
     ax.text(0.62, -0.56, 'Ω', fontsize=10)
     venn = venn2(subsets=(0, 1, 1), set_labels=('', ''), set_colors=('green', 'orange'))
     venn.get_label_by_id('10').set_text('')
-    venn.get_label_by_id('11').set_text('A₁')
-    venn.get_label_by_id('01').set_text('A₂')
-    plt.title('A₁ ⊆ A₂ ⇒ A₁ ∩ A₂ = A₁')
+    venn.get_label_by_id('11').set_text('B')
+    venn.get_label_by_id('01').set_text('A')
+    plt.title('B ⊆ A ⇒ A ∩ B = B')
     plt.show()
 
 plot_subset_events()
