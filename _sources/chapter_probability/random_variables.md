@@ -17,7 +17,7 @@ probability distribution over the values it can assume.
 
 Formally, a random variable on a probability space
 $(\Omega, \mathcal{F}, \mathbb{P})$ is a function
-$X: \Omega \to \mathbb{R}$.[^12]
+$X: \Omega \to \mathbb{R}$.
 
 We denote the range of $X$ by
 $X(\Omega) = \{X(\omega) : \omega \in \Omega\}$. 
