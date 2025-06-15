@@ -204,6 +204,7 @@ $$\mathbb{P}(a < X \leq b) = F(b) - F(a)$$
 ## Discrete random variables
 
 A **discrete random variable** is a random variable that has a countable range and assumes each value in this range with positive probability.
+
 Discrete random variables are completely specified by their
 **probability mass function** (p.m.f.) $p : X(\Omega) \to [0,1]$ which
 satisfies 
