@@ -351,7 +351,7 @@ occurred is written $\mathbb{P}(A | B)$ and defined as
 
 $$\mathbb{P}(A | B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}$$
 
-assuming $\mathbb{P}(B) > 0$.[^10]
+assuming $\mathbb{P}(B) > 0$.
 
 ## Chain rule of probability
 
