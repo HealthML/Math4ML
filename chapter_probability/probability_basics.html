@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -527,12 +527,6 @@ document.write(`
 <p>For example, the event “the coin lands heads” is the subset <span class="math notranslate nohighlight">\(\{ \text{heads} \}\)</span> of <span class="math notranslate nohighlight">\(\Omega\)</span>.</p>
 <hr class="docutils" />
 <blockquote>
-<div><p>The <strong>set of possible events</strong> is denoted <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.</p>
-<p>(<span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is a so-called <span class="math notranslate nohighlight">\(\sigma\)</span>-algebra of subsets of <span class="math notranslate nohighlight">\(\Omega\)</span>.)</p>
-</div></blockquote>
-<p>So <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is a set of sets of outcomes. We do not need to specify <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> explicitly, but it is useful to know that it exists. Also the term <span class="math notranslate nohighlight">\(\sigma\)</span>-algebra is a bit technical and we will not use it in this course.</p>
-<hr class="docutils" />
-<blockquote>
 <div><p>The <strong>complement</strong> of the event <span class="math notranslate nohighlight">\(A\)</span> is another event,</p>
 <div class="math notranslate nohighlight">
 \[A^\text{c} = \Omega \setminus A.\]</div>
@@ -717,6 +711,12 @@ document.write(`
 <img alt="../_images/8c87c937cc0e644fad13618e33e574cfb376b73446df2216c57e0c7061b7250a.png" src="../_images/8c87c937cc0e644fad13618e33e574cfb376b73446df2216c57e0c7061b7250a.png" />
 </div>
 </div>
+<hr class="docutils" />
+<blockquote>
+<div><p>The <strong>set of possible events</strong> is denoted <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>.</p>
+<p>(<span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is a so-called <span class="math notranslate nohighlight">\(\sigma\)</span>-algebra of subsets of <span class="math notranslate nohighlight">\(\Omega\)</span>.)</p>
+</div></blockquote>
+<p>So <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is a set of sets of outcomes. We do not need to specify <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> explicitly, but it is useful to know that it exists. Also the term <span class="math notranslate nohighlight">\(\sigma\)</span>-algebra is a bit technical and we will not use it in this course.</p>
 <hr class="docutils" />
 <p>The goal of probability theory is to assign probabilities to events. To do so, we need to define a <strong>probability measure</strong> <span class="math notranslate nohighlight">\(\mathbb{P} : \mathcal{F} \to [0,1]\)</span> which must satisfy the following axioms:</p>
 <blockquote>

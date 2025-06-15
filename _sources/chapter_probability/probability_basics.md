@@ -29,12 +29,6 @@ $$\Omega = \{ \text{heads}, \text{tails} \}$$
 
 For example, the event "the coin lands heads" is the subset $\{ \text{heads} \}$ of $\Omega$.
 
----
-> The **set of possible events** is denoted $\mathcal{F}$.
-> 
-> ($\mathcal{F}$ is a so-called $\sigma$-algebra of subsets of $\Omega$.)
-
-So $\mathcal{F}$ is a set of sets of outcomes. We do not need to specify $\mathcal{F}$ explicitly, but it is useful to know that it exists. Also the term $\sigma$-algebra is a bit technical and we will not use it in this course.
 
 ---
 
@@ -202,6 +196,12 @@ In comparison, below we visualize the sample space $\Omega$, two overlapping eve
 plot_overlapping_events()
 ```
 
+---
+> The **set of possible events** is denoted $\mathcal{F}$.
+> 
+> ($\mathcal{F}$ is a so-called $\sigma$-algebra of subsets of $\Omega$.)
+
+So $\mathcal{F}$ is a set of sets of outcomes. We do not need to specify $\mathcal{F}$ explicitly, but it is useful to know that it exists. Also the term $\sigma$-algebra is a bit technical and we will not use it in this course.
 
 
 ---
