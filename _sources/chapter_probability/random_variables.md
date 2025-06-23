@@ -489,3 +489,4 @@ number uniformly at random from $[1,2]$.
 Such a random variable can take on uncountably many values, but only finitely many of these with positive probability. 
 
 We will not discuss such random variables because they are rather pathological and require measure theory to analyze.
+

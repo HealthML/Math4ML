@@ -46,3 +46,6 @@ $$\mathbf{x}^{\!\top\!}\mathbf{\Sigma}\mathbf{x} = \mathbf{x}^{\!\top\!}\mathbb{
 The inverse of the covariance matrix, $\mathbf{\Sigma}^{-1}$, is
 sometimes called the **precision matrix**.
 
+
+---
+

@@ -1,0 +1,1428 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>From Change of Variables to Normalizing Flows &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_probability/normalizing_flows';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/normalizing_flows.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_decompositions/overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/determinant.html">Determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/trace.html">Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_norms.html">Matrix Norms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/psd_matrices.html">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pca.html">Principal Components Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/svd.html">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_convexity/overview_convexity.html">Convexity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_sets.html">Convex sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_functions.html">Basics of convex functions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_second_order/overview_second_order.html">Second-Order Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/minima_second_order_condition.html">Second Order Condition for Minima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="variance.html">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="covariance.html">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_probability/normalizing_flows.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_probability/normalizing_flows.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapter_probability/normalizing_flows.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>From Change of Variables to Normalizing Flows</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insight">Key Insight</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizing-flows-definition">Normalizing Flows: Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-normalizing-flows">Why Normalizing Flows?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-analogy">Visual Analogy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-invertible-affine-coupling-layer">An invertible affine coupling layer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian-determinant">Jacobian Determinant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-this-example">Why Use This Example?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizing-the-parameters-of-the-affine-coupling-layer">Optimizing the parameters of the affine coupling layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-for-flow-parameter-optimization">🧮 Newton’s Method for Flow Parameter Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-affine-coupling-layer">🔧 Setup: Affine Coupling Layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-log-density-of-transformed-sample">🎯 Objective: Log-Density of Transformed Sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-the-jacobian">📐 Step 1: The Jacobian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-log-likelihood">🧮 Step 2: Log-Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-gradient-w-r-t-theta-a-b-c-d">🔁 Step 3: Gradient w.r.t. $\theta = [a, b, c, d]$</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-frac-partial-x-partial-theta">a) $\frac{\partial x}{\partial \theta}$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-gradient-of-log-determinant">b) Gradient of log-determinant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-gradient-expression">🔚 Final Gradient Expression:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-hessian">🧠 Step 4: Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-notation-and-precomputations">Step 1: Notation and Precomputations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-hessian-breakdown">Step 2: Hessian Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-second-derivatives-of-x-2">Step 3: Second Derivatives of <span class="math notranslate nohighlight">\(x_2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-hessian-of-log-determinant">Step 4: Hessian of Log-Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-the-hessian">✅ Final Expression for the Hessian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">implementation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="from-change-of-variables-to-normalizing-flows">
+<h1>From Change of Variables to Normalizing Flows<a class="headerlink" href="#from-change-of-variables-to-normalizing-flows" title="Link to this heading">#</a></h1>
+<p>We’ve seen in the previous example that if we start with a random vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> with known density <span class="math notranslate nohighlight">\(p_{\mathbf{X}}(\mathbf{x})\)</span>, and apply a smooth, invertible function <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}^n\)</span>, then the resulting random vector <span class="math notranslate nohighlight">\(\mathbf{Y} = f(\mathbf{X})\)</span> has a density given by the <strong>change-of-variables formula</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{\mathbf{Y}}(\mathbf{y}) = p_{\mathbf{X}}(f^{-1}(\mathbf{y})) \cdot \left| \det \left( \frac{\partial f^{-1}}{\partial \mathbf{y}} \right) \right|
+\]</div>
+<p>or equivalently:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{\mathbf{Y}}(f(\mathbf{x})) = p_{\mathbf{X}}(\mathbf{x}) \cdot \left| \det \left( \frac{\partial f}{\partial \mathbf{x}} \right) \right|^{-1}
+\]</div>
+<p>This formula shows how the probability mass “warps” as we pass it through a transformation.</p>
+<hr class="docutils" />
+<section id="key-insight">
+<h2>Key Insight<a class="headerlink" href="#key-insight" title="Link to this heading">#</a></h2>
+<p>Suppose we want to <strong>model a complex target distribution</strong> <span class="math notranslate nohighlight">\(p_{\text{target}}(\mathbf{y})\)</span> for which:</p>
+<ul class="simple">
+<li><p>Sampling directly is hard</p></li>
+<li><p>Evaluating the density is expensive or intractable</p></li>
+</ul>
+<p>But if we can find a <strong>smooth, invertible transformation</strong> <span class="math notranslate nohighlight">\(f\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{Y} = f(\mathbf{Z}), \quad \text{where } \mathbf{Z} \sim p_{\mathbf{Z}} \text{ (a simple distribution, e.g. standard normal)}
+\]</div>
+<p>then we can <strong>induce</strong> a complex distribution on <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span>, and compute the exact density via:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{\mathbf{Y}}(\mathbf{y}) = p_{\mathbf{Z}}(f^{-1}(\mathbf{y})) \cdot \left| \det \left( \frac{\partial f^{-1}}{\partial \mathbf{y}} \right) \right|
+\]</div>
+<p>This is the foundation of <strong>normalizing flows</strong>.</p>
+</section>
+<hr class="docutils" />
+<section id="normalizing-flows-definition">
+<h2>Normalizing Flows: Definition<a class="headerlink" href="#normalizing-flows-definition" title="Link to this heading">#</a></h2>
+<p>A <strong>normalizing flow</strong> is a sequence of invertible, differentiable transformations:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{z}_0 \sim p_0(\mathbf{z}_0) \quad \xrightarrow{f_1} \quad \mathbf{z}_1 \quad \xrightarrow{f_2} \quad \cdots \quad \xrightarrow{f_K} \quad \mathbf{y} = \mathbf{z}_K
+\]</div>
+<p>The overall transformation is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y} = f_K \circ f_{K-1} \circ \cdots \circ f_1(\mathbf{z}_0)
+\]</div>
+<p>Then, by repeatedly applying the change-of-variables formula, we can compute the density of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_{\mathbf{Y}}(\mathbf{y}) = \log p_0(\mathbf{z}_0) - \sum_{k=1}^K \log \left| \det \left( \frac{\partial f_k}{\partial \mathbf{z}_{k-1}} \right) \right|
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{z}_0 = f_1^{-1} \circ \cdots \circ f_K^{-1}(\mathbf{y})\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="why-normalizing-flows">
+<h2>Why Normalizing Flows?<a class="headerlink" href="#why-normalizing-flows" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Flexible modeling</strong>: Flows can represent complex, multi-modal distributions.</p></li>
+<li><p><strong>Exact density evaluation</strong>: Unlike GANs or VAEs, flows provide <strong>exact likelihoods</strong>.</p></li>
+<li><p><strong>Efficient sampling and inference</strong>: If all <span class="math notranslate nohighlight">\(f_k\)</span> are computationally efficient, we can sample and compute densities fast.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="visual-analogy">
+<h2>Visual Analogy<a class="headerlink" href="#visual-analogy" title="Link to this heading">#</a></h2>
+<p>Think of normalizing flows as <strong>sculpting</strong> a simple blob (like a Gaussian) into a complex shape by bending and stretching space — always carefully keeping track of how volumes change, via the Jacobian determinant.</p>
+</section>
+<hr class="docutils" />
+<section id="an-invertible-affine-coupling-layer">
+<h2>An invertible affine coupling layer<a class="headerlink" href="#an-invertible-affine-coupling-layer" title="Link to this heading">#</a></h2>
+<p>We define a transformation <span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}^2\)</span> using an <strong>affine coupling</strong> mechanism:</p>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{z} = \begin{bmatrix} z_1 \\ z_2 \end{bmatrix} \in \mathbb{R}^2\)</span>. Define:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+y_1 &amp;= z_1 \\
+y_2 &amp;= z_2 \cdot \exp(s(z_1)) + t(z_1)
+\end{aligned}
+\end{split}\]</div>
+<p>Here:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(s(\cdot)\)</span> is a <strong>scale function</strong> (e.g., a neural net or a simple function like <span class="math notranslate nohighlight">\(s(z_1) = \sin(z_1)\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(t(\cdot)\)</span> is a <strong>translation function</strong></p></li>
+</ul>
+<p>This transformation is <strong>invertible</strong> as long as <span class="math notranslate nohighlight">\(\exp(s(z_1)) \ne 0\)</span>. The inverse is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+z_1 &amp;= y_1 \\
+z_2 &amp;= \left(y_2 - t(y_1)\right) \cdot \exp(-s(y_1))
+\end{aligned}
+\end{split}\]</div>
+</section>
+<section id="jacobian-determinant">
+<h3>Jacobian Determinant<a class="headerlink" href="#jacobian-determinant" title="Link to this heading">#</a></h3>
+<p>The Jacobian matrix <span class="math notranslate nohighlight">\(J_f\)</span> of <span class="math notranslate nohighlight">\(f\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+J_f = \begin{bmatrix}
+1 &amp; 0 \\
+\frac{\partial y_2}{\partial z_1} &amp; \exp(s(z_1))
+\end{bmatrix}
+\end{split}\]</div>
+<p>The determinant is easy to compute (lower triangular matrix):</p>
+<div class="math notranslate nohighlight">
+\[
+\det J_f = \exp(s(z_1))
+\]</div>
+<p>This makes log-determinant evaluation efficient:</p>
+<div class="math notranslate nohighlight">
+\[
+\log \left| \det J_f \right| = s(z_1)
+\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="why-use-this-example">
+<h2>Why Use This Example?<a class="headerlink" href="#why-use-this-example" title="Link to this heading">#</a></h2>
+<p>This layer is:</p>
+<ul class="simple">
+<li><p><strong>Invertible</strong> and <strong>efficient</strong></p></li>
+<li><p>Has a <strong>triangular Jacobian</strong>, so the determinant is trivial to compute</p></li>
+<li><p>Scales to higher dimensions by permuting or splitting coordinates</p></li>
+<li><p>Used in real normalizing flows like <strong>RealNVP</strong> and <strong>Glow</strong></p></li>
+</ul>
+<p>Let’s implement the affine coupling layer in Python.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">s_function</span><span class="p">(</span><span class="n">z1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Scale function s(z1), simple nonlinearity&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">t_function</span><span class="p">(</span><span class="n">z1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translation function t(z1), simple nonlinearity&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">affine_coupling_forward</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Affine coupling forward transformation.</span>
+<span class="sd">    Input:</span>
+<span class="sd">        z: np.array of shape (n_samples, 2)</span>
+<span class="sd">    Output:</span>
+<span class="sd">        y: transformed output</span>
+<span class="sd">        log_det_jacobian: log determinant of the Jacobian</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">z2</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s_function</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t_function</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">z1</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span>
+
+    <span class="n">log_det_jacobian</span> <span class="o">=</span> <span class="n">s</span>  <span class="c1"># log|det J| = s(z1)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y</span><span class="p">,</span> <span class="n">log_det_jacobian</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">affine_coupling_inverse</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Affine coupling inverse transformation.</span>
+<span class="sd">    Input:</span>
+<span class="sd">        y: np.array of shape (n_samples, 2)</span>
+<span class="sd">    Output:</span>
+<span class="sd">        z: inverse transformed output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s_function</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t_function</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span>
+
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">y1</span>
+    <span class="n">z2</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">z</span>
+
+<span class="c1"># Sample inputs</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">z_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Standard normal samples</span>
+
+<span class="c1"># Apply forward and inverse transformation</span>
+<span class="n">y_samples</span><span class="p">,</span> <span class="n">log_det</span> <span class="o">=</span> <span class="n">affine_coupling_forward</span><span class="p">(</span><span class="n">z_samples</span><span class="p">)</span>
+<span class="n">z_reconstructed</span> <span class="o">=</span> <span class="n">affine_coupling_inverse</span><span class="p">(</span><span class="n">y_samples</span><span class="p">)</span>
+
+<span class="c1"># Check reconstruction accuracy</span>
+<span class="n">reconstruction_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z_samples</span> <span class="o">-</span> <span class="n">z_reconstructed</span><span class="p">))</span>
+<span class="n">reconstruction_error</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(2.220446049250313e-16)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Define the target distribution: banana-shaped</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">target_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># A banana-shaped 2D distribution</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Define the coupling layer transformation (simple affine coupling)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">coupling_forward</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span>  <span class="c1"># scale function</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x</span>  <span class="c1"># translation function</span>
+    <span class="n">y_new</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y_new</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">coupling_inverse</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y_new</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_new</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Sample from a simple base distribution (uniform)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Transform samples through the coupling layer</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">coupling_forward</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="c1"># Plot original (uniform) and transformed (approximate target) samples</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Base distribution</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">z</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">z</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Base Distribution (Uniform)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Transformed samples</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed Samples (Flow Output)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># True target density (background)</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+<span class="n">zz</span> <span class="o">=</span> <span class="n">target_density</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Target Density&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7347de17ac38a32dfb9011129e2af0b3a0bba432a1c35e5485b85facd4e63f52.png" src="../_images/7347de17ac38a32dfb9011129e2af0b3a0bba432a1c35e5485b85facd4e63f52.png" />
+</div>
+</div>
+<section id="optimizing-the-parameters-of-the-affine-coupling-layer">
+<h3>Optimizing the parameters of the affine coupling layer<a class="headerlink" href="#optimizing-the-parameters-of-the-affine-coupling-layer" title="Link to this heading">#</a></h3>
+<p>We want to <strong>maximize the likelihood</strong> of the transformed samples under the target distribution.</p>
+<p>For a normalizing flow with parameters $\theta$ and a base distribution $p_Z$ (e.g., uniform or standard normal), the <strong>log-likelihood of data $\mathbf{x}$</strong> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_X(\mathbf{x}; \theta) = \log p_Z(f_\theta^{-1}(\mathbf{x})) + \log \left| \det \left( \frac{\partial f_\theta^{-1}}{\partial \mathbf{x}} \right) \right|
+\]</div>
+<p>If you generate $n$ samples from the base distribution, transform them via $f_\theta$, and evaluate them under a known <strong>target density $p_{\text{target}}$</strong>, your objective becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\max_\theta \ \sum_{i=1}^n \log p_{\text{target}}(f_\theta(z^{(i)})) + \log \left| \det \left( \frac{\partial f_\theta}{\partial z^{(i)}} \right) \right|
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="newtons-method-for-flow-parameter-optimization">
+<h3>🧮 Newton’s Method for Flow Parameter Optimization<a class="headerlink" href="#newtons-method-for-flow-parameter-optimization" title="Link to this heading">#</a></h3>
+<p>Newton’s method requires:</p>
+<ul class="simple">
+<li><p><strong>Gradient</strong> $\nabla_\theta \mathcal{L}$</p></li>
+<li><p><strong>Hessian</strong> $H_\theta = \nabla_\theta^2 \mathcal{L}$</p></li>
+</ul>
+<p>The update step is:</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_{\text{new}} = \theta_{\text{old}} - H_\theta^{-1} \nabla_\theta \mathcal{L}
+\]</div>
+<p>This can be <strong>costly</strong>, but in small 2D problems with a small number of parameters (like affine coupling layers with a few affine weights), it’s feasible.</p>
+<hr class="docutils" />
+<p>Let’s derive the <strong>gradient</strong> and <strong>Hessian</strong> of the log-likelihood with respect to the parameters of a <strong>simple affine coupling layer</strong>, in the context of <strong>normalizing flows</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="setup-affine-coupling-layer">
+<h2>🔧 Setup: Affine Coupling Layer<a class="headerlink" href="#setup-affine-coupling-layer" title="Link to this heading">#</a></h2>
+<p>Assume a 2D input vector:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{z} = \begin{bmatrix} z_1 \\ z_2 \end{bmatrix} \sim \text{Uniform}([0,1]^2)
+\end{split}\]</div>
+<p>We define a simple <strong>affine coupling layer</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f_\theta(\mathbf{z}) = \begin{bmatrix} 
+z_1 \\
+z_2 \cdot \exp(s(z_1)) + t(z_1)
+\end{bmatrix}
+\end{split}\]</div>
+<p>We use <strong>parametric functions</strong>:</p>
+<ul class="simple">
+<li><p>$s(z_1) = a z_1 + b$</p></li>
+<li><p>$t(z_1) = c z_1 + d$</p></li>
+</ul>
+<p>The parameters are: $\theta = [a, b, c, d]$</p>
+</section>
+<hr class="docutils" />
+<section id="objective-log-density-of-transformed-sample">
+<h2>🎯 Objective: Log-Density of Transformed Sample<a class="headerlink" href="#objective-log-density-of-transformed-sample" title="Link to this heading">#</a></h2>
+<p>Let $\mathbf{x} = f_\theta(\mathbf{z})$, and let $p_{\text{target}}(\mathbf{x})$ be the known density we want to approximate. Then the <strong>loss</strong> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\theta) = \sum_{i=1}^n \log p_{\text{target}}(f_\theta(\mathbf{z}^{(i)})) + \log \left| \det \left( \frac{\partial f_\theta}{\partial \mathbf{z}^{(i)}} \right) \right|
+\]</div>
+<p>We derive $\nabla_\theta \mathcal{L}$ and $\nabla^2_\theta \mathcal{L}$ for a single sample $\mathbf{z}$, then extend to a sum.</p>
+</section>
+<hr class="docutils" />
+<section id="step-1-the-jacobian">
+<h2>📐 Step 1: The Jacobian<a class="headerlink" href="#step-1-the-jacobian" title="Link to this heading">#</a></h2>
+<p>For the affine coupling layer:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} = f_\theta(\mathbf{z}) = 
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+z_1 \\
+z_2 \cdot \exp(a z_1 + b) + c z_1 + d
+\end{bmatrix}
+\end{split}\]</div>
+<p>Jacobian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+J = \frac{\partial f_\theta}{\partial \mathbf{z}} =
+\begin{bmatrix}
+1 &amp; 0 \\
+z_2 \cdot a \exp(a z_1 + b) + c &amp; \exp(a z_1 + b)
+\end{bmatrix}
+\end{split}\]</div>
+<p>Determinant of Jacobian:</p>
+<div class="math notranslate nohighlight">
+\[
+\det(J) = \exp(a z_1 + b)
+\]</div>
+<p>So the log-determinant term is:</p>
+<div class="math notranslate nohighlight">
+\[
+\log |\det J| = a z_1 + b
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="step-2-log-likelihood">
+<h2>🧮 Step 2: Log-Likelihood<a class="headerlink" href="#step-2-log-likelihood" title="Link to this heading">#</a></h2>
+<p>Let $x = f_\theta(z)$, then</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\theta; z) = \log p_{\text{target}}(f_\theta(z)) + a z_1 + b
+\]</div>
+<p>Let’s define:</p>
+<div class="math notranslate nohighlight">
+\[
+x_1 = z_1, \quad x_2 = z_2 \cdot \exp(a z_1 + b) + c z_1 + d
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="step-3-gradient-w-r-t-theta-a-b-c-d">
+<h2>🔁 Step 3: Gradient w.r.t. $\theta = [a, b, c, d]$<a class="headerlink" href="#step-3-gradient-w-r-t-theta-a-b-c-d" title="Link to this heading">#</a></h2>
+<p>We apply the chain rule:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_\theta \mathcal{L} = \frac{\partial \log p_{\text{target}}(x)}{\partial x} \cdot \frac{\partial x}{\partial \theta} + \nabla_\theta \log |\det J|
+\]</div>
+<p>Break down:</p>
+<section id="a-frac-partial-x-partial-theta">
+<h3>a) $\frac{\partial x}{\partial \theta}$<a class="headerlink" href="#a-frac-partial-x-partial-theta" title="Link to this heading">#</a></h3>
+<p>Let’s compute partials of $x_2$:</p>
+<ul class="simple">
+<li><p>$\frac{\partial x_2}{\partial a} = z_2 \cdot z_1 \cdot \exp(a z_1 + b)$</p></li>
+<li><p>$\frac{\partial x_2}{\partial b} = z_2 \cdot \exp(a z_1 + b)$</p></li>
+<li><p>$\frac{\partial x_2}{\partial c} = z_1$</p></li>
+<li><p>$\frac{\partial x_2}{\partial d} = 1$</p></li>
+</ul>
+<p>So,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial x}{\partial \theta} =
+\begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 0 \\
+z_2 z_1 e^{a z_1 + b} &amp; z_2 e^{a z_1 + b} &amp; z_1 &amp; 1
+\end{bmatrix}
+\end{split}\]</div>
+<p>Denote $\nabla_x \log p_{\text{target}} = [g_1, g_2]^\top$. Then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \log p_{\text{target}}(x)}{\partial \theta} =
+g_2 \cdot
+\begin{bmatrix}
+z_2 z_1 e^{a z_1 + b} \\
+z_2 e^{a z_1 + b} \\
+z_1 \\
+1
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="b-gradient-of-log-determinant">
+<h3>b) Gradient of log-determinant<a class="headerlink" href="#b-gradient-of-log-determinant" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_\theta \log |\det J| =
+\begin{bmatrix}
+z_1 \\
+1 \\
+0 \\
+0
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="final-gradient-expression">
+<h3>🔚 Final Gradient Expression:<a class="headerlink" href="#final-gradient-expression" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_\theta \mathcal{L} =
+g_2 \cdot
+\begin{bmatrix}
+z_2 z_1 e^{a z_1 + b} \\
+z_2 e^{a z_1 + b} \\
+z_1 \\
+1
+\end{bmatrix}
++
+\begin{bmatrix}
+z_1 \\
+1 \\
+0 \\
+0
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="step-4-hessian">
+<h2>🧠 Step 4: Hessian<a class="headerlink" href="#step-4-hessian" title="Link to this heading">#</a></h2>
+<p>Let’s now derive the <strong>full Hessian</strong> of the log-likelihood</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\theta) = \log p_{\text{target}}(x(\theta)) + \log|\det J(\theta)| = \log p(x_1, x_2) + (a z_1 + b)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_1 = z_1\)</span>,
+and</p>
+<div class="math notranslate nohighlight">
+\[
+x_2 = z_2 \cdot e^{a z_1 + b} + c z_1 + d
+\]</div>
+<p>and the parameters are <span class="math notranslate nohighlight">\(\theta = [a, b, c, d]^\top \in \mathbb{R}^4\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="step-1-notation-and-precomputations">
+<h2>Step 1: Notation and Precomputations<a class="headerlink" href="#step-1-notation-and-precomputations" title="Link to this heading">#</a></h2>
+<p>Let:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(s = a z_1 + b\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(e^s = \exp(s)\)</span></p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(\nabla_x \log p(x) = \begin{bmatrix} g_1 \\ g_2 \end{bmatrix}\)</span></p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(H_x = \nabla^2_x \log p(x) = \begin{bmatrix} h_{11} &amp; h_{12} \\ h_{21} &amp; h_{22} \end{bmatrix}\)</span></p></li>
+</ul>
+<p>Since only <span class="math notranslate nohighlight">\(x_2\)</span> depends on <span class="math notranslate nohighlight">\(\theta\)</span>, we can focus on that.</p>
+<p>We already computed:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_\theta x_2 = 
+\begin{bmatrix}
+z_2 z_1 e^s \\
+z_2 e^s \\
+z_1 \\
+1
+\end{bmatrix}
+\end{split}\]</div>
+<p>And</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_\theta \log |\det J| = 
+\begin{bmatrix}
+z_1 \\
+1 \\
+0 \\
+0
+\end{bmatrix}
+\end{split}\]</div>
+<p>So the full gradient is:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_\theta \mathcal{L} = g_2 \cdot \nabla_\theta x_2 + \nabla_\theta \log |\det J|
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="step-2-hessian-breakdown">
+<h2>Step 2: Hessian Breakdown<a class="headerlink" href="#step-2-hessian-breakdown" title="Link to this heading">#</a></h2>
+<p>The Hessian is:</p>
+<div class="math notranslate nohighlight">
+\[
+H_\theta = \nabla^2_\theta \mathcal{L} 
+= g_2 \cdot \nabla^2_\theta x_2 + \left( \nabla_\theta x_2 \right) \left( \nabla_\theta g_2 \right)^\top + \nabla^2_\theta \log |\det J|
+\]</div>
+<p>But since <span class="math notranslate nohighlight">\(g_2 = \frac{\partial \log p}{\partial x_2}\)</span>, and <span class="math notranslate nohighlight">\(\nabla_\theta g_2 = \frac{\partial^2 \log p}{\partial x_2^2} \cdot \nabla_\theta x_2 = h_{22} \cdot \nabla_\theta x_2\)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+H_\theta = g_2 \cdot \nabla^2_\theta x_2 + h_{22} \cdot (\nabla_\theta x_2)(\nabla_\theta x_2)^\top + \nabla^2_\theta \log |\det J|
+\]</div>
+<p>Let’s compute each term separately.</p>
+</section>
+<hr class="docutils" />
+<section id="step-3-second-derivatives-of-x-2">
+<h2>Step 3: Second Derivatives of <span class="math notranslate nohighlight">\(x_2\)</span><a class="headerlink" href="#step-3-second-derivatives-of-x-2" title="Link to this heading">#</a></h2>
+<p>Recall:</p>
+<div class="math notranslate nohighlight">
+\[
+x_2 = z_2 \cdot e^s + c z_1 + d, \quad s = a z_1 + b
+\]</div>
+<p>So,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 x_2}{\partial a^2} = z_2 z_1^2 e^s, \quad
+\frac{\partial^2 x_2}{\partial a \partial b} = z_2 z_1 e^s, \quad
+\frac{\partial^2 x_2}{\partial b^2} = z_2 e^s
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial^2 x_2}{\partial a \partial c} = 0, \quad \frac{\partial^2 x_2}{\partial a \partial d} = 0, \quad \text{(and all other second mixed terms with c or d are zero)}
+\]</div>
+<p>So, the Hessian of <span class="math notranslate nohighlight">\(x_2\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla^2_\theta x_2 =
+\begin{bmatrix}
+z_2 z_1^2 e^s &amp; z_2 z_1 e^s &amp; 0 &amp; 0 \\
+z_2 z_1 e^s &amp; z_2 e^s &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<hr class="docutils" />
+<section id="step-4-hessian-of-log-determinant">
+<h2>Step 4: Hessian of Log-Determinant<a class="headerlink" href="#step-4-hessian-of-log-determinant" title="Link to this heading">#</a></h2>
+<p>Since:</p>
+<div class="math notranslate nohighlight">
+\[
+\log |\det J| = a z_1 + b
+\]</div>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla^2_\theta \log |\det J| = 
+\begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 
+\end{bmatrix}
+\end{split}\]</div>
+</section>
+<hr class="docutils" />
+<section id="final-expression-for-the-hessian">
+<h2>✅ Final Expression for the Hessian<a class="headerlink" href="#final-expression-for-the-hessian" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[
+H_\theta = g_2 \cdot \nabla^2_\theta x_2 + h_{22} \cdot (\nabla_\theta x_2)(\nabla_\theta x_2)^\top
+\]</div>
+<p>More explicitly:</p>
+<div class="highlight-math notranslate"><div class="highlight"><pre><span></span>H_\theta = 
+g_2 \cdot
+\begin{bmatrix}
+z_2 z_1^2 e^s &amp; z_2 z_1 e^s &amp; 0 &amp; 0 \\
+z_2 z_1 e^s &amp; z_2 e^s &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{bmatrix}
++
+h_{22} \cdot
+\begin{bmatrix}
+z_2 z_1 e^s \\
+z_2 e^s \\
+z_1 \\
+1
+\end{bmatrix}
+\begin{bmatrix}
+z_2 z_1 e^s &amp;
+z_2 e^s &amp;
+z_1 &amp;
+1
+\end{bmatrix}
+</pre></div>
+</div>
+<p>This gives a rank-1 update structure in the second term (outer product), useful for efficient Newton optimization.</p>
+<section id="implementation">
+<h3>implementation<a class="headerlink" href="#implementation" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">multivariate_normal</span>
+
+<span class="c1"># Target distribution: a banana-shaped distribution</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_p</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="c1"># Define a simple log-density for a banana distribution</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">x1</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">y1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grad_log_p</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">x1</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">dy1</span> <span class="o">=</span> <span class="o">-</span><span class="n">y1</span>
+    <span class="n">dy2</span> <span class="o">=</span> <span class="o">-</span><span class="n">y2</span>
+    <span class="n">dx1</span> <span class="o">=</span> <span class="n">dy1</span> <span class="o">+</span> <span class="n">dy2</span> <span class="o">*</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x1</span>
+    <span class="n">dx2</span> <span class="o">=</span> <span class="n">dy2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dx1</span><span class="p">,</span> <span class="n">dx2</span><span class="p">])</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hess_log_p</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">x1</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">x1</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">d2y1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="n">d2y2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="n">dx1x1</span> <span class="o">=</span> <span class="n">d2y1</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">y2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span>
+    <span class="n">dx1x2</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dx2x2</span> <span class="o">=</span> <span class="n">d2y2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">dx1x1</span><span class="p">,</span> <span class="n">dx1x2</span><span class="p">],</span> <span class="p">[</span><span class="n">dx1x2</span><span class="p">,</span> <span class="n">dx2x2</span><span class="p">]])</span>
+
+<span class="c1"># Affine coupling layer: parameters theta = [a, b, c, d]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">theta</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">z1</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">grad_and_hess</span><span class="p">(</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">theta</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">exp_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">z1</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">exp_s</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">d</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">grad_log_p</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">hess_log_p</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">g</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">z2</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">z1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">z2</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">hess</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">g</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="n">z2</span> <span class="o">*</span> <span class="n">z1</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">z2</span> <span class="o">*</span> <span class="n">z1</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="n">z2</span> <span class="o">*</span> <span class="n">exp_s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">])</span>
+        <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="n">J</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">grad</span><span class="p">,</span> <span class="n">hess</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">newtons_method</span><span class="p">(</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">theta0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">grad</span><span class="p">,</span> <span class="n">hess</span> <span class="o">=</span> <span class="n">grad_and_hess</span><span class="p">(</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hessian is singular.&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">theta</span> <span class="o">-=</span> <span class="n">delta</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">theta</span>
+
+<span class="c1"># Run the method</span>
+<span class="n">z1</span><span class="p">,</span> <span class="n">z2</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span>
+<span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
+<span class="n">theta_opt</span> <span class="o">=</span> <span class="n">newtons_method</span><span class="p">(</span><span class="n">z1</span><span class="p">,</span> <span class="n">z2</span><span class="p">,</span> <span class="n">theta0</span><span class="p">)</span>
+
+<span class="n">theta_opt</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hessian is singular.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.08223429,  0.05253647, -0.09414322,  0.02501221])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapter_probability"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insight">Key Insight</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#normalizing-flows-definition">Normalizing Flows: Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-normalizing-flows">Why Normalizing Flows?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-analogy">Visual Analogy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-invertible-affine-coupling-layer">An invertible affine coupling layer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian-determinant">Jacobian Determinant</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-use-this-example">Why Use This Example?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimizing-the-parameters-of-the-affine-coupling-layer">Optimizing the parameters of the affine coupling layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newtons-method-for-flow-parameter-optimization">🧮 Newton’s Method for Flow Parameter Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-affine-coupling-layer">🔧 Setup: Affine Coupling Layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-log-density-of-transformed-sample">🎯 Objective: Log-Density of Transformed Sample</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-the-jacobian">📐 Step 1: The Jacobian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-log-likelihood">🧮 Step 2: Log-Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-gradient-w-r-t-theta-a-b-c-d">🔁 Step 3: Gradient w.r.t. $\theta = [a, b, c, d]$</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-frac-partial-x-partial-theta">a) $\frac{\partial x}{\partial \theta}$</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-gradient-of-log-determinant">b) Gradient of log-determinant</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-gradient-expression">🔚 Final Gradient Expression:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-hessian">🧠 Step 4: Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-notation-and-precomputations">Step 1: Notation and Precomputations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-hessian-breakdown">Step 2: Hessian Breakdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-second-derivatives-of-x-2">Step 3: Second Derivatives of <span class="math notranslate nohighlight">\(x_2\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-hessian-of-log-determinant">Step 4: Hessian of Log-Determinant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#final-expression-for-the-hessian">✅ Final Expression for the Hessian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation">implementation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

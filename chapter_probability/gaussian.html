@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -65,7 +65,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Detailed Proofs" href="../appendix/proofs.html" />
-    <link rel="prev" title="Random vectors" href="random_vectors.html" />
+    <link rel="prev" title="Joint distributions" href="joint_distributions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -250,12 +250,13 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
 <li class="toctree-l2"><a class="reference internal" href="variance.html">Variance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="covariance.html">Covariance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimation of Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">The Gaussian distribution</a></li>
 </ul>
 </details></li>
@@ -496,6 +497,18 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-multivariate-gaussians">The geometry of multivariate Gaussians</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completing-the-square">Completing the square</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-gaussian-distributions">Conditional Gaussian distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-gaussian-distributions">Marginal Gaussian distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-transform-of-a-gaussian">Linear Transform of a Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-linear-regression-estimates-under-gaussian-noise-are-gaussian">Example: Linear Regression estimates under Gaussian noise are Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-of-all-training-samples-mathbf-y-in-mathbb-r-n-follows-a-gaussian-distribution">1. The vector of all training samples <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span> follows a Gaussian distribution.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ols-and-ridge-estimates-are-gaussian">2. The OLS and Ridge estimates are Gaussian.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-predictions-are-gaussian">3. The predictions are Gaussian.</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -510,7 +523,8 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="the-gaussian-distribution">
 <h1>The Gaussian distribution<a class="headerlink" href="#the-gaussian-distribution" title="Link to this heading">#</a></h1>
 <p>There are many distributions, but one of particular importance is the
-<strong>Gaussian distribution</strong>, also known as the <strong>normal distribution</strong>. It
+<strong>Gaussian distribution</strong>, also known as the <strong>normal distribution</strong>.</p>
+<p>It
 is a continuous distribution, parameterized by its mean
 <span class="math notranslate nohighlight">\(\boldsymbol\mu \in \mathbb{R}^d\)</span> and positive-definite covariance matrix
 <span class="math notranslate nohighlight">\(\mathbf{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, with density</p>
@@ -520,50 +534,818 @@ is a continuous distribution, parameterized by its mean
 more recognizable form</p>
 <div class="math notranslate nohighlight">
 \[p(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_gaussian</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mu</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;PDF&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Mean line</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mu$&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Std deviation lines</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mu \pm \sigma$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Annotations</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.02</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span> <span class="o">-</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu - \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu + \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;1D Gaussian (Normal) Distribution&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">plot_gaussian</span><span class="p">(</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/72cb702d99603188a5bfdd59154d4bf53a12249522328f1a97e5cce1976403aa.png" src="../_images/72cb702d99603188a5bfdd59154d4bf53a12249522328f1a97e5cce1976403aa.png" />
+</div>
+</div>
 <p>We write <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span> to
 denote that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is normally distributed with mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and
 variance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
 <section id="the-geometry-of-multivariate-gaussians">
 <h2>The geometry of multivariate Gaussians<a class="headerlink" href="#the-geometry-of-multivariate-gaussians" title="Link to this heading">#</a></h2>
 <p>The geometry of the multivariate Gaussian density is intimately related
-to the geometry of positive definite quadratic forms, so make sure the
-material in that section is well-understood before tackling this
-section.</p>
+to the geometry of positive definite quadratic forms.</p>
 <p>First observe that the p.d.f. of the multivariate Gaussian can be
-rewritten as</p>
+rewritten as a normalized exponential function of a quadratic form:</p>
 <div class="math notranslate nohighlight">
-\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = g(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}})\]</div>
-<p>where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}} = \mathbf{x} - \boldsymbol\mu\)</span> and
-<span class="math notranslate nohighlight">\(g(z) = [(2\pi)^d \det(\mathbf{\Sigma})]^{-\frac{1}{2}}\exp\left(-\frac{z}{2}\right)\)</span>.
-Writing the density in this way, we see that after shifting by the mean
-<span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>, the density is really just a simple function of its precision
-matrix’s quadratic form.</p>
-<p>Here is a key observation: this function <span class="math notranslate nohighlight">\(g\)</span> is <strong>strictly monotonically
-decreasing</strong> in its argument. That is, <span class="math notranslate nohighlight">\(g(a) &gt; g(b)\)</span> whenever <span class="math notranslate nohighlight">\(a &lt; b\)</span>.
-Therefore, small values of
-<span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>
-(which generally correspond to points where <span class="math notranslate nohighlight">\(\tilde{\mathbf{x}}\)</span> is
-closer to <span class="math notranslate nohighlight">\(\mathbf{0}\)</span>, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \approx \boldsymbol\mu\)</span>) have
-relatively high probability densities, and vice-versa. Furthermore,
-because <span class="math notranslate nohighlight">\(g\)</span> is <em>strictly</em> monotonic, it is injective, so the
+\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = \underbrace{\frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}}_{\text{normalization constant}} \exp\left(-\frac{1}{2} {\left(\mathbf{x}-\boldsymbol\mu\right)}^{\!\top\!}\mathbf{\Sigma}^{-1}{\left(\mathbf{x}-\boldsymbol\mu\right)}\right)\]</div>
+<p>The multiplicative term <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\)</span> is a normalization constant that is independent of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and ensures that the density integrates to 1.</p>
+<p>The random variable <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is present only in the exponent. Thus, the multiplicative term <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}\)</span> is a constant that ensures that the Gaussian probability density function integrates to 1.</p>
+<p>To gain a better understanding of the geometry of the Gaussian density, we can leave out the normalization constant and focus on the exponential function of the quadratic form:</p>
+<div class="math notranslate nohighlight">
+\[p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) \propto \exp\left(-\frac{1}{2} {\left(\mathbf{x}-\boldsymbol\mu\right)}^{\!\top\!}\mathbf{\Sigma}^{-1}{\left(\mathbf{x}-\boldsymbol\mu\right)}\right)\]</div>
+<p>Expanding the quadratic form, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) &amp;\propto  \exp\left(-\frac{1}{2} {\left(\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} - 2\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu\right)}\right) \\
+&amp;= \exp\left(-\frac{1}{2} {\left(\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} - 2\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu\right)}\right)\\
+&amp;= \exp\left(-\frac{1}{2} {\left(\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} - 2\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu \right)}\right)\underbrace{\exp\left(-\frac{1}{2} {\boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu}\right)}_{\text{constant}}
+\end{aligned}
+\end{split}\]</div>
+<p>We identify another multiplicative term that does not depend on <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and can be moved into the normalization constant.</p>
+<p>So, if we only look at the part that depends on <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, what are are left with is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) \propto \exp\left(-\frac{1}{2} {\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x}} + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} \right)
+\]</div>
+<p>Here is a key observation: the function <span class="math notranslate nohighlight">\(\exp(-z)\)</span> is <strong>strictly monotonically decreasing</strong> in its argument <span class="math notranslate nohighlight">\(z\in\mathbb{R}\)</span>.
+That is, <span class="math notranslate nohighlight">\(\exp(-a) &gt; \exp(-b)\)</span> whenever <span class="math notranslate nohighlight">\(a &lt; b\)</span>.</p>
+<p>This means that the probability density is highest at the mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and falls off exponentially with the distance from the mean.</p>
+<p>Furthermore,
+because <span class="math notranslate nohighlight">\(\exp(-z)\)</span> is <em>strictly</em> monotonic, it is injective, so the
 <span class="math notranslate nohighlight">\(c\)</span>-isocontours of <span class="math notranslate nohighlight">\(p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma})\)</span> are the
-<span class="math notranslate nohighlight">\(g^{-1}(c)\)</span>-isocontours of the function
-<span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}}\)</span>.
-That is, for any <span class="math notranslate nohighlight">\(c\)</span>,</p>
-<div class="math notranslate nohighlight">
-\[\{\mathbf{x} \in \mathbb{R}^d : p(\mathbf{x}; \boldsymbol\mu, \mathbf{\Sigma}) = c\} = \{\mathbf{x} \in \mathbb{R}^d : \tilde{\mathbf{x}}^{\!\top\!}\mathbf{\Sigma}^{-1}\tilde{\mathbf{x}} = g^{-1}(c)\}\]</div>
-<p>In words, these functions have the same isocontours but different
-isovalues.</p>
-<p>Recall the executive summary of the geometry of positive definite
-quadratic forms: the isocontours of
-<span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{x}^{\!\top\!}\mathbf{A}\mathbf{x}\)</span> are
-ellipsoids such that the axes point in the directions of the
-eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the lengths of these axes are
-proportional to the inverse square roots of the corresponding
-eigenvalues. Therefore in this case, the isocontours of the density are
+<span class="math notranslate nohighlight">\(\exp(-z)^{-1}(c)\)</span>-isocontours of the quadratic form
+<span class="math notranslate nohighlight">\(\mathbf{x} \mapsto \frac{1}{2}\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x}\)</span>.</p>
+<p>Recall  that the isocontours of a quadratic form associated with a positive definite matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> are ellipsoids such that the axes point in the directions of the eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, and the lengths of these axes are proportional to the inverse square roots of the corresponding eigenvalues.</p>
+<p>Therefore in this case, the isocontours of the density are
 ellipsoids (centered at <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span>) with axis lengths proportional to the
-inverse square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>, or
+inverse square roots of the eigenvalues of the so-called <strong>precision matrix</strong> <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>, or
 equivalently, the square roots of the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_gaussian_geometry</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualizes the geometry of a 2D Gaussian:</span>
+<span class="sd">    - 1σ and 2σ isocontour ellipses</span>
+<span class="sd">    - Samples</span>
+<span class="sd">    - Eigenvectors scaled by sqrt(eigenvalues)</span>
+<span class="sd">    - Eigenvalue magnitudes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+    <span class="c1"># Draw samples</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">samples</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Samples&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Eigen decomposition</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span>
+
+    <span class="c1"># Draw 1σ and 2σ ellipses</span>
+    <span class="k">for</span> <span class="n">n_std</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="s1">&#39;dashed&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">]):</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">*</span><span class="n">vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">ellipse</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span>
+                          <span class="n">edgecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                          <span class="n">linestyle</span><span class="o">=</span><span class="n">style</span><span class="p">,</span>
+                          <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n_std</span><span class="si">}</span><span class="s1">$\sigma$ contour&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
+    <span class="c1"># Plot eigenvectors (scaled by sqrt of eigenvalue)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">eigval</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">eigvec</span> <span class="o">=</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">vec_scaled</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigval</span><span class="p">)</span> <span class="o">*</span> <span class="n">eigvec</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">vec_scaled</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">vec_scaled</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$\sqrt</span><span class="se">{{</span><span class="s1">\lambda_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="se">}}</span><span class="s1"> = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigval</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Formatting</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Geometry of a 2D Gaussian Distribution&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">mu</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Mean $\boldsymbol{\mu}$&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">plot_gaussian_geometry</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/62dbc6bd2743bae616e3be6fa16e407a3e1f64a03f92e8eed11f3e191c971978.png" src="../_images/62dbc6bd2743bae616e3be6fa16e407a3e1f64a03f92e8eed11f3e191c971978.png" />
+</div>
+</div>
+<p>In the plot, the solid elipse shows the <span class="math notranslate nohighlight">\(1\sigma\)</span> contour of the Gaussian density.</p>
+<ul class="simple">
+<li><p>Within the ellipse, roughly half the samples are located.</p></li>
+<li><p>The <strong>orientation</strong> of the ellipse is given by the <strong>eigenvectors</strong> of <span class="math notranslate nohighlight">\(\Sigma\)</span>, shown as blue and orange lines.</p></li>
+<li><p>The <strong>axis lengths</strong> are proportional to the <strong>square roots</strong> of the <strong>eigenvalues</strong> of <span class="math notranslate nohighlight">\(\Sigma\)</span> (or inverse square roots of <span class="math notranslate nohighlight">\(\Sigma^{-1}\)</span>).</p></li>
+</ul>
+<p>The dashed ellipse shows the <span class="math notranslate nohighlight">\(2\sigma\)</span> contour containing roughly 95% of the samples.</p>
+</section>
+<hr class="docutils" />
+<section id="completing-the-square">
+<h2>Completing the square<a class="headerlink" href="#completing-the-square" title="Link to this heading">#</a></h2>
+<p>Let’s dig a bit deeper into the observation that the Gaussian density is proportional to a <span class="math notranslate nohighlight">\(\exp(-z)\)</span>, where <span class="math notranslate nohighlight">\(z\)</span> is a quadratic form associated with the positive definite precision matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}^{-1}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) =  \underbrace{\frac{\exp\left(-\frac{1}{2} \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu\right)}{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}}_{\text{constant}}\cdot \exp\left(-\frac{1}{2} {\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x}} + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} \right)
+\]</div>
+<p>A key observation is that all terms in the Gaussian density that depend on <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> appear in the quadratic form and that the remaining constant term merely ensures that the density integrates to 1.</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{aligned}
+\int \exp\left(-\frac{1}{2} {\mathbf{x}^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x}} + \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\mathbf{x} \right) d\mathbf{x}= \frac{\sqrt{(2\pi)^d \det(\mathbf{\Sigma})}}{\exp\left(-\frac{1}{2} \boldsymbol\mu^{\!\top\!}\mathbf{\Sigma}^{-1}\boldsymbol\mu\right)} 
+\end{aligned}
+\]</div>
+<p>This obervation is sufficient to conclude that any distribution that is proportional to <span class="math notranslate nohighlight">\(\exp(-z)\)</span>, where <span class="math notranslate nohighlight">\(z\)</span> is a quadratic form associated with a positive definite matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, is a Gaussian distribution.</p>
+<p>Further, we can use this observation to derive the mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and covariance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> of this Gaussian distribution.
+As the Gaussian distribution is fully determined by its mean and covariance, this is sufficient to fully specify the distribution.</p>
+<p>Let’s formalize this observation in a theorem.</p>
+<div class="proof theorem admonition" id="completing-the-square">
+<p class="admonition-title"><span>Theorem </span> (Completing the Gaussian square)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(p(\mathbf{x}) \propto \exp(-z(\mathbf{x}))\)</span> be a distribution that is proportional to a <span class="math notranslate nohighlight">\(\exp(-z)\)</span>, where <span class="math notranslate nohighlight">\(z\)</span> is a quadratic form associated with a positive definite matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \propto \exp\left( -\frac{1}{2} \mathbf{x}^\top \mathbf{A} \mathbf{x} + \mathbf{b}^\top \mathbf{x} \right)
+\]</div>
+<p>Then the distribution is a Gaussian distribution with mean <span class="math notranslate nohighlight">\(\boldsymbol\mu\)</span> and covariance <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> given by</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu = \mathbf{A}^{-1} \mathbf{b} \quad \text{and} \quad \mathbf{\Sigma} = \mathbf{A}^{-1}
+\]</div>
+</section>
+</div><p>To see that the expressions for the mean and covariance are correct, we expand the desired square:</p>
+<div class="math notranslate nohighlight">
+\[
+-\frac{1}{2} (\mathbf{x} - \boldsymbol\mu)^\top \mathbf{A} (\mathbf{x} - \boldsymbol\mu) 
+= -\frac{1}{2} \mathbf{x}^\top \mathbf{A} \mathbf{x} + \mathbf{b}^\top \mathbf{x} + \text{const}
+\]</div>
+<p>Let’s expand the LHS:</p>
+<div class="math notranslate nohighlight">
+\[
+-\frac{1}{2} \left[ 
+\mathbf{x}^\top \mathbf{A} \mathbf{x}
+- 2 \boldsymbol\mu^\top \mathbf{A} \mathbf{x}
++ \boldsymbol\mu^\top \mathbf{A} \boldsymbol\mu
+\right]
+= -\frac{1}{2} \mathbf{x}^\top \mathbf{A} \mathbf{x} + \boldsymbol\mu^\top \mathbf{A} \mathbf{x} + \text{const}
+\]</div>
+<p>So we want:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu^\top \mathbf{A} \mathbf{x} = \mathbf{b}^\top \mathbf{x}
+\quad \Rightarrow \quad
+\boldsymbol\mu^\top \mathbf{A} = \mathbf{b}^\top
+\quad \Rightarrow \quad
+\mathbf{A} \boldsymbol\mu = \mathbf{b}
+\quad \Rightarrow \quad
+\boldsymbol\mu = \mathbf{A}^{-1} \mathbf{b}
+\]</div>
+<p>Hence,</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \propto \exp\left( -\frac{1}{2} (\mathbf{x} - \mathbf{A}^{-1} \mathbf{b})^\top \mathbf{A} (\mathbf{x} - \mathbf{A}^{-1} \mathbf{b}) \right)
+\]</div>
+<p>or equivalently,</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) = \mathcal{N}(\mathbf{x}; \mathbf{A}^{-1} \mathbf{b}, \mathbf{A}^{-1})
+\]</div>
+<p>This technique is called <strong>completing the square</strong> and is a standard technique when working with normal distributions.</p>
+<p>To put it into practice, we will now use it to derive the marginal and conditional distributions of a Gaussian distribution.</p>
+</section>
+<section id="conditional-gaussian-distributions">
+<h2>Conditional Gaussian distributions<a class="headerlink" href="#conditional-gaussian-distributions" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{x} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span> be the joint distribution of two random variables <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} = \begin{bmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{bmatrix}, \quad
+\boldsymbol\mu = \begin{bmatrix} \boldsymbol\mu_1 \\ \boldsymbol\mu_2 \end{bmatrix}, \quad
+\mathbf{\Sigma} =
+\begin{bmatrix}
+\mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}} \\
+\mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}}
+\end{bmatrix}
+\end{split}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{\Lambda}=\mathbf{\Sigma}^{-1}\)</span> be the joint precision matrix.</p>
+<p>We can partition the joint precision matrix as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{\Lambda} = \begin{bmatrix} \mathbf{\Lambda_{11}} &amp; \mathbf{\Lambda_{12}} \\ \mathbf{\Lambda_{21}} &amp; \mathbf{\Lambda_{22}} \end{bmatrix}
+\end{split}\]</div>
+<p>We know that the conditional distribution of <span class="math notranslate nohighlight">\(\mathbf{x}_1 \mid \mathbf{x}_2\)</span> is given by the joint distribution divided by the marginal distribution of <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}_1 \mid \mathbf{x}_2) = \frac{p(\mathbf{x}_1, \mathbf{x}_2)}{p(\mathbf{x}_2)}
+\]</div>
+<p>As the marginal distribution of <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span> does not depend on <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> it can be seen as a constant.</p>
+<p>Thus, the conditional distribution of <span class="math notranslate nohighlight">\(\mathbf{x}_1 \mid \mathbf{x}_2\)</span> is proportional to their joint distribution.</p>
+<p>In order to find the conditional distribution, we need to find all terms that depend on <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> and complete the square.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(\mathbf{x}_1 \mid \mathbf{x}_2) &amp;\propto p(\mathbf{x}_1, \mathbf{x}_2)\\
+&amp;\propto \exp\left(  -\frac{1}{2}(\mathbf{x}_1-\mathbf{\mu}_1)^\top \mathbf{\Lambda_{11}} (\mathbf{x}_1-\mathbf{\mu}_1) -\frac{1}{2} (\mathbf{x}_2-\mathbf{\mu}_2)^\top \mathbf{\Lambda_{22}} (\mathbf{x}_2-\mathbf{\mu}_2) - (\mathbf{x}_1-\mathbf{\mu}_1)^\top \mathbf{\Lambda_{12}} (\mathbf{x}_2-\mathbf{\mu}_2) \right)
+\\
+&amp;\propto \exp\left(  -\frac{1}{2}(\mathbf{x}_1-\mathbf{\mu}_1)^\top \mathbf{\Lambda_{11}} (\mathbf{x}_1-\mathbf{\mu}_1) -  (\mathbf{x}_2-\mathbf{\mu}_2)\mathbf{\Lambda_{21}}  (\mathbf{x}_1-\mathbf{\mu}_1)^\top\right)
+\\
+&amp;\propto \exp\left( -\frac{1}{2}\mathbf{x}_1^\top \mathbf{\Lambda_{11}} \mathbf{x}_1 + \mathbf{\mu}_1^\top\mathbf{\Lambda_{11}} \mathbf{x}_1 + (\mathbf{x}_2 - \mathbf{\mu}_2)^\top \mathbf{\Lambda_{21}}\mathbf{x}_1  \right)
+\\
+&amp;= \exp\left( -\frac{1}{2}\mathbf{x}_1^\top \mathbf{\Lambda_{11}} \mathbf{x}_1 + \left(\mathbf{\Lambda_{11}}\mathbf{\mu}_1  +\mathbf{\Lambda_{12}} (\mathbf{x}_2 - \mathbf{\mu}_2) \right)^\top\mathbf{x}_1\right)
+\end{aligned}
+\end{split}\]</div>
+<p>It follows that we can identify the squared form in <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> associated with the postive definite matrix <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and the vector <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> equal to</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{A}=\mathbf{\Lambda_{11}} \quad \text{and} \quad \mathbf{b}=\left(\mathbf{\Lambda_{11}}\mathbf{\mu}_1  +\mathbf{\Lambda_{12}} (\mathbf{x}_2 - \mathbf{\mu}_2) \right)
+\]</div>
+<p>Thus, the conditional distribution is a Gaussian with mean and covariance matrix given by</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}_1 \mid \mathbf{x}_2) = \mathcal{N}(\mathbf{x}_1; \mu_{1\mid2}, \Sigma_{1\mid2})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\Sigma_{1\mid2} = \mathbf{\Lambda_{11}}^{-1}
+\]</div>
+<p>and mean</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mu_{1\mid2} &amp;= \mathbf{\Lambda_{11}}^{-1}\left(\mathbf{\Lambda_{11}}\mathbf{\mu}_1  +\mathbf{\Lambda_{12}} (\mathbf{x}_2 - \mathbf{\mu}_2) \right) \\
+&amp;= \mathbf{\mu}_1 + \mathbf{\Lambda_{11}}^{-1}\mathbf{\Lambda_{12}} (\mathbf{x}_2 - \mathbf{\mu}_2) 
+\end{aligned}
+\end{split}\]</div>
+<p>Using the blockwise matrix inversion theorem (TODO appendix), these can alternatively been written as</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_{1\mid2} = \mu_1 + \Sigma_{12} \Sigma_{22}^{-1}(x_2 - \mu_2), \quad
+\Sigma_{1\mid2} = \Sigma_{11} - \Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21}
+\]</div>
+<hr class="docutils" />
+<p>Let’s visualize a 2D example.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_ellipse</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">eigvals</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">eigvals</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">eigvecs</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigvals</span><span class="p">)</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">*</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">ellipse</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_joint_with_conditional</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">x2_fixed</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Conditional parameters</span>
+    <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span> <span class="o">=</span> <span class="n">mu</span>
+    <span class="n">Sigma11</span><span class="p">,</span> <span class="n">Sigma12</span> <span class="o">=</span> <span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">Sigma21</span><span class="p">,</span> <span class="n">Sigma22</span> <span class="o">=</span> <span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">cond_mu</span> <span class="o">=</span> <span class="n">mu1</span> <span class="o">+</span> <span class="n">Sigma12</span> <span class="o">/</span> <span class="n">Sigma22</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2_fixed</span> <span class="o">-</span> <span class="n">mu2</span><span class="p">)</span>
+    <span class="n">cond_var</span> <span class="o">=</span> <span class="n">Sigma11</span> <span class="o">-</span> <span class="n">Sigma12</span> <span class="o">*</span> <span class="n">Sigma21</span> <span class="o">/</span> <span class="n">Sigma22</span>
+    <span class="n">cond_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cond_var</span><span class="p">)</span>
+
+    <span class="c1"># Layout</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">14.65</span><span class="p">))</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">ax_main</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax_cond</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># === Main joint plot ===</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">x2_fixed</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$x_2 = </span><span class="si">{</span><span class="n">x2_fixed</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+    <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax_main</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1σ contour&#39;</span><span class="p">)</span>
+    <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax_main</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Conditional density &quot;bump&quot; along purple line</span>
+    <span class="n">x1_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">cond_mu</span> <span class="o">-</span> <span class="mi">8</span><span class="o">*</span><span class="n">cond_std</span><span class="p">,</span> <span class="n">cond_mu</span> <span class="o">+</span> <span class="mi">8</span><span class="o">*</span><span class="n">cond_std</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+    <span class="n">y_vals</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">cond_mu</span><span class="p">,</span> <span class="n">cond_std</span><span class="p">)</span>
+    <span class="n">y_vals_scaled</span> <span class="o">=</span> <span class="n">y_vals</span> <span class="o">/</span> <span class="n">y_vals</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.5</span>  <span class="c1"># scale height for visual clarity</span>
+
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">x2_fixed</span> <span class="o">+</span> <span class="n">y_vals_scaled</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">x2_fixed</span> <span class="o">-</span> <span class="n">y_vals_scaled</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">x2_fixed</span> <span class="o">-</span> <span class="n">y_vals_scaled</span><span class="p">,</span> <span class="n">x2_fixed</span> <span class="o">+</span> <span class="n">y_vals_scaled</span><span class="p">,</span>
+                         <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Conditional density&#39;</span><span class="p">)</span>
+
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Joint Distribution with Conditional Slice&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="c1"># === Conditional side plot ===</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$p(x_1 \mid x_2 = </span><span class="si">{</span><span class="n">x2_fixed</span><span class="si">}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">cond_mu</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$\mu_</span><span class="se">{{</span><span class="s1">\mid</span><span class="se">}}</span><span class="s1"> = </span><span class="si">{</span><span class="n">cond_mu</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="n">where</span><span class="o">=</span><span class="p">((</span><span class="n">x1_vals</span> <span class="o">&gt;</span> <span class="n">cond_mu</span> <span class="o">-</span> <span class="n">cond_std</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x1_vals</span> <span class="o">&lt;</span> <span class="n">cond_mu</span> <span class="o">+</span> <span class="n">cond_std</span><span class="p">)),</span>
+                         <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s1">&#39;$\pm \sigma_</span><span class="se">{{</span><span class="s1">\mid</span><span class="se">}}</span><span class="s1"> = </span><span class="si">{</span><span class="n">cond_std</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">fr</span><span class="s1">&#39;Conditional $p(x_1 \mid x_2 = </span><span class="si">{</span><span class="n">x2_fixed</span><span class="si">}</span><span class="s1">)$&#39;</span><span class="p">)</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax_cond</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_joint_with_conditional</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">x2_fixed</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/fa53a2783370663ab29c8b1614ba3896f450da9abc8e6fe665ce0a438c437b9b.png" src="../_images/fa53a2783370663ab29c8b1614ba3896f450da9abc8e6fe665ce0a438c437b9b.png" />
+</div>
+</div>
+</section>
+<section id="marginal-gaussian-distributions">
+<h2>Marginal Gaussian distributions<a class="headerlink" href="#marginal-gaussian-distributions" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{x} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span> be the joint distribution of two random variables <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} = \begin{bmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{bmatrix}, \quad
+\boldsymbol\mu = \begin{bmatrix} \boldsymbol\mu_1 \\ \boldsymbol\mu_2 \end{bmatrix}, \quad
+\mathbf{\Sigma} =
+\begin{bmatrix}
+\mathbf{\Sigma_{11}} &amp; \mathbf{\Sigma_{12}} \\
+\mathbf{\Sigma_{21}} &amp; \mathbf{\Sigma_{22}}
+\end{bmatrix}
+\end{split}\]</div>
+<p>The marginals of <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span> are just Gaussians:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_1 \sim \mathcal{N}(\boldsymbol\mu_1, \mathbf{\Sigma_{11}}), \quad
+\mathbf{x}_2 \sim \mathcal{N}(\boldsymbol\mu_2, \mathbf{\Sigma_{22}})
+\]</div>
+<p>Let’s visualize the two marginal distributions for <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span> for the same 2-D Gaussian as above.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_joint_with_marginals</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Layout</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                           <span class="n">hspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="n">ax_main</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax_top</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax_main</span><span class="p">)</span>
+    <span class="n">ax_right</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">sharey</span><span class="o">=</span><span class="n">ax_main</span><span class="p">)</span>
+
+    <span class="c1"># === Main joint plot ===</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+    <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax_main</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1σ contour&#39;</span><span class="p">)</span>
+    <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax_main</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1">#ax_main.set_title(&#39;Joint Distribution $p(x_1, x_2)$&#39;)</span>
+    <span class="n">ax_main</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="c1"># === Top marginal: p(x1) ===</span>
+    <span class="n">std1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">x1_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">std1</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">std1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">y1_vals</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">std1</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1_vals</span><span class="p">,</span> <span class="n">y1_vals</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">std1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">std1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Marginal $p(x_1)$&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Annotations for x1 marginal</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">y1_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.9</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">std1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">y1_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.7</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu - \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">std1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">y1_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.7</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu + \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+
+    <span class="c1"># === Right marginal: p(x2) ===</span>
+    <span class="n">std2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Sigma</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">x2_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">std2</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">std2</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">y2_vals</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x2_vals</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">std2</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y2_vals</span><span class="p">,</span> <span class="n">x2_vals</span><span class="p">,</span> <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">std2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">std2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Marginal $p(x_2)$&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># Annotations for x2 marginal</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y2_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\mu$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y2_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">std2</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu - \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+    <span class="n">ax_right</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">y2_vals</span><span class="p">)</span><span class="o">*</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">mu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">std2</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mu + \sigma$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot_joint_with_marginals</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/40afa43529efaef50641d66869cd5f916894830cd85037b172d3fade72e13476.png" src="../_images/40afa43529efaef50641d66869cd5f916894830cd85037b172d3fade72e13476.png" />
+</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="linear-transform-of-a-gaussian">
+<h2>Linear Transform of a Gaussian<a class="headerlink" href="#linear-transform-of-a-gaussian" title="Link to this heading">#</a></h2>
+<div class="proof theorem admonition" id="affine-gaussian">
+<p class="admonition-title"><span>Theorem </span> (Closure of Gaussian under Affine Transformations)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{X} \sim \mathcal{N}(\boldsymbol\mu, \mathbf{\Sigma})\)</span></p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{Y} = \mathbf{A} \mathbf{X} + \mathbf{b}\)</span></p>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{Y} \sim \mathcal{N}(\mathbf{A} \boldsymbol\mu + \mathbf{b},\ \mathbf{A} \mathbf{\Sigma} \mathbf{A}^\top)
+\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. (using completing the square)</p>
+<p>Start with the Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \propto \exp\left( -\frac{1}{2} (\mathbf{x} - \boldsymbol\mu)^\top \mathbf{\Sigma}^{-1} (\mathbf{x} - \boldsymbol\mu) \right)
+\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{A} \mathbf{x} + \mathbf{b}\)</span></p>
+<p>Assume <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is invertible: <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{A}^{-1}(\mathbf{y} - \mathbf{b})\)</span></p>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{\mathbf{Y}}(\mathbf{y}) \propto \exp\left(
+-\frac{1}{2} \left( \mathbf{A}^{-1}(\mathbf{y} - \mathbf{b}) - \boldsymbol\mu \right)^\top \mathbf{\Sigma}^{-1} \left( \mathbf{A}^{-1}(\mathbf{y} - \mathbf{b}) - \boldsymbol\mu \right)
+\right)
+\]</div>
+<p>Let’s define:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu_Y = \mathbf{A} \boldsymbol\mu + \mathbf{b}
+\quad \text{and} \quad
+\mathbf{\Sigma}_Y = \mathbf{A} \mathbf{\Sigma} \mathbf{A}^\top
+\]</div>
+<p>As shown earlier by completing the square, this is again of the form:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{y}) \propto \exp\left(
+-\frac{1}{2} (\mathbf{y} - \boldsymbol\mu_Y)^\top \mathbf{\Sigma}_Y^{-1} (\mathbf{y} - \boldsymbol\mu_Y)
+\right)
+\]</div>
+<p>Thus, <span class="math notranslate nohighlight">\(\mathbf{Y} \sim \mathcal{N}(\boldsymbol\mu\_Y, \mathbf{\Sigma}\_Y)\)</span>.</p>
+<p>While we have shown this for the case of an invertible <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, the result holds for any <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>.
+The proof is more involved in this case, but the result is the same.</p>
+</div>
+<hr class="docutils" />
+<p>Let’s visualize this with a simple 2D Gaussian and its linear transformation.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_affine_transform_of_gaussian</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">transformed_samples</span> <span class="o">=</span> <span class="n">samples</span> <span class="o">@</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">b</span>
+
+    <span class="n">mu_trans</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">Sigma_trans</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">Sigma</span> <span class="o">@</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">axes</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">samples</span><span class="p">,</span> <span class="n">transformed_samples</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">mu_trans</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">Sigma</span><span class="p">,</span> <span class="n">Sigma_trans</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;Original Gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;After Linear Transformation&#39;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean&#39;</span><span class="p">)</span>
+        <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">draw_ellipse</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Linear Transformation of a Gaussian: $</span><span class="se">\\</span><span class="s1">mathbf</span><span class="si">{Y}</span><span class="s1"> = A </span><span class="se">\\</span><span class="s1">mathbf</span><span class="si">{X}</span><span class="s1"> + b$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="c1"># Linear transformation A and b</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">plot_affine_transform_of_gaussian</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/44a30d7b00025ffbe7764e010c37f5f4048b8bd836beb85ef8b603d72c1fe56e.png" src="../_images/44a30d7b00025ffbe7764e010c37f5f4048b8bd836beb85ef8b603d72c1fe56e.png" />
+</div>
+</div>
+<section id="example-linear-regression-estimates-under-gaussian-noise-are-gaussian">
+<h3>Example: Linear Regression estimates under Gaussian noise are Gaussian<a class="headerlink" href="#example-linear-regression-estimates-under-gaussian-noise-are-gaussian" title="Link to this heading">#</a></h3>
+<p>Let’s consider the linear regression model:</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \mathbf{x}_i^\top \boldsymbol\beta + \epsilon_i
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_i \sim \mathcal{N}(0, \sigma^2)\)</span> is i.i.d. Gaussian noise.</p>
+<p>Let’s assume that we have a training set <span class="math notranslate nohighlight">\(\mathcal{D}=\{(\mathbf{x}_i, y_i)\}_{i=1}^n\)</span> and we want to estimate the parameters <span class="math notranslate nohighlight">\(\boldsymbol\beta\)</span>.</p>
+<p>We can write this as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y} = \mathbf{X}\boldsymbol\beta + \boldsymbol\epsilon
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{n\times d}\)</span> is the design matrix, <span class="math notranslate nohighlight">\(\boldsymbol\beta\in\mathbb{R}^d\)</span> is the parameter vector, and <span class="math notranslate nohighlight">\(\boldsymbol\epsilon\in\mathbb{R}^n\)</span> is the noise vector.</p>
+<section id="the-vector-of-all-training-samples-mathbf-y-in-mathbb-r-n-follows-a-gaussian-distribution">
+<h4>1. The vector of all training samples <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span> follows a Gaussian distribution.<a class="headerlink" href="#the-vector-of-all-training-samples-mathbf-y-in-mathbb-r-n-follows-a-gaussian-distribution" title="Link to this heading">#</a></h4>
+<p>We observe, that in the model, the vector of all training samples <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span> follows a Gaussian distribution.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y} \sim \mathcal{N}(\mathbf{X}\boldsymbol\beta, \sigma^2\mathbf{I})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol\epsilon \sim \mathcal{N}(\mathbf{0}, \sigma^2\mathbf{I})\)</span>.</p>
+<p>The mean of <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> is <span class="math notranslate nohighlight">\(\mathbf{X}\boldsymbol\beta\)</span> and the variance is <span class="math notranslate nohighlight">\(\sigma^2\mathbf{I}\)</span>.</p>
+</section>
+<section id="the-ols-and-ridge-estimates-are-gaussian">
+<h4>2. The OLS and Ridge estimates are Gaussian.<a class="headerlink" href="#the-ols-and-ridge-estimates-are-gaussian" title="Link to this heading">#</a></h4>
+<p>Say, we use either the OLS <span class="math notranslate nohighlight">\((\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}\)</span> or the Ridge estimator <span class="math notranslate nohighlight">\((\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}\)</span> to estimate <span class="math notranslate nohighlight">\({\boldsymbol\beta}\)</span>.</p>
+<p>Then, as these are affine transformations of the Gaussian <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, the estimates are also Gaussian.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol\beta}_{OLS} \sim \mathcal{N}(\boldsymbol\beta, \sigma^2(\mathbf{X}^\top\mathbf{X})^{-1})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol\beta}_{Ridge} \sim \mathcal{N}(\boldsymbol\beta, \sigma^2(\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1})
+\]</div>
+<p>This result is typically used in statistics to compute confidence intervals for the estimates or to test hypotheses about the parameters.</p>
+</section>
+<section id="the-predictions-are-gaussian">
+<h4>3. The predictions are Gaussian.<a class="headerlink" href="#the-predictions-are-gaussian" title="Link to this heading">#</a></h4>
+<p>The predictions are also Gaussian.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y}_{new} \sim \mathcal{N}(\mathbf{X}_{new}\hat{\boldsymbol\beta}, \sigma^2)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{X}_{new}\in\mathbb{R}^{n_{new}\times d}\)</span> is the design matrix for the new samples and <span class="math notranslate nohighlight">\(\hat{\boldsymbol\beta}\)</span> is the estimated parameter vector, which is Gaussian as shown in 2.</p>
+<p>Thus, the predictions are also Gaussian, reflecting the uncertainty in the predictions.</p>
+<hr class="docutils" />
+<p>The following example visualizes this property.</p>
+<p>We repeatedly generate data from a true linear model with added Gaussian noise, and for each dataset, it computes the OLS estimate <span class="math notranslate nohighlight">\(\hat{\boldsymbol\beta}\)</span>.</p>
+<p>The visualization shows two things:</p>
+<ul class="simple">
+<li><p>A scatter plot of all the estimated parameter pairs <span class="math notranslate nohighlight">\((\hat{\beta}0, \hat{\beta}_1)\)</span>, which form a Gaussian cloud around the true parameter value, as predicted by the theory.</p></li>
+<li><p>A plot showing multiple regression lines, each corresponding to a different <span class="math notranslate nohighlight">\(\hat{\boldsymbol\beta}\)</span> estimate. This illustrates how the uncertainty in the parameters translates directly into uncertainty about the model’s predictions.</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visualize_gaussian_properties_in_regression</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualizes how Gaussian noise in linear regression leads to Gaussian-distributed</span>
+<span class="sd">    parameter estimates and prediction uncertainty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 1. --- Setup: Define the true model and simulation parameters ---</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    
+    <span class="c1"># True parameters (y = beta_0 * 1 + beta_1 * x)</span>
+    <span class="n">true_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])</span> 
+    
+    <span class="c1"># Noise level</span>
+    <span class="n">noise_sigma</span> <span class="o">=</span> <span class="mf">2.5</span>
+    
+    <span class="c1"># Data and simulation settings</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">n_trials</span> <span class="o">=</span> <span class="mi">2000</span>  <span class="c1"># Number of experiments to run</span>
+
+    <span class="c1"># Generate the design matrix X (with an intercept)</span>
+    <span class="c1"># We use the same X for all trials to isolate the effect of noise</span>
+    <span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">X_design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">x_values</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="c1"># 2. --- Simulation: Repeatedly estimate parameters ---</span>
+    
+    <span class="n">estimated_betas</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Store the last y_observed for plotting</span>
+    <span class="n">y_observed</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_trials</span><span class="p">):</span>
+        <span class="c1"># Generate new Gaussian noise for this trial</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_sigma</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+        
+        <span class="c1"># Create the observed y values</span>
+        <span class="n">y_observed</span> <span class="o">=</span> <span class="n">X_design</span> <span class="o">@</span> <span class="n">true_beta</span> <span class="o">+</span> <span class="n">epsilon</span>
+        
+        <span class="c1"># Calculate OLS estimate for beta</span>
+        <span class="c1"># beta_hat = (X^T X)^-1 X^T y</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">xtx_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X_design</span><span class="p">)</span>
+            <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">xtx_inv</span> <span class="o">@</span> <span class="n">X_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y_observed</span>
+            <span class="n">estimated_betas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta_hat</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
+            <span class="k">continue</span> <span class="c1"># Should not happen with this data</span>
+
+    <span class="n">estimated_betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">estimated_betas</span><span class="p">)</span>
+
+    <span class="c1"># 3. --- Theoretical Calculation ---</span>
+    
+    <span class="c1"># The theoretical distribution of beta_hat is N(true_beta, sigma^2 * (X^T X)^-1)</span>
+    <span class="n">mean_beta_hat</span> <span class="o">=</span> <span class="n">true_beta</span>
+    <span class="n">cov_beta_hat</span> <span class="o">=</span> <span class="n">noise_sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">xtx_inv</span>
+
+    <span class="c1"># 4. --- Visualization ---</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8-whitegrid&#39;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+    <span class="c1"># --- Plot 1: Distribution of Parameter Estimates ---</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Scatter plot of all estimated (beta_0, beta_1) pairs</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">estimated_betas</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">estimated_betas</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sampled $</span><span class="se">\\</span><span class="s1">hat{</span><span class="se">\\</span><span class="s1">beta}$&#39;</span><span class="p">)</span>
+    <span class="c1"># Plot the true beta</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">true_beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">true_beta</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True $</span><span class="se">\\</span><span class="s1">beta$&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Overlay the theoretical 2D Gaussian distribution confidence ellipses</span>
+    <span class="n">lambda_</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">cov_beta_hat</span><span class="p">)</span>
+    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">lambda_</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n_std</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+        <span class="n">ell</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">mean_beta_hat</span><span class="p">,</span>
+                      <span class="n">width</span><span class="o">=</span><span class="n">lambda_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+                      <span class="n">height</span><span class="o">=</span><span class="n">lambda_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+                      <span class="n">angle</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">])),</span>
+                      <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n_std</span><span class="si">}</span><span class="s1">$</span><span class="se">\\</span><span class="s1">sigma$ confidence ellipse&#39;</span> <span class="k">if</span> <span class="n">n_std</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ell</span><span class="p">)</span>
+        
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Distribution of OLS Estimates $</span><span class="se">\\</span><span class="s1">hat{</span><span class="se">\\</span><span class="s1">beta}$&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat{</span><span class="se">\\</span><span class="s1">beta}_0$ (Intercept)&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat{</span><span class="se">\\</span><span class="s1">beta}_1$ (Slope)&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+    <span class="c1"># --- Plot 2: Uncertainty in Regression Lines ---</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="c1"># Plot a subset of the estimated regression lines to show uncertainty</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_trials</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="n">beta_hat_sample</span> <span class="o">=</span> <span class="n">estimated_betas</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">X_design</span> <span class="o">@</span> <span class="n">beta_hat_sample</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    
+    <span class="c1"># Plot the true regression line</span>
+    <span class="n">y_true_line</span> <span class="o">=</span> <span class="n">X_design</span> <span class="o">@</span> <span class="n">true_beta</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_true_line</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Regression Line&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Plot the mean regression line (from the average of all beta_hats)</span>
+    <span class="n">mean_beta_estimate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">estimated_betas</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">X_design</span> <span class="o">@</span> <span class="n">mean_beta_estimate</span><span class="p">,</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean Estimated Line&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Scatter plot some example data points from the last trial</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_observed</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;One Set of Sample Data&#39;</span><span class="p">)</span>
+    
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Uncertainty in Predictions&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Visualization of Gaussian Properties in Linear Regression&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="n">visualize_gaussian_properties_in_regression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/09206a4e41a9d05d09225a2aecd28ce8e5f81579db86b143b21715f742fec7d4.png" src="../_images/09206a4e41a9d05d09225a2aecd28ce8e5f81579db86b143b21715f742fec7d4.png" />
+</div>
+</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -598,12 +1380,12 @@ equivalently, the square roots of the eigenvalues of <span class="math notransla
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="random_vectors.html"
+       href="joint_distributions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Random vectors</p>
+        <p class="prev-next-title">Joint distributions</p>
       </div>
     </a>
     <a class="right-next"
@@ -632,6 +1414,18 @@ equivalently, the square roots of the eigenvalues of <span class="math notransla
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-multivariate-gaussians">The geometry of multivariate Gaussians</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completing-the-square">Completing the square</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-gaussian-distributions">Conditional Gaussian distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-gaussian-distributions">Marginal Gaussian distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-transform-of-a-gaussian">Linear Transform of a Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-linear-regression-estimates-under-gaussian-noise-are-gaussian">Example: Linear Regression estimates under Gaussian noise are Gaussian</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-vector-of-all-training-samples-mathbf-y-in-mathbb-r-n-follows-a-gaussian-distribution">1. The vector of all training samples <span class="math notranslate nohighlight">\(\mathbf{y}\in\mathbb{R}^n\)</span> follows a Gaussian distribution.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ols-and-ridge-estimates-are-gaussian">2. The OLS and Ridge estimates are Gaussian.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-predictions-are-gaussian">3. The predictions are Gaussian.</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

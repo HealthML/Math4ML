@@ -64,8 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/joint_distributions.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Estimation of Parameters" href="estimation.html" />
-    <link rel="prev" title="Covariance" href="covariance.html" />
+    <link rel="next" title="The Gaussian distribution" href="gaussian.html" />
+    <link rel="prev" title="Functions of Random Vectors" href="functions_random_vectors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -250,12 +250,13 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
 <li class="toctree-l2"><a class="reference internal" href="variance.html">Variance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="covariance.html">Covariance</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Joint distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimation of Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Joint distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
 </ul>
 </details></li>
@@ -495,8 +496,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-of-random-variables">Independence of random variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions">Marginal distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence">Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-and-identically-distributed-random-variables">Independent and identically distributed random variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-independent-coin-flips">Example: Independent coin flips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditioning-the-chain-rule-and-the-sum-rule-for-random-variables">Conditioning, the chain rule, and the sum rule for random variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-distributions">Conditional distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions-and-the-sum-rule">Marginal distributions and the sum rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-marginal-and-conditional-distributions">Example of Marginal and Conditional Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions">Marginal Distributions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-distribution">Conditional Distribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -511,44 +524,200 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="joint-distributions">
 <h1>Joint distributions<a class="headerlink" href="#joint-distributions" title="Link to this heading">#</a></h1>
 <p>Often we have several random variables and we would like to get a
-distribution over some combination of them. A <strong>joint distribution</strong> is
-exactly this. For some random variables <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span>, the joint
+distribution over some combination of them.
+A <strong>joint distribution</strong> is
+exactly this.</p>
+<p>For some random variables <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span>, the joint
 distribution is written <span class="math notranslate nohighlight">\(p(X_1, \dots, X_n)\)</span> and gives probabilities
 over entire assignments to all the <span class="math notranslate nohighlight">\(X_i\)</span> simultaneously.</p>
-<section id="independence-of-random-variables">
-<h2>Independence of random variables<a class="headerlink" href="#independence-of-random-variables" title="Link to this heading">#</a></h2>
+<section id="independence">
+<h2>Independence<a class="headerlink" href="#independence" title="Link to this heading">#</a></h2>
 <p>We say that two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are <strong>independent</strong> if their joint
 distribution factors into their respective distributions, i.e.</p>
 <div class="math notranslate nohighlight">
 \[p(X, Y) = p(X)p(Y)\]</div>
 <p>We can also define independence for more than two
-random variables, although it is more complicated. Let
+random variables.
+Let
 <span class="math notranslate nohighlight">\(\{X_i\}_{i \in I}\)</span> be a collection of random variables indexed by <span class="math notranslate nohighlight">\(I\)</span>,
-which may be infinite. Then <span class="math notranslate nohighlight">\(\{X_i\}\)</span> are independent if for every
+which may be infinite.</p>
+<p>Then <span class="math notranslate nohighlight">\(\{X_i\}\)</span> are independent if for every
 finite subset of indices <span class="math notranslate nohighlight">\(i_1, \dots, i_k \in I\)</span> we have</p>
 <div class="math notranslate nohighlight">
 \[p(X_{i_1}, \dots, X_{i_k}) = \prod_{j=1}^k p(X_{i_j})\]</div>
-<p>For example,
-in the case of three random variables, <span class="math notranslate nohighlight">\(X, Y, Z\)</span>, we require that
-<span class="math notranslate nohighlight">\(p(X,Y,Z) = p(X)p(Y)p(Z)\)</span> as well as <span class="math notranslate nohighlight">\(p(X,Y) = p(X)p(Y)\)</span>,
-<span class="math notranslate nohighlight">\(p(X,Z) = p(X)p(Z)\)</span>, and <span class="math notranslate nohighlight">\(p(Y,Z) = p(Y)p(Z)\)</span>.</p>
-<p>It is often convenient (though perhaps questionable) to assume that a
-bunch of random variables are <strong>independent and identically
-distributed</strong> (i.i.d.) so that their joint distribution can be factored
-entirely:</p>
+<p>For example, in the case of three random variables, <span class="math notranslate nohighlight">\(X, Y, Z\)</span>, we require that</p>
+<div class="math notranslate nohighlight">
+\[p(X,Y,Z) = p(X)p(Y)p(Z)\]</div>
+<p>as well as</p>
+<div class="math notranslate nohighlight">
+\[p(X,Y) = p(X)p(Y)\quad\text{and}\quad p(X,Z) = p(X)p(Z) \quad\text{and}\quad p(Y,Z) = p(Y)p(Z)\]</div>
+</section>
+<section id="independent-and-identically-distributed-random-variables">
+<h2>Independent and identically distributed random variables<a class="headerlink" href="#independent-and-identically-distributed-random-variables" title="Link to this heading">#</a></h2>
+<p>In machine learning, we often assume that a bunch of random variables are <strong>independent and identically distributed</strong> (i.i.d.) so that their joint distribution can be factored entirely:</p>
 <div class="math notranslate nohighlight">
 \[p(X_1, \dots, X_n) = \prod_{i=1}^n p(X_i)\]</div>
-<p>where
-<span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> all share the same p.m.f./p.d.f.</p>
-</section>
-<section id="marginal-distributions">
-<h2>Marginal distributions<a class="headerlink" href="#marginal-distributions" title="Link to this heading">#</a></h2>
-<p>If we have a joint distribution over some set of random variables, it is
-possible to obtain a distribution for a subset of them by “summing out”
-(or “integrating out” in the continuous case) the variables we don’t
-care about:</p>
+<p>where <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> all share the same p.m.f./p.d.f.</p>
+<p>That means that for a parametrerized model <span class="math notranslate nohighlight">\(p_\boldsymbol{\theta}\)</span>, the distributions of all <span class="math notranslate nohighlight">\(X_i\)</span> share the parameter vector <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> and are independent.</p>
 <div class="math notranslate nohighlight">
-\[p(X) = \sum_{y} p(X, y)\]</div>
+\[p_\boldsymbol{\theta}(X_1, \dots, X_n) = \prod_{i=1}^n p_\boldsymbol{\theta}(X_i)\]</div>
+</section>
+<section id="example-independent-coin-flips">
+<h2>Example: Independent coin flips<a class="headerlink" href="#example-independent-coin-flips" title="Link to this heading">#</a></h2>
+<p>Assume we have a coin with probability of heads <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> be the results of <span class="math notranslate nohighlight">\(n\)</span> independent flips of the same coin, where <span class="math notranslate nohighlight">\(X_i = 1\)</span> if the <span class="math notranslate nohighlight">\(i\)</span>-th flip is heads and <span class="math notranslate nohighlight">\(X_i = 0\)</span> if the <span class="math notranslate nohighlight">\(i\)</span>-th flip is tails.</p>
+<p>Then the joint distribution of <span class="math notranslate nohighlight">\(X_1, \dots, X_n\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[p(X_1, \dots, X_n) = \prod_{i=1}^n \theta^{X_i} (1-\theta)^{1-X_i} = \theta^{\sum_{i=1}^n X_i} (1-\theta)^{n-\sum_{i=1}^n X_i}\]</div>
+</section>
+<section id="conditioning-the-chain-rule-and-the-sum-rule-for-random-variables">
+<h2>Conditioning, the chain rule, and the sum rule for random variables<a class="headerlink" href="#conditioning-the-chain-rule-and-the-sum-rule-for-random-variables" title="Link to this heading">#</a></h2>
+<p>Previously, we have encountered conditioning, the chain rule, and the sum rule in the context of individual events.
+We now extend these foundational ideas to <strong>random variables</strong>, allowing us to reason about distributions and probabilities more systematically.</p>
+<section id="conditional-distributions">
+<h3>Conditional distributions<a class="headerlink" href="#conditional-distributions" title="Link to this heading">#</a></h3>
+<p>For random variables, the concept of conditioning generalizes naturally: the <strong>conditional distribution</strong> <span class="math notranslate nohighlight">\(p(X \mid Y=y)\)</span> describes the probability distribution of <span class="math notranslate nohighlight">\(X\)</span> given that <span class="math notranslate nohighlight">\(Y\)</span> takes a specific value <span class="math notranslate nohighlight">\(y\)</span>.</p>
+</section>
+<section id="the-chain-rule">
+<h3>The chain rule<a class="headerlink" href="#the-chain-rule" title="Link to this heading">#</a></h3>
+<p>Similarly, the <strong>chain rule</strong> generalizes to factorize joint distributions of multiple random variables, such as:</p>
+<div class="math notranslate nohighlight">
+\[
+p(X, Y) = p(X \mid Y)\, p(Y), \quad p(X, Y, Z) = p(X \mid Y, Z)\,p(Y \mid Z)\,p(Z),
+\]</div>
+<p>and so forth.</p>
+</section>
+<section id="marginal-distributions-and-the-sum-rule">
+<h3>Marginal distributions and the sum rule<a class="headerlink" href="#marginal-distributions-and-the-sum-rule" title="Link to this heading">#</a></h3>
+<p>Finally, the <strong>sum rule</strong> for random variables states that we can obtain the marginal distribution of a variable by summing (or integrating) over all possible values of the other variables:</p>
+<div class="math notranslate nohighlight">
+\[
+p(X) = \sum_{y} p(X, y).
+\]</div>
+<p>These extensions provide a powerful framework to handle complex probabilistic scenarios involving multiple random variables.</p>
+</section>
+<section id="example-of-marginal-and-conditional-distributions">
+<h3>Example of Marginal and Conditional Distributions<a class="headerlink" href="#example-of-marginal-and-conditional-distributions" title="Link to this heading">#</a></h3>
+<p>Let’s illustrate these concepts with a concrete scenario.</p>
+<p><strong>Scenario: A Small Coding Bootcamp</strong></p>
+<p>Imagine a small coding bootcamp with just <strong>10 students</strong>.
+We can define two random variables based on the students’ properties:</p>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(X\)</span> = Student’s Experience Level</strong>:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(X=1\)</span>: Beginner (no prior experience)</p></li>
+<li><p><span class="math notranslate nohighlight">\(X=2\)</span>: Intermediate (some prior experience)</p></li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\(Y\)</span> = Number of Projects Completed</strong>:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(Y=0\)</span>: No projects</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y=1\)</span>: One project</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y=2\)</span>: Two projects</p></li>
+</ul>
+</li>
+</ul>
+<p>The 10 students in the bootcamp are composed as follows:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Experience (<span class="math notranslate nohighlight">\(X\)</span>)</p></th>
+<th class="head text-left"><p>Projects (<span class="math notranslate nohighlight">\(Y\)</span>)</p></th>
+<th class="head text-left"><p>Number of Students</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Beginner</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Beginner</p></td>
+<td class="text-left"><p>1</p></td>
+<td class="text-left"><p>1</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Beginner</p></td>
+<td class="text-left"><p>2</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Intermediate</p></td>
+<td class="text-left"><p>0</p></td>
+<td class="text-left"><p>1</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Intermediate</p></td>
+<td class="text-left"><p>1</p></td>
+<td class="text-left"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Intermediate</p></td>
+<td class="text-left"><p>2</p></td>
+<td class="text-left"><p>3</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Total</strong></p></td>
+<td class="text-left"><p></p></td>
+<td class="text-left"><p><strong>10</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If we pick a student at random from this bootcamp, the joint probability distribution of their experience level (<span class="math notranslate nohighlight">\(X\)</span>) and project completions (<span class="math notranslate nohighlight">\(Y\)</span>) is given by the following table, where each entry is the number of students in that category divided by the total of 10.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(X, Y) = 
+\begin{array}{c|ccc}
+ &amp; Y = 0 &amp; Y = 1 &amp; Y = 2 \\
+\hline
+X = 1 &amp; 0.1 &amp; 0.1 &amp; 0.2 \\
+X = 2 &amp; 0.1 &amp; 0.2 &amp; 0.3 \\
+X = 3 &amp; 0.2 &amp; 0.3 &amp; 0.5
+\end{array}
+\end{split}\]</div>
+<section id="marginal-distributions">
+<h4>Marginal Distributions<a class="headerlink" href="#marginal-distributions" title="Link to this heading">#</a></h4>
+<p>We first recall the marginal distributions, obtained by summing over the other variable.</p>
+<p>Marginalizing over <span class="math notranslate nohighlight">\( Y \)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(X = 1) &amp;= 0.1 + 0.1 + 0.2 = 0.4 \\
+p(X = 2) &amp;= 0.1 + 0.2 + 0.3 = 0.6
+\end{aligned}
+\end{split}\]</div>
+<p>Marginalizing over <span class="math notranslate nohighlight">\( X \)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(Y = 0) &amp;= 0.1 + 0.1 = 0.2 \\
+p(Y = 1) &amp;= 0.1 + 0.2 = 0.3 \\
+p(Y = 2) &amp;= 0.2 + 0.3 = 0.5
+\end{aligned}
+\end{split}\]</div>
+</section>
+<section id="conditional-distribution">
+<h4>Conditional Distribution<a class="headerlink" href="#conditional-distribution" title="Link to this heading">#</a></h4>
+<p>Now, we introduce the conditional distribution. The conditional distribution of <span class="math notranslate nohighlight">\( X \)</span> given <span class="math notranslate nohighlight">\( Y = y \)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+p(X \mid Y = y) = \frac{p(X, Y = y)}{p(Y = y)}
+\]</div>
+<p>For example, let’s compute <span class="math notranslate nohighlight">\( p(X \mid Y = 2) \)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(X = 1 \mid Y = 2) &amp;= \frac{p(X = 1, Y = 2)}{p(Y = 2)} = \frac{0.2}{0.5} = 0.4 \\
+p(X = 2 \mid Y = 2) &amp;= \frac{p(X = 2, Y = 2)}{p(Y = 2)} = \frac{0.3}{0.5} = 0.6
+\end{aligned}
+\end{split}\]</div>
+<p>Thus, the conditional distribution <span class="math notranslate nohighlight">\( p(X \mid Y = 2) \)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(X \mid Y = 2) =
+\begin{cases}
+0.4 &amp; \text{if } X = 1 \\
+0.6 &amp; \text{if } X = 2
+\end{cases}
+\end{split}\]</div>
+<p>Similarly, one could compute the conditional distributions for <span class="math notranslate nohighlight">\( Y = 0 \)</span> and <span class="math notranslate nohighlight">\( Y = 1 \)</span>.</p>
+<p>This clearly illustrates how the conditional distribution relates directly to both joint and marginal distributions.</p>
+</section>
+</section>
 </section>
 </section>
 
@@ -583,20 +752,20 @@ care about:</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="covariance.html"
+       href="functions_random_vectors.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Covariance</p>
+        <p class="prev-next-title">Functions of Random Vectors</p>
       </div>
     </a>
     <a class="right-next"
-       href="estimation.html"
+       href="gaussian.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Estimation of Parameters</p>
+        <p class="prev-next-title">The Gaussian distribution</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -616,8 +785,20 @@ care about:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-of-random-variables">Independence of random variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions">Marginal distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence">Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independent-and-identically-distributed-random-variables">Independent and identically distributed random variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-independent-coin-flips">Example: Independent coin flips</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditioning-the-chain-rule-and-the-sum-rule-for-random-variables">Conditioning, the chain rule, and the sum rule for random variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-distributions">Conditional distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule">The chain rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions-and-the-sum-rule">Marginal distributions and the sum rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-marginal-and-conditional-distributions">Example of Marginal and Conditional Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-distributions">Marginal Distributions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-distribution">Conditional Distribution</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
