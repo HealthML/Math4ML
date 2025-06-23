@@ -126,13 +126,20 @@ parts:
         sections:
         - file: chapter_probability/probability_basics
         - file: chapter_probability/random_variables
+        - file: chapter_probability/functions_of_random_variables
         - file: chapter_probability/expectation
         - file: chapter_probability/variance
         - file: chapter_probability/covariance
-        - file: chapter_probability/joint_distributions
-        - file: chapter_probability/estimation
         - file: chapter_probability/random_vectors
+        - file: chapter_probability/functions_random_vectors
+        - file: chapter_probability/joint_distributions
         - file: chapter_probability/gaussian
+#         - file: chapter_probability/estimation
+#        - file: chapter_probability/exponential_family
+#        - file: chapter_probability/bayesian_linreg
+#        - file: chapter_probability/gaussian_processes
+#        - file: chapter_probability/mixture_models
+#        - file: chapter_probability/gaussian_mixture_models
 #############
 #  - file: example_weather_stations/univariate_linreg 
 #  - file: example_weather_stations/linreg 

@@ -67,10 +67,6 @@ $$\operatorname{Var}(\alpha X + \beta) = \alpha^2 \operatorname{Var}(X)$$
 
 Basically, multiplicative constants become squared when they are pulled out, and additive constants disappear (since the variance contributed by a constant is zero).
 
----
-It follows that in our example of two tosses of a fair coin, the variance of the total number of heads can be computed from the variance of the individual tosses:
-
-$$\operatorname{Var}(X_1 + X_2) = \operatorname{Var}(X_1) + \operatorname{Var}(X_2) = 0.25 + 0.25 = 1.0$$
 
 ---
 
@@ -79,7 +75,12 @@ Furthermore, if $X_1, \dots, X_n$ are uncorrelated, then
 $$\operatorname{Var}(X_1 + \dots + X_n) = \operatorname{Var}(X_1) + \dots + \operatorname{Var}(X_n)$$
 
 ---
-So for example, the variance of the total number of heads in $n$ tosses of a fair coin is $n$ times the variance of the number of heads in a single toss, i.e. $n \cdot 0.25$.
+It follows that in our example of two tosses of a fair coin, the variance of the total number of heads can be computed from the variance of the individual tosses:
+
+$$\operatorname{Var}(X_1 + X_2) = \operatorname{Var}(X_1) + \operatorname{Var}(X_2) = 0.25 + 0.25 = 1.0$$
+
+---
+The variance of the total number of heads in $n$ tosses of a fair coin is $n$ times the variance of the number of heads in a single toss, i.e. $n \cdot 0.25$.
 
 ## Standard deviation
 

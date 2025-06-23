@@ -29,12 +29,6 @@ $$\Omega = \{ \text{heads}, \text{tails} \}$$
 
 For example, the event "the coin lands heads" is the subset $\{ \text{heads} \}$ of $\Omega$.
 
----
-> The **set of possible events** is denoted $\mathcal{F}$.
-> 
-> ($\mathcal{F}$ is a so-called $\sigma$-algebra of subsets of $\Omega$.)
-
-So $\mathcal{F}$ is a set of sets of outcomes. We do not need to specify $\mathcal{F}$ explicitly, but it is useful to know that it exists. Also the term $\sigma$-algebra is a bit technical and we will not use it in this course.
 
 ---
 
@@ -202,6 +196,12 @@ In comparison, below we visualize the sample space $\Omega$, two overlapping eve
 plot_overlapping_events()
 ```
 
+---
+> The **set of possible events** is denoted $\mathcal{F}$.
+> 
+> ($\mathcal{F}$ is a so-called $\sigma$-algebra of subsets of $\Omega$.)
+
+So $\mathcal{F}$ is a set of sets of outcomes. We do not need to specify $\mathcal{F}$ explicitly, but it is useful to know that it exists. Also the term $\sigma$-algebra is a bit technical and we will not use it in this course.
 
 
 ---
@@ -256,9 +256,9 @@ def plot_subset_events():
     ax.text(0.62, -0.56, 'Ω', fontsize=10)
     venn = venn2(subsets=(0, 1, 1), set_labels=('', ''), set_colors=('green', 'orange'))
     venn.get_label_by_id('10').set_text('')
-    venn.get_label_by_id('11').set_text('A₁')
-    venn.get_label_by_id('01').set_text('A₂')
-    plt.title('A₁ ⊆ A₂ ⇒ A₁ ∩ A₂ = A₁')
+    venn.get_label_by_id('11').set_text('B')
+    venn.get_label_by_id('01').set_text('A')
+    plt.title('B ⊆ A ⇒ A ∩ B = B')
     plt.show()
 
 plot_subset_events()
@@ -351,7 +351,7 @@ occurred is written $\mathbb{P}(A | B)$ and defined as
 
 $$\mathbb{P}(A | B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)}$$
 
-assuming $\mathbb{P}(B) > 0$.[^10]
+assuming $\mathbb{P}(B) > 0$.
 
 ## Chain rule of probability
 

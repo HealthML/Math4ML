@@ -17,7 +17,7 @@ probability distribution over the values it can assume.
 
 Formally, a random variable on a probability space
 $(\Omega, \mathcal{F}, \mathbb{P})$ is a function
-$X: \Omega \to \mathbb{R}$.[^12]
+$X: \Omega \to \mathbb{R}$.
 
 We denote the range of $X$ by
 $X(\Omega) = \{X(\omega) : \omega \in \Omega\}$. 
@@ -204,6 +204,7 @@ $$\mathbb{P}(a < X \leq b) = F(b) - F(a)$$
 ## Discrete random variables
 
 A **discrete random variable** is a random variable that has a countable range and assumes each value in this range with positive probability.
+
 Discrete random variables are completely specified by their
 **probability mass function** (p.m.f.) $p : X(\Omega) \to [0,1]$ which
 satisfies 
@@ -488,3 +489,4 @@ number uniformly at random from $[1,2]$.
 Such a random variable can take on uncountably many values, but only finitely many of these with positive probability. 
 
 We will not discuss such random variables because they are rather pathological and require measure theory to analyze.
+
