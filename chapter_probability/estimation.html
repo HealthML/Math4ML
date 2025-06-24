@@ -64,6 +64,8 @@
     <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/estimation.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Exponential Family and Conjugate Priors" href="exponential_family.html" />
+    <link rel="prev" title="The Gaussian distribution" href="gaussian.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,8 +128,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -184,7 +184,7 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
@@ -247,7 +247,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
@@ -258,6 +258,9 @@
 <li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Estimation of Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
 </ul>
 </details></li>
 </ul>
@@ -497,38 +500,24 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation">Maximum likelihood estimation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-the-normal-distribution">MLE for the Normal Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-for-the-multivariate-normal">Maximum Likelihood Estimation for the Multivariate Normal</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-write-the-likelihood">Step 1: Write the Likelihood</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-take-the-log-likelihood">Step 2: Take the Log-Likelihood</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-maximize-the-log-likelihood">Step 3: Maximize the Log-Likelihood</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-w-r-t-mu">Derivative w.r.t. <span class="math notranslate nohighlight">\(\mu\)</span>:</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-w-r-t-sigma-2">Derivative w.r.t. <span class="math notranslate nohighlight">\(\sigma^2\)</span>:</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3a-maximize-with-respect-to-boldsymbol-mu">Step 3a: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3b-maximize-with-respect-to-boldsymbol-sigma">Step 3b: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-example">✅ Output Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-mle-in-the-small-sample-case">Limitations of MLE in the Small Sample Case</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-estimation-map">Maximum A Posteriori Estimation (MAP)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-estimation">Maximum a posteriori estimation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-estimation-for-a-gaussian-mean-with-known-variance">MAP Estimation for a Gaussian Mean with Known Variance</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation">Derivation:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-demo-comparing-mle-and-map">✅ Python Demo: Comparing MLE and MAP</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaways">📌 Takeaways:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-for-linear-regression">Maximum Likelihood Estimation for Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-mle-in-linear-regression">Limitations of MLE in Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-n-d">Example: <span class="math notranslate nohighlight">\(n = d\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-overfitting-and-variance-underestimation">Problem: Overfitting and Variance Underestimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insight">Key Insight</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-map-estimation">Ridge Regression as MAP Estimation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem">Problem:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-linear-regression">MLE for Linear Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-with-gaussian-prior">MAP with Gaussian Prior</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">✅ Conclusion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-ridge-regression-map-estimation">✅ Python Code: Ridge Regression ≡ MAP Estimation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-expect">📌 What to Expect:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">💡 Interpretation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-fix-maximum-a-posteriori-estimation">Bayesian Fix: Maximum a Posteriori Estimation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-estimation-for-linear-regression">MAP Estimation for Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -581,76 +570,142 @@ maximum likelihood estimator. If <span class="math notranslate nohighlight">\(\l
 setting the derivatives to zero and trying to solve for
 <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> is a good place to start.</p>
 </section>
-<section id="mle-for-the-normal-distribution">
-<h2>MLE for the Normal Distribution<a class="headerlink" href="#mle-for-the-normal-distribution" title="Link to this heading">#</a></h2>
-<p>Let us now apply the principle of maximum likelihood estimation to a common and important case: the <strong>normal distribution</strong>. Suppose we observe data points <span class="math notranslate nohighlight">\(x_1, \dots, x_n \in \mathbb{R}\)</span> which we assume to be i.i.d. samples from a normal distribution with unknown parameters: mean <span class="math notranslate nohighlight">\(\mu \in \mathbb{R}\)</span> and variance <span class="math notranslate nohighlight">\(\sigma^2 &gt; 0\)</span>. That is,</p>
+<section id="maximum-likelihood-estimation-for-the-multivariate-normal">
+<h2>Maximum Likelihood Estimation for the Multivariate Normal<a class="headerlink" href="#maximum-likelihood-estimation-for-the-multivariate-normal" title="Link to this heading">#</a></h2>
+<p>Suppose we observe data points <span class="math notranslate nohighlight">\(\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d\)</span> assumed to be i.i.d. samples from a multivariate normal distribution with unknown parameters:</p>
 <div class="math notranslate nohighlight">
 \[
-x_i \sim \mathcal{N}(\mu, \sigma^2)
+\mathbf{x}_i \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
-<p>We want to find the <strong>maximum likelihood estimates</strong> (MLEs) of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p>We want to estimate <span class="math notranslate nohighlight">\(\boldsymbol{\mu} \in \mathbb{R}^d\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma} \in \mathbb{R}^{d \times d}\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> is symmetric and positive definite.</p>
 <section id="step-1-write-the-likelihood">
 <h3>Step 1: Write the Likelihood<a class="headerlink" href="#step-1-write-the-likelihood" title="Link to this heading">#</a></h3>
-<p>The likelihood function is the joint probability density of the data:</p>
+<p>The density of the multivariate normal is:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}(\mu, \sigma^2) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right)
+p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma}) =
+\frac{1}{(2\pi)^{d/2} |\boldsymbol{\Sigma}|^{1/2}} \exp\left(
+-\frac{1}{2} (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\right)
+\]</div>
+<p>Since the samples are i.i.d., the joint likelihood is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) =
+\prod_{i=1}^n p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 </section>
+<hr class="docutils" />
 <section id="step-2-take-the-log-likelihood">
 <h3>Step 2: Take the Log-Likelihood<a class="headerlink" href="#step-2-take-the-log-likelihood" title="Link to this heading">#</a></h3>
-<p>Taking the log turns the product into a sum and simplifies the exponential:</p>
+<p>Take logarithms to get a sum:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\log \mathcal{L}(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+&amp;= \sum_{i=1}^n \log p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma}) \\
+&amp;= \sum_{i=1}^n \left[ 
+-\frac{d}{2} \log(2\pi)
+- \frac{1}{2} \log |\boldsymbol{\Sigma}|
+- \frac{1}{2} (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\right] \\
+&amp;= -\frac{nd}{2} \log(2\pi) - \frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\end{aligned}
+\end{split}\]</div>
+<p>Only the last two terms depend on the parameters, so we optimize:</p>
 <div class="math notranslate nohighlight">
 \[
-\log \mathcal{L}(\mu, \sigma^2)
-= -\frac{n}{2} \log(2\pi) - \frac{n}{2} \log \sigma^2 - \frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2
+\ell(\boldsymbol{\mu}, \boldsymbol{\Sigma}) := 
+- \frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
 \]</div>
 </section>
-<section id="step-3-maximize-the-log-likelihood">
-<h3>Step 3: Maximize the Log-Likelihood<a class="headerlink" href="#step-3-maximize-the-log-likelihood" title="Link to this heading">#</a></h3>
-<p>To find the MLEs, we take derivatives and set them to zero.</p>
-<section id="derivative-w-r-t-mu">
-<h4>Derivative w.r.t. <span class="math notranslate nohighlight">\(\mu\)</span>:<a class="headerlink" href="#derivative-w-r-t-mu" title="Link to this heading">#</a></h4>
+<hr class="docutils" />
+<section id="step-3a-maximize-with-respect-to-boldsymbol-mu">
+<h3>Step 3a: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span><a class="headerlink" href="#step-3a-maximize-with-respect-to-boldsymbol-mu" title="Link to this heading">#</a></h3>
+<p>We take the gradient with respect to <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\frac{\partial \ell}{\partial \boldsymbol{\mu}} 
+&amp;= \frac{1}{2} \sum_{i=1}^n \left[ 
+\frac{\partial}{\partial \boldsymbol{\mu}} 
+\left( - (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) \right)
+\right] \\
+&amp;= \sum_{i=1}^n \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\end{aligned}
+\end{split}\]</div>
+<p>Set the derivative to zero:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial}{\partial \mu} \log \mathcal{L} = \frac{1}{\sigma^2} \sum_{i=1}^n (x_i - \mu) = 0
+\sum_{i=1}^n \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) = 0
 \quad \Rightarrow \quad
-\hat{\mu}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n x_i
+\sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu}) = 0
+\quad \Rightarrow \quad
+n \boldsymbol{\mu} = \sum_{i=1}^n \mathbf{x}_i
 \]</div>
-</section>
-<section id="derivative-w-r-t-sigma-2">
-<h4>Derivative w.r.t. <span class="math notranslate nohighlight">\(\sigma^2\)</span>:<a class="headerlink" href="#derivative-w-r-t-sigma-2" title="Link to this heading">#</a></h4>
+<p>So the MLE for the mean is:</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial}{\partial \sigma^2} \log \mathcal{L} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i=1}^n (x_i - \mu)^2 = 0
+\hat{\boldsymbol{\mu}}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i
 \]</div>
-<p>Solving for <span class="math notranslate nohighlight">\(\sigma^2\)</span> (and plugging in <span class="math notranslate nohighlight">\(\hat{\mu}\)</span>):</p>
+</section>
+<hr class="docutils" />
+<section id="step-3b-maximize-with-respect-to-boldsymbol-sigma">
+<h3>Step 3b: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span><a class="headerlink" href="#step-3b-maximize-with-respect-to-boldsymbol-sigma" title="Link to this heading">#</a></h3>
+<p>Substitute <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\mu}}\)</span> into the log-likelihood:</p>
+<p>Define the <strong>centered data</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2
+\mathbf{x}_i^c := \mathbf{x}_i - \hat{\boldsymbol{\mu}}
+\]</div>
+<p>Then the negative log-likelihood becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\boldsymbol{\Sigma}) = -\frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i^c)^\top \boldsymbol{\Sigma}^{-1} \mathbf{x}_i^c
+\]</div>
+<p>We define the <strong>scatter matrix</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{S} = \sum_{i=1}^n \mathbf{x}_i^c (\mathbf{x}_i^c)^\top
+\]</div>
+<p>Then:</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\boldsymbol{\Sigma}) = -\frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \operatorname{Tr}(\boldsymbol{\Sigma}^{-1} \mathbf{S})
+\]</div>
+<p>Take the derivative with respect to <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}^{-1}\)</span> (using matrix calculus):</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \ell}{\partial \boldsymbol{\Sigma}^{-1}} = 
+\frac{n}{2} \boldsymbol{\Sigma} - \frac{1}{2} \mathbf{S}
+\]</div>
+<p>Set to zero:</p>
+<div class="math notranslate nohighlight">
+\[
+\Rightarrow\quad \frac{n}{2} \boldsymbol{\Sigma} = \frac{1}{2} \mathbf{S}
+\quad \Rightarrow \quad \hat{\boldsymbol{\Sigma}}_{\text{MLE}} = \frac{1}{n} \mathbf{S}
+= \frac{1}{n} \sum_{i=1}^n (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^\top
 \]</div>
 </section>
-</section>
+<hr class="docutils" />
 <section id="summary">
 <h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h3>
-<p>The maximum likelihood estimates for a univariate normal distribution are:</p>
+<p>The <strong>MLE for multivariate normal distribution</strong> yields:</p>
+<ul>
+<li><p>Mean vector:</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{\mu}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n x_i, \quad
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2
-\]</div>
-<p>These are just the <strong>sample mean</strong> and the <strong>(non-biased) sample variance</strong> with denominator <span class="math notranslate nohighlight">\(n\)</span> (not <span class="math notranslate nohighlight">\(n-1\)</span>).</p>
-<ul class="simple">
-<li><p>Generates synthetic i.i.d. samples from a normal distribution.</p></li>
-<li><p>Computes MLE estimates of <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p></li>
-<li><p>Plots:</p>
-<ul>
-<li><p>Histogram of the data</p></li>
-<li><p>True density curve</p></li>
-<li><p>Fitted (MLE) density curve</p></li>
-</ul>
+  \hat{\boldsymbol{\mu}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i
+  \]</div>
+</li>
+<li><p>Covariance matrix:</p>
+<div class="math notranslate nohighlight">
+\[
+  \hat{\boldsymbol{\Sigma}} = \frac{1}{n} \sum_{i=1}^n (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^\top
+  \]</div>
 </li>
 </ul>
+<p>This is the <strong>sample mean</strong> and the <strong>(biased) sample covariance</strong> (with denominator <span class="math notranslate nohighlight">\(n\)</span>).</p>
 <hr class="docutils" />
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -661,287 +716,66 @@ x_i \sim \mathcal{N}(\mu, \sigma^2)
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">multivariate_normal</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">mle_normal_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">mu_true</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma_true</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mle_multivariate_normal_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     
+    <span class="c1"># True parameters</span>
+    <span class="n">mu_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">Sigma_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
+                           <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+    
     <span class="c1"># Generate data</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">sigma_true</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">Sigma_true</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
     
     <span class="c1"># MLE estimates</span>
-    <span class="n">mu_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">sigma2_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">data</span> <span class="o">-</span> <span class="n">mu_mle</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">sigma_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2_mle</span><span class="p">)</span>
+    <span class="n">mu_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">Sigma_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># bias=True uses 1/n</span>
     
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True μ = </span><span class="si">{</span><span class="n">mu_true</span><span class="si">}</span><span class="s2">,   MLE μ̂ = </span><span class="si">{</span><span class="n">mu_mle</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True σ² = </span><span class="si">{</span><span class="n">sigma_true</span><span class="o">**</span><span class="mi">2</span><span class="si">}</span><span class="s2">, MLE σ̂² = </span><span class="si">{</span><span class="n">sigma2_mle</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True mean:&quot;</span><span class="p">,</span> <span class="n">mu_true</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE mean :&quot;</span><span class="p">,</span> <span class="n">mu_mle</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True covariance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Sigma_true</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE covariance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Sigma_mle</span><span class="p">)</span>
     
     <span class="c1"># Plot</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-    <span class="n">true_pdf</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu_true</span><span class="p">,</span> <span class="n">sigma_true</span><span class="p">)</span>
-    <span class="n">mle_pdf</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu_mle</span><span class="p">,</span> <span class="n">sigma_mle</span><span class="p">)</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data histogram&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">true_pdf</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True distribution&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mle_pdf</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE fit&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;MLE of the Normal Distribution&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Samples&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Mean&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE Mean&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;MLE of Multivariate Normal Distribution&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="c1"># Run the demo</span>
-<span class="n">mle_normal_demo</span><span class="p">()</span>
+<span class="n">mle_multivariate_normal_demo</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True μ = 2.0,   MLE μ̂ = 1.844
-True σ² = 2.25, MLE σ̂² = 1.837
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True mean: [ 1. -1.]
+MLE mean : [ 0.9745329  -0.99265192]
+True covariance:
+ [[1.  0.8]
+ [0.8 1.5]]
+MLE covariance:
+ [[0.89347252 0.72037511]
+ [0.72037511 1.39413223]]
 </pre></div>
 </div>
-<img alt="../_images/ea349b28785f5e17fd1618c72352f535f549a4d34292ccea0a58c7a678c5a6d3.png" src="../_images/ea349b28785f5e17fd1618c72352f535f549a4d34292ccea0a58c7a678c5a6d3.png" />
+<img alt="../_images/c0d34d940208400910b74271e5244a5aad9cdd012969a553d5ca54dfe55034b3.png" src="../_images/c0d34d940208400910b74271e5244a5aad9cdd012969a553d5ca54dfe55034b3.png" />
 </div>
 </div>
-</section>
-<hr class="docutils" />
-<section id="output-example">
-<h3>✅ Output Example<a class="headerlink" href="#output-example" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>True μ = 2.0,   MLE μ̂ = 2.023
-True σ² = 2.25, MLE σ̂² = 2.082
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>See that the <strong>sample mean and variance (with denominator <span class="math notranslate nohighlight">\(n\)</span>)</strong> are the MLEs.</p></li>
-<li><p>Understand how MLE fits data by maximizing likelihood.</p></li>
-<li><p>Visually compare the <strong>true</strong> vs <strong>fitted</strong> normal densities.</p></li>
-</ul>
-<p>Perfect — here’s how to expand your section with a smooth transition from <strong>MLE to MAP</strong>, showing the <strong>motivation</strong> from the small sample case, especially <span class="math notranslate nohighlight">\(n = 1\)</span>, followed by the derivation of <strong>MAP estimates for the Gaussian distribution with a conjugate prior</strong>.</p>
 </section>
 </section>
 <hr class="docutils" />
-<section id="limitations-of-mle-in-the-small-sample-case">
-<h2>Limitations of MLE in the Small Sample Case<a class="headerlink" href="#limitations-of-mle-in-the-small-sample-case" title="Link to this heading">#</a></h2>
-<p>The maximum likelihood estimator (MLE) works well with large amounts of data, but in the <strong>small sample regime</strong>, it has important limitations:</p>
-<ul class="simple">
-<li><p><strong>Variance underestimation</strong>: The MLE for variance,</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2,
-\]</div>
-<p>is <strong>biased</strong>. In fact, the unbiased estimator uses a denominator of <span class="math notranslate nohighlight">\(n - 1\)</span>, not <span class="math notranslate nohighlight">\(n\)</span>.</p>
-<ul class="simple">
-<li><p><strong>Extreme case <span class="math notranslate nohighlight">\(n = 1\)</span></strong>: With only one sample, the MLE of the variance is <strong>not even defined</strong>, since we have</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{1} (x_1 - x_1)^2 = 0,
-\]</div>
-<p>which clearly <strong>understates our uncertainty</strong>.</p>
-<p>These issues motivate a <strong>Bayesian perspective</strong>, where we regularize estimation with a prior.</p>
-</section>
-<hr class="docutils" />
-<section id="maximum-a-posteriori-estimation-map">
-<h2>Maximum A Posteriori Estimation (MAP)<a class="headerlink" href="#maximum-a-posteriori-estimation-map" title="Link to this heading">#</a></h2>
-<p>MAP estimation introduces prior knowledge into the estimation problem. Using Bayes’ rule, the posterior over parameters <span class="math notranslate nohighlight">\(\theta\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \theta)
-\]</div>
-<p>The <strong>MAP estimate</strong> is the mode of the posterior:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}_\text{MAP} = \operatorname{argmax}_\theta \log p(\theta) + \sum_{i=1}^n \log p(x_i \mid \theta)
-\]</div>
-</section>
-<section id="maximum-a-posteriori-estimation">
-<h2>Maximum a posteriori estimation<a class="headerlink" href="#maximum-a-posteriori-estimation" title="Link to this heading">#</a></h2>
-<p>A more Bayesian way to fit parameters is through <strong>maximum a posteriori
-estimation</strong> (MAP). In this technique we assume that the parameters are
-a random variable, and we specify a prior distribution
-<span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>. Then we can employ Bayes’ rule to compute the
-posterior distribution of the parameters given the observed data:</p>
-<div class="math notranslate nohighlight">
-\[p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
-<p>Computing the normalizing constant is often intractable, because it
-involves integrating over the parameter space, which may be very
-high-dimensional. Fortunately, if we just want the MAP estimate, we
-don’t care about the normalizing constant! It does not affect which
-values of <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> maximize the posterior. So we have</p>
-<div class="math notranslate nohighlight">
-\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
-<p>Again, if we assume the observations are i.i.d., then we can express
-this in the equivalent, and possibly friendlier, form</p>
-<div class="math notranslate nohighlight">
-\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\]</div>
-<p>A particularly nice case is when the prior is chosen carefully such that
-the posterior comes from the same family as the prior. In this case the
-prior is called a <strong>conjugate prior</strong>. For example, if the likelihood is
-binomial and the prior is beta, the posterior is also beta. There are
-many conjugate priors; the reader may find this <a class="reference external" href="https://en.wikipedia.org/wiki/Conjugate_prior#Table_of_conjugate_distributions">table of conjugate
-priors</a>
-useful.</p>
-</section>
-<hr class="docutils" />
-<section id="map-estimation-for-a-gaussian-mean-with-known-variance">
-<h2>MAP Estimation for a Gaussian Mean with Known Variance<a class="headerlink" href="#map-estimation-for-a-gaussian-mean-with-known-variance" title="Link to this heading">#</a></h2>
-<p>Assume:</p>
-<ul class="simple">
-<li><p>Data: <span class="math notranslate nohighlight">\(x_1, \dots, x_n \sim \mathcal{N}(\mu, \sigma^2)\)</span>, with known <span class="math notranslate nohighlight">\(\sigma^2\)</span></p></li>
-<li><p>Prior: <span class="math notranslate nohighlight">\(\mu \sim \mathcal{N}(\mu_0, \tau^2)\)</span></p></li>
-</ul>
-<section id="derivation">
-<h3>Derivation:<a class="headerlink" href="#derivation" title="Link to this heading">#</a></h3>
-<p>The log posterior is:</p>
-<div class="math notranslate nohighlight">
-\[
-\log p(\mu \mid x_{1:n}) = \log p(\mu) + \sum_{i=1}^n \log p(x_i \mid \mu)
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-= -\frac{1}{2\tau^2}(\mu - \mu_0)^2 - \frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2 + \text{const}
-\]</div>
-<p>Differentiating w.r.t. <span class="math notranslate nohighlight">\(\mu\)</span> and setting to zero gives:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\mu}_{\text{MAP}} = \left( \frac{n}{\sigma^2} + \frac{1}{\tau^2} \right)^{-1}
-\left( \frac{1}{\tau^2} \mu_0 + \frac{n}{\sigma^2} \bar{x} \right)
-\]</div>
-<p>This is a <strong>weighted average</strong> of the prior mean and the sample mean.</p>
-</section>
-<section id="interpretation">
-<h3>Interpretation:<a class="headerlink" href="#interpretation" title="Link to this heading">#</a></h3>
-<div class="math notranslate nohighlight">
-\[
-\hat{\mu}_{\text{MAP}} = \frac{\tau^2}{\tau^2 + \sigma^2 / n} \bar{x} +
-\frac{\sigma^2 / n}{\tau^2 + \sigma^2 / n} \mu_0
-\]</div>
-<ul class="simple">
-<li><p>When <span class="math notranslate nohighlight">\(n \to \infty\)</span>: MAP converges to MLE.</p></li>
-<li><p>When <span class="math notranslate nohighlight">\(n \to 0\)</span>: MAP converges to the prior mean <span class="math notranslate nohighlight">\(\mu_0\)</span>.</p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="python-demo-comparing-mle-and-map">
-<h3>✅ Python Demo: Comparing MLE and MAP<a class="headerlink" href="#python-demo-comparing-mle-and-map" title="Link to this heading">#</a></h3>
-<div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">mle_vs_map_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mu_true</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">mu0</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">x_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-    <span class="c1"># MLE estimate</span>
-    <span class="n">mu_mle</span> <span class="o">=</span> <span class="n">x_bar</span>
-
-    <span class="c1"># MAP estimate</span>
-    <span class="n">weight</span> <span class="o">=</span> <span class="p">(</span><span class="n">tau</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">tau</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
-    <span class="n">mu_map</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">x_bar</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">weight</span><span class="p">)</span> <span class="o">*</span> <span class="n">mu0</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample mean       (MLE): </span><span class="si">{</span><span class="n">mu_mle</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAP estimate             : </span><span class="si">{</span><span class="n">mu_map</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prior mean         μ₀    : </span><span class="si">{</span><span class="n">mu0</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># Plot posterior</span>
-    <span class="n">mu_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mu_true</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mu0</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">tau</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-    <span class="n">prior_pdf</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_vals</span><span class="p">,</span> <span class="n">mu0</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span>
-    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_vals</span><span class="p">,</span> <span class="n">x_bar</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
-    <span class="n">posterior_unnorm</span> <span class="o">=</span> <span class="n">prior_pdf</span> <span class="o">*</span> <span class="n">likelihood</span>
-    <span class="n">posterior</span> <span class="o">=</span> <span class="n">posterior_unnorm</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">posterior_unnorm</span><span class="p">,</span> <span class="n">mu_vals</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu_vals</span><span class="p">,</span> <span class="n">prior_pdf</span><span class="p">,</span> <span class="s1">&#39;g--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Prior $p(</span><span class="se">\\</span><span class="s1">mu)$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu_vals</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">,</span> <span class="s1">&#39;b--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Likelihood $p(x|</span><span class="se">\\</span><span class="s1">mu)$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu_vals</span><span class="p">,</span> <span class="n">posterior</span><span class="p">,</span> <span class="s1">&#39;m-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Posterior $p(</span><span class="se">\\</span><span class="s1">mu|x)$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu_map</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAP&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mu0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MLE vs MAP (n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">mu$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="c1"># Try with n=1 to emphasize prior influence</span>
-<span class="n">mle_vs_map_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n = 1
-Sample mean       (MLE): 0.497
-MAP estimate             : 2.748
-Prior mean         μ₀    : 5.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_71608/860782517.py:27: DeprecationWarning: `trapz` is deprecated. Use `trapezoid` instead, or one of the numerical integration functions in `scipy.integrate`.
-  posterior = posterior_unnorm / np.trapz(posterior_unnorm, mu_vals)
-</pre></div>
-</div>
-<img alt="../_images/abe1320539e2b4c6537157188406a9f15eeb7676482f1cf828f9848b80034bb6.png" src="../_images/abe1320539e2b4c6537157188406a9f15eeb7676482f1cf828f9848b80034bb6.png" />
-</div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="takeaways">
-<h3>📌 Takeaways:<a class="headerlink" href="#takeaways" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>With <strong>small samples</strong>, MLE can be <strong>overconfident</strong> and even undefined for variance.</p></li>
-<li><p>MAP estimation <strong>regularizes</strong> using prior knowledge.</p></li>
-<li><p>For the Gaussian with known variance, MAP gives a <strong>weighted average</strong> of prior mean and sample mean.</p></li>
-</ul>
-</section>
-</section>
-<hr class="docutils" />
-<section id="ridge-regression-as-map-estimation">
-<h2>Ridge Regression as MAP Estimation<a class="headerlink" href="#ridge-regression-as-map-estimation" title="Link to this heading">#</a></h2>
-<p>Let’s consider a standard linear regression setup:</p>
-<section id="problem">
-<h3>Problem:<a class="headerlink" href="#problem" title="Link to this heading">#</a></h3>
-<p>We observe:</p>
-<ul class="simple">
-<li><p>Inputs <span class="math notranslate nohighlight">\(\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d\)</span></p></li>
-<li><p>Outputs <span class="math notranslate nohighlight">\(y_1, \dots, y_n \in \mathbb{R}\)</span></p></li>
-</ul>
-<p>Stacked as matrices:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span>, with rows <span class="math notranslate nohighlight">\(\mathbf{x}_i^\top\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^n\)</span></p></li>
-</ul>
-<p>We assume a <strong>linear model with Gaussian noise</strong>:</p>
-<div class="math notranslate nohighlight">
-\[
-y_i = \mathbf{x}_i^\top \mathbf{w} + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
-\]</div>
-<p>Equivalently, in matrix form:</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{y} \sim \mathcal{N}(\mathbf{Xw}, \sigma^2 \mathbf{I})
-\]</div>
-</section>
-</section>
-<hr class="docutils" />
-<section id="mle-for-linear-regression">
-<h2>MLE for Linear Regression<a class="headerlink" href="#mle-for-linear-regression" title="Link to this heading">#</a></h2>
+<section id="maximum-likelihood-estimation-for-linear-regression">
+<h2>Maximum Likelihood Estimation for Linear Regression<a class="headerlink" href="#maximum-likelihood-estimation-for-linear-regression" title="Link to this heading">#</a></h2>
 <p>The likelihood is:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -952,59 +786,157 @@ p(\mathbf{y} \mid \mathbf{w}) = \prod_{i=1}^n \mathcal{N}(y_i \mid \mathbf{x}_i^
 \[
 \log p(\mathbf{y} \mid \mathbf{w}) = -\frac{1}{2\sigma^2} \|\mathbf{y} - \mathbf{Xw}\|^2 + \text{const}
 \]</div>
-<p>So the <strong>MLE</strong> is:</p>
+<p>So we observe that maximizing the log-likelihood is equivalent to minimizing the squared error.</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathbf{w}}_{\text{MLE}} = \operatorname{argmin}_\mathbf{w} \|\mathbf{y} - \mathbf{Xw}\|^2
 \]</div>
+<p>So the <strong>MLE</strong> for the linear regression model is identical to the OLS estimator:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{w}}_{\text{MLE}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+\]</div>
+<p>Based on the estimator for the weights, we can also derive the estimator for the variance.
+In order to do this, we need to know the gradient of the log-likelihood with respect to the noise variance.</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \log p(\mathbf{y} \mid \mathbf{w})}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \|\mathbf{y} - \mathbf{Xw}\|^2
+\]</div>
+<p>Setting the gradient to zero, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \log p(\mathbf{y} \mid \mathbf{w})}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \|\mathbf{y} - \mathbf{Xw}\|^2 = 0
+\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(\sigma^2\)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\sigma}^2 = \frac{1}{n} \|\mathbf{y} - \mathbf{X}\hat{\mathbf{w}}\|^2
+\]</div>
 </section>
 <hr class="docutils" />
-<section id="map-with-gaussian-prior">
-<h2>MAP with Gaussian Prior<a class="headerlink" href="#map-with-gaussian-prior" title="Link to this heading">#</a></h2>
-<p>Now suppose we place a <strong>zero-mean Gaussian prior</strong> on <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>:</p>
+<section id="limitations-of-mle-in-linear-regression">
+<h2>Limitations of MLE in Linear Regression<a class="headerlink" href="#limitations-of-mle-in-linear-regression" title="Link to this heading">#</a></h2>
+<p>While maximum likelihood estimation (MLE) is appealing for its simplicity and optimality under large samples, it has important drawbacks — especially in the context of <strong>linear regression with limited data</strong> or <strong>high-dimensional features</strong>.</p>
+<hr class="docutils" />
+<section id="example-n-d">
+<h3>Example: <span class="math notranslate nohighlight">\(n = d\)</span><a class="headerlink" href="#example-n-d" title="Link to this heading">#</a></h3>
+<p>Consider a linear regression model:</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbf{w} \sim \mathcal{N}(\mathbf{0}, \tau^2 \mathbf{I})
-\quad\Rightarrow\quad
-\log p(\mathbf{w}) = -\frac{1}{2\tau^2} \|\mathbf{w}\|^2 + \text{const}
+y_i = \mathbf{x}_i^\top \mathbf{w} + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
 \]</div>
-<p>The <strong>log-posterior</strong> is then:</p>
+<p>Suppose the number of observations <span class="math notranslate nohighlight">\(n\)</span> is equal to the number of features <span class="math notranslate nohighlight">\(d\)</span>. Then the design matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span> is square, and the MLE is:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
-- \frac{1}{2\sigma^2} \|\mathbf{y} - \mathbf{Xw}\|^2
-- \frac{1}{2\tau^2} \|\mathbf{w}\|^2
+\hat{\mathbf{w}}_{\text{MLE}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
 \]</div>
-<p>Taking the <strong>negative log posterior</strong>, we obtain the <strong>ridge regression objective</strong>:</p>
+<p>In this case, <span class="math notranslate nohighlight">\(\mathbf{X}^\top \mathbf{X}\)</span> is invertible (with probability 1 if <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is random), and the MLE will <strong>perfectly interpolate the data</strong> — giving <strong>zero training error</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{\mathbf{w}}_{\text{MAP}} = \operatorname{argmin}_\mathbf{w}
-\left\{
-\|\mathbf{y} - \mathbf{Xw}\|^2 + \lambda \|\mathbf{w}\|^2
-\right\}
-\quad \text{where } \lambda = \frac{\sigma^2}{\tau^2}
+\mathbf{y} = \mathbf{X} \hat{\mathbf{w}}_{\text{MLE}} \quad \Rightarrow \quad \|\mathbf{y} - \mathbf{X} \hat{\mathbf{w}}_{\text{MLE}}\|^2 = 0
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="problem-overfitting-and-variance-underestimation">
+<h3>Problem: Overfitting and Variance Underestimation<a class="headerlink" href="#problem-overfitting-and-variance-underestimation" title="Link to this heading">#</a></h3>
+<ul>
+<li><p>The MLE predicts with <strong>zero error on training data</strong>, but may <strong>generalize poorly</strong> to new inputs.</p></li>
+<li><p>The <strong>estimated variance</strong> becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+  \hat{\sigma}^2 = \frac{1}{n} \|\mathbf{y} - \mathbf{X} \hat{\mathbf{w}}\|^2 = 0
+  \]</div>
+<p>even though we know the data were generated with non-zero noise (<span class="math notranslate nohighlight">\(\sigma^2 &gt; 0\)</span>)!</p>
+</li>
+</ul>
+<p>❗ <strong>MLE underestimates the variance</strong> and is <strong>overconfident</strong> — especially when <span class="math notranslate nohighlight">\(n\)</span> is small or close to <span class="math notranslate nohighlight">\(d\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="key-insight">
+<h3>Key Insight<a class="headerlink" href="#key-insight" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Small sample sizes</strong> lead to <strong>overfitting</strong> with MLE.</p></li>
+<li><p><strong>Estimated noise variance</strong> can be <strong>zero</strong> when the model interpolates the data.</p></li>
+<li><p>We need a way to <strong>regularize</strong> the parameter estimates and <strong>account for uncertainty</strong>.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="bayesian-fix-maximum-a-posteriori-estimation">
+<h2>Bayesian Fix: Maximum a Posteriori Estimation<a class="headerlink" href="#bayesian-fix-maximum-a-posteriori-estimation" title="Link to this heading">#</a></h2>
+<p>Maximum a posteriori estimation (MAP) allows us to introduce <strong>prior beliefs</strong> about the parameters to avoid this degeneracy.</p>
+<ul class="simple">
+<li><p>For the multivariate normal, using an appropriate <strong>prior distribution</strong> allows us to derive a <strong>MAP estimate</strong> that:</p>
+<ul>
+<li><p>Shrinks the sample covariance toward a prior value</p></li>
+<li><p>Stays well-defined even when <span class="math notranslate nohighlight">\(n = 1\)</span></p></li>
+<li><p>Regularizes estimates in low-data regimes</p></li>
+</ul>
+</li>
+</ul>
+<p>MAP estimation thus <strong>balances data and prior</strong> — resulting in more robust parameter estimates when the data are scarce.</p>
+<p>In this technique we assume that the parameters are
+a random variable, and we specify a prior distribution
+<span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>.</p>
+<p>Then we can employ Bayes’ rule to compute the
+posterior distribution of the parameters given the observed data:</p>
+<div class="math notranslate nohighlight">
+\[p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
+<p>Computing the normalizing constant is often intractable, because it
+involves integrating over the parameter space, which may be very
+high-dimensional.
+Fortunately, if we just want the MAP estimate, we
+don’t care about the normalizing constant! It does not affect which
+values of <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> maximize the posterior.</p>
+<p>So we have</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})\]</div>
+<p>Again, if we assume the observations are i.i.d., then we can express
+this in the equivalent, and possibly friendlier, form</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)\]</div>
+</section>
+<hr class="docutils" />
+<section id="map-estimation-for-linear-regression">
+<h2>MAP Estimation for Linear Regression<a class="headerlink" href="#map-estimation-for-linear-regression" title="Link to this heading">#</a></h2>
+<p>Let’s apply MAP estimation to the linear regression model.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><p>Let <span class="math notranslate nohighlight">\(\mathbf{w} \sim \mathcal{N}(0, \tau^2 \mathbf{I})\)</span> — a Gaussian prior centered at zero.</p></li>
+<li><p>Assume <span class="math notranslate nohighlight">\(\sigma^2\)</span> is known or estimated separately.</p></li>
+</ul>
+<p>The posterior over <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{w} \mid \mathbf{y}) \propto p(\mathbf{y} \mid \mathbf{w}) \cdot p(\mathbf{w})
+\]</div>
+<p>Taking logs and maximizing yields the <strong>MAP estimator</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{w}}_{\text{MAP}} = \operatorname{argmin}_\mathbf{w} \left\{ \|\mathbf{y} - \mathbf{Xw}\|^2 + \lambda \|\mathbf{w}\|^2 \right\}
+\]</div>
+<p>where the hyperparameter <span class="math notranslate nohighlight">\(\lambda = \sigma^2 / \tau^2\)</span> controls the strength of the regularization.</p>
+<p>Similar to the MLE being equivalent to OLS, the MAP estimator is equivalent to <strong>ridge regression</strong>.</p>
+<p>Thus, the MAP estimator is equivalent to the solution of ridge regression:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{w}}_{\text{MAP}} = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y}
 \]</div>
 <hr class="docutils" />
 <section id="conclusion">
-<h3>✅ Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
 <blockquote>
-<div><p><strong>Ridge regression is the MAP estimate in linear regression under a Gaussian prior on the weights.</strong></p>
+<div><p>MAP estimation provides a <strong>natural Bayesian justification</strong> for regularization in linear models. It improves generalization, avoids variance collapse, and leads to robust estimates — even when data is scarce.</p>
 </div></blockquote>
+<hr class="docutils" />
+<p>Perfect. Here’s a <strong>Python demo</strong> that visually compares <strong>MLE (ordinary least squares)</strong> and <strong>MAP (ridge regression)</strong> on a small dataset, illustrating:</p>
 <ul class="simple">
-<li><p>The regularization term <span class="math notranslate nohighlight">\(\lambda \|\mathbf{w}\|^2\)</span> comes from the log of the Gaussian prior.</p></li>
-<li><p>The ridge penalty <strong>shrinks</strong> weights toward zero, just like the prior favors small values.</p></li>
+<li><p>Overfitting with MLE when <span class="math notranslate nohighlight">\(n \approx d\)</span></p></li>
+<li><p>How MAP (ridge) regularizes the solution</p></li>
+<li><p>Differences in weight magnitude and generalization</p></li>
 </ul>
 <hr class="docutils" />
-<p>Great! Below is a <strong>numerical Python demo</strong> that illustrates the equivalence between:</p>
-<ul class="simple">
-<li><p><strong>Ridge regression</strong>: minimizing squared loss + <span class="math notranslate nohighlight">\(\lambda \|\mathbf{w}\|^2\)</span></p></li>
-<li><p><strong>MAP estimation</strong>: under a Gaussian prior <span class="math notranslate nohighlight">\(\mathbf{w} \sim \mathcal{N}(0, \tau^2 I)\)</span></p></li>
-</ul>
-<p>We’ll simulate data from a linear model, perform both <strong>ridge regression</strong> and <strong>MAP estimation</strong>, and confirm they return <strong>identical results</strong>.</p>
-</section>
-<hr class="docutils" />
-<section id="python-code-ridge-regression-map-estimation">
-<h3>✅ Python Code: Ridge Regression ≡ MAP Estimation<a class="headerlink" href="#python-code-ridge-regression-map-estimation" title="Link to this heading">#</a></h3>
+<p>Let’s compare MLE and MAP for <strong>polynomial regression</strong></p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1014,98 +946,178 @@ p(\mathbf{y} \mid \mathbf{w}) = \prod_{i=1}^n \mathcal{N}(y_i \mid \mathbf{x}_i^
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ridge</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">inv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">ridge_vs_map_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">sine_polynomial_regression_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">noise_std</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="c1"># Generate true weights</span>
-    <span class="n">w_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">Xr</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">yr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="c1"># === True function ===</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">true_func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
 
-    <span class="c1"># Generate inputs and noise</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
-    <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">w_true</span> <span class="o">+</span> <span class="n">noise</span>
+    <span class="c1"># === Generate data ===</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">Xr</span><span class="p">[:</span><span class="n">n</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">true_func</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">+</span> <span class="n">yr</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="n">noise_std</span>
 
-    <span class="c1"># === Ridge Regression ===</span>
-    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">tau</span><span class="o">**</span><span class="mi">2</span>
-    <span class="n">ridge</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">w_ridge</span> <span class="o">=</span> <span class="n">ridge</span><span class="o">.</span><span class="n">coef_</span>
+    <span class="c1"># === Generate test data ===</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">true_func</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-    <span class="c1"># === MAP Estimation (same as Ridge closed-form) ===</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span> <span class="o">+</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
-    <span class="n">w_map</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">@</span> <span class="n">b</span>
+    <span class="c1"># === Polynomial features ===</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">X_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">X_test_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
-    <span class="c1"># === Compare ===</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True weights:     &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">w_true</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ridge estimate:   &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">w_ridge</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MAP estimate:     &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">w_map</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Are ridge and MAP identical? &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">w_ridge</span><span class="p">,</span> <span class="n">w_map</span><span class="p">))</span>
+    <span class="c1"># u, s, v = la.svd(X_poly)</span>
+    <span class="c1"># i_null = s &lt; 1e-10</span>
+    <span class="c1"># s_inv = np.zeros_like(s)</span>
+    <span class="c1"># s_inv = np.diag(1/s)</span>
+    <span class="c1"># s_inv[i_null] = 0</span>
+    
+    <span class="n">Xy</span> <span class="o">=</span> <span class="n">X_poly</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y</span>
+    <span class="n">XX</span> <span class="o">=</span> <span class="n">X_poly</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X_poly</span>
+    <span class="n">w_ols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">Xy</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">w_ridge</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">XX</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">XX</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">Xy</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="c1"># === Visualize ===</span>
-    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.25</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">indices</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span> <span class="n">w_true</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True $w$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">w_ridge</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ridge $</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{w}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">indices</span> <span class="o">+</span> <span class="n">width</span><span class="p">,</span> <span class="n">w_map</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAP $</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{w}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;True vs Ridge vs MAP Estimates&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Weight Index&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="c1"># === MLE (Ordinary Least Squares) ===</span>
+    <span class="n">y_pred_mle</span> <span class="o">=</span> <span class="n">X_test_poly</span> <span class="o">@</span> <span class="n">w_ols</span>
+
+    <span class="c1"># === MAP (Ridge Regression) ===</span>
+    
+    <span class="n">y_pred_map</span> <span class="o">=</span> <span class="n">X_test_poly</span> <span class="o">@</span> <span class="n">w_ridge</span>
+
+    <span class="c1"># === Plot ===</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Function (sin)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Noisy Samples&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_pred_mle</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE (degree </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degree</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_pred_map</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MAP (ridge, α=</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Polynomial Regression: Degree </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s1">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># Run the demo</span>
-<span class="n">ridge_vs_map_demo</span><span class="p">()</span>
+<span class="c1"># Try degree approaching number of points</span>
+
+<span class="n">degree</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">.001</span>
+<span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">n_i</span> <span class="ow">in</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">sine_polynomial_regression_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n_i</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True weights:      [ 0.497 -0.138  0.648  1.523 -0.234]
-Ridge estimate:    [ 0.493 -0.17   0.525  1.494 -0.343]
-MAP estimate:      [ 0.493 -0.17   0.525  1.494 -0.343]
-Are ridge and MAP identical?  True
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
-<img alt="../_images/67fd56a2292c7bb13339b11342ebfd2fe3ce7512116b46c91cdc94fb6cef82a4.png" src="../_images/67fd56a2292c7bb13339b11342ebfd2fe3ce7512116b46c91cdc94fb6cef82a4.png" />
+<img alt="../_images/6f8848f722af1a05a9855bdf2a253b09059f0c859e52b5c15446bbc08e6c7b41.png" src="../_images/6f8848f722af1a05a9855bdf2a253b09059f0c859e52b5c15446bbc08e6c7b41.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+</pre></div>
 </div>
+<img alt="../_images/b1965d0bdab4d9b60298f06f62c617c55b9900a1f882347eceeb0fe58ff82d17.png" src="../_images/b1965d0bdab4d9b60298f06f62c617c55b9900a1f882347eceeb0fe58ff82d17.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+</pre></div>
 </div>
-</section>
-<hr class="docutils" />
-<section id="what-to-expect">
-<h3>📌 What to Expect:<a class="headerlink" href="#what-to-expect" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>The <strong>Ridge</strong> and <strong>MAP estimates</strong> will match up to numerical precision.</p></li>
-<li><p>You’ll see bar plots of the <strong>true weights</strong>, <strong>ridge solution</strong>, and <strong>MAP solution</strong> side by side.</p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="id1">
-<h3>💡 Interpretation:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Term</p></th>
-<th class="head"><p>Role</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\lambda = \sigma^2 / \tau^2\)</span></p></td>
-<td><p>Ridge penalty = prior precision</p></td>
-</tr>
-<tr class="row-odd"><td><p>Ridge regression</p></td>
-<td><p>Minimizes loss + prior log-density</p></td>
-</tr>
-<tr class="row-even"><td><p>MAP estimation</p></td>
-<td><p>Maximizes posterior (log-likelihood + log-prior)</p></td>
-</tr>
-</tbody>
-</table>
+<img alt="../_images/c57c83a882869aa94ed2bb01df503f5a2494339c51c81fbbf3c6ed173f5f8030.png" src="../_images/c57c83a882869aa94ed2bb01df503f5a2494339c51c81fbbf3c6ed173f5f8030.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+  XX = X_poly.T @ X_poly
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+</pre></div>
+</div>
+<img alt="../_images/2cbf316a8a326845ace0a2d5110ceba641302ab6de6276e40a9f33bbf127d70d.png" src="../_images/2cbf316a8a326845ace0a2d5110ceba641302ab6de6276e40a9f33bbf127d70d.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+  y_pred_mle = X_test_poly @ w_ols
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+  y_pred_map = X_test_poly @ w_ridge
+</pre></div>
+</div>
+<img alt="../_images/ebd042cf0311c8dd352f4305da4a4e2264bc38b635311395d543088fced58b2f.png" src="../_images/ebd042cf0311c8dd352f4305da4a4e2264bc38b635311395d543088fced58b2f.png" />
+</div>
 </div>
 </section>
 </section>
@@ -1141,6 +1153,24 @@ Are ridge and MAP identical?  True
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="gaussian.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">The Gaussian distribution</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exponential_family.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The Exponential Family and Conjugate Priors</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1158,38 +1188,24 @@ Are ridge and MAP identical?  True
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation">Maximum likelihood estimation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-the-normal-distribution">MLE for the Normal Distribution</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-for-the-multivariate-normal">Maximum Likelihood Estimation for the Multivariate Normal</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-write-the-likelihood">Step 1: Write the Likelihood</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-take-the-log-likelihood">Step 2: Take the Log-Likelihood</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-maximize-the-log-likelihood">Step 3: Maximize the Log-Likelihood</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-w-r-t-mu">Derivative w.r.t. <span class="math notranslate nohighlight">\(\mu\)</span>:</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivative-w-r-t-sigma-2">Derivative w.r.t. <span class="math notranslate nohighlight">\(\sigma^2\)</span>:</a></li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3a-maximize-with-respect-to-boldsymbol-mu">Step 3a: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3b-maximize-with-respect-to-boldsymbol-sigma">Step 3b: Maximize with Respect to <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-example">✅ Output Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-mle-in-the-small-sample-case">Limitations of MLE in the Small Sample Case</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-estimation-map">Maximum A Posteriori Estimation (MAP)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-estimation">Maximum a posteriori estimation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-estimation-for-a-gaussian-mean-with-known-variance">MAP Estimation for a Gaussian Mean with Known Variance</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation">Derivation:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-demo-comparing-mle-and-map">✅ Python Demo: Comparing MLE and MAP</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaways">📌 Takeaways:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-for-linear-regression">Maximum Likelihood Estimation for Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-mle-in-linear-regression">Limitations of MLE in Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-n-d">Example: <span class="math notranslate nohighlight">\(n = d\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-overfitting-and-variance-underestimation">Problem: Overfitting and Variance Underestimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insight">Key Insight</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression-as-map-estimation">Ridge Regression as MAP Estimation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem">Problem:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-linear-regression">MLE for Linear Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-with-gaussian-prior">MAP with Gaussian Prior</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">✅ Conclusion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-ridge-regression-map-estimation">✅ Python Code: Ridge Regression ≡ MAP Estimation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-expect">📌 What to Expect:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">💡 Interpretation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-fix-maximum-a-posteriori-estimation">Bayesian Fix: Maximum a Posteriori Estimation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#map-estimation-for-linear-regression">MAP Estimation for Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>

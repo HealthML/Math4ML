@@ -57,345 +57,208 @@ $\mathbf{\theta}$ is a good place to start.
 
 
 
-## MLE for the Normal Distribution
+## Maximum Likelihood Estimation for the Multivariate Normal
 
-Let us now apply the principle of maximum likelihood estimation to a common and important case: the **normal distribution**. Suppose we observe data points $x_1, \dots, x_n \in \mathbb{R}$ which we assume to be i.i.d. samples from a normal distribution with unknown parameters: mean $\mu \in \mathbb{R}$ and variance $\sigma^2 > 0$. That is,
+
+Suppose we observe data points $\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d$ assumed to be i.i.d. samples from a multivariate normal distribution with unknown parameters:
 
 $$
-x_i \sim \mathcal{N}(\mu, \sigma^2)
+\mathbf{x}_i \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 $$
 
-We want to find the **maximum likelihood estimates** (MLEs) of $\mu$ and $\sigma^2$.
+We want to estimate $\boldsymbol{\mu} \in \mathbb{R}^d$ and $\boldsymbol{\Sigma} \in \mathbb{R}^{d \times d}$, where $\boldsymbol{\Sigma}$ is symmetric and positive definite.
+
 
 ### Step 1: Write the Likelihood
 
-The likelihood function is the joint probability density of the data:
+The density of the multivariate normal is:
 
 $$
-\mathcal{L}(\mu, \sigma^2) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\right)
+p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma}) =
+\frac{1}{(2\pi)^{d/2} |\boldsymbol{\Sigma}|^{1/2}} \exp\left(
+-\frac{1}{2} (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\right)
 $$
+
+Since the samples are i.i.d., the joint likelihood is:
+
+$$
+\mathcal{L}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) =
+\prod_{i=1}^n p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma})
+$$
+
+---
 
 ### Step 2: Take the Log-Likelihood
 
-Taking the log turns the product into a sum and simplifies the exponential:
+Take logarithms to get a sum:
 
 $$
-\log \mathcal{L}(\mu, \sigma^2)
-= -\frac{n}{2} \log(2\pi) - \frac{n}{2} \log \sigma^2 - \frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2
+\begin{aligned}
+\log \mathcal{L}(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+&= \sum_{i=1}^n \log p(\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma}) \\
+&= \sum_{i=1}^n \left[ 
+-\frac{d}{2} \log(2\pi)
+- \frac{1}{2} \log |\boldsymbol{\Sigma}|
+- \frac{1}{2} (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\right] \\
+&= -\frac{nd}{2} \log(2\pi) - \frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\end{aligned}
 $$
 
-### Step 3: Maximize the Log-Likelihood
-
-To find the MLEs, we take derivatives and set them to zero.
-
-#### Derivative w\.r.t. $\mu$:
+Only the last two terms depend on the parameters, so we optimize:
 
 $$
-\frac{\partial}{\partial \mu} \log \mathcal{L} = \frac{1}{\sigma^2} \sum_{i=1}^n (x_i - \mu) = 0
-\quad \Rightarrow \quad
-\hat{\mu}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n x_i
+\ell(\boldsymbol{\mu}, \boldsymbol{\Sigma}) := 
+- \frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
 $$
-
-#### Derivative w\.r.t. $\sigma^2$:
-
-$$
-\frac{\partial}{\partial \sigma^2} \log \mathcal{L} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \sum_{i=1}^n (x_i - \mu)^2 = 0
-$$
-
-Solving for $\sigma^2$ (and plugging in $\hat{\mu}$):
-
-$$
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2
-$$
-
-### Summary
-
-The maximum likelihood estimates for a univariate normal distribution are:
-
-$$
-\hat{\mu}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n x_i, \quad
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2
-$$
-
-These are just the **sample mean** and the **(non-biased) sample variance** with denominator $n$ (not $n-1$).
-
-
-* Generates synthetic i.i.d. samples from a normal distribution.
-* Computes MLE estimates of $\mu$ and $\sigma^2$.
-* Plots:
-
-  * Histogram of the data
-  * True density curve
-  * Fitted (MLE) density curve
 
 ---
 
+### Step 3a: Maximize with Respect to $\boldsymbol{\mu}$
+
+We take the gradient with respect to $\boldsymbol{\mu}$:
+
+$$
+\begin{aligned}
+\frac{\partial \ell}{\partial \boldsymbol{\mu}} 
+&= \frac{1}{2} \sum_{i=1}^n \left[ 
+\frac{\partial}{\partial \boldsymbol{\mu}} 
+\left( - (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) \right)
+\right] \\
+&= \sum_{i=1}^n \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\end{aligned}
+$$
+
+Set the derivative to zero:
+
+$$
+\sum_{i=1}^n \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) = 0
+\quad \Rightarrow \quad
+\sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu}) = 0
+\quad \Rightarrow \quad
+n \boldsymbol{\mu} = \sum_{i=1}^n \mathbf{x}_i
+$$
+
+So the MLE for the mean is:
+
+$$
+\hat{\boldsymbol{\mu}}_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i
+$$
+
+---
+
+### Step 3b: Maximize with Respect to $\boldsymbol{\Sigma}$
+
+Substitute $\hat{\boldsymbol{\mu}}$ into the log-likelihood:
+
+Define the **centered data**:
+
+$$
+\mathbf{x}_i^c := \mathbf{x}_i - \hat{\boldsymbol{\mu}}
+$$
+
+Then the negative log-likelihood becomes:
+
+$$
+\ell(\boldsymbol{\Sigma}) = -\frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i^c)^\top \boldsymbol{\Sigma}^{-1} \mathbf{x}_i^c
+$$
+
+We define the **scatter matrix**:
+
+$$
+\mathbf{S} = \sum_{i=1}^n \mathbf{x}_i^c (\mathbf{x}_i^c)^\top
+$$
+
+Then:
+
+$$
+\ell(\boldsymbol{\Sigma}) = -\frac{n}{2} \log |\boldsymbol{\Sigma}| - \frac{1}{2} \operatorname{Tr}(\boldsymbol{\Sigma}^{-1} \mathbf{S})
+$$
+
+Take the derivative with respect to $\boldsymbol{\Sigma}^{-1}$ (using matrix calculus):
+
+$$
+\frac{\partial \ell}{\partial \boldsymbol{\Sigma}^{-1}} = 
+\frac{n}{2} \boldsymbol{\Sigma} - \frac{1}{2} \mathbf{S}
+$$
+
+Set to zero:
+
+$$
+\Rightarrow\quad \frac{n}{2} \boldsymbol{\Sigma} = \frac{1}{2} \mathbf{S}
+\quad \Rightarrow \quad \hat{\boldsymbol{\Sigma}}_{\text{MLE}} = \frac{1}{n} \mathbf{S}
+= \frac{1}{n} \sum_{i=1}^n (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^\top
+$$
+
+---
+### Summary
+
+The **MLE for multivariate normal distribution** yields:
+
+* Mean vector:
+
+  $$
+  \hat{\boldsymbol{\mu}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i
+  $$
+
+* Covariance matrix:
+
+  $$
+  \hat{\boldsymbol{\Sigma}} = \frac{1}{n} \sum_{i=1}^n (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^\top
+  $$
+
+This is the **sample mean** and the **(biased) sample covariance** (with denominator $n$).
+
+---
 
 ```{code-cell} ipython3
 :tags: [hide-input]
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import norm
+from scipy.stats import multivariate_normal
 
-def mle_normal_demo(n=100, mu_true=2.0, sigma_true=1.5, seed=42):
+def mle_multivariate_normal_demo(n=200, d=2, seed=42):
     np.random.seed(seed)
     
+    # True parameters
+    mu_true = np.array([1.0, -1.0])
+    Sigma_true = np.array([[1.0, 0.8],
+                           [0.8, 1.5]])
+    
     # Generate data
-    data = np.random.normal(mu_true, sigma_true, size=n)
+    X = np.random.multivariate_normal(mu_true, Sigma_true, size=n)
     
     # MLE estimates
-    mu_mle = np.mean(data)
-    sigma2_mle = np.mean((data - mu_mle)**2)
-    sigma_mle = np.sqrt(sigma2_mle)
+    mu_mle = np.mean(X, axis=0)
+    Sigma_mle = np.cov(X.T, bias=True)  # bias=True uses 1/n
     
-    print(f"True μ = {mu_true},   MLE μ̂ = {mu_mle:.3f}")
-    print(f"True σ² = {sigma_true**2}, MLE σ̂² = {sigma2_mle:.3f}")
+    print("True mean:", mu_true)
+    print("MLE mean :", mu_mle)
+    print("True covariance:\n", Sigma_true)
+    print("MLE covariance:\n", Sigma_mle)
     
     # Plot
-    x = np.linspace(min(data) - 1, max(data) + 1, 300)
-    true_pdf = norm.pdf(x, mu_true, sigma_true)
-    mle_pdf = norm.pdf(x, mu_mle, sigma_mle)
-    
-    plt.figure(figsize=(8, 5))
-    plt.hist(data, bins=20, density=True, alpha=0.4, color='gray', label='Data histogram')
-    plt.plot(x, true_pdf, 'g--', lw=2, label='True distribution')
-    plt.plot(x, mle_pdf, 'r-', lw=2, label='MLE fit')
-    plt.axvline(mu_mle, color='r', linestyle='--', lw=1)
-    plt.axvline(mu_true, color='g', linestyle='--', lw=1)
-    plt.title('MLE of the Normal Distribution')
-    plt.xlabel('$x$')
-    plt.ylabel('Density')
-    plt.legend()
+    plt.figure(figsize=(6, 6))
+    plt.scatter(X[:, 0], X[:, 1], alpha=0.3, label='Samples')
+    plt.scatter(*mu_true, c='green', marker='x', s=100, label='True Mean')
+    plt.scatter(*mu_mle, c='red', marker='o', s=100, label='MLE Mean')
+    plt.title("MLE of Multivariate Normal Distribution")
+    plt.xlabel("$x_1$")
+    plt.ylabel("$x_2$")
     plt.grid(True)
+    plt.axis('equal')
+    plt.legend()
     plt.show()
 
 # Run the demo
-mle_normal_demo()
+mle_multivariate_normal_demo()
 ```
 
 ---
 
-### ✅ Output Example
-
-```
-True μ = 2.0,   MLE μ̂ = 2.023
-True σ² = 2.25, MLE σ̂² = 2.082
-```
-
-
-* See that the **sample mean and variance (with denominator $n$)** are the MLEs.
-* Understand how MLE fits data by maximizing likelihood.
-* Visually compare the **true** vs **fitted** normal densities.
-
-Perfect — here's how to expand your section with a smooth transition from **MLE to MAP**, showing the **motivation** from the small sample case, especially $n = 1$, followed by the derivation of **MAP estimates for the Gaussian distribution with a conjugate prior**.
-
----
-
-## Limitations of MLE in the Small Sample Case
-
-The maximum likelihood estimator (MLE) works well with large amounts of data, but in the **small sample regime**, it has important limitations:
-
-* **Variance underestimation**: The MLE for variance,
-
-$$
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2,
-$$
-
-is **biased**. In fact, the unbiased estimator uses a denominator of $n - 1$, not $n$.
-
-* **Extreme case $n = 1$**: With only one sample, the MLE of the variance is **not even defined**, since we have
-
-$$
-\hat{\sigma}^2_{\text{MLE}} = \frac{1}{1} (x_1 - x_1)^2 = 0,
-$$
-
-which clearly **understates our uncertainty**.
-
-These issues motivate a **Bayesian perspective**, where we regularize estimation with a prior.
-
----
-
-## Maximum A Posteriori Estimation (MAP)
-
-MAP estimation introduces prior knowledge into the estimation problem. Using Bayes' rule, the posterior over parameters $\theta$ is:
-
-$$
-p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \theta)
-$$
-
-The **MAP estimate** is the mode of the posterior:
-
-$$
-\hat{\theta}_\text{MAP} = \operatorname{argmax}_\theta \log p(\theta) + \sum_{i=1}^n \log p(x_i \mid \theta)
-$$
-
-
-## Maximum a posteriori estimation
-
-A more Bayesian way to fit parameters is through **maximum a posteriori
-estimation** (MAP). In this technique we assume that the parameters are
-a random variable, and we specify a prior distribution
-$p(\mathbf{\theta})$. Then we can employ Bayes' rule to compute the
-posterior distribution of the parameters given the observed data:
-
-$$p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
-
-Computing the normalizing constant is often intractable, because it
-involves integrating over the parameter space, which may be very
-high-dimensional. Fortunately, if we just want the MAP estimate, we
-don't care about the normalizing constant! It does not affect which
-values of $\mathbf{\theta}$ maximize the posterior. So we have
-
-$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
-
-Again, if we assume the observations are i.i.d., then we can express
-this in the equivalent, and possibly friendlier, form
-
-$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)$$
-
-A particularly nice case is when the prior is chosen carefully such that
-the posterior comes from the same family as the prior. In this case the
-prior is called a **conjugate prior**. For example, if the likelihood is
-binomial and the prior is beta, the posterior is also beta. There are
-many conjugate priors; the reader may find this [table of conjugate
-priors](https://en.wikipedia.org/wiki/Conjugate_prior#Table_of_conjugate_distributions)
-useful.
-
----
-
-## MAP Estimation for a Gaussian Mean with Known Variance
-
-Assume:
-
-* Data: $x_1, \dots, x_n \sim \mathcal{N}(\mu, \sigma^2)$, with known $\sigma^2$
-* Prior: $\mu \sim \mathcal{N}(\mu_0, \tau^2)$
-
-### Derivation:
-
-The log posterior is:
-
-$$
-\log p(\mu \mid x_{1:n}) = \log p(\mu) + \sum_{i=1}^n \log p(x_i \mid \mu)
-$$
-
-$$
-= -\frac{1}{2\tau^2}(\mu - \mu_0)^2 - \frac{1}{2\sigma^2} \sum_{i=1}^n (x_i - \mu)^2 + \text{const}
-$$
-
-Differentiating w\.r.t. $\mu$ and setting to zero gives:
-
-$$
-\hat{\mu}_{\text{MAP}} = \left( \frac{n}{\sigma^2} + \frac{1}{\tau^2} \right)^{-1}
-\left( \frac{1}{\tau^2} \mu_0 + \frac{n}{\sigma^2} \bar{x} \right)
-$$
-
-This is a **weighted average** of the prior mean and the sample mean.
-
-### Interpretation:
-
-$$
-\hat{\mu}_{\text{MAP}} = \frac{\tau^2}{\tau^2 + \sigma^2 / n} \bar{x} +
-\frac{\sigma^2 / n}{\tau^2 + \sigma^2 / n} \mu_0
-$$
-
-* When $n \to \infty$: MAP converges to MLE.
-* When $n \to 0$: MAP converges to the prior mean $\mu_0$.
-
----
-
-### ✅ Python Demo: Comparing MLE and MAP
-
-```{code-cell} ipython3
-:tags: [hide-input]
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-
-def mle_vs_map_demo(n=1, mu_true=0.0, sigma=1.0, mu0=5.0, tau=1.0, seed=42):
-    np.random.seed(seed)
-    x = np.random.normal(mu_true, sigma, size=n)
-    x_bar = np.mean(x)
-
-    # MLE estimate
-    mu_mle = x_bar
-
-    # MAP estimate
-    weight = (tau**2) / (tau**2 + sigma**2 / n)
-    mu_map = weight * x_bar + (1 - weight) * mu0
-
-    print(f"n = {n}")
-    print(f"Sample mean       (MLE): {mu_mle:.3f}")
-    print(f"MAP estimate             : {mu_map:.3f}")
-    print(f"Prior mean         μ₀    : {mu0}")
-
-    # Plot posterior
-    mu_vals = np.linspace(mu_true - 3*sigma, mu0 + 3*tau, 400)
-    prior_pdf = norm.pdf(mu_vals, mu0, tau)
-    likelihood = norm.pdf(mu_vals, x_bar, sigma / np.sqrt(n))
-    posterior_unnorm = prior_pdf * likelihood
-    posterior = posterior_unnorm / np.trapz(posterior_unnorm, mu_vals)
-
-    plt.figure(figsize=(8, 5))
-    plt.plot(mu_vals, prior_pdf, 'g--', label='Prior $p(\\mu)$')
-    plt.plot(mu_vals, likelihood, 'b--', label='Likelihood $p(x|\\mu)$')
-    plt.plot(mu_vals, posterior, 'm-', lw=2, label='Posterior $p(\\mu|x)$')
-    plt.axvline(mu_mle, color='blue', linestyle=':', label='MLE')
-    plt.axvline(mu_map, color='purple', linestyle='--', label='MAP')
-    plt.axvline(mu0, color='green', linestyle='--', lw=1)
-    plt.title(f'MLE vs MAP (n = {n})')
-    plt.xlabel('$\\mu$')
-    plt.ylabel('Density')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
-
-# Try with n=1 to emphasize prior influence
-mle_vs_map_demo(n=1)
-```
-
----
-
-### 📌 Takeaways:
-
-* With **small samples**, MLE can be **overconfident** and even undefined for variance.
-* MAP estimation **regularizes** using prior knowledge.
-* For the Gaussian with known variance, MAP gives a **weighted average** of prior mean and sample mean.
-
----
-
-## Ridge Regression as MAP Estimation
-
-Let’s consider a standard linear regression setup:
-
-### Problem:
-
-We observe:
-
-* Inputs $\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d$
-* Outputs $y_1, \dots, y_n \in \mathbb{R}$
-
-Stacked as matrices:
-
-* $\mathbf{X} \in \mathbb{R}^{n \times d}$, with rows $\mathbf{x}_i^\top$
-* $\mathbf{y} \in \mathbb{R}^n$
-
-We assume a **linear model with Gaussian noise**:
-
-$$
-y_i = \mathbf{x}_i^\top \mathbf{w} + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
-$$
-
-Equivalently, in matrix form:
-
-$$
-\mathbf{y} \sim \mathcal{N}(\mathbf{Xw}, \sigma^2 \mathbf{I})
-$$
-
----
-
-## MLE for Linear Regression
+## Maximum Likelihood Estimation for Linear Regression
 
 The likelihood is:
 
@@ -409,132 +272,251 @@ $$
 \log p(\mathbf{y} \mid \mathbf{w}) = -\frac{1}{2\sigma^2} \|\mathbf{y} - \mathbf{Xw}\|^2 + \text{const}
 $$
 
-So the **MLE** is:
+So we observe that maximizing the log-likelihood is equivalent to minimizing the squared error.
 
 $$
 \hat{\mathbf{w}}_{\text{MLE}} = \operatorname{argmin}_\mathbf{w} \|\mathbf{y} - \mathbf{Xw}\|^2
 $$
 
----
-
-## MAP with Gaussian Prior
-
-Now suppose we place a **zero-mean Gaussian prior** on $\mathbf{w}$:
+So the **MLE** for the linear regression model is identical to the OLS estimator:
 
 $$
-\mathbf{w} \sim \mathcal{N}(\mathbf{0}, \tau^2 \mathbf{I})
-\quad\Rightarrow\quad
-\log p(\mathbf{w}) = -\frac{1}{2\tau^2} \|\mathbf{w}\|^2 + \text{const}
+\hat{\mathbf{w}}_{\text{MLE}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
 $$
 
-The **log-posterior** is then:
+Based on the estimator for the weights, we can also derive the estimator for the variance.
+In order to do this, we need to know the gradient of the log-likelihood with respect to the noise variance.
 
 $$
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
-- \frac{1}{2\sigma^2} \|\mathbf{y} - \mathbf{Xw}\|^2
-- \frac{1}{2\tau^2} \|\mathbf{w}\|^2
+\frac{\partial \log p(\mathbf{y} \mid \mathbf{w})}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \|\mathbf{y} - \mathbf{Xw}\|^2
 $$
 
-Taking the **negative log posterior**, we obtain the **ridge regression objective**:
+Setting the gradient to zero, we get:
 
 $$
-\hat{\mathbf{w}}_{\text{MAP}} = \operatorname{argmin}_\mathbf{w}
-\left\{
-\|\mathbf{y} - \mathbf{Xw}\|^2 + \lambda \|\mathbf{w}\|^2
-\right\}
-\quad \text{where } \lambda = \frac{\sigma^2}{\tau^2}
+\frac{\partial \log p(\mathbf{y} \mid \mathbf{w})}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4} \|\mathbf{y} - \mathbf{Xw}\|^2 = 0
+$$
+
+Solving for $\sigma^2$, we get:
+
+$$
+\hat{\sigma}^2 = \frac{1}{n} \|\mathbf{y} - \mathbf{X}\hat{\mathbf{w}}\|^2
 $$
 
 ---
 
-### ✅ Conclusion
+## Limitations of MLE in Linear Regression
 
-> **Ridge regression is the MAP estimate in linear regression under a Gaussian prior on the weights.**
-
-* The regularization term $\lambda \|\mathbf{w}\|^2$ comes from the log of the Gaussian prior.
-* The ridge penalty **shrinks** weights toward zero, just like the prior favors small values.
-
----
-Great! Below is a **numerical Python demo** that illustrates the equivalence between:
-
-* **Ridge regression**: minimizing squared loss + $\lambda \|\mathbf{w}\|^2$
-* **MAP estimation**: under a Gaussian prior $\mathbf{w} \sim \mathcal{N}(0, \tau^2 I)$
-
-We’ll simulate data from a linear model, perform both **ridge regression** and **MAP estimation**, and confirm they return **identical results**.
+While maximum likelihood estimation (MLE) is appealing for its simplicity and optimality under large samples, it has important drawbacks — especially in the context of **linear regression with limited data** or **high-dimensional features**.
 
 ---
 
-### ✅ Python Code: Ridge Regression ≡ MAP Estimation
+### Example: $n = d$
+
+Consider a linear regression model:
+
+$$
+y_i = \mathbf{x}_i^\top \mathbf{w} + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
+$$
+
+Suppose the number of observations $n$ is equal to the number of features $d$. Then the design matrix $\mathbf{X} \in \mathbb{R}^{n \times d}$ is square, and the MLE is:
+
+$$
+\hat{\mathbf{w}}_{\text{MLE}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+$$
+
+In this case, $\mathbf{X}^\top \mathbf{X}$ is invertible (with probability 1 if $\mathbf{X}$ is random), and the MLE will **perfectly interpolate the data** — giving **zero training error**:
+
+$$
+\mathbf{y} = \mathbf{X} \hat{\mathbf{w}}_{\text{MLE}} \quad \Rightarrow \quad \|\mathbf{y} - \mathbf{X} \hat{\mathbf{w}}_{\text{MLE}}\|^2 = 0
+$$
+
+---
+
+### Problem: Overfitting and Variance Underestimation
+
+* The MLE predicts with **zero error on training data**, but may **generalize poorly** to new inputs.
+* The **estimated variance** becomes:
+
+  $$
+  \hat{\sigma}^2 = \frac{1}{n} \|\mathbf{y} - \mathbf{X} \hat{\mathbf{w}}\|^2 = 0
+  $$
+
+  even though we know the data were generated with non-zero noise ($\sigma^2 > 0$)!
+
+❗ **MLE underestimates the variance** and is **overconfident** — especially when $n$ is small or close to $d$.
+
+---
+
+### Key Insight
+
+* **Small sample sizes** lead to **overfitting** with MLE.
+* **Estimated noise variance** can be **zero** when the model interpolates the data.
+* We need a way to **regularize** the parameter estimates and **account for uncertainty**.
+
+---
+
+## Bayesian Fix: Maximum a Posteriori Estimation
+
+Maximum a posteriori estimation (MAP) allows us to introduce **prior beliefs** about the parameters to avoid this degeneracy.
+
+* For the multivariate normal, using an appropriate **prior distribution** allows us to derive a **MAP estimate** that:
+
+  * Shrinks the sample covariance toward a prior value
+  * Stays well-defined even when $n = 1$
+  * Regularizes estimates in low-data regimes
+
+MAP estimation thus **balances data and prior** — resulting in more robust parameter estimates when the data are scarce.
+
+In this technique we assume that the parameters are
+a random variable, and we specify a prior distribution
+$p(\mathbf{\theta})$. 
+
+Then we can employ Bayes' rule to compute the
+posterior distribution of the parameters given the observed data:
+
+$$p(\mathbf{\theta} | x_1, \dots, x_n) \propto p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
+
+Computing the normalizing constant is often intractable, because it
+involves integrating over the parameter space, which may be very
+high-dimensional. 
+Fortunately, if we just want the MAP estimate, we
+don't care about the normalizing constant! It does not affect which
+values of $\mathbf{\theta}$ maximize the posterior. 
+
+So we have
+
+$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} p(\mathbf{\theta})p(x_1, \dots, x_n | \mathbf{\theta})$$
+
+Again, if we assume the observations are i.i.d., then we can express
+this in the equivalent, and possibly friendlier, form
+
+$$\hat{\mathbf{\theta}}_\text{map} = \operatorname{argmax}_\mathbf{\theta} \left(\log p(\mathbf{\theta}) + \sum_{i=1}^n \log p(x_i | \mathbf{\theta})\right)$$
+
+---
+
+
+
+## MAP Estimation for Linear Regression
+
+Let's apply MAP estimation to the linear regression model.
+
+For example:
+
+* Let $\mathbf{w} \sim \mathcal{N}(0, \tau^2 \mathbf{I})$ — a Gaussian prior centered at zero.
+* Assume $\sigma^2$ is known or estimated separately.
+
+The posterior over $\mathbf{w}$ is:
+
+$$
+p(\mathbf{w} \mid \mathbf{y}) \propto p(\mathbf{y} \mid \mathbf{w}) \cdot p(\mathbf{w})
+$$
+
+Taking logs and maximizing yields the **MAP estimator**:
+
+$$
+\hat{\mathbf{w}}_{\text{MAP}} = \operatorname{argmin}_\mathbf{w} \left\{ \|\mathbf{y} - \mathbf{Xw}\|^2 + \lambda \|\mathbf{w}\|^2 \right\}
+$$
+
+where the hyperparameter $\lambda = \sigma^2 / \tau^2$ controls the strength of the regularization.
+
+Similar to the MLE being equivalent to OLS, the MAP estimator is equivalent to **ridge regression**.
+
+Thus, the MAP estimator is equivalent to the solution of ridge regression:
+
+$$
+\hat{\mathbf{w}}_{\text{MAP}} = (\mathbf{X}^\top \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^\top \mathbf{y}
+$$
+
+
+---
+
+### Conclusion
+
+> MAP estimation provides a **natural Bayesian justification** for regularization in linear models. It improves generalization, avoids variance collapse, and leads to robust estimates — even when data is scarce.
+
+---
+
+Perfect. Here's a **Python demo** that visually compares **MLE (ordinary least squares)** and **MAP (ridge regression)** on a small dataset, illustrating:
+
+* Overfitting with MLE when $n \approx d$
+* How MAP (ridge) regularizes the solution
+* Differences in weight magnitude and generalization
+
+---
+
+Let's compare MLE and MAP for **polynomial regression**
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.linear_model import Ridge
-from numpy.linalg import inv
+from sklearn.preprocessing import PolynomialFeatures
 
-def ridge_vs_map_demo(n=50, d=5, sigma=1.0, tau=1.0, seed=42):
+
+def sine_polynomial_regression_demo(n=15, degree=14, noise_std=0.1, alpha=1.0, seed=42):
     np.random.seed(seed)
 
-    # Generate true weights
-    w_true = np.random.randn(d)
+    Xr =np.random.rand(1000, 1)
+    yr = np.random.randn(1000)
+    # === True function ===
+    def true_func(x): return np.sin(2 * np.pi * x)
 
-    # Generate inputs and noise
-    X = np.random.randn(n, d)
-    noise = np.random.normal(0, sigma, size=n)
-    y = X @ w_true + noise
+    # === Generate data ===
+    X = np.sort(Xr[:n], axis=0)
+    y = true_func(X).ravel() + yr[:n] * noise_std
 
-    # === Ridge Regression ===
-    lambda_ = sigma**2 / tau**2
-    ridge = Ridge(alpha=lambda_, fit_intercept=False)
-    ridge.fit(X, y)
-    w_ridge = ridge.coef_
+    # === Generate test data ===
+    X_test = np.linspace(0, 1, 500).reshape(-1, 1)
+    y_true = true_func(X_test)
 
-    # === MAP Estimation (same as Ridge closed-form) ===
-    A = X.T @ X + lambda_ * np.eye(d)
-    b = X.T @ y
-    w_map = inv(A) @ b
+    # === Polynomial features ===
+    poly = PolynomialFeatures(degree, include_bias=True)
+    X_poly = poly.fit_transform(X)
+    X_test_poly = poly.transform(X_test)
 
-    # === Compare ===
-    print("True weights:     ", np.round(w_true, 3))
-    print("Ridge estimate:   ", np.round(w_ridge, 3))
-    print("MAP estimate:     ", np.round(w_map, 3))
-    print("Are ridge and MAP identical? ", np.allclose(w_ridge, w_map))
+    # u, s, v = la.svd(X_poly)
+    # i_null = s < 1e-10
+    # s_inv = np.zeros_like(s)
+    # s_inv = np.diag(1/s)
+    # s_inv[i_null] = 0
+    
+    Xy = X_poly.T @ y
+    XX = X_poly.T @ X_poly
+    w_ols = np.linalg.lstsq(XX, Xy, rcond=None)[0]
+    
+    w_ridge = np.linalg.lstsq(XX + alpha * np.eye(XX.shape[0]), Xy, rcond=None)[0]
 
-    # === Visualize ===
-    indices = np.arange(d)
-    width = 0.25
-    plt.bar(indices - width, w_true, width=width, label='True $w$', color='gray')
-    plt.bar(indices, w_ridge, width=width, label='Ridge $\\hat{w}$', color='blue')
-    plt.bar(indices + width, w_map, width=width, label='MAP $\\hat{w}$', color='purple', alpha=0.6)
-    plt.xticks(indices)
-    plt.title('True vs Ridge vs MAP Estimates')
-    plt.xlabel('Weight Index')
-    plt.ylabel('Value')
-    plt.legend()
+    # === MLE (Ordinary Least Squares) ===
+    y_pred_mle = X_test_poly @ w_ols
+
+    # === MAP (Ridge Regression) ===
+    
+    y_pred_map = X_test_poly @ w_ridge
+
+    # === Plot ===
+    plt.figure(figsize=(10, 5))
+    plt.plot(X_test, y_true, 'k--', label='True Function (sin)')
+    plt.scatter(X, y, color='black', s=30, label='Noisy Samples')
+    plt.plot(X_test, y_pred_mle, 'r-', label='MLE (degree {})'.format(degree))
+    plt.plot(X_test, y_pred_map, 'b-', label='MAP (ridge, α={})'.format(alpha))
+    plt.title(f'Polynomial Regression: Degree {degree}, n = {n}')
+    plt.xlabel('$x$')
+    plt.ylabel('$y$')
+    plt.ylim(-1.5, 1.5)
+    plt.xlim(0, 1)
     plt.grid(True)
+    plt.legend()
     plt.tight_layout()
     plt.show()
 
-# Run the demo
-ridge_vs_map_demo()
+# Try degree approaching number of points
+
+degree = 9
+alpha = .001
+n = [50, 15, 11, 10, 9]
+
+for n_i in n:
+    sine_polynomial_regression_demo(n=n_i, degree=degree, alpha=alpha)
+
 ```
-
----
-
-### 📌 What to Expect:
-
-* The **Ridge** and **MAP estimates** will match up to numerical precision.
-* You’ll see bar plots of the **true weights**, **ridge solution**, and **MAP solution** side by side.
-
----
-
-### 💡 Interpretation:
-
-| Term                          | Role                                             |
-| ----------------------------- | ------------------------------------------------ |
-| $\lambda = \sigma^2 / \tau^2$ | Ridge penalty = prior precision                  |
-| Ridge regression              | Minimizes loss + prior log-density               |
-| MAP estimation                | Maximizes posterior (log-likelihood + log-prior) |
-
