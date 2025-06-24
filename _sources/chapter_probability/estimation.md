@@ -214,46 +214,66 @@ This is the **sample mean** and the **(biased) sample covariance** (with denomin
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-
+# Re-import required libraries after kernel reset
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 from scipy.stats import multivariate_normal
+
+def plot_cov_ellipse(mean, cov, ax, n_std=2.0, facecolor='none', edgecolor='black', linestyle='-', label=None):
+    """Add a 2D covariance ellipse to an existing plot."""
+    vals, vecs = np.linalg.eigh(cov)
+    order = vals.argsort()[::-1]
+    vals, vecs = vals[order], vecs[:, order]
+    theta = np.degrees(np.arctan2(*vecs[:, 0][::-1]))
+
+    width, height = 2 * n_std * np.sqrt(vals)
+    ellipse = Ellipse(xy=mean, width=width, height=height, angle=theta,
+                      facecolor=facecolor, edgecolor=edgecolor, linestyle=linestyle, label=label)
+    ax.add_patch(ellipse)
 
 def mle_multivariate_normal_demo(n=200, d=2, seed=42):
     np.random.seed(seed)
-    
+
     # True parameters
     mu_true = np.array([1.0, -1.0])
     Sigma_true = np.array([[1.0, 0.8],
                            [0.8, 1.5]])
-    
+
     # Generate data
     X = np.random.multivariate_normal(mu_true, Sigma_true, size=n)
-    
+
     # MLE estimates
     mu_mle = np.mean(X, axis=0)
     Sigma_mle = np.cov(X.T, bias=True)  # bias=True uses 1/n
-    
+
     print("True mean:", mu_true)
     print("MLE mean :", mu_mle)
     print("True covariance:\n", Sigma_true)
     print("MLE covariance:\n", Sigma_mle)
-    
+
     # Plot
-    plt.figure(figsize=(6, 6))
-    plt.scatter(X[:, 0], X[:, 1], alpha=0.3, label='Samples')
-    plt.scatter(*mu_true, c='green', marker='x', s=100, label='True Mean')
-    plt.scatter(*mu_mle, c='red', marker='o', s=100, label='MLE Mean')
-    plt.title("MLE of Multivariate Normal Distribution")
-    plt.xlabel("$x_1$")
-    plt.ylabel("$x_2$")
-    plt.grid(True)
-    plt.axis('equal')
-    plt.legend()
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.scatter(X[:, 0], X[:, 1], alpha=0.3, label='Samples')
+    ax.scatter(*mu_true, c='green', marker='x', s=100, label='True Mean')
+    ax.scatter(*mu_mle, c='red', marker='o', s=100, label='MLE Mean')
+
+    # Add 2-sigma ellipses
+    plot_cov_ellipse(mu_true, Sigma_true, ax, n_std=2.0, edgecolor='green', linestyle='--', label='True Covariance (2σ)')
+    plot_cov_ellipse(mu_mle, Sigma_mle, ax, n_std=2.0, edgecolor='red', linestyle='-', label='MLE Covariance (2σ)')
+
+    ax.set_title("MLE of Multivariate Normal Distribution")
+    ax.set_xlabel("$x_1$")
+    ax.set_ylabel("$x_2$")
+    ax.grid(True)
+    ax.axis('equal')
+    ax.legend()
+    plt.tight_layout()
     plt.show()
 
 # Run the demo
 mle_multivariate_normal_demo()
+
 ```
 
 ---

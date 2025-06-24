@@ -65,7 +65,7 @@ This conjugate prior leads to a posterior distribution that is again Gaussian.
 
 Given:
 
-* Observations: $\mathbf{x}\_1, \dots, \mathbf{x}\_n \in \mathbb{R}^d$ i.i.d. from
+* Observations: $\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d$ i.i.d. from
   $\mathbf{x}_i \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$
   with **known** covariance $\boldsymbol{\Sigma}$ and **unknown** mean $\boldsymbol{\mu}$
 
@@ -90,7 +90,7 @@ $$
 - \frac{n}{2} \log |2\pi \boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
 $$
 
-Let $\bar{\mathbf{x}} = \frac{1}{n} \sum\_{i=1}^n \mathbf{x}\_i$, then the sum of squared deviations becomes:
+Let $\bar{\mathbf{x}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i$, then the sum of squared deviations becomes:
 
 $$
 \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
@@ -100,7 +100,7 @@ $$
 So up to constants:
 
 $$
-\log p(\mathbf{x}_{1:n} \mid \boldsymbol{\mu}) \propto
+\log p(\mathbf{x}_{1:n} \mid \boldsymbol{\mu}) = \text{const}
 - \frac{n}{2} (\boldsymbol{\mu} - \bar{\mathbf{x}})^\top \boldsymbol{\Sigma}^{-1} (\boldsymbol{\mu} - \bar{\mathbf{x}})
 $$
 
@@ -118,7 +118,7 @@ $$
 Add log-prior and log-likelihood:
 
 $$
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{n}{2} (\boldsymbol{\mu} - \bar{\mathbf{x}})^\top \boldsymbol{\Sigma}^{-1} (\boldsymbol{\mu} - \bar{\mathbf{x}})
 - \frac{1}{2} (\boldsymbol{\mu} - \boldsymbol{\mu}_0)^\top \boldsymbol{\Lambda}_0^{-1} (\boldsymbol{\mu} - \boldsymbol{\mu}_0)
 $$
@@ -136,7 +136,7 @@ $$
 To do this, combine the two quadratic terms:
 
 $$
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{1}{2} \boldsymbol{\mu}^\top (n \boldsymbol{\Sigma}^{-1} + \boldsymbol{\Lambda}_0^{-1}) \boldsymbol{\mu}
 + \boldsymbol{\mu}^\top \left(n \boldsymbol{\Sigma}^{-1} \bar{\mathbf{x}} + \boldsymbol{\Lambda}_0^{-1} \boldsymbol{\mu}_0 \right)
 $$
@@ -160,7 +160,7 @@ Let
 Then:
 
 $$
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{1}{2} (\boldsymbol{\mu} - \boldsymbol{\mu}_n)^\top \boldsymbol{\Lambda}_n^{-1} (\boldsymbol{\mu} - \boldsymbol{\mu}_n)
 + \text{const}
 $$
@@ -204,8 +204,8 @@ With:
 
 ### Interpretation
 
-* The posterior is a **weighted average** of the prior mean $\boldsymbol{\mu}\_0$ and the sample mean $\bar{\mathbf{x}}$.
-* The prior can be interpreted as encoding **$n\_0$ pseudo-observations**, where $n\_0 = \text{tr}(\boldsymbol{\Sigma} \boldsymbol{\Lambda}\_0^{-1})$ heuristically reflects its strength.
+* The posterior is a **weighted average** of the prior mean $\boldsymbol{\mu}_0$ and the sample mean $\bar{\mathbf{x}}$.
+* The prior can be interpreted as encoding **$n_0$ pseudo-observations**, where $n_0 = \text{tr}(\boldsymbol{\Sigma} \boldsymbol{\Lambda}_0^{-1})$ heuristically reflects its strength.
 * When $n \to \infty$, the posterior converges to the MLE.
 * When $n = 0$, the posterior is the prior.
 
@@ -214,7 +214,7 @@ With:
 
 Let's visualize how the **posterior distribution over the mean $\boldsymbol{\mu}$** updates as we observe more data points from a **2D Gaussian with known covariance**.
 
-We will use a **Gaussian prior** with mean $\boldsymbol{\mu}\_0 = (0, 0)$ and covariance $\boldsymbol{\Lambda}\_0 = \mathbf{I}$.
+We will use a **Gaussian prior** with mean $\boldsymbol{\mu}_0 = (0, 0)$ and covariance $\boldsymbol{\Lambda}_0 = \mathbf{I}$.
 
 We will generate 10 data points from a **2D Gaussian with known covariance** $\boldsymbol{\Sigma} = \begin{pmatrix} 0.5 & 0.2 \\ 0.2 & 1.0 \end{pmatrix}$.
 
@@ -307,8 +307,8 @@ posterior_updates_viz()
 
 Let's derive **Bayesian Linear Regression** using:
 
-* A **Gaussian prior** on the weights: \$\mathbf{w} \sim \mathcal{N}(\mathbf{w}\_0, \boldsymbol{\Lambda}\_0)\$
-* A **Gaussian likelihood** for outputs: \$y\_i \mid \mathbf{x}\_i, \mathbf{w} \sim \mathcal{N}(\mathbf{x}\_i^\top \mathbf{w}, \sigma^2)\$
+* A **Gaussian prior** on the weights: $\mathbf{w} \sim \mathcal{N}(\mathbf{w}_0, \boldsymbol{\Lambda}_0)$
+* A **Gaussian likelihood** for outputs: $y_i \mid \mathbf{x}_i, \mathbf{w} \sim \mathcal{N}(\mathbf{x}_i^\top \mathbf{w}, \sigma^2)$
 * The method of **completing the square** to compute the posterior over weights.
 
 ---
@@ -317,8 +317,8 @@ Let's derive **Bayesian Linear Regression** using:
 
 Let:
 
-* \$\mathbf{X} \in \mathbb{R}^{n \times d}\$: design matrix (rows are \$\mathbf{x}\_i^\top\$)
-* \$\mathbf{y} \in \mathbb{R}^n\$: target vector
+* $\mathbf{X} \in \mathbb{R}^{n \times d}$: design matrix (rows are $\mathbf{x}_i^\top$)
+* $\mathbf{y} \in \mathbb{R}^n$: target vector
 
 ### Likelihood
 
@@ -351,12 +351,12 @@ $$
 We combine the log prior and log likelihood:
 
 $$
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2\sigma^2} (\mathbf{y} - \mathbf{Xw})^\top (\mathbf{y} - \mathbf{Xw})
 - \frac{1}{2} (\mathbf{w} - \mathbf{w}_0)^\top \boldsymbol{\Lambda}_0^{-1} (\mathbf{w} - \mathbf{w}_0)
 $$
 
-We now **complete the square** to identify the posterior as a multivariate normal in \$\mathbf{w}\$.
+We now **complete the square** to identify the posterior as a multivariate normal in $\mathbf{w}$.
 
 ---
 
@@ -381,7 +381,7 @@ $$
 ### Combine terms:
 
 $$
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2} \mathbf{w}^\top \left( \frac{1}{\sigma^2} \mathbf{X}^\top \mathbf{X} + \boldsymbol{\Lambda}_0^{-1} \right) \mathbf{w}
 + \mathbf{w}^\top \left( \frac{1}{\sigma^2} \mathbf{X}^\top \mathbf{y} + \boldsymbol{\Lambda}_0^{-1} \mathbf{w}_0 \right)
 + \text{const}
@@ -394,7 +394,7 @@ $$
 This is the canonical form of a **log-density of a Gaussian**:
 
 $$
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2} (\mathbf{w} - \mathbf{w}_n)^\top \boldsymbol{\Lambda}_n^{-1} (\mathbf{w} - \mathbf{w}_n)
 $$
 
@@ -429,10 +429,10 @@ Where:
 
 ### 📌 Interpretation
 
-* If \$\boldsymbol{\Lambda}\_0 = \tau^2 \mathbf{I}\$ and \$\mathbf{w}\_0 = \mathbf{0}\$, this corresponds to **ridge regression** with \$\ell\_2\$ penalty \$\propto \frac{1}{\tau^2}\$.
-* The prior acts as a **regularizer**, pulling weights toward \$\mathbf{w}\_0\$.
-* If \$n \to \infty\$, the posterior converges to the MLE solution.
-* If \$n = 0\$, the posterior equals the prior.
+* If $\boldsymbol{\Lambda}_0 = \tau^2 \mathbf{I}$ and $\mathbf{w}_0 = \mathbf{0}$, this corresponds to **ridge regression** with $\ell_2$ penalty $\propto \frac{1}{\tau^2}$.
+* The prior acts as a **regularizer**, pulling weights toward $\mathbf{w}_0$.
+* If $n \to \infty$, the posterior converges to the MLE solution.
+* If $n = 0$, the posterior equals the prior.
 
 ---
 

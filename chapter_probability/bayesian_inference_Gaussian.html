@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -588,7 +588,7 @@ h(\mathbf{x}) \exp\left( \boldsymbol{\eta}^\top \mathbf{x} - A(\boldsymbol{\eta}
 <h2>Derivation of the Posterior Distribution<a class="headerlink" href="#derivation-of-the-posterior-distribution" title="Link to this heading">#</a></h2>
 <p>Given:</p>
 <ul class="simple">
-<li><p>Observations: <span class="math notranslate nohighlight">\(\mathbf{x}\_1, \dots, \mathbf{x}\_n \in \mathbb{R}^d\)</span> i.i.d. from
+<li><p>Observations: <span class="math notranslate nohighlight">\(\mathbf{x}_1, \dots, \mathbf{x}_n \in \mathbb{R}^d\)</span> i.i.d. from
 <span class="math notranslate nohighlight">\(\mathbf{x}_i \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span>
 with <strong>known</strong> covariance <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> and <strong>unknown</strong> mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span></p></li>
 <li><p>Prior:
@@ -610,7 +610,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto p(\boldsymbol{\mu}) \prod_{i=1
 \log p(\mathbf{x}_{1:n} \mid \boldsymbol{\mu}) =
 - \frac{n}{2} \log |2\pi \boldsymbol{\Sigma}| - \frac{1}{2} \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
 \]</div>
-<p>Let <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} = \frac{1}{n} \sum\_{i=1}^n \mathbf{x}\_i\)</span>, then the sum of squared deviations becomes:</p>
+<p>Let <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} = \frac{1}{n} \sum_{i=1}^n \mathbf{x}_i\)</span>, then the sum of squared deviations becomes:</p>
 <div class="math notranslate nohighlight">
 \[
 \sum_{i=1}^n (\mathbf{x}_i - \boldsymbol{\mu})^\top \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
@@ -619,7 +619,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto p(\boldsymbol{\mu}) \prod_{i=1
 <p>So up to constants:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\mathbf{x}_{1:n} \mid \boldsymbol{\mu}) \propto
+\log p(\mathbf{x}_{1:n} \mid \boldsymbol{\mu}) = \text{const}
 - \frac{n}{2} (\boldsymbol{\mu} - \bar{\mathbf{x}})^\top \boldsymbol{\Sigma}^{-1} (\boldsymbol{\mu} - \bar{\mathbf{x}})
 \]</div>
 <p><strong>Log prior:</strong></p>
@@ -636,7 +636,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto p(\boldsymbol{\mu}) \prod_{i=1
 <p>Add log-prior and log-likelihood:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{n}{2} (\boldsymbol{\mu} - \bar{\mathbf{x}})^\top \boldsymbol{\Sigma}^{-1} (\boldsymbol{\mu} - \bar{\mathbf{x}})
 - \frac{1}{2} (\boldsymbol{\mu} - \boldsymbol{\mu}_0)^\top \boldsymbol{\Lambda}_0^{-1} (\boldsymbol{\mu} - \boldsymbol{\mu}_0)
 \]</div>
@@ -652,7 +652,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto p(\boldsymbol{\mu}) \prod_{i=1
 <p>To do this, combine the two quadratic terms:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{1}{2} \boldsymbol{\mu}^\top (n \boldsymbol{\Sigma}^{-1} + \boldsymbol{\Lambda}_0^{-1}) \boldsymbol{\mu}
 + \boldsymbol{\mu}^\top \left(n \boldsymbol{\Sigma}^{-1} \bar{\mathbf{x}} + \boldsymbol{\Lambda}_0^{-1} \boldsymbol{\mu}_0 \right)
 \]</div>
@@ -675,7 +675,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto p(\boldsymbol{\mu}) \prod_{i=1
 <p>Then:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) \propto
+\log p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) = \text{const}
 - \frac{1}{2} (\boldsymbol{\mu} - \boldsymbol{\mu}_n)^\top \boldsymbol{\Lambda}_n^{-1} (\boldsymbol{\mu} - \boldsymbol{\mu}_n)
 + \text{const}
 \]</div>
@@ -716,8 +716,8 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) =
 <section id="interpretation">
 <h3>Interpretation<a class="headerlink" href="#interpretation" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>The posterior is a <strong>weighted average</strong> of the prior mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\_0\)</span> and the sample mean <span class="math notranslate nohighlight">\(\bar{\mathbf{x}}\)</span>.</p></li>
-<li><p>The prior can be interpreted as encoding <strong><span class="math notranslate nohighlight">\(n\_0\)</span> pseudo-observations</strong>, where <span class="math notranslate nohighlight">\(n\_0 = \text{tr}(\boldsymbol{\Sigma} \boldsymbol{\Lambda}\_0^{-1})\)</span> heuristically reflects its strength.</p></li>
+<li><p>The posterior is a <strong>weighted average</strong> of the prior mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_0\)</span> and the sample mean <span class="math notranslate nohighlight">\(\bar{\mathbf{x}}\)</span>.</p></li>
+<li><p>The prior can be interpreted as encoding <strong><span class="math notranslate nohighlight">\(n_0\)</span> pseudo-observations</strong>, where <span class="math notranslate nohighlight">\(n_0 = \text{tr}(\boldsymbol{\Sigma} \boldsymbol{\Lambda}_0^{-1})\)</span> heuristically reflects its strength.</p></li>
 <li><p>When <span class="math notranslate nohighlight">\(n \to \infty\)</span>, the posterior converges to the MLE.</p></li>
 <li><p>When <span class="math notranslate nohighlight">\(n = 0\)</span>, the posterior is the prior.</p></li>
 </ul>
@@ -727,7 +727,7 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) =
 <section id="visualizing-posterior-updates-for-boldsymbol-mu">
 <h2>Visualizing Posterior Updates for <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span><a class="headerlink" href="#visualizing-posterior-updates-for-boldsymbol-mu" title="Link to this heading">#</a></h2>
 <p>Let’s visualize how the <strong>posterior distribution over the mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span></strong> updates as we observe more data points from a <strong>2D Gaussian with known covariance</strong>.</p>
-<p>We will use a <strong>Gaussian prior</strong> with mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\_0 = (0, 0)\)</span> and covariance <span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}\_0 = \mathbf{I}\)</span>.</p>
+<p>We will use a <strong>Gaussian prior</strong> with mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_0 = (0, 0)\)</span> and covariance <span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}_0 = \mathbf{I}\)</span>.</p>
 <p>We will generate 10 data points from a <strong>2D Gaussian with known covariance</strong> <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma} = \begin{pmatrix} 0.5 &amp; 0.2 \\ 0.2 &amp; 1.0 \end{pmatrix}\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -831,8 +831,8 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) =
 <h2>Bayesian Linear Regression<a class="headerlink" href="#bayesian-linear-regression" title="Link to this heading">#</a></h2>
 <p>Let’s derive <strong>Bayesian Linear Regression</strong> using:</p>
 <ul class="simple">
-<li><p>A <strong>Gaussian prior</strong> on the weights: $\mathbf{w} \sim \mathcal{N}(\mathbf{w}_0, \boldsymbol{\Lambda}_0)$</p></li>
-<li><p>A <strong>Gaussian likelihood</strong> for outputs: $y_i \mid \mathbf{x}_i, \mathbf{w} \sim \mathcal{N}(\mathbf{x}_i^\top \mathbf{w}, \sigma^2)$</p></li>
+<li><p>A <strong>Gaussian prior</strong> on the weights: <span class="math notranslate nohighlight">\(\mathbf{w} \sim \mathcal{N}(\mathbf{w}_0, \boldsymbol{\Lambda}_0)\)</span></p></li>
+<li><p>A <strong>Gaussian likelihood</strong> for outputs: <span class="math notranslate nohighlight">\(y_i \mid \mathbf{x}_i, \mathbf{w} \sim \mathcal{N}(\mathbf{x}_i^\top \mathbf{w}, \sigma^2)\)</span></p></li>
 <li><p>The method of <strong>completing the square</strong> to compute the posterior over weights.</p></li>
 </ul>
 </section>
@@ -841,8 +841,8 @@ p(\boldsymbol{\mu} \mid \mathbf{x}_{1:n}) =
 <h2>Setup: Likelihood and Prior<a class="headerlink" href="#setup-likelihood-and-prior" title="Link to this heading">#</a></h2>
 <p>Let:</p>
 <ul class="simple">
-<li><p>$\mathbf{X} \in \mathbb{R}^{n \times d}$: design matrix (rows are $\mathbf{x}_i^\top$)</p></li>
-<li><p>$\mathbf{y} \in \mathbb{R}^n$: target vector</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span>: design matrix (rows are <span class="math notranslate nohighlight">\(\mathbf{x}_i^\top\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^n\)</span>: target vector</p></li>
 </ul>
 <section id="likelihood">
 <h3>Likelihood<a class="headerlink" href="#likelihood" title="Link to this heading">#</a></h3>
@@ -875,11 +875,11 @@ p(\mathbf{w}) = \mathcal{N}(\mathbf{w} \mid \mathbf{w}_0, \boldsymbol{\Lambda}_0
 <p>We combine the log prior and log likelihood:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2\sigma^2} (\mathbf{y} - \mathbf{Xw})^\top (\mathbf{y} - \mathbf{Xw})
 - \frac{1}{2} (\mathbf{w} - \mathbf{w}_0)^\top \boldsymbol{\Lambda}_0^{-1} (\mathbf{w} - \mathbf{w}_0)
 \]</div>
-<p>We now <strong>complete the square</strong> to identify the posterior as a multivariate normal in $\mathbf{w}$.</p>
+<p>We now <strong>complete the square</strong> to identify the posterior as a multivariate normal in <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>.</p>
 </section>
 <hr class="docutils" />
 <section id="completing-the-square">
@@ -903,7 +903,7 @@ p(\mathbf{w}) = \mathcal{N}(\mathbf{w} \mid \mathbf{w}_0, \boldsymbol{\Lambda}_0
 <h3>Combine terms:<a class="headerlink" href="#combine-terms" title="Link to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
 \[
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2} \mathbf{w}^\top \left( \frac{1}{\sigma^2} \mathbf{X}^\top \mathbf{X} + \boldsymbol{\Lambda}_0^{-1} \right) \mathbf{w}
 + \mathbf{w}^\top \left( \frac{1}{\sigma^2} \mathbf{X}^\top \mathbf{y} + \boldsymbol{\Lambda}_0^{-1} \mathbf{w}_0 \right)
 + \text{const}
@@ -916,7 +916,7 @@ p(\mathbf{w}) = \mathcal{N}(\mathbf{w} \mid \mathbf{w}_0, \boldsymbol{\Lambda}_0
 <p>This is the canonical form of a <strong>log-density of a Gaussian</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
-\log p(\mathbf{w} \mid \mathbf{y}) \propto
+\log p(\mathbf{w} \mid \mathbf{y}) = \text{const}
 - \frac{1}{2} (\mathbf{w} - \mathbf{w}_n)^\top \boldsymbol{\Lambda}_n^{-1} (\mathbf{w} - \mathbf{w}_n)
 \]</div>
 <p>Hence the posterior is Gaussian:</p>
@@ -950,10 +950,10 @@ p(\mathbf{w} \mid \mathbf{y}) = \mathcal{N}(\mathbf{w}_n, \boldsymbol{\Lambda}_n
 <section id="id1">
 <h3>📌 Interpretation<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>If $\boldsymbol{\Lambda}_0 = \tau^2 \mathbf{I}$ and $\mathbf{w}_0 = \mathbf{0}$, this corresponds to <strong>ridge regression</strong> with $\ell_2$ penalty $\propto \frac{1}{\tau^2}$.</p></li>
-<li><p>The prior acts as a <strong>regularizer</strong>, pulling weights toward $\mathbf{w}_0$.</p></li>
-<li><p>If $n \to \infty$, the posterior converges to the MLE solution.</p></li>
-<li><p>If $n = 0$, the posterior equals the prior.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}_0 = \tau^2 \mathbf{I}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{w}_0 = \mathbf{0}\)</span>, this corresponds to <strong>ridge regression</strong> with <span class="math notranslate nohighlight">\(\ell_2\)</span> penalty <span class="math notranslate nohighlight">\(\propto \frac{1}{\tau^2}\)</span>.</p></li>
+<li><p>The prior acts as a <strong>regularizer</strong>, pulling weights toward <span class="math notranslate nohighlight">\(\mathbf{w}_0\)</span>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(n \to \infty\)</span>, the posterior converges to the MLE solution.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(n = 0\)</span>, the posterior equals the prior.</p></li>
 </ul>
 </section>
 </section>

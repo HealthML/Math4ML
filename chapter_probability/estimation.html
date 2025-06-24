@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -714,41 +714,61 @@ n \boldsymbol{\mu} = \sum_{i=1}^n \mathbf{x}_i
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-import required libraries after kernel reset</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ellipse</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">multivariate_normal</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_cov_ellipse</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a 2D covariance ellipse to an existing plot.&quot;&quot;&quot;</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">*</span><span class="n">vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n_std</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+    <span class="n">ellipse</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">theta</span><span class="p">,</span>
+                      <span class="n">facecolor</span><span class="o">=</span><span class="n">facecolor</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="n">edgecolor</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="n">linestyle</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ellipse</span><span class="p">)</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">mle_multivariate_normal_demo</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    
+
     <span class="c1"># True parameters</span>
     <span class="n">mu_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>
     <span class="n">Sigma_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span>
                            <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
-    
+
     <span class="c1"># Generate data</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">Sigma_true</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    
+
     <span class="c1"># MLE estimates</span>
     <span class="n">mu_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">Sigma_mle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># bias=True uses 1/n</span>
-    
+
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True mean:&quot;</span><span class="p">,</span> <span class="n">mu_true</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE mean :&quot;</span><span class="p">,</span> <span class="n">mu_mle</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True covariance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Sigma_true</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MLE covariance:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Sigma_mle</span><span class="p">)</span>
-    
+
     <span class="c1"># Plot</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Samples&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Mean&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE Mean&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;MLE of Multivariate Normal Distribution&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Samples&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Mean&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE Mean&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add 2-sigma ellipses</span>
+    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">mu_true</span><span class="p">,</span> <span class="n">Sigma_true</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True Covariance (2σ)&#39;</span><span class="p">)</span>
+    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">mu_mle</span><span class="p">,</span> <span class="n">Sigma_mle</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE Covariance (2σ)&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;MLE of Multivariate Normal Distribution&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 <span class="c1"># Run the demo</span>
@@ -768,7 +788,7 @@ MLE covariance:
  [0.72037511 1.39413223]]
 </pre></div>
 </div>
-<img alt="../_images/c0d34d940208400910b74271e5244a5aad9cdd012969a553d5ca54dfe55034b3.png" src="../_images/c0d34d940208400910b74271e5244a5aad9cdd012969a553d5ca54dfe55034b3.png" />
+<img alt="../_images/0655070ee13c6770048babea2229b53342cf434b34229000f084d0c1f5881d59.png" src="../_images/0655070ee13c6770048babea2229b53342cf434b34229000f084d0c1f5881d59.png" />
 </div>
 </div>
 </section>
@@ -1018,101 +1038,101 @@ p(\mathbf{w} \mid \mathbf{y}) \propto p(\mathbf{y} \mid \mathbf{w}) \cdot p(\mat
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
 <img alt="../_images/6f8848f722af1a05a9855bdf2a253b09059f0c859e52b5c15446bbc08e6c7b41.png" src="../_images/6f8848f722af1a05a9855bdf2a253b09059f0c859e52b5c15446bbc08e6c7b41.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
 <img alt="../_images/b1965d0bdab4d9b60298f06f62c617c55b9900a1f882347eceeb0fe58ff82d17.png" src="../_images/b1965d0bdab4d9b60298f06f62c617c55b9900a1f882347eceeb0fe58ff82d17.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
 <img alt="../_images/c57c83a882869aa94ed2bb01df503f5a2494339c51c81fbbf3c6ed173f5f8030.png" src="../_images/c57c83a882869aa94ed2bb01df503f5a2494339c51c81fbbf3c6ed173f5f8030.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: divide by zero encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: overflow encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:34: RuntimeWarning: invalid value encountered in matmul
   XX = X_poly.T @ X_poly
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
 <img alt="../_images/2cbf316a8a326845ace0a2d5110ceba641302ab6de6276e40a9f33bbf127d70d.png" src="../_images/2cbf316a8a326845ace0a2d5110ceba641302ab6de6276e40a9f33bbf127d70d.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: divide by zero encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: overflow encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:40: RuntimeWarning: invalid value encountered in matmul
   y_pred_mle = X_test_poly @ w_ols
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: divide by zero encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: overflow encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
-/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_8223/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
+/var/folders/n7/1tlnr9g5403gj0lq5b926czm0000gn/T/ipykernel_10198/1236886821.py:44: RuntimeWarning: invalid value encountered in matmul
   y_pred_map = X_test_poly @ w_ridge
 </pre></div>
 </div>
