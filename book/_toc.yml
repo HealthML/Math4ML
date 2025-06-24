@@ -134,8 +134,9 @@ parts:
         - file: chapter_probability/functions_random_vectors
         - file: chapter_probability/joint_distributions
         - file: chapter_probability/gaussian
-#         - file: chapter_probability/estimation
-#        - file: chapter_probability/exponential_family
+        - file: chapter_probability/estimation
+        - file: chapter_probability/exponential_family
+        - file: chapter_probability/bayesian_inference_Gaussian
 #        - file: chapter_probability/bayesian_linreg
 #        - file: chapter_probability/gaussian_processes
 #        - file: chapter_probability/mixture_models
