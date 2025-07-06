@@ -193,6 +193,23 @@ parts:
             title: Exercise Sheet 3 Solutions
           - file: appendix/Exercise Sheet 4 Solutions.md
             title: Exercise Sheet 4 Solutions
+      - file: appendix/project_briefs.md
+        title: Project Briefs
+        sections:
+          - file: appendix/normalizing_flows_coupling
+            title: Normalizing Flows
+          - file: appendix/GMM_EM
+            title: Gaussian Mixture Models
+          - file: appendix/kernel_PCA
+            title: Kernelized PCA
+          - file: appendix/GP_kernel_opt
+            title: Gaussian Processes
+          - file: appendix/GPLVM
+            title: Gaussian-Process Latent Variable Model
+          - file: appendix/Bayesian_logreg
+            title: Bayesian Logistic Regression
+          - file: appendix/LBFGS_opt
+            title: L-BFGS Optimizer
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces
