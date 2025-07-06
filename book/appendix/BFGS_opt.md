@@ -114,16 +114,15 @@ Building your own BFGS optimizer deepens your understanding of numerical optimiz
 
 Let's dive in and build your very own BFGS optimizer!
 
-## Project Summary: Building an L-BFGS Optimizer
+## Project Summary: Building a BFGS Optimizer
 
 *(NumPy)*
 
-| Item           | Details                                                                                               |
-| -------------- | ----------------------------------------------------------------------------------------------------- |
-| **Goal**       | Implement limited-memory BFGS and test on Rosenbrock & a small NN regression loss.                    |
-| **Key ideas**  | Two-loop recursion, line search (Wolfe), storing $s_k, y_k$ pairs.                                    |
-| **Core tasks** | <ul><li>Coding pure NumPy L-BFGS.</li><li>Compare to scipy.optimize for speed / iterations.</li></ul> |
-| **Report**     | Discuss curvature approximation vs. full BFGS and GD.                                                 |
-| **Stretch**    | Add bound-constraints (L-BFGS-B) for $[-2,2]^d$ box.                                                  |
+| Item           | Details                                                                                                                                                                                        |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Goal**       | Implement the full BFGS algorithm from scratch and test it on the Rosenbrock function and a small neural network regression loss.                                                              |
+| **Key ideas**  | Curvature approximation via Hessian updates, Wolfe-condition line search, comparison to GD and Newton methods.                                                                                 |
+| **Core tasks** | <ul><li>Implement BFGS with dense Hessian approximation and update rules.</li><li>Add line search satisfying Wolfe conditions.</li><li>Compare performance to `scipy.optimize` BFGS.</li></ul> |
+| **Report**     | Explain BFGS curvature updates and contrast with GD and Newton; include convergence plots and observations.                                                                                    |
+| **Stretch**    | Implement **L-BFGS** as a memory-efficient variant; optionally extend to **L-BFGS-B** for box constraints.                                                                                     |
 
----
