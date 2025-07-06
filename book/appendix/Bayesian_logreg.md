@@ -22,6 +22,64 @@ Classification tasks are everywhere—spam filtering, image classification, medi
 * It provides principled uncertainty estimates alongside predictive means.
 * It uses optimization techniques you're familiar with (gradient ascent) to approximate complex posterior distributions.
 
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.linear_model import LogisticRegression
+from scipy.special import expit, entr
+
+# Generate two-moons dataset
+X, y = make_moons(n_samples=300, noise=0.2, random_state=0)
+
+# Fit standard logistic regression for comparison
+clf = LogisticRegression()
+clf.fit(X, y)
+
+# Generate grid for predictions
+xx, yy = np.meshgrid(np.linspace(-2, 3, 300), np.linspace(-1.5, 2, 300))
+grid = np.c_[xx.ravel(), yy.ravel()]
+
+# Predict probabilities using logistic regression
+probs = clf.predict_proba(grid)[:, 1].reshape(xx.shape)
+entropy = entr(probs) + entr(1 - probs)  # predictive entropy
+
+# Plotting
+fig, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+# Decision boundary and data
+ax[0].contourf(xx, yy, probs, levels=25, cmap='RdBu', alpha=0.7)
+ax[0].contour(xx, yy, probs, levels=[0.5], colors='black', linewidths=1.5)
+ax[0].scatter(X[:, 0], X[:, 1], c=y, cmap='bwr', edgecolor='k', s=30)
+ax[0].set_title("Logistic Regression Decision Boundary")
+ax[0].set_xlabel("$x_1$")
+ax[0].set_ylabel("$x_2$")
+ax[0].set_xlim(-2, 3)
+ax[0].set_ylim(-1.5, 2)
+
+# Entropy plot
+cs = ax[1].contourf(xx, yy, entropy, levels=25, cmap='viridis')
+ax[1].scatter(X[:, 0], X[:, 1], c=y, cmap='bwr', edgecolor='k', s=30, alpha=0.4)
+ax[1].set_title("Predictive Entropy (Uncertainty)")
+ax[1].set_xlabel("$x_1$")
+ax[1].set_ylabel("$x_2$")
+ax[1].set_xlim(-2, 3)
+ax[1].set_ylim(-1.5, 2)
+fig.colorbar(cs, ax=ax[1], label='Entropy')
+
+plt.tight_layout()
+plt.show()
+```
+* **Left plot**: The decision boundary learned by standard logistic regression (MLE).
+* **Right plot**: The predictive uncertainty visualized as **entropy** — highest far from the data, as a Bayesian model would estimate.
+
+This illustration can serve as a baseline. You can later compare it to your Bayesian VI implementation, which should:
+
+* produce similar decision boundaries,
+* but show **more calibrated uncertainty**, especially in regions lacking data.
+
+
 ---
 
 ## 📌 What You Will Do in This Project

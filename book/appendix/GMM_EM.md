@@ -24,6 +24,51 @@ GMMs are widely used across machine learning tasks, including:
 
 To fit a GMM, you'll use a powerful iterative procedure known as **Expectation-Maximization (EM)**, which neatly handles missing information—here, the assignment of data points to Gaussian components.
 
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.mixture import GaussianMixture
+from sklearn.datasets import make_blobs
+from matplotlib.patches import Ellipse
+
+# Generate synthetic data
+X, y_true = make_blobs(n_samples=500, centers=4, cluster_std=1.0, random_state=42)
+
+# Fit GMM
+gmm = GaussianMixture(n_components=4, covariance_type='full', random_state=42)
+gmm.fit(X)
+labels = gmm.predict(X)
+
+# Plot data and Gaussian components
+def plot_ellipse(mean, cov, ax, n_std=2.0, facecolor='none', **kwargs):
+    vals, vecs = np.linalg.eigh(cov)
+    order = vals.argsort()[::-1]
+    vals, vecs = vals[order], vecs[:, order]
+    angle = np.degrees(np.arctan2(*vecs[:,0][::-1]))
+    width, height = 2 * n_std * np.sqrt(vals)
+    ellipse = Ellipse(xy=mean, width=width, height=height, angle=angle, facecolor=facecolor, **kwargs)
+    ax.add_patch(ellipse)
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.scatter(X[:, 0], X[:, 1], c=labels, s=20, cmap='viridis', alpha=0.5)
+for i in range(gmm.n_components):
+    plot_ellipse(gmm.means_[i], gmm.covariances_[i], ax, edgecolor='black', linewidth=2)
+
+ax.set_title('Gaussian Mixture Model with EM\n(Color = Component Assignment, Ellipses = 2σ Contours)')
+ax.set_xlabel('X1')
+ax.set_ylabel('X2')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+```
+Here's a figure visualizing the key concepts of Gaussian Mixture Models with the EM algorithm:
+
+* **Colored points** show the data assigned to each Gaussian component.
+* **Black ellipses** indicate the 2σ contours of each fitted Gaussian.
+* The model captures both the clustering and shape (covariance) of the components through iterative EM updates.
+
 ---
 
 ## 📌 What You Will Do in This Project

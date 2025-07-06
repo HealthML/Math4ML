@@ -24,6 +24,64 @@ A powerful solution to this question is the **Gaussian-Process Latent Variable M
 
 In short: GPLVM helps you "unroll" complex manifolds, simplifying data representation and interpretation.
 
+
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_swiss_roll
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+
+# Generate smaller Swiss roll dataset for fast visualization
+n_samples = 500
+X, color = make_swiss_roll(n_samples, noise=0.05)
+X = X[:, [0, 2, 1]]  # reorder axes for better visualization
+
+# Apply PCA
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+# Faster t-SNE with fewer iterations and lower perplexity
+tsne = TSNE(n_components=2, init='pca', random_state=42, perplexity=20, n_iter=500)
+X_tsne = tsne.fit_transform(X)
+
+# Plot
+fig = plt.figure(figsize=(15, 4))
+
+# 3D Swiss Roll
+ax = fig.add_subplot(131, projection='3d')
+ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=color, cmap=plt.cm.Spectral, s=10)
+ax.set_title("Original 3D Swiss Roll")
+ax.view_init(10, -70)
+
+# PCA
+plt.subplot(132)
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=color, cmap=plt.cm.Spectral, s=10)
+plt.title("PCA Projection")
+plt.xlabel("PC 1")
+plt.ylabel("PC 2")
+
+# t-SNE (motivates GPLVM)
+plt.subplot(133)
+plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=color, cmap=plt.cm.Spectral, s=10)
+plt.title("t-SNE Embedding (Nonlinear)")
+plt.xlabel("Dim 1")
+plt.ylabel("Dim 2")
+
+plt.suptitle("Motivation for GPLVM: Recovering Low-Dimensional Manifolds", fontsize=14)
+plt.tight_layout()
+plt.subplots_adjust(top=0.85)
+plt.show()
+```
+
+This visualization shows:
+
+* Left: the **true** high-dimensional manifold structure.
+* Middle: **PCA**, a linear method that fails to "unroll" the manifold.
+* Right: **t-SNE**, a nonlinear method that recovers the latent 2D structure (like GPLVM aims to do, but with a probabilistic model).
+
+
 ---
 
 ## 📌 What You Will Do in This Project

@@ -22,6 +22,56 @@ Imagine you have data shaped like a spiral or a "Swiss-roll"—clearly non-linea
 * Allows us to leverage PCA in that transformed space, giving us powerful nonlinear dimensionality reduction.
 * Uncovers hidden structure and simplifies the representation of data, which can be critical for downstream tasks like classification, visualization, or clustering.
 
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_swiss_roll
+from sklearn.decomposition import PCA, KernelPCA
+
+# Generate Swiss roll data
+X, color = make_swiss_roll(n_samples=1000, noise=0.05)
+X = X[:, [0, 2]]  # Use only two dimensions (flattened roll)
+
+# Apply linear PCA
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X)
+
+# Apply Kernel PCA with RBF kernel
+kpca = KernelPCA(n_components=2, kernel="rbf", gamma=10)
+X_kpca = kpca.fit_transform(X)
+
+# Plotting
+fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+
+axes[0].scatter(X[:, 0], X[:, 1], c=color, cmap=plt.cm.Spectral)
+axes[0].set_title("Original Swiss Roll (2D slice)")
+axes[0].set_xlabel("x")
+axes[0].set_ylabel("z")
+
+axes[1].scatter(X_pca[:, 0], X_pca[:, 1], c=color, cmap=plt.cm.Spectral)
+axes[1].set_title("Linear PCA")
+axes[1].set_xlabel("PC1")
+axes[1].set_ylabel("PC2")
+
+axes[2].scatter(X_kpca[:, 0], X_kpca[:, 1], c=color, cmap=plt.cm.Spectral)
+axes[2].set_title("Kernel PCA (RBF)")
+axes[2].set_xlabel("KPC1")
+axes[2].set_ylabel("KPC2")
+
+plt.tight_layout()
+plt.show()
+
+```
+
+Here is a figure comparing:
+
+1. A 2D slice of the original Swiss-roll structure.
+2. The result of applying linear PCA (which fails to untangle the manifold).
+3. The result of Kernel PCA with an RBF kernel, which successfully "unrolls" the manifold into a meaningful 2D representation.
+
+This visual clearly highlights the power of nonlinear methods like KPCA over traditional PCA when dealing with complex, curved data.
+
 ---
 
 ## 📌 What You Will Do in This Project

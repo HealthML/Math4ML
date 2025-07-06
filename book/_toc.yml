@@ -208,8 +208,8 @@ parts:
             title: Gaussian-Process Latent Variable Model
           - file: appendix/Bayesian_logreg
             title: Bayesian Logistic Regression
-          - file: appendix/LBFGS_opt
-            title: L-BFGS Optimizer
+          - file: appendix/BFGS_opt
+            title: BFGS Optimizer
 #        sections:
 #          - file: appendix/proof_vector_spaces
 #            title: Vector Spaces

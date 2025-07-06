@@ -24,6 +24,66 @@ When dealing with regression problems, you've often fitted simple linear models.
 
 This project will give you practical experience building a GP regression model from scratch, using NumPy, and show how to optimize hyperparameters to fit data robustly.
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF, WhiteKernel, ConstantKernel as C
+
+# Generate synthetic 1D data
+def f(x):
+    return np.sin(2 * np.pi * x)
+
+rng = np.random.RandomState(42)
+X_plot = np.linspace(0, 1, 500).reshape(-1, 1)
+X_full = np.sort(rng.rand(30)).reshape(-1, 1)
+y_full = f(X_full).ravel() + rng.normal(0, 0.1, X_full.shape[0])
+
+# Visualize for different training sizes
+training_sizes = [5, 10, 30]
+fig, axes = plt.subplots(1, len(training_sizes), figsize=(18, 4), sharey=True)
+
+for i, n in enumerate(training_sizes):
+    X = X_full[:n]
+    y = y_full[:n]
+
+    # GP with RBF kernel + noise
+    kernel = C(1.0, (1e-3, 1e3)) * RBF(length_scale=0.3, length_scale_bounds=(1e-2, 1e1)) + WhiteKernel(noise_level=0.1, noise_level_bounds=(1e-5, 1e0))
+    gp = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10, random_state=0)
+    gp.fit(X, y)
+    
+    y_pred, y_std = gp.predict(X_plot, return_std=True)
+
+    ax = axes[i]
+    ax.plot(X_plot, f(X_plot), 'k--', label="True function")
+    ax.scatter(X, y, c='black', s=30, label="Training points")
+    ax.plot(X_plot, y_pred, 'b-', label="GP mean")
+    ax.fill_between(X_plot.ravel(), y_pred - 2*y_std, y_pred + 2*y_std, color='blue', alpha=0.2, label="±2σ band")
+    ax.set_title(f"n = {n} samples")
+    ax.set_ylim(-2, 2)
+    ax.grid(True)
+
+axes[0].set_ylabel("y")
+for ax in axes:
+    ax.set_xlabel("x")
+
+axes[0].legend(loc="upper right")
+fig.suptitle("Gaussian Process Regression: Posterior Mean and Uncertainty", fontsize=16)
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.show()
+
+```
+
+Here is a figure visualizing key concepts of **Gaussian Processes with Kernel Optimization**:
+
+* The GP posterior mean (blue line) adapts to increasing training data (n = 5, 10, 30).
+* The shaded ±2σ confidence band shows predictive uncertainty—narrowing as data increases.
+* The model automatically adjusts its fit through kernel hyperparameter optimization using marginal likelihood.
+
+
+
 ---
 
 ## 📌 What You Will Do in This Project

@@ -28,6 +28,71 @@ By implementing your own BFGS optimizer from scratch, you'll gain deep, practica
 
 ---
 
+```{code-cell} ipython3
+:tags: [hide-input]
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize
+
+# Define the Rosenbrock function
+def rosenbrock(x):
+    return (1 - x[0])**2 + 100 * (x[1] - x[0]**2)**2
+
+# Store optimization path
+trajectory = []
+
+def callback(xk):
+    trajectory.append(np.copy(xk))
+
+# Initial guess
+x0 = np.array([-1.5, 1.5])
+trajectory.append(np.copy(x0))
+
+# Run BFGS
+res = minimize(rosenbrock, x0, method='BFGS', callback=callback, options={'disp': False})
+
+# Convert trajectory to array
+trajectory = np.array(trajectory)
+
+# Create contour plot
+x = np.linspace(-2, 2, 400)
+y = np.linspace(-1, 3, 400)
+X, Y = np.meshgrid(x, y)
+Z = (1 - X)**2 + 100 * (Y - X**2)**2
+
+ax = plt.figure(figsize=(8, 6))
+plt.contour(X, Y, Z, levels=np.logspace(-0.5, 3.5, 30), cmap='viridis')
+plt.plot(trajectory[:, 0], trajectory[:, 1], 'r.-', label='BFGS Path')
+plt.quiver(trajectory[:-1, 0], trajectory[:-1, 1],
+           trajectory[1:, 0] - trajectory[:-1, 0],
+           trajectory[1:, 1] - trajectory[:-1, 1],
+           scale_units='xy', angles='xy', scale=1, color='red')
+plt.plot([1], [1], 'bo', label='Minimum')
+plt.xlabel('$x_1$')
+plt.ylabel('$x_2$')
+
+plt.title('BFGS Optimization Path on Rosenbrock Function')
+plt.legend()
+plt.grid(True)
+# plt.axis('equal')
+plt.tight_layout()
+plt.xlim(-2,2)
+plt.show()
+```
+
+Here's a visual summary of the BFGS optimization trajectory on the Rosenbrock function:
+
+* The **contours** show the curved shape of the loss surface.
+* The **red arrows** trace the optimization path.
+* The **blue dot** marks the global minimum at $(1, 1)$.
+
+This nicely illustrates:
+
+* **Curvature-aware updates** of BFGS,
+* Faster convergence compared to plain gradient descent,
+* The impact of Hessian approximations in navigating challenging geometry.
+
+
 ## 📌 What You Will Do in This Project
 
 Your clear and concrete goal is:
