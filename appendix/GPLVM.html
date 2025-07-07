@@ -1,0 +1,892 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gaussian-Process Latent Variable Model (GPLVM) with Input Optimisation &#8212; Mathematics for Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/GPLVM';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/GPLVM.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bayesian Logistic Regression with Variational Inference" href="Bayesian_logreg.html" />
+    <link rel="prev" title="Gaussian Processes with Kernel Optimization" href="GP_kernel_opt.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/hpi-logo-colored.svg" class="logo__image only-light" alt="Mathematics for Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/hpi-logo-colored.svg" class="logo__image only-dark" alt="Mathematics for Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Preface
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Mathematics for Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_ml_basics/intro.html">Machine Learning Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/classification.html">Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/regression.html">Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/clustering.html">Clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_ml_basics/representation_learning.html">Representation Learning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_spaces/overview_spaces.html">Vector and Function Spaces</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/vector_spaces.html">Vector Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/polynomial_vector_space.html">Polynomial Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/basis_functions_vector_space.html">Basis Functions Vector Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/subspaces.html">Subspaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/metric_spaces.html">Metric Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/normed_spaces.html">Normed Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/inner_product_spaces.html">Inner Product Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_spaces/transposition.html">Transposition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_calculus/overview_calculus.html">Calculus and Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/extrema.html">Extrema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradients.html">Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/gradient_descent_ridge.html">Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/matrix_calculus.html">Matrix Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/jacobian.html">Jacobian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/chain_rule.html">Chain Rule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/mean_value_theorem.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/minima_first_order_condition.html">First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/analytical_solution_ridge.html">Quadratic Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/line_search.html">Line Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/hessian.html">Hessian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_calculus/taylors_theorem.html">Taylor’s Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_decompositions/overview_decompositions.html">Matrix Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_rank.html">Rank of a Matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/determinant.html">Determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/row_equivalence.html">Gaussian Elimination and the PLU Decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/square_matrices.html">Fundamental Equivalences for Square matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/trace.html">Trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/eigenvectors.html">Eigenvalues and Eigenvectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_matrices.html">Orthogonal matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/symmetric_matrices.html">Symmetric matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/Rayleigh_quotients.html">Rayleigh Quotients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/matrix_norms.html">Matrix Norms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/psd_matrices.html">Positive (semi-)definite matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pca.html">Principal Components Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/svd.html">Singular value decomposition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/pseudoinverse.html">Moore-Penrose Pseudoinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/orthogonal_projections.html">Orthogonal projections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_decompositions/big_picture.html">Fundamental Subspaces</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_convexity/overview_convexity.html">Convexity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_sets.html">Convex sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_convexity/convex_functions.html">Basics of convex functions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_second_order/overview_second_order.html">Second-Order Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/minima_second_order_condition.html">Second Order Condition for Minima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_probability/overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/probability_basics.html">Probability Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_of_random_variables.html">Functions of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/expectation.html">Expected Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/variance.html">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/covariance.html">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/joint_distributions.html">Joint distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/gaussian.html">The Gaussian distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/estimation.html">Estimation of Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Clairauts_theorem.html">Clairaut's Theorem</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="project_briefs.html">Project Briefs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="normalizing_flows_coupling.html">Normalizing Flows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GMM_EM.html">Gaussian Mixture Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel_PCA.html">Kernelized PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GP_kernel_opt.html">Gaussian Processes</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gaussian-Process Latent Variable Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bayesian_logreg.html">Bayesian Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BFGS_opt.html">BFGS Optimizer</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/appendix/GPLVM.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fappendix/GPLVM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/appendix/GPLVM.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gaussian-Process Latent Variable Model (GPLVM) with Input Optimisation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stretch-goals-optional-advanced">🚀 Stretch Goals (Optional, Advanced)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-support">📚 Resources and Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-matters">✅ Why This Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-summary-gaussian-process-latent-variable-model-gplvm-with-input-optimization">Project Summary: Gaussian-Process Latent Variable Model (GPLVM) with Input Optimization</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-process-latent-variable-model-gplvm-with-input-optimisation">
+<h1>Gaussian-Process Latent Variable Model (GPLVM) with Input Optimisation<a class="headerlink" href="#gaussian-process-latent-variable-model-gplvm-with-input-optimisation" title="Link to this heading">#</a></h1>
+<section id="motivation">
+<h2>🌟 Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
+<p>Real-world data often lies on complex, curved surfaces or manifolds in a high-dimensional space. Think of images, speech signals, or biological measurements: although high-dimensional, they typically possess a much simpler underlying structure. Can we automatically discover such a simplified, low-dimensional structure from complex data?</p>
+<p>A powerful solution to this question is the <strong>Gaussian-Process Latent Variable Model (GPLVM)</strong>:</p>
+<ul class="simple">
+<li><p>GPLVM elegantly extends Gaussian Processes to <strong>unsupervised learning</strong>, automatically discovering low-dimensional representations.</p></li>
+<li><p>It reveals the intrinsic structure hidden in high-dimensional observations by optimising latent input positions.</p></li>
+<li><p>It outperforms linear methods (like PCA) in capturing nonlinear relationships and structure.</p></li>
+</ul>
+<p>In short: GPLVM helps you “unroll” complex manifolds, simplifying data representation and interpretation.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_swiss_roll</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">TSNE</span>
+
+<span class="c1"># Generate smaller Swiss roll dataset for fast visualization</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">make_swiss_roll</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># reorder axes for better visualization</span>
+
+<span class="c1"># Apply PCA</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Faster t-SNE with fewer iterations and lower perplexity</span>
+<span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;pca&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">X_tsne</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># 3D Swiss Roll</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Spectral</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original 3D Swiss Roll&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">70</span><span class="p">)</span>
+
+<span class="c1"># PCA</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Spectral</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA Projection&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;PC 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PC 2&quot;</span><span class="p">)</span>
+
+<span class="c1"># t-SNE (motivates GPLVM)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_tsne</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Spectral</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;t-SNE Embedding (Nonlinear)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Dim 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Dim 2&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Motivation for GPLVM: Recovering Low-Dimensional Manifolds&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/manifold/_t_sne.py:1164: FutureWarning: &#39;n_iter&#39; was renamed to &#39;max_iter&#39; in version 1.5 and will be removed in 1.7.
+  warnings.warn(
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:335: RuntimeWarning: divide by zero encountered in matmul
+  Q, _ = normalizer(A @ Q)
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:335: RuntimeWarning: overflow encountered in matmul
+  Q, _ = normalizer(A @ Q)
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:335: RuntimeWarning: invalid value encountered in matmul
+  Q, _ = normalizer(A @ Q)
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:336: RuntimeWarning: divide by zero encountered in matmul
+  Q, _ = normalizer(A.T @ Q)
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:336: RuntimeWarning: overflow encountered in matmul
+  Q, _ = normalizer(A.T @ Q)
+/Users/christoph/miniconda3/lib/python3.13/site-packages/sklearn/utils/extmath.py:336: RuntimeWarning: invalid value encountered in matmul
+  Q, _ = normalizer(A.T @ Q)
+</pre></div>
+</div>
+<img alt="../_images/c675339f89bc79c60df9f53613eba946edcce8efb36bad72f141fd20543ace34.png" src="../_images/c675339f89bc79c60df9f53613eba946edcce8efb36bad72f141fd20543ace34.png" />
+</div>
+</div>
+<p>This visualization shows:</p>
+<ul class="simple">
+<li><p>Left: the <strong>true</strong> high-dimensional manifold structure.</p></li>
+<li><p>Middle: <strong>PCA</strong>, a linear method that fails to “unroll” the manifold.</p></li>
+<li><p>Right: <strong>t-SNE</strong>, a nonlinear method that recovers the latent 2D structure (like GPLVM aims to do, but with a probabilistic model).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="what-you-will-do-in-this-project">
+<h2>📌 What You Will Do in This Project<a class="headerlink" href="#what-you-will-do-in-this-project" title="Link to this heading">#</a></h2>
+<p>Your main goal is straightforward yet powerful:</p>
+<blockquote>
+<div><p><strong>Implement a Gaussian-Process Latent Variable Model (GPLVM)</strong> to find a meaningful 2-D latent representation of the classic <strong>3-D Swiss-roll dataset</strong>.</p>
+</div></blockquote>
+<p>You will:</p>
+<ul class="simple">
+<li><p>Implement GPLVM from scratch, using NumPy.</p></li>
+<li><p>Optimise latent variables (input points in latent space) and kernel hyperparameters simultaneously.</p></li>
+<li><p>Visualise your learned latent embedding clearly to show how GPLVM uncovers the underlying 2-D structure hidden in the data.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-concepts-youll-master">
+<h2>🔍 Key Concepts You’ll Master<a class="headerlink" href="#key-concepts-youll-master" title="Link to this heading">#</a></h2>
+<p>Through this project, you’ll build practical skills around these key ideas:</p>
+<ul class="simple">
+<li><p><strong>Latent Variable Modelling</strong>:
+Understanding how latent inputs (unobserved) can be optimised to explain complex observed data effectively.</p></li>
+<li><p><strong>GP Marginal Likelihood and MAP</strong>:
+You’ll learn how the marginal likelihood of Gaussian Processes guides simultaneous optimisation of latent variables and kernel hyperparameters.</p></li>
+<li><p><strong>Alternating Optimisation</strong>:
+Discover how to iteratively optimise latent inputs and kernel parameters to reveal meaningful low-dimensional representations.</p></li>
+<li><p><strong>Nonlinear Dimensionality Reduction</strong>:
+Compare how GPLVM performs better than linear methods (PCA), providing more interpretable embeddings.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="core-tasks-implementation-details">
+<h2>🚧 Core Tasks (Implementation Details)<a class="headerlink" href="#core-tasks-implementation-details" title="Link to this heading">#</a></h2>
+<p>You will practically engage with these tasks:</p>
+<ul class="simple">
+<li><p><strong>Latent Initialisation (PCA)</strong>:
+Begin by initialising latent 2-D positions for your data points using PCA, providing a sensible starting point.</p></li>
+<li><p><strong>Alternating Optimisation</strong>:
+Perform iterative optimisation steps, alternating between:</p>
+<ul>
+<li><p>Optimising <strong>latent inputs (X)</strong>.</p></li>
+<li><p>Optimising <strong>kernel hyperparameters</strong> (length-scale, signal variance, noise variance).</p></li>
+</ul>
+</li>
+<li><p><strong>Visualization</strong>:
+Create clear visualisations of your latent embedding (2-D space) colour-coded by the height of the original Swiss-roll, showing clearly how GPLVM effectively “unrolls” the manifold.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="reporting-analysis-and-insights">
+<h2>📝 Reporting: Analysis and Insights<a class="headerlink" href="#reporting-analysis-and-insights" title="Link to this heading">#</a></h2>
+<p>Your short report (~2 pages) should focus on insightful comparisons and explanations:</p>
+<ul class="simple">
+<li><p>Show derivation of the GPLVM.</p></li>
+<li><p>Clearly explain why GPLVM provides a more meaningful embedding than PCA for nonlinear data like the Swiss-roll.</p></li>
+<li><p>Visually illustrate your embedding, highlighting key structural features and smoothness of the learned representation.</p></li>
+<li><p>Briefly discuss how optimising both inputs and kernel parameters leads to more powerful dimensionality reduction.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="stretch-goals-optional-advanced">
+<h2>🚀 Stretch Goals (Optional, Advanced)<a class="headerlink" href="#stretch-goals-optional-advanced" title="Link to this heading">#</a></h2>
+<p>If you’re keen to explore further, you might:</p>
+<ul class="simple">
+<li><p>Implement <strong>back-constraints</strong>: add parametric mappings to better generalise to new data points.</p></li>
+<li><p>Compare GPLVM embedding to other nonlinear methods such as <strong>t-SNE</strong>, highlighting differences in interpretability and manifold preservation.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="resources-and-support">
+<h2>📚 Resources and Support<a class="headerlink" href="#resources-and-support" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Starter code for data generation (Swiss-roll) and visualisation will be provided, enabling you to focus on the core GPLVM implementation.</p></li>
+<li><p>Feel free to leverage external resources, lecture notes, and clearly documented AI-assistance.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="why-this-matters">
+<h2>✅ Why This Matters<a class="headerlink" href="#why-this-matters" title="Link to this heading">#</a></h2>
+<p>GPLVM is not just a fascinating theoretical concept; it’s highly practical and valuable in real-world contexts:</p>
+<ul class="simple">
+<li><p>Widely used in fields such as bioinformatics, robotics, computer vision, and data visualization.</p></li>
+<li><p>Provides deep intuition into nonlinear dimensionality reduction, latent-variable modeling, and Gaussian processes—crucial topics in modern machine learning.</p></li>
+<li><p>Demonstrates your ability to implement complex probabilistic models, optimally position latent variables, and interpret sophisticated models visually and mathematically.</p></li>
+</ul>
+<p>This project is an opportunity to create a standout portfolio piece and gain robust understanding and confidence in modern nonlinear probabilistic modeling.</p>
+</section>
+<section id="project-summary-gaussian-process-latent-variable-model-gplvm-with-input-optimization">
+<h2>Project Summary: Gaussian-Process Latent Variable Model (GPLVM) with Input Optimization<a class="headerlink" href="#project-summary-gaussian-process-latent-variable-model-gplvm-with-input-optimization" title="Link to this heading">#</a></h2>
+<p><em>(NumPy)</em></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Goal</strong></p></td>
+<td><p>Fit a 2-D latent representation for 3-D Swiss-roll using GPLVM MAP.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Key ideas</strong></p></td>
+<td><p>Latent <span class="math notranslate nohighlight">\(X\)</span> as parameters, GP marginal likelihood, alternating optimisation.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Core tasks</strong></p></td>
+<td><p><ul><li>Initialise latent <span class="math notranslate nohighlight">\(X\)</span> with PCA.</li><li>Alternate optimise <span class="math notranslate nohighlight">\(X\)</span> and kernel hyper-parameters (few steps).</li><li>Visualise latent 2-D embedding colour-coded by height.</li></ul></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Report</strong></p></td>
+<td><p>Show derivation of the GPLVM; explain why GPLVM can “unroll” the manifold better than PCA.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Stretch</strong></p></td>
+<td><p>Add back-constraints or compare to t-SNE.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./appendix"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="GP_kernel_opt.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Gaussian Processes with Kernel Optimization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Bayesian_logreg.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Bayesian Logistic Regression with Variational Inference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stretch-goals-optional-advanced">🚀 Stretch Goals (Optional, Advanced)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources-and-support">📚 Resources and Support</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-matters">✅ Why This Matters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-summary-gaussian-process-latent-variable-model-gplvm-with-input-optimization">Project Summary: Gaussian-Process Latent Variable Model (GPLVM) with Input Optimization</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christoph Lippert
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <script src="https://giscus.app/client.js"
+        data-repo="HealthML/Math4ML"
+        data-repo-id="R_kgDON-O79w"
+        data-category="Comments"
+        data-category-id="DIC_kwDON-O7984Co2qc"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
