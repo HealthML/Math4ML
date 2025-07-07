@@ -133,6 +133,10 @@ You will concretely engage with these tasks:
 
 Your brief (\~2 pages) report should include clear comparisons and intuitive insights:
 
+* **Derivation of the ELBO**: Derive the ELBO from first principles.
+
+* **Derivation of the Gradient**: Derive the gradient of the ELBO from first principles.
+
 * **Deterministic vs. Bayesian Boundaries**:
   Clearly compare standard logistic regression to Bayesian logistic regression decision boundaries, highlighting key differences.
 
@@ -178,7 +182,7 @@ This project positions you at the forefront of practical Bayesian machine learni
 | **Goal**       | Classify 2-D moons with Bayesian logistic regression using a diagonal-Gaussian variational posterior.                                                             |
 | **Key ideas**  | Laplace vs. VI, ELBO, re-parameterisation trick.                                                                                                                  |
 | **Core tasks** | <ul><li>Derive ELBO for variational $q(\mathbf{w})$.</li><li>Implement stochastic gradient ascent.</li><li>Plot decision boundary & predictive entropy.</li></ul> |
-| **Report**     | Compare deterministic vs. Bayesian boundary; discuss uncertainty away from data.                                                                                  |
+| **Report**     | Show derivation of the ELBO; compare deterministic vs. Bayesian boundary; discuss uncertainty away from data.                                                                                  |
 | **Stretch**    | Use full-covariance q via low-rank + diag.                                                                                                                        |
 
 ---

@@ -119,6 +119,8 @@ Your implementation will show clearly how EM iteratively increases the likelihoo
 
 Your short report (\~2 pages) should clearly document:
 
+* **Derivation of the GMM**: Derive the GMM from first principles.
+* **Derivation of the EM algorithm**: Derive the EM algorithm from first principles.
 * **Log-likelihood evolution**: Plot the log-likelihood at each iteration to demonstrate monotonic convergence.
 * **Discussion of convergence**: Identify local optima and discuss strategies to mitigate this (e.g., initialization strategies or multiple runs).
 * **Visualization interpretation**: Explain how and why the Gaussian components change during EM.
@@ -131,6 +133,7 @@ To further enrich your understanding, you might:
 
 * **Implement Bayesian Information Criterion (BIC)**: Automatically determine the best number of clusters (K).
 * **Explore initialization methods**: Compare random initialization to k-means initialization and discuss impacts on convergence and quality.
+* **Explore Bayesian GMM**: Implement a Bayesian GMM variants, either with a conjugate prior on the covariance matrix or use variational inference to approximate the posterior over the number of components.
 
 ---
 
@@ -161,6 +164,6 @@ This project is an opportunity to build robust ML intuition and coding skills ap
 | **Key ideas**  | Soft assignments (E-step), analytic M-step, log-sum-exp for stability.                                                                                 |
 | **Core tasks** | <ul><li>Implement E- and M-steps from first principles.</li><li>Track log-likelihood and plot 2-σ ellipses per component every 5 iterations.</li></ul> |
 | **Report**     | Show monotonic increase of the evidence and comment on local optima.                                                                                   |
-| **Stretch**    | Add BIC model-selection; run k-means initialisation vs. random.                                                                                        |
+| **Stretch**    | Add BIC model-selection; run k-means initialisation vs. random;   Bayesian GMMs.                                                                                     |
 
 ---

@@ -144,6 +144,7 @@ You'll proceed with these practical steps:
 
 Your concise report (\~2 pages) should focus on clear insights, specifically:
 
+* **Derivation of the GP**: Derive the GP as kernelized Bayesian linear regression.
 * Plot how the **marginal likelihood (evidence)** surface changes with different values of length-scale ($\ell$).
 * Discuss **over-fitting and under-fitting**: What happens when your length-scale is too small or too large?
 * Clearly visualize how increasing data (n=5→30) reduces uncertainty and improves predictions.
@@ -184,6 +185,7 @@ This project will equip you with hands-on experience, enabling you to confidentl
 | **Goal**       | Build 1-D GP regression with RBF kernel; learn length-scale via marginal log-likelihood maximisation (L-BFGS or grid).                                            |
 | **Key ideas**  | Cholesky solves, log-det, automatic differentiation optional (scipy.optimize).                                                                                    |
 | **Core tasks** | <ul><li>Implement predictive mean/variance.</li><li>Optimise $\ell,\sigma_f,\sigma_n$.</li><li>Plot posterior mean ±2σ bands for n = {5,10,30} samples.</li></ul> |
-| **Report**     | Show how evidence surface changes with $\ell$; comment on over/under-fitting.                                                                                     |
+| **Report**     | Show derivation of the GP; show how evidence surface changes with $\ell$; comment on over/under-fitting.                                                                                     |
+| **Stretch**    | Explore more complex kernels (Matérn, periodic, etc.); implement automatic differentiation.                                                                     |
 
 ---

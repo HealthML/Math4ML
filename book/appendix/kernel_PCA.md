@@ -131,6 +131,8 @@ Optional but insightful:
 
 Your short report (\~2 pages) should highlight clearly:
 
+* **Derivation of the KPCA**: Derive the KPCA from PCA using the kernel trick.
+
 * **Linear PCA vs KPCA**:
   Compare scatter plots to illustrate how KPCA recovers meaningful nonlinear structure missed by standard PCA.
 
@@ -148,6 +150,7 @@ To delve deeper, consider:
 
 * Conducting a systematic **grid-search over γ** and reporting how this affects the embedding quality and variance explained.
 * Exploring alternate kernels (polynomial, sigmoid) and comparing their performance on nonlinear datasets.
+* Explore probabilistic KPCA.
 
 ---
 
@@ -176,6 +179,6 @@ By mastering Kernelized PCA, you'll have:
 | **Key ideas**  | Centering in feature space, eigen-decomposition of kernel matrix.                                                                               |
 | **Core tasks** | <ul><li>Compute centered kernel $K_c$.</li><li>Extract top-2 eigenvectors & reconstruct pre-images with kernel regression (optional).</li></ul> |
 | **Report**     | Contrast linear PCA vs. KPCA scatter plots; discuss role of $\gamma$.                                                                           |
-| **Stretch**    | Grid-search $\gamma$ and report explained variance.                                                                                             |
+| **Stretch**    | Grid-search $\gamma$ and report explained variance; explore probabilistic KPCA.                                                                                             |
 
 ---

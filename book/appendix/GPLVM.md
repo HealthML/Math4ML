@@ -138,6 +138,7 @@ You will practically engage with these tasks:
 
 Your short report (\~2 pages) should focus on insightful comparisons and explanations:
 
+* Show derivation of the GPLVM.
 * Clearly explain why GPLVM provides a more meaningful embedding than PCA for nonlinear data like the Swiss-roll.
 * Visually illustrate your embedding, highlighting key structural features and smoothness of the learned representation.
 * Briefly discuss how optimising both inputs and kernel parameters leads to more powerful dimensionality reduction.
@@ -179,7 +180,7 @@ This project is an opportunity to create a standout portfolio piece and gain rob
 | **Goal**       | Fit a 2-D latent representation for 3-D Swiss-roll using GPLVM MAP.                                                                                                                      |
 | **Key ideas**  | Latent $X$ as parameters, GP marginal likelihood, alternating optimisation.                                                                                                              |
 | **Core tasks** | <ul><li>Initialise latent $X$ with PCA.</li><li>Alternate optimise $X$ and kernel hyper-parameters (few steps).</li><li>Visualise latent 2-D embedding colour-coded by height.</li></ul> |
-| **Report**     | Explain why GPLVM can “unroll” the manifold better than PCA.                                                                                                                             |
+| **Report**     | Show derivation of the GPLVM; explain why GPLVM can “unroll” the manifold better than PCA.                                                                                         |
 | **Stretch**    | Add back-constraints or compare to t-SNE.                                                                                                                                                |
 
 ---
