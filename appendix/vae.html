@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Maximum A Posteriori Estimation (MAP) &#8212; Mathematics for Machine Learning</title>
+    <title>Variational Autoencoder (VAE) &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -60,10 +60,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_probability/map_estimation';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/map_estimation.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/vae';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/vae.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Comparison of Kernel Functions in SVM Classification" href="svm.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +126,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -247,57 +246,57 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variance.html">Variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="covariance.html">Covariance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimation of Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_probability/overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/probability_basics.html">Probability Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_of_random_variables.html">Functions of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/expectation.html">Expected Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/variance.html">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/covariance.html">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/joint_distributions.html">Joint distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/gaussian.html">The Gaussian distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/estimation.html">Estimation of Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/project_briefs.html">Project Briefs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/normalizing_flows_coupling.html">Normalizing Flows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GMM_EM.html">Gaussian Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/kernel_PCA.html">Kernelized PCA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GP_kernel_opt.html">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GPLVM.html">Gaussian-Process Latent Variable Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Bayesian_logreg.html">Bayesian Logistic Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/BFGS_opt.html">BFGS Optimizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/PCA_MI.html">PCA and Mutual Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/svm.html">Support Vector Machines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/vae.html">Variational Autoencoders</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="project_briefs.html">Project Briefs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="normalizing_flows_coupling.html">Normalizing Flows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GMM_EM.html">Gaussian Mixture Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel_PCA.html">Kernelized PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GP_kernel_opt.html">Gaussian Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPLVM.html">Gaussian-Process Latent Variable Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bayesian_logreg.html">Bayesian Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BFGS_opt.html">BFGS Optimizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PCA_MI.html">PCA and Mutual Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svm.html">Support Vector Machines</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Variational Autoencoders</a></li>
 </ul>
 </details></li>
 </ul>
@@ -371,7 +370,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_probability/map_estimation.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/appendix/vae.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -388,7 +387,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_probability/map_estimation.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fappendix/vae.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -418,7 +417,7 @@
       
       
       
-      <li><a href="../_sources/chapter_probability/map_estimation.md" target="_blank"
+      <li><a href="../_sources/appendix/vae.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -489,7 +488,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -500,11 +501,31 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Maximum A Posteriori Estimation (MAP)</h1>
+    <h1>Variational Autoencoder (VAE)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">1. <strong>Data Preparation</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">2. <strong>Model Architecture</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-via-reparameterization">3. <strong>Sampling via Reparameterization</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-negative-elbo">3. Loss Function (Negative ELBO)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-visualization">4. Evaluation and Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">✅ Summary Table</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -514,19 +535,136 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="maximum-a-posteriori-estimation-map">
-<h1>Maximum A Posteriori Estimation (MAP)<a class="headerlink" href="#maximum-a-posteriori-estimation-map" title="Link to this heading">#</a></h1>
-<p>MAP estimation introduces prior knowledge into the estimation problem.
-Using Bayes’ rule, the posterior over parameters <span class="math notranslate nohighlight">\(\theta\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \theta)
-\]</div>
-<p>The <strong>MAP estimate</strong> is the mode of the posterior:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}_\text{MAP} = \operatorname{argmax}_\theta \log p(\theta) + \sum_{i=1}^n \log p(x_i \mid \theta)
-\]</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="variational-autoencoder-vae">
+<h1>Variational Autoencoder (VAE)<a class="headerlink" href="#variational-autoencoder-vae" title="Link to this heading">#</a></h1>
+<section id="motivation">
+<h2>🌟 Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
+<p>Variational Autoencoders (VAEs) are neural networks designed to learn how to generate new handwritten digits by modeling the underlying data distribution. Unlike traditional autoencoders that only compress and reconstruct inputs, VAEs incorporate probabilistic principles to enable meaningful data generation.</p>
+<p><strong>Variational Autoencoders (VAEs)</strong> introduce a probabilistic twist:</p>
+<ul class="simple">
+<li><p>They learn a <strong>distribution over the latent space</strong>—not just fixed encodings.</p></li>
+<li><p>They allow for <strong>sampling and generation</strong> of new data points.</p></li>
+<li><p>They fuse deep learning with <strong>Bayesian reasoning</strong> through <strong>variational inference</strong>.</p></li>
+<li><p>They’re optimized via the <strong>Evidence Lower Bound (ELBO)</strong>, balancing reconstruction quality and latent regularization.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="what-you-will-do-in-this-project">
+<h2>📌 What You Will Do in This Project<a class="headerlink" href="#what-you-will-do-in-this-project" title="Link to this heading">#</a></h2>
+<p>Your primary goal is:</p>
+<blockquote>
+<div><p><strong>Implement a Variational Autoencoder (VAE) using PyTorch and apply it to the MNIST dataset.</strong></p>
+</div></blockquote>
+<p>Specifically, you’ll:</p>
+<ul class="simple">
+<li><p>Train an encoder to output mean and log-variance of latent Gaussian.</p></li>
+<li><p>Sample latent vectors via the reparameterization trick.</p></li>
+<li><p>Decode latent vectors to reconstruct images.</p></li>
+<li><p>Derive and minimize the negative <strong>ELBO</strong> loss.</p></li>
+<li><p>Visualize latent space, reconstructions, and generated samples.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-concepts-youll-master">
+<h2>🔍 Key Concepts You’ll Master<a class="headerlink" href="#key-concepts-youll-master" title="Link to this heading">#</a></h2>
+<p>You’ll gain intuition and implementation skills in:</p>
+<ul class="simple">
+<li><p><strong>Latent variable models</strong>:<br />
+Learn how data can be represented via probabilistic latent spaces.</p></li>
+<li><p><strong>KL Divergence</strong>:<br />
+Understand how KL measures divergence from a prior distribution, and why regularization is essential.</p></li>
+<li><p><strong>Reparameterization Trick</strong>:<br />
+Make stochastic sampling differentiable for backpropagation.</p></li>
+<li><p><strong>Evidence Lower Bound (ELBO)</strong>:<br />
+The central loss function that balances reconstruction loss and regularization.</p></li>
+<li><p><strong>Generative Modeling</strong>:<br />
+Use trained VAEs to <strong>sample new digits</strong>, perform <strong>interpolations</strong>, and understand how deep models learn distributions.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="core-tasks-implementation-details">
+<h2>🚧 Core Tasks (Implementation Details)<a class="headerlink" href="#core-tasks-implementation-details" title="Link to this heading">#</a></h2>
+<p>Your VAE implementation should follow these key steps:</p>
+<section id="data-preparation">
+<h3>1. <strong>Data Preparation</strong><a class="headerlink" href="#data-preparation" title="Link to this heading">#</a></h3>
+<p>Load and preprocess the MNIST dataset using torchvision.</p>
+</section>
+<section id="model-architecture">
+<h3>2. <strong>Model Architecture</strong><a class="headerlink" href="#model-architecture" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Encoder outputs mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and log-variance (<span class="math notranslate nohighlight">\(\log \sigma^2\)</span>).</p></li>
+<li><p>Decoder reconstructs input from latent vector <span class="math notranslate nohighlight">\(z\)</span>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">nn.Sequential</span></code> or custom <code class="docutils literal notranslate"><span class="pre">nn.Module</span></code> classes.</p></li>
+</ul>
+</section>
+<section id="sampling-via-reparameterization">
+<h3>3. <strong>Sampling via Reparameterization</strong><a class="headerlink" href="#sampling-via-reparameterization" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">std</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>  <span class="c1"># std = torch.exp(0.5 * log_var)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Decoder reconstructs input from sampled <code class="docutils literal notranslate"><span class="pre">z</span></code></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="loss-function-negative-elbo">
+<h2>3. Loss Function (Negative ELBO)<a class="headerlink" href="#loss-function-negative-elbo" title="Link to this heading">#</a></h2>
+<p>We combine:</p>
+<ul class="simple">
+<li><p><strong>Reconstruction Loss</strong>: Binary Cross Entropy between input and reconstruction</p></li>
+<li><p><strong>KL Divergence</strong>: Distance between approximate posterior <code class="docutils literal notranslate"><span class="pre">q(z|x)</span></code> and prior <code class="docutils literal notranslate"><span class="pre">p(z)</span> <span class="pre">=</span> <span class="pre">N(0,</span> <span class="pre">I)</span></code></p></li>
+</ul>
+</section>
+<section id="evaluation-and-visualization">
+<h2>4. Evaluation and Visualization<a class="headerlink" href="#evaluation-and-visualization" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Compare input images to their reconstructions</p></li>
+<li><p>Generate new digits from random latent vectors</p></li>
+<li><p>Interpolate between two latent codes</p></li>
+</ul>
+</section>
+<section id="reporting-analysis-and-insights">
+<h2>📝 Reporting: Analysis and Insights<a class="headerlink" href="#reporting-analysis-and-insights" title="Link to this heading">#</a></h2>
+<p>Include in your report (~2 pages):</p>
+<ul class="simple">
+<li><p>Derivation of the ELBO from the variational objective</p></li>
+<li><p>Explanation of the KL and reconstruction loss trade-off</p></li>
+<li><p>Visualizations:</p></li>
+<li><p>Input vs Reconstruction</p></li>
+<li><p>Latent Space Traversals</p></li>
+<li><p>Samples from Prior</p></li>
+<li><p>Observations about learned latent representations</p></li>
+</ul>
+</section>
+<section id="summary-table">
+<h2>✅ Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Model</strong></p></td>
+<td><p>VAE with encoder + decoder using PyTorch</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Loss</strong></p></td>
+<td><p>ELBO = Reconstruction Loss + KL Divergence</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Dataset</strong></p></td>
+<td><p>MNIST (grayscale 28×28 digits)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Latent Dim</strong></p></td>
+<td><p>Typically 2–20 (use 2D for visualization)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Output</strong></p></td>
+<td><p>Reconstructions, random generations, latent visualizations</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -542,7 +680,7 @@ p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \t
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapter_probability"
+            path: "./appendix"
         },
         predefinedOutput: true
     }
@@ -559,12 +697,48 @@ p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \t
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="svm.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Comparison of Kernel Functions in SVM Classification</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">1. <strong>Data Preparation</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">2. <strong>Model Architecture</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-via-reparameterization">3. <strong>Sampling via Reparameterization</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-negative-elbo">3. Loss Function (Negative ELBO)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-visualization">4. Evaluation and Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">✅ Summary Table</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

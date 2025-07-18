@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Maximum A Posteriori Estimation (MAP) &#8212; Mathematics for Machine Learning</title>
+    <title>Supervised Feature Selection Using Mutual Information: A Comparison with PCA &#8212; Mathematics for Machine Learning</title>
   
   
   
@@ -58,12 +58,12 @@
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapter_probability/map_estimation';</script>
-    <link rel="canonical" href="https://healthml.github.io/Math4ML/chapter_probability/map_estimation.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'appendix/PCA_MI';</script>
+    <link rel="canonical" href="https://healthml.github.io/Math4ML/appendix/PCA_MI.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Comparison of Kernel Functions in SVM Classification" href="svm.html" />
+    <link rel="prev" title="Building a BFGS Optimizer from Scratch" href="BFGS_opt.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +125,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -247,57 +245,57 @@
 <li class="toctree-l2"><a class="reference internal" href="../chapter_second_order/newtons_method.html">Newton’s Method</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="probability_basics.html">Probability Basics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="random_variables.html">Random variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions_of_random_variables.html">Functions of Random Variables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="expectation.html">Expected Value</a></li>
-<li class="toctree-l2"><a class="reference internal" href="variance.html">Variance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="covariance.html">Covariance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="random_vectors.html">Random vectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functions_random_vectors.html">Functions of Random Vectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="joint_distributions.html">Joint distributions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gaussian.html">The Gaussian distribution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimation.html">Estimation of Parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter_probability/overview_probability.html">Probability</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/probability_basics.html">Probability Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_variables.html">Random variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_of_random_variables.html">Functions of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/expectation.html">Expected Value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/variance.html">Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/covariance.html">Covariance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/random_vectors.html">Random vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/functions_random_vectors.html">Functions of Random Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/joint_distributions.html">Joint distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/gaussian.html">The Gaussian distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/estimation.html">Estimation of Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/exponential_family.html">The Exponential Family and Conjugate Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chapter_probability/bayesian_inference_Gaussian.html">Bayesian Inference for the Gaussian</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/extreme_value_theorem.html">Extreme Value Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Rolles_theorem.html">Rolle's Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/mean_value_theorem_proof.html">Mean Value Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/squeeze_theorem.html">Squeeze Theorem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Clairauts_theorem.html">Clairaut's Theorem</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="proofs.html">Detailed Proofs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cauchy%E2%80%93Schwarz_inequality.html">Cauchy-Schwarz Inequality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bolzano-Weierstrass_theorem.html">Bolzano-Weierstrass Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extreme_value_theorem.html">Extreme Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Rolles_theorem.html">Rolle's Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mean_value_theorem_proof.html">Mean Value Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scalar-scalar_chain_rule.html">Chain Rule for Scalar-Scalar Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="squeeze_theorem.html">Squeeze Theorem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="first_fundamental_theorem_calculus.html">First Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="second_fundamental_theorem_calculus.html">Second Fundamental Theorem of Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Clairauts_theorem.html">Clairaut's Theorem</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/differentiation_rules.html">Differentiation Rules</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="differentiation_rules.html">Differentiation Rules</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Exercise%20Sheet%20Solutions.html">Exercise Sheet Solutions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%201%20Solutions.html">Exercise Sheet 1 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%202%20Solutions.html">Exercise Sheet 2 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%203%20Solutions.html">Exercise Sheet 3 Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exercise%20Sheet%204%20Solutions.html">Exercise Sheet 4 Solutions</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/project_briefs.html">Project Briefs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/normalizing_flows_coupling.html">Normalizing Flows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GMM_EM.html">Gaussian Mixture Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/kernel_PCA.html">Kernelized PCA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GP_kernel_opt.html">Gaussian Processes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/GPLVM.html">Gaussian-Process Latent Variable Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/Bayesian_logreg.html">Bayesian Logistic Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/BFGS_opt.html">BFGS Optimizer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/PCA_MI.html">PCA and Mutual Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/svm.html">Support Vector Machines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../appendix/vae.html">Variational Autoencoders</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="project_briefs.html">Project Briefs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="normalizing_flows_coupling.html">Normalizing Flows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GMM_EM.html">Gaussian Mixture Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel_PCA.html">Kernelized PCA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GP_kernel_opt.html">Gaussian Processes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GPLVM.html">Gaussian-Process Latent Variable Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Bayesian_logreg.html">Bayesian Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BFGS_opt.html">BFGS Optimizer</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">PCA and Mutual Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="svm.html">Support Vector Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vae.html">Variational Autoencoders</a></li>
 </ul>
 </details></li>
 </ul>
@@ -371,7 +369,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/chapter_probability/map_estimation.md" target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/edit/main/book/appendix/PCA_MI.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -388,7 +386,7 @@
       
       
       
-      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fchapter_probability/map_estimation.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/HealthML/Math4ML/issues/new?title=Issue%20on%20page%20%2Fappendix/PCA_MI.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -418,7 +416,7 @@
       
       
       
-      <li><a href="../_sources/chapter_probability/map_estimation.md" target="_blank"
+      <li><a href="../_sources/appendix/PCA_MI.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -489,7 +487,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -500,11 +500,24 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Maximum A Posteriori Estimation (MAP)</h1>
+    <h1>Supervised Feature Selection Using Mutual Information: A Comparison with PCA</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">✅ Summary Table</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -514,19 +527,98 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="maximum-a-posteriori-estimation-map">
-<h1>Maximum A Posteriori Estimation (MAP)<a class="headerlink" href="#maximum-a-posteriori-estimation-map" title="Link to this heading">#</a></h1>
-<p>MAP estimation introduces prior knowledge into the estimation problem.
-Using Bayes’ rule, the posterior over parameters <span class="math notranslate nohighlight">\(\theta\)</span> is:</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \theta)
-\]</div>
-<p>The <strong>MAP estimate</strong> is the mode of the posterior:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}_\text{MAP} = \operatorname{argmax}_\theta \log p(\theta) + \sum_{i=1}^n \log p(x_i \mid \theta)
-\]</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="supervised-feature-selection-using-mutual-information-a-comparison-with-pca">
+<h1>Supervised Feature Selection Using Mutual Information: A Comparison with PCA<a class="headerlink" href="#supervised-feature-selection-using-mutual-information-a-comparison-with-pca" title="Link to this heading">#</a></h1>
+<section id="motivation">
+<h2>🌟 Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
+<p>Feature selection is a crucial step in machine learning that can improve model performance and interpretability. Principal Component Analysis (PCA) and Mutual Information (MI) are two powerful but fundamentally different methods for selecting informative features.</p>
+<p>This project explores:</p>
+<ul class="simple">
+<li><p>How PCA, a linear unsupervised method, reduces dimensionality based on variance.</p></li>
+<li><p>How Mutual Information, a nonlinear supervised metric, selects features based on dependency with the target.</p></li>
+<li><p>Their comparative effectiveness in classification tasks.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="what-you-will-do-in-this-project">
+<h2>📌 What You Will Do in This Project<a class="headerlink" href="#what-you-will-do-in-this-project" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Implement PCA and Mutual Information from scratch for supervised feature selection on the UCI Breast Cancer dataset, then compare their impact on classification accuracy.</strong></p>
+</div></blockquote>
+<p>You will:</p>
+<ul class="simple">
+<li><p>Estimate probabilities and calculate Mutual Information manually.</p></li>
+<li><p>Select top features using both methods.</p></li>
+<li><p>Train a classifier on the reduced feature sets.</p></li>
+<li><p>Evaluate and analyze classification accuracy.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-concepts-youll-master">
+<h2>🔍 Key Concepts You’ll Master<a class="headerlink" href="#key-concepts-youll-master" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Probability estimation and Mutual Information calculation</p></li>
+<li><p>Supervised vs unsupervised feature selection</p></li>
+<li><p>Impact of feature selection on classification</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="core-tasks-implementation-details">
+<h2>🚧 Core Tasks (Implementation Details)<a class="headerlink" href="#core-tasks-implementation-details" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Load the UCI Breast Cancer dataset from sklearn or UCI repository.</p></li>
+<li><p>Compute covariance matrix from training data.</p></li>
+<li><p>Perform eigen decomposition to find principal components.</p></li>
+<li><p>Estimate joint and marginal probabilities to calculate Mutual Information between each feature and the class label.</p></li>
+<li><p>Select top-k features according to PCA loadings and MI scores.</p></li>
+<li><p>Train a classifier (e.g., logistic regression or SVM) on reduced datasets.</p></li>
+<li><p>Compare and interpret classification results.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="reporting-analysis-and-insights">
+<h2>📝 Reporting: Analysis and Insights<a class="headerlink" href="#reporting-analysis-and-insights" title="Link to this heading">#</a></h2>
+<p>Your report (~2 pages) should cover:</p>
+<ul class="simple">
+<li><p>Mathematical derivation of PCA and Mutual Information.</p></li>
+<li><p>Visual comparison of selected features.</p></li>
+<li><p>Classification accuracy and robustness analysis.</p></li>
+<li><p>Discussion on strengths and limitations of each method.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="summary-table">
+<h2>✅ Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Dataset</strong></p></td>
+<td><p>UCI Breast Cancer Wisconsin dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Goal</strong></p></td>
+<td><p>Implement PCA and MI for feature selection and compare their effect</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Key Concepts</strong></p></td>
+<td><p>Covariance, eigen decomposition, probability estimation, MI</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Core Tasks</strong></p></td>
+<td><p>Calculate PCA components, estimate MI, select features, classify</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Evaluation</strong></p></td>
+<td><p>Classification accuracy comparison on reduced features</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Tools</strong></p></td>
+<td><p>NumPy, scikit-learn (for classifier), matplotlib</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -542,7 +634,7 @@ p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \t
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapter_probability"
+            path: "./appendix"
         },
         predefinedOutput: true
     }
@@ -559,12 +651,50 @@ p(\theta \mid x_1, \dots, x_n) \propto p(\theta) \cdot p(x_1, \dots, x_n \mid \t
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="BFGS_opt.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Building a BFGS Optimizer from Scratch</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="svm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Comparison of Kernel Functions in SVM Classification</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">🌟 Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-will-do-in-this-project">📌 What You Will Do in This Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-youll-master">🔍 Key Concepts You’ll Master</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-tasks-implementation-details">🚧 Core Tasks (Implementation Details)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reporting-analysis-and-insights">📝 Reporting: Analysis and Insights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">✅ Summary Table</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
