@@ -450,8 +450,9 @@ Where:
 - $b$ is a scalar offset
 
 - **Affine Subspace:**  
-  A hyperplane is a linear manifold but not a subspace unless it passes exactly through the origin. Generally, this hyperplane does **not contain the zero vector**, and hence it violates condition (i) of the subspace definition. However, it is an affine subspace of $\mathbb{R}^n$, as it can be expressed as:
+  A hyperplane is a linear manifold but not a subspace unless it passes exactly through the origin. Generally, this hyperplane does **not contain the zero vector**, and hence it violates condition (i) of the subspace definition.
 
+However, it is an affine subspace of $\mathbb{R}^n$, as it can be expressed as:
 
 Given $\mathbf{w} \in \mathbb{R}^n$ (with $\mathbf{w} \neq \mathbf{0}$) and a scalar $b$, a particular solution $\mathbf{x}_0$ of the equation
 
@@ -488,6 +489,34 @@ $$
 \mathbf{w}^\top \mathbf{x} + b = 0 \quad \Longleftrightarrow \quad \mathbf{x} = -\frac{b}{\|\mathbf{w}\|^2}\mathbf{w} + \mathbf{u}, \quad \text{with } \mathbf{u} \in \{ \mathbf{v} \in \mathbb{R}^n : \mathbf{w}^\top \mathbf{v} = 0 \}.
 $$
 This expression decomposes any point on the hyperplane into a particular solution plus a component that lies in the $(n-1)$-dimensional subspace $U$.
+
+
+:::{prf:proposition}
+Let the hyperplane be defined by ${\mathbf{x} \in \mathbb{R}^n \mid \mathbf{w}^\top \mathbf{x} + b = 0}$ with $\mathbf{w} \neq \mathbf{0}$.
+
+Then $\mathbf{w}$ is perpendicular to the hyperplane.
+:::
+
+:::{prf:proof}
+Let $\mathbf{x}_1, \mathbf{x}_2$ be two arbitrary points on the hyperplane. Then
+
+$$
+\mathbf{w}^\top \mathbf{x}_1 + b = 0
+\quad \text{and} \quad
+\mathbf{w}^\top \mathbf{x}_2 + b = 0.
+$$
+
+Subtracting the two equations yields
+
+$$
+\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0.
+$$
+
+The vector $\mathbf{x}_1 - \mathbf{x}_2$ is a direction vector lying entirely in the hyperplane. Since its inner product with $\mathbf{w}$ is zero, it follows that $\mathbf{w}$ is orthogonal to every direction in the hyperplane.
+
+Therefore, $\mathbf{w}$ is perpendicular to the hyperplane.
+:::
+
 
 ## Subspaces of the Space of Functions
 
