@@ -973,7 +973,7 @@ from scipy.linalg import solve_triangular
 b = np.array([4, 2, 6], dtype=float)
 
 # Step 1: permute b
-c = P @ b
+c = P.T @ b
 
 # Step 2: solve L y = P b
 y = solve_triangular(L, c, lower=True)
