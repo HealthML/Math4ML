@@ -219,7 +219,7 @@ $\mathbf{x} \in \mathcal{X}$, so $\mathbf{x}^*$ is a global minimum of
 $f$ in $\mathcal{X}$. ◻
 :::
 
-:::{prf:proposition} Minima stricly convex functions
+:::{prf:proposition} Minima of strictly convex functions
 :label: prop-minima-striclty-convex
 :nonumber:
 
@@ -971,13 +971,65 @@ Gradient descent will eventually reach a minimizer — but convergence may be sl
 
 #### 2. **Strongly convex functions**:
 
-If $f$ is **$\mu$-strongly convex** and has **L-Lipschitz continuous gradients**, then gradient descent **converges linearly** to the global minimizer $\mathbf{x}^*$, meaning:
+If $f$ is **$\mu$-strongly convex** and has **$L$-Lipschitz continuous gradients**, then gradient descent **converges linearly** to the global minimizer $\mathbf{x}^*$:
+
+:::{prf:theorem} Linear convergence of gradient descent
+:label: thm-gd-strongly-convex
+:nonumber:
+
+Let $f : \mathbb{R}^d \to \mathbb{R}$ be differentiable and $\mu$-strongly convex with $\mu > 0$, and let $\nabla f$ be $L$-Lipschitz continuous.
+Let $\mathbf{x}^*$ be the minimizer of $f$.
+If the step size satisfies $0 < \eta \leq \frac{1}{L}$, then the gradient descent iterates satisfy
 
 $$
 f(\mathbf{x}^{(k)}) - f(\mathbf{x}^*) \leq \left(1 - \eta \mu\right)^k \left(f(\mathbf{x}^{(0)}) - f(\mathbf{x}^*)\right)
 $$
 
-for $\eta \in \left(0, \frac{2}{L} \right)$.
+for all $k \geq 0$.
+:::
+
+:::{prf:proof}
+**Step 1 (descent lemma).** For any $\mathbf{x}, \mathbf{y}$, write $f(\mathbf{y}) - f(\mathbf{x}) = \int_0^1 \nabla f(\mathbf{x} + t(\mathbf{y}-\mathbf{x}))^\top (\mathbf{y}-\mathbf{x})\,\mathrm{d}t$. Subtracting $\nabla f(\mathbf{x})^\top(\mathbf{y}-\mathbf{x})$ and using Cauchy–Schwarz and the Lipschitz continuity of $\nabla f$,
+
+$$
+f(\mathbf{y}) - f(\mathbf{x}) - \nabla f(\mathbf{x})^\top (\mathbf{y}-\mathbf{x})
+\leq \int_0^1 L\, t\, \|\mathbf{y}-\mathbf{x}\|_2^2 \,\mathrm{d}t
+= \frac{L}{2}\|\mathbf{y}-\mathbf{x}\|_2^2 .
+$$
+
+Setting $\mathbf{y} = \mathbf{x} - \eta \nabla f(\mathbf{x})$ gives
+
+$$
+f(\mathbf{y}) \leq f(\mathbf{x}) - \eta\left(1 - \frac{L\eta}{2}\right)\|\nabla f(\mathbf{x})\|_2^2
+\leq f(\mathbf{x}) - \frac{\eta}{2}\|\nabla f(\mathbf{x})\|_2^2 ,
+$$
+
+where the last inequality uses $\eta \leq \frac{1}{L}$.
+
+**Step 2 (strong convexity bounds the gradient from below).** Applying the first-order condition ({prf:ref}`prop-convex-functions-graph`) to the convex function $\mathbf{x} \mapsto f(\mathbf{x}) - \frac{\mu}{2}\|\mathbf{x}\|_2^2$ yields
+
+$$
+f(\mathbf{y}) \geq f(\mathbf{x}) + \nabla f(\mathbf{x})^\top(\mathbf{y}-\mathbf{x}) + \frac{\mu}{2}\|\mathbf{y}-\mathbf{x}\|_2^2
+\quad \text{for all } \mathbf{x}, \mathbf{y}.
+$$
+
+The right-hand side is minimized over $\mathbf{y}$ at $\mathbf{y} = \mathbf{x} - \frac{1}{\mu}\nabla f(\mathbf{x})$, where it equals $f(\mathbf{x}) - \frac{1}{2\mu}\|\nabla f(\mathbf{x})\|_2^2$. Taking $\mathbf{y} = \mathbf{x}^*$ on the left therefore gives
+
+$$
+\|\nabla f(\mathbf{x})\|_2^2 \geq 2\mu\left(f(\mathbf{x}) - f(\mathbf{x}^*)\right).
+$$
+
+**Step 3.** Combining both steps at $\mathbf{x} = \mathbf{x}^{(k)}$,
+
+$$
+f(\mathbf{x}^{(k+1)}) - f(\mathbf{x}^*) \leq \left(1 - \eta\mu\right)\left(f(\mathbf{x}^{(k)}) - f(\mathbf{x}^*)\right),
+$$
+
+and the claim follows by induction on $k$. Note that $0 \leq 1 - \eta\mu < 1$ because $\mu \leq L$.
+:::
+
+The restriction $\eta \leq \frac{1}{L}$ matters. Gradient descent still converges for every $\eta \in \left(0, \frac{2}{L}\right)$, but the factor $1 - \eta\mu$ is no longer valid for the larger step sizes: for $f(x) = \frac{L}{2}x^2$ (where $\mu = L$) each step multiplies $f$ by $(1 - \eta L)^2$, which tends to $1$ as $\eta \to \frac{2}{L}$, whereas $1 - \eta\mu$ would become negative.
+For step sizes up to $\frac{2}{\mu + L}$ one can instead show $\|\mathbf{x}^{(k)} - \mathbf{x}^*\|_2^2 \leq \left(1 - \frac{2\eta\mu L}{\mu + L}\right)^k \|\mathbf{x}^{(0)} - \mathbf{x}^*\|_2^2$.
 
 → The stronger the curvature, the faster the convergence.
 

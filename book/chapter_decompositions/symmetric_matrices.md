@@ -20,7 +20,7 @@ for all $(i,j)$.
 This definition seems harmless but turns out to
 have some strong implications. 
 
-## Spectral Decopmosition
+## Spectral Decomposition
 
 :::{prf:theorem} Spectral Theorem
 :label: trm-spectral-decomposition

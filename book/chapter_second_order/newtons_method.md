@@ -122,15 +122,15 @@ We see that Newton's method rapidly converges to the minimum.
 ## Convergence of Newton's Method
 
 It turns out that convergence of Newton's method is not guaranteed for all functions. 
-We will see that for convex functions, Newton's method converges quadratically to the minimum. 
-However, for non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite. 
+We will see that Newton's method converges quadratically once the iterates are close to a local minimum at which the Hessian is positive definite. 
+Far away from such a point, convergence is not guaranteed, not even for convex functions. 
 
 In fact, if the Hessian is not positive definite, the update may not be a descent direction.
 
 To see this, let's consider the following non-convex function:
 
 $$
-f(x, y) = -x^2 - y^2
+f(x, y) = x^2 - y^2
 $$
 
 Let's plot the function and the path taken by Newton's method, starting from the point $(0, -1)$:
@@ -298,102 +298,76 @@ If the Hessian is positive definite, then all of the terms are positive and the 
 Thus, for non-convex functions the sum is not guaranteed to be positive. 
 In that case, the Newton step is not guaranteed to be a descent direction, and may even be a direction of ascent as in the example above.
 
-### Convergence for Convex Functions
+### Local Quadratic Convergence
 
-As we have just shown, for striclty convex functions, where the Hessian is guaranteed to be positive definite everywhere, the Newton step is a descent direction.
-Additionally, we can show that Newton's method is guaranteed to get to a minimum rapidly.
+As we have just shown, the Newton step is a descent direction wherever the Hessian is positive definite.
+Close to a local minimum with positive definite Hessian we can say much more: the error is squared in every step.
 
-:::{prf:theorem} Quadratic Convergence for Convex Functions
-:label: quadratic-convergence-convex
+:::{prf:theorem} Local Quadratic Convergence of Newton's Method
+:label: quadratic-convergence-newton
 :nonumber:
 
-Let $f(x)$ be a convex function. 
-Then
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be twice continuously differentiable and let $x^*$ be a point with $\nabla f(x^*) = 0$ and $\nabla^2 f(x^*)$ positive definite.
+Assume that the Hessian is Lipschitz continuous with constant $L$ in a ball of radius $\rho$ around $x^*$, i.e.
+$\|\nabla^2 f(x) - \nabla^2 f(y)\|_2 \leq L \|x - y\|_2$ for all $x, y$ in that ball.
+Let $M = \|\nabla^2 f(x^*)^{-1}\|_2$ and $r = \min\left\{\rho, \frac{1}{2LM}\right\}$.
+
+If $\|x_0 - x^*\|_2 < r$, then all Newton iterates $x_{k+1} = x_k - [\nabla^2 f(x_k)]^{-1} \nabla f(x_k)$ are well defined, stay in the ball of radius $r$, converge to $x^*$, and satisfy
 
 $$
-f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2
+\|x_{k+1} - x^*\|_2 \leq L M \, \|x_k - x^*\|_2^2 .
 $$
-
-where $L$ is the Lipschitz constant of the Hessian.
 :::
 
-This means that the error between $x_k$ and the optimal solution $x^*$ decreases quadratically.
+This means that the error between $x_k$ and $x^*$ is squared in every iteration: the number of correct digits roughly doubles per step.
 
 :::{prf:proof}
 
-Let $f: \mathbb{R}^n \to \mathbb{R}$ be a twice continuously differentiable convex function, and suppose the Hessian $\nabla^2 f(x)$ is Lipschitz continuous with constant $L$ in a neighborhood of the minimizer $x^*$.
+Write $e_k = x_k - x^*$ and $H_k = \nabla^2 f(x_k)$, $H_* = \nabla^2 f(x^*)$, and suppose $\|e_k\|_2 < r$.
 
-Assume also that $\nabla^2 f(x^*)$ is positive definite (i.e., $f$ is strictly convex).
-
-Let $x_k$ be the current iterate, and define the Newton step:
+**The Hessian at $x_k$ is invertible.** The smallest eigenvalue of $H_*$ is $1/M$. For any unit vector $v$,
 
 $$
-x_{k+1} = x_k - [\nabla^2 f(x_k)]^{-1} \nabla f(x_k)
+v^\top H_k v = v^\top H_* v + v^\top (H_k - H_*) v \geq \frac{1}{M} - L\|e_k\|_2 \geq \frac{1}{M} - \frac{1}{2M} = \frac{1}{2M},
 $$
 
-Let $e_k = x_k - x^*$. 
+so $H_k$ is positive definite and $\|H_k^{-1}\|_2 \leq 2M$.
 
-By Taylor's theorem,
-
-$$
-\nabla f(x_k) = \nabla^2 f(x^*) e_k + r_k,
-$$
-where the remainder $r_k$ satisfies
+**Error recursion.** Since $\nabla f(x^*) = 0$, the Newton update gives
 
 $$
-\|r_k\| \leq \frac{L}{2} \|e_k\|^2.
+e_{k+1} = e_k - H_k^{-1} \nabla f(x_k) = H_k^{-1}\left( H_k e_k - \left(\nabla f(x_k) - \nabla f(x^*)\right) \right).
 $$
 
-The Newton update gives:
+By the mean value theorem for vector-valued functions ({prf:ref}`thm-Jacobian`) applied to $\nabla f$,
+$\nabla f(x_k) - \nabla f(x^*) = \int_0^1 \nabla^2 f(x^* + t e_k)\, e_k \,\mathrm{d}t$, hence
 
 $$
-\begin{align*}
-x_{k+1} - x^* &= x_k - [\nabla^2 f(x_k)]^{-1} \nabla f(x_k) - x^* \\
-&= e_k - [\nabla^2 f(x_k)]^{-1} \left( \nabla^2 f(x^*) e_k + r_k \right) \\
-&= \left( I - [\nabla^2 f(x_k)]^{-1} \nabla^2 f(x^*) \right) e_k - [\nabla^2 f(x_k)]^{-1} r_k
-\end{align*}
+H_k e_k - \left(\nabla f(x_k) - \nabla f(x^*)\right) = \int_0^1 \left( \nabla^2 f(x_k) - \nabla^2 f(x^* + t e_k) \right) e_k \,\mathrm{d}t .
 $$
 
-If $x_k$ is close to $x^*$, then $\nabla^2 f(x_k) \approx \nabla^2 f(x^*)$, so the first term is small (of order $\|e_k\|^2$), and the second term is also of order $\|e_k\|^2$ due to the bound on $r_k$.
-
-Therefore, there exists a constant $C > 0$ such that
+The points $x_k$ and $x^* + t e_k$ are at distance $(1-t)\|e_k\|_2$, so by the Lipschitz continuity of the Hessian the norm of the integrand is at most $L (1-t) \|e_k\|_2^2$, and the integral is bounded by $\frac{L}{2}\|e_k\|_2^2$. Therefore
 
 $$
-\|x_{k+1} - x^*\| \leq C \|x_k - x^*\|^2
+\|e_{k+1}\|_2 \leq \|H_k^{-1}\|_2 \cdot \frac{L}{2} \|e_k\|_2^2 \leq L M \|e_k\|_2^2 .
 $$
-for all $x_k$ sufficiently close to $x^*$. This is **quadratic convergence**.
 
-Finally, since $f$ is convex and the Hessian is Lipschitz, we also have
-
-$$
-f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2,
-$$
-as stated.
+**Convergence.** Because $L M \|e_k\|_2 < L M r \leq \frac{1}{2}$, we get $\|e_{k+1}\|_2 \leq \frac{1}{2}\|e_k\|_2 < r$. By induction all iterates stay in the ball, the bound holds for every $k$, and $\|e_k\|_2 \leq 2^{-k}\|e_0\|_2 \to 0$.
 
 :::
-**Conclusion:** Under the stated conditions, Newton's method converges quadratically to the minimizer $x^*$, and the function value error decreases at least as fast as $\|x_k - x^*\|^2$.
+**Conclusion:** Under the stated conditions, Newton's method converges quadratically to $x^*$. The theorem does not require $f$ to be convex; it only needs a positive definite Hessian at $x^*$ and a starting point that is close enough.
 
-### Convergence for Non-convex functions
+### The Result is Only Local
 
-For non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite. 
-
-
-:::{prf:theorem} Local Convergence for Non-convex Functions
-:label: local-convergence-non-convex
-:nonumber:
-
-Let $f(x)$ be a twice continuously differentiable function, and assume that the Hessian $\nabla^2 f(x)$ is Lipschitz continuous with constant $L$ in a neighborhood of a local minimum $x^*$. 
-
-If $x_k$ is sufficiently close to $x^*$ and the Hessian is positive definite at $x^*$, then Newton's method exhibits quadratic convergence. 
-
-Specifically, the following inequality holds:
+The condition $\|x_0 - x^*\|_2 < r$ cannot be dropped, not even for convex functions.
+Consider the smooth, strictly convex function $f(x) = \sqrt{1 + x^2}$ with minimizer $x^* = 0$. We have
 
 $$
-f(x_k) - f(x^*) \leq \frac{L}{2} \|x_k - x^*\|^2
+f'(x) = \frac{x}{\sqrt{1+x^2}}, \qquad f''(x) = \frac{1}{(1+x^2)^{3/2}}, \qquad x_{k+1} = x_k - \frac{f'(x_k)}{f''(x_k)} = -x_k^3 .
 $$
 
-:::
-This result is particularly relevant for convex functions, where global convergence can be more readily assured. However, for non-convex functions, the convergence is only guaranteed locally near a point where the Hessian is positive definite.
+For $|x_0| < 1$ the iterates converge to $0$ extremely fast, for $|x_0| = 1$ they oscillate between $1$ and $-1$, and for $|x_0| > 1$ they diverge.
+Global convergence therefore needs an additional safeguard such as a line search, which we discuss next.
 
 ---
 

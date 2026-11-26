@@ -260,7 +260,7 @@ The **rank** of a linear map $T$ is the dimension of its range, and the
 :::{prf:theorem} Rank-Nullity Theorem
 :label: thm-rank-nullity
 :nonumber:
-For a linear map $T: V \to W$, the **rank** of $ T $ (i.e. the number of linearly independent columns in the matrix representation of $ T $) is exactly the dimension of its range (or column space) and the **nullity** of $ T $ is the dimension of its nullspace (kernel).
+Let $V$ be a finite-dimensional vector space and $T: V \to W$ a linear map. Then the nullity and the rank of $T$ add up to the dimension of $V$:
 
 $$
 \operatorname{dim}(\operatorname{null}(T)) + \operatorname{dim}(\operatorname{range}(T)) = \operatorname{dim}(V).

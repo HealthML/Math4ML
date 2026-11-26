@@ -35,9 +35,9 @@ There is a natural generalization of this rule to multivariate functions.
 :label: chain-rule
 :nonumber:
 Suppose $f : \mathbb{R}^m \to \mathbb{R}^k$ and
-$g : \mathbb{R}^n \to \mathbb{R}^m$.
+$g : \mathbb{R}^n \to \mathbb{R}^m$, where $g$ is differentiable at $\mathbf{x}$ and $f$ is differentiable at $g(\mathbf{x})$.
 
-Then $f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ and
+Then $f \circ g : \mathbb{R}^n \to \mathbb{R}^k$ is differentiable at $\mathbf{x}$ and
 
 $$\mathbf{J}_{f \circ g}(\mathbf{x}) = \mathbf{J}_f(g(\mathbf{x}))\mathbf{J}_g(\mathbf{x})$$
 :::

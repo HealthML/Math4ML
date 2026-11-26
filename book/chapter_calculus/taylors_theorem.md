@@ -465,7 +465,7 @@ This visualization shows how the first-order (left) and second-order (right) Tay
 :label: thm-taylor-multiple-first
 :nonumber:
 
-Let $f: \mathbb{R}^d \to \mathbb{R}$ be a function that is **three times continuously differentiable** on an open set $U \subset \mathbb{R}^d$. Let $\mathbf{x}_0 \in U$, and let $\mathbf{x} \in U$ be such that the **line segment** between $\mathbf{x}_0$ and $\mathbf{x}$ lies entirely in $U$. Then:
+Let $f: \mathbb{R}^d \to \mathbb{R}$ be a function that is **twice continuously differentiable** on an open set $U \subset \mathbb{R}^d$. Let $\mathbf{x}_0 \in U$, and let $\mathbf{x} \in U$ be such that the **line segment** between $\mathbf{x}_0$ and $\mathbf{x}$ lies entirely in $U$. Then:
 
 $$
 f(\mathbf{x}) = f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^T (\mathbf{x} - \mathbf{x}_0) + \frac{1}{2} (\mathbf{x} - \mathbf{x}_0)^T \nabla^2 f(\boldsymbol{\xi}) (\mathbf{x} - \mathbf{x}_0)
@@ -474,18 +474,18 @@ $$
 for some point $\boldsymbol{\xi}$ on the open segment between $\mathbf{x}_0$ and $\mathbf{x}$.
 :::
 
-This is the **first-order Taylor approximation** with **remainder in integral form or mean value form**.
+This is the **first-order Taylor approximation** with **remainder in mean value (Lagrange) form**.
 
 We observe:
 
 * We’re approximating $f(\mathbf{x})$ using only the **first-order derivative**, but the **error** (or remainder) is controlled by the **second-order derivative**, specifically involving the Hessian at some intermediate point $\boldsymbol{\xi}$.
 * Therefore, it's a **first-order approximation with a second-order remainder**.
 
-:::{prf:theorem} Taylor’s Theorem in Multiple Variables (Third-Order Integral Remainder)
+:::{prf:theorem} Taylor’s Theorem in Multiple Variables (Third-Order Remainder)
 :label: thm-taylor-multiple-second
 :nonumber:
 
-Let $f: \mathbb{R}^d \to \mathbb{R}$ be **four times continuously differentiable** on an open set $U \subset \mathbb{R}^d$, and let $\mathbf{x}_0, \mathbf{x} \in U$ such that the line segment between them lies entirely in $U$. Then:
+Let $f: \mathbb{R}^d \to \mathbb{R}$ be **three times continuously differentiable** on an open set $U \subset \mathbb{R}^d$, and let $\mathbf{x}_0, \mathbf{x} \in U$ such that the line segment between them lies entirely in $U$. Then:
 
 $$
 f(\mathbf{x}) = f(\mathbf{x}_0)

@@ -16,7 +16,7 @@ $$
 We are asked to examine the **continuity of $ f $ in $ \mathbb{R}^2 $**.
 
 *Remark*
-We say that a single-variable function $ f : \$$bb{R} \rightarrow \$$bb{R} $ is **continuous at a point** $ a \in \$$bb{R} $ if
+We say that a single-variable function $ f : \mathbb{R} \rightarrow \mathbb{R} $ is **continuous at a point** $ a \in \mathbb{R} $ if
 
 $$
 \lim_{x \to a} f(x) = f(a)
