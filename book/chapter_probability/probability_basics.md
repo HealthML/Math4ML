@@ -228,7 +228,7 @@ $\mathbb{P}(A) = 0$.
 
 From these axioms, a number of useful rules can be derived.
 
-:::{prf:proposition} Probability axioms
+:::{prf:proposition} Consequences of the probability axioms
 :label: probability-axioms
 :nonumber:
 
@@ -315,7 +315,7 @@ $$\begin{aligned}
 :::
 
 :::{prf:proposition} Union bound
-:label: probability-union
+:label: probability-union-bound
 :nonumber:
 
 If $\{A_i\} \subseteq \mathcal{F}$ is a countable set of events,

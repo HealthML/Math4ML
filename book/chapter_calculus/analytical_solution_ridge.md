@@ -15,7 +15,7 @@ kernelspec:
 So far, we have optimized ridge regression using the gradient descent algorithm.
 However, the first order condition tells us that at the minimum of the objective function, the gradient should vanish. We will use this knowledge to derive an analytical solution to the weights in ridge regression. We will show that Ridge Regression belongs to the set of quadratic Optimization Problems and will show how to solve quadratic optimization problems analytically.
 
-## Ride Regression
+## Ridge Regression
 
 The objective function for Ridge regression is given by:
 

@@ -107,7 +107,7 @@ Our intuition from Euclidean space suggests that the closest point to
 $\mathbf{x}$ in $S$ has the perpendicularity property described above,
 and we now show that this is indeed the case.
 
-:::{prf:proposition} Ortogonal projection and unique minimizer
+:::{prf:proposition} Orthogonal projection and unique minimizer
 :label: prop-unique-minimizer
 :nonumber:
 Let $S$ be a subspace of an inner product space $V$ and let $\mathbf{x} \in V$ and $\mathbf{y} \in S$. 

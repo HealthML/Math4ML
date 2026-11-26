@@ -188,7 +188,7 @@ This formula recursively reduces the computation of a determinant to smaller and
 
 ---
 
-### Cofactor Expantion Example (3×3 Matrix)
+### Cofactor Expansion Example (3×3 Matrix)
 
 Let:
 
